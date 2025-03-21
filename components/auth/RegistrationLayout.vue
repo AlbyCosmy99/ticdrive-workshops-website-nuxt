@@ -3,7 +3,7 @@
     <div class="bg-yellow-300">steps and logo</div>
     <div class="bg-red-300 w-full grid grid-cols-2 flex-1">
       <!-- Left Section -->
-      <div class="bg-green-300 flex-1 flex justify-center p-4">
+      <div class="bg-green-300 flex-1 flex justify-center items-center p-4">
         <div
           class="relative w-[90%] h-[70vw] max-w-[500px] max-h-[500px] rounded-xl overflow-hidden"
         >
