@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <form @submit.prevent="handleSubmit" class="flex flex-col items-center">
+    <form @submit.prevent="handleSubmit" class="flex flex-col w-full px-6 items-center m-auto max-w-lg lg:max-w-full">
       <FormInput
         id="username"
         label="Username"
@@ -28,12 +28,12 @@
         v-model="username"
       />
 
-      <div>
+      <div class="w-full max-w-lg lg:max-w-full">
         <div class="self-start mt-2.5 text-base text-black">
           <label for="password">Password</label>
         </div>
         <div
-          class="flex gap-5 justify-between px-8 py-4 mt-3 max-w-full text-base font-light bg-white rounded-3xl border border-solid border-neutral-400 border-opacity-60 text-neutral-400 w-[435px] max-md:px-5"
+          class="flex gap-5 justify-between px-8 py-4 mt-3 max-w-full w-full text-base font-light bg-white rounded-3xl border border-solid border-neutral-400 border-opacity-60 text-neutral-400 w-[435px] max-md:px-5"
         >
           <input
             type="password"

@@ -49,6 +49,8 @@ export default defineComponent({
     const setActiveTab = (tab: string) => {
       activeTab.value = tab;
       emit("update:tab", tab);
+      console.log(tab);
+      navigateTo(tab === 'login' ? '/auth/login' : '/auth/register');
     };
 
     return {
