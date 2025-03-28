@@ -264,10 +264,11 @@
                 updateCurrentStep(step);
             }
             const prevStep = async (step: number) => {
+                if(!currentStep.value) {
+                    return ;
+                }
                 useStore.setStep(step - 1);
                 currentStep.value = useStore.getCurrentStep;
-                console.log(currentStep.value);
-                
             }
             watch([accept1, accept2, currentStep], ([newAccept1, newAccept2, newCurrentStep]) => {
                 console.log("called");
