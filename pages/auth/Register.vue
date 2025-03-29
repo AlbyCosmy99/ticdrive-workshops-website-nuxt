@@ -5,3 +5,12 @@
     </template>
   </AuthRegistrationLayout>
 </template>
+
+<script setup lang="ts">
+import useStepStore from '~/store/step';
+
+const stepStore = useStepStore();
+onMounted(() => {
+  stepStore.currentStep++;
+});
+</script>
