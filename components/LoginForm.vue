@@ -103,17 +103,14 @@ export default defineComponent({
         password: password.value,
         rememberMe: rememberMe.value,
       });
-      // Handle login logic here
     };
 
     const togglePasswordVisibility = () => {
       passwordVisible.value = !passwordVisible.value;
-      // Would need to change the input type and icon based on visibility state
     };
 
     const forgotPassword = () => {
       console.log("Forgot password clicked");
-      // Handle forgot password logic here
     };
 
     return {

@@ -6,57 +6,43 @@
   >
     <button
       role="tab"
-      :aria-selected="activeTab === 'login'"
+      :aria-selected="authMode === 'login'"
       id="login-tab"
       aria-controls="login-panel"
       class="gap-2.5 self-stretch px-4 py-4 my-auto text-center min-h-[50px] rounded-[30px] shadow-[0px_4px_10px_rgba(0,0,0,0.08)] w-[175px] focus:outline-none focus:ring-2 focus:ring-green-500"
       :class="
-        activeTab === 'login'
+        authMode === 'login'
           ? 'text-white bg-green-500'
           : 'text-black bg-neutral-100'
       "
-      @click="setActiveTab('login')"
+      @click="setAuthMode('login')"
     >
       Login
     </button>
     <button
       role="tab"
-      :aria-selected="activeTab === 'register'"
+      :aria-selected="authMode === 'register'"
       id="register-tab"
       aria-controls="register-panel"
       class="gap-2.5 self-stretch px-4 py-4 my-auto text-center min-h-[50px] rounded-[30px] w-[175px] focus:outline-none focus:ring-2 focus:ring-green-500"
       :class="
-        activeTab === 'register'
+        authMode === 'register'
           ? 'text-white bg-green-500'
           : 'text-black bg-neutral-100'
       "
-      @click="setActiveTab('register')"
+      @click="setAuthMode('register')"
     >
       Registrati
     </button>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
+const authMode = ref<"login" | "register">("login");
 
-export default defineComponent({
-  name: "ToggleButton",
-  emits: ["update:tab"],
-  setup(_, { emit }) {
-    const activeTab = ref("login");
-
-    const setActiveTab = (tab: string) => {
-      activeTab.value = tab;
-      emit("update:tab", tab);
-      console.log(tab);
-      navigateTo(tab === 'login' ? '/auth/login' : '/auth/register');
-    };
-
-    return {
-      activeTab,
-      setActiveTab,
-    };
-  },
-});
+const setAuthMode = (mode: "login" | "register") => {
+  authMode.value = mode;
+  navigateTo(mode === "login" ? "/auth/login" : "/auth/register");
+};
 </script>
