@@ -245,14 +245,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { useVuelidate } from "@vuelidate/core";
-import { required, email, numeric, helpers } from "@vuelidate/validators";
+import {ref, computed, watch} from 'vue';
+import {useVuelidate} from '@vuelidate/core';
+import {required, email, numeric, helpers} from '@vuelidate/validators';
 
-import FormInput from "./FormInput.vue";
-import Button from "./Button.vue";
-import RadioOption from "./RadioOption.vue";
-import useStepStore from "~/store/step";
+import FormInput from './FormInput.vue';
+import Button from './Button.vue';
+import RadioOption from './RadioOption.vue';
+import useStepStore from '~/store/step';
 
 const useStore = useStepStore();
 const currentStep = ref(useStore.getCurrentStep);
@@ -276,90 +276,90 @@ const referContact = ref(useStore.getStepOneValue.referContact);
 // Step 2
 const currentWorkShopSpec = ref(useStore.getStepTwoValue.currentWorkShopSpec);
 const workShopSpecs = [
-  { value: 1, label: "Meccanica generale" },
-  { value: 2, label: "Flotte Aziendali e Noleggio" },
-  { value: 3, label: "Elettrauto" },
-  { value: 4, label: "Veicoli Elettrici e Ibridi" },
-  { value: 5, label: "Gommista" },
-  { value: 6, label: "Cristalli e Parabrezza" },
-  { value: 7, label: "Carrozzeria" },
-  { value: 8, label: "Veicoli Elettrici e Ibridi" },
-  { value: 9, label: "Centro revisioni" },
-  { value: 10, label: "Impianti GPL/Metano" },
+  {value: 1, label: 'Meccanica generale'},
+  {value: 2, label: 'Flotte Aziendali e Noleggio'},
+  {value: 3, label: 'Elettrauto'},
+  {value: 4, label: 'Veicoli Elettrici e Ibridi'},
+  {value: 5, label: 'Gommista'},
+  {value: 6, label: 'Cristalli e Parabrezza'},
+  {value: 7, label: 'Carrozzeria'},
+  {value: 8, label: 'Veicoli Elettrici e Ibridi'},
+  {value: 9, label: 'Centro revisioni'},
+  {value: 10, label: 'Impianti GPL/Metano'},
 ];
 
 // Step 3
 const serviceTypes = [
-  { value: 1, label: "Cambio olio" },
-  { value: 2, label: "Rotazione pneumatici" },
-  { value: 3, label: "Revisione Auto" },
-  { value: 4, label: "Lucidatura fari" },
-  { value: 5, label: "Ricarica gas clima" },
-  { value: 6, label: "Oscuramento vetri" },
-  { value: 7, label: "Ricarica batteria" },
-  { value: 8, label: "Controllo pre-viaggio" },
-  { value: 9, label: "Soccorso stradale" },
-  { value: 10, label: "Assistenza Acquisto Auto" },
-  { value: 11, label: "Lavagio sedili" },
-  { value: 12, label: "Autodemolizione" },
-  { value: 13, label: "Lavagio cruscotto" },
-  { value: 14, label: "Lucidatura carozzeria" },
+  {value: 1, label: 'Cambio olio'},
+  {value: 2, label: 'Rotazione pneumatici'},
+  {value: 3, label: 'Revisione Auto'},
+  {value: 4, label: 'Lucidatura fari'},
+  {value: 5, label: 'Ricarica gas clima'},
+  {value: 6, label: 'Oscuramento vetri'},
+  {value: 7, label: 'Ricarica batteria'},
+  {value: 8, label: 'Controllo pre-viaggio'},
+  {value: 9, label: 'Soccorso stradale'},
+  {value: 10, label: 'Assistenza Acquisto Auto'},
+  {value: 11, label: 'Lavagio sedili'},
+  {value: 12, label: 'Autodemolizione'},
+  {value: 13, label: 'Lavagio cruscotto'},
+  {value: 14, label: 'Lucidatura carozzeria'},
 ];
 const currentServiceType = ref(useStore.getStepThreeValue.currentServiceType);
 
 // VALIDATIONS
 const rules = computed(() => ({
-  name: { required: helpers.withMessage("Name is required", required) },
-  surname: { required: helpers.withMessage("Surname is required", required) },
+  name: {required: helpers.withMessage('Name is required', required)},
+  surname: {required: helpers.withMessage('Surname is required', required)},
   tel: {
-    required: helpers.withMessage("Phone number is required", required),
-    numeric: helpers.withMessage("Phone number must be numeric", numeric),
+    required: helpers.withMessage('Phone number is required', required),
+    numeric: helpers.withMessage('Phone number must be numeric', numeric),
   },
   email: {
-    required: helpers.withMessage("Email is required", required),
-    email: helpers.withMessage("Invalid email format", email),
+    required: helpers.withMessage('Email is required', required),
+    email: helpers.withMessage('Invalid email format', email),
   },
   workSpace: {
-    required: helpers.withMessage("Workspace name is required", required),
+    required: helpers.withMessage('Workspace name is required', required),
   },
   postalCode: {
-    required: helpers.withMessage("Postal code is required", required),
-    numeric: helpers.withMessage("Postal code must be numeric", numeric),
+    required: helpers.withMessage('Postal code is required', required),
+    numeric: helpers.withMessage('Postal code must be numeric', numeric),
   },
 }));
 
 const rules1 = computed(() => ({
   fullAddress: {
     add1: {
-      required: helpers.withMessage("Address line 1 is required", required),
+      required: helpers.withMessage('Address line 1 is required', required),
     },
     add2: {
-      required: helpers.withMessage("Address line 2 is required", required),
+      required: helpers.withMessage('Address line 2 is required', required),
     },
     add3: {
-      required: helpers.withMessage("Address line 3 is required", required),
+      required: helpers.withMessage('Address line 3 is required', required),
     },
     add4: {
-      required: helpers.withMessage("Address line 4 is required", required),
+      required: helpers.withMessage('Address line 4 is required', required),
     },
   },
   companyContact: {
     contact1: {
-      required: helpers.withMessage("Contact 1 is required", required),
+      required: helpers.withMessage('Contact 1 is required', required),
     },
     contact2: {
-      required: helpers.withMessage("Contact 2 is required", required),
+      required: helpers.withMessage('Contact 2 is required', required),
     },
   },
   referContact: {
     contact1: {
-      required: helpers.withMessage("Contact 1 is required", required),
+      required: helpers.withMessage('Contact 1 is required', required),
     },
     contact2: {
-      required: helpers.withMessage("Contact 2 is required", required),
+      required: helpers.withMessage('Contact 2 is required', required),
     },
     contact3: {
-      required: helpers.withMessage("Contact 3 is required", required),
+      required: helpers.withMessage('Contact 3 is required', required),
     },
   },
 }));
@@ -372,7 +372,7 @@ const v0$ = useVuelidate(rules, {
   workSpace,
   postalCode,
 });
-const v1$ = useVuelidate(rules1, { fullAddress, companyContact, referContact });
+const v1$ = useVuelidate(rules1, {fullAddress, companyContact, referContact});
 
 // METHODS
 const checkToggle = (check: number) => {
@@ -400,9 +400,9 @@ const updateStepValues = (step: number) => {
     });
   } else if (step === 1) {
     useStore.setStepOneValue({
-      fullAddress: { ...fullAddress.value },
-      companyContact: { ...companyContact.value },
-      referContact: { ...referContact.value },
+      fullAddress: {...fullAddress.value},
+      companyContact: {...companyContact.value},
+      referContact: {...referContact.value},
     });
   } else if (step === 2) {
     useStore.setStepTwoValue({
@@ -419,9 +419,9 @@ const stepValidation = async (step: number) => {
   if (step === 0) return await v0$.value.$validate();
   if (step === 1) return await v1$.value.$validate();
   if (step === 2)
-    return !!currentWorkShopSpec.value || alert("please select one");
+    return !!currentWorkShopSpec.value || alert('please select one');
   if (step === 3)
-    return !!currentServiceType.value || alert("please select one");
+    return !!currentServiceType.value || alert('please select one');
   return true;
 };
 

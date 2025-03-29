@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import StepBar from "../StepBar.vue";
+import StepBar from '../StepBar.vue';
 
 defineProps({
   showStepBar: {

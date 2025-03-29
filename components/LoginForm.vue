@@ -20,7 +20,10 @@
       </div>
     </div>
 
-    <form @submit.prevent="handleSubmit" class="flex flex-col w-full px-6 items-center m-auto max-w-lg lg:max-w-full">
+    <form
+      @submit.prevent="handleSubmit"
+      class="flex flex-col w-full px-6 items-center m-auto max-w-lg lg:max-w-full"
+    >
       <FormInput
         id="username"
         label="Username"
@@ -79,26 +82,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import ToggleButton from "./ToggleButton.vue";
-import FormInput from "./FormInput.vue";
-import CheckboxField from "./CheckboxField.vue";
+import {defineComponent, ref} from 'vue';
+import ToggleButton from './ToggleButton.vue';
+import FormInput from './FormInput.vue';
+import CheckboxField from './CheckboxField.vue';
 
 export default defineComponent({
-  name: "LoginForm",
+  name: 'LoginForm',
   components: {
     ToggleButton,
     FormInput,
     CheckboxField,
   },
   setup() {
-    const username = ref("");
-    const password = ref("");
+    const username = ref('');
+    const password = ref('');
     const rememberMe = ref(true);
     const passwordVisible = ref(false);
 
     const handleSubmit = () => {
-      console.log("Login submitted", {
+      console.log('Login submitted', {
         username: username.value,
         password: password.value,
         rememberMe: rememberMe.value,
@@ -110,7 +113,7 @@ export default defineComponent({
     };
 
     const forgotPassword = () => {
-      console.log("Forgot password clicked");
+      console.log('Forgot password clicked');
     };
 
     return {

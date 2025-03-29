@@ -20,19 +20,19 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-import useStepStore from "~/store/step";
+import {ref} from 'vue';
+import useStepStore from '~/store/step';
 
 const stepStore = useStepStore();
 const currentStep = stepStore.getCurrentStep;
 const steps = ref([
-  { step: 1, value: "Informazioni e contatti" },
-  { step: 1, value: "Tipologia d’officina" },
-  { step: 1, value: "Servizi offerti" },
-  { step: 1, value: "Orari di apertura" },
-  { step: 1, value: "Informazioni fiscali" },
-  { step: 1, value: "Dati di profilo" },
-  { step: 1, value: "Descrizione officina" },
-  { step: 1, value: "Firma e accettazione" },
+  {step: 1, value: 'Informazioni e contatti'},
+  {step: 1, value: 'Tipologia d’officina'},
+  {step: 1, value: 'Servizi offerti'},
+  {step: 1, value: 'Orari di apertura'},
+  {step: 1, value: 'Informazioni fiscali'},
+  {step: 1, value: 'Dati di profilo'},
+  {step: 1, value: 'Descrizione officina'},
+  {step: 1, value: 'Firma e accettazione'},
 ]);
 </script>

@@ -38,11 +38,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-const authMode = ref<"login" | "register">("login");
+import {ref} from 'vue';
+const authMode = ref<'login' | 'register'>('login');
 
-const setAuthMode = (mode: "login" | "register") => {
+const setAuthMode = (mode: 'login' | 'register') => {
   authMode.value = mode;
-  navigateTo(mode === "login" ? "/auth/login" : "/auth/register");
+  navigateTo(mode === 'login' ? '/auth/login' : '/auth/register');
 };
 </script>
