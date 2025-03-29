@@ -44,6 +44,12 @@ export const useStepStore = defineStore('step', {
                 contact2: '',
                 contact3: ''
             }
+        },
+        step_two_value: {
+            currentWorkShopSpec: 0
+        },
+        step_three_value: {
+            currentServiceType: 0
         }
     }),
     actions: {
@@ -60,17 +66,33 @@ export const useStepStore = defineStore('step', {
                 postalCode: values.postalCode,
                 accept1: values.accept1,
                 accept2: values.accept2,
-                buttonDisable: values.buttonDisable
+                buttonDisable: values.buttonDisable,
             }
         },
-        setStepOneValue(value: any) {
-
+        setStepOneValue(values: any) {
+            this.step_one_value = {
+                fullAddress: values.fullAddress,
+                companyContact: values.companyContact,
+                referContact: values.referContact
+            }
+        },
+        setStepTwoValue(values: any) {
+            this.step_two_value = {
+                currentWorkShopSpec: values.currentWorkShopSpec
+            }
+        },
+        setStepThreeValue(values: any) {
+            this.step_three_value = {
+                currentServiceType: values.currentServiceType
+            }
         }
     },
     getters: {
         getCurrentStep: (state) => state.step,
         getStepZeroValue: (state) => state.step_zero_value,
-        getStepOneValue: (state) => state.step_one_value
+        getStepOneValue: (state) => state.step_one_value,
+        getStepTwoValue: (state) => state.step_two_value,
+        getStepThreeValue: (state) => state.step_three_value,
     },
     persist: true
 })

@@ -75,6 +75,7 @@
                     placeholder="Via e Numero Civico:"
                     v-model="fullAddress.add1"
                     size="small"
+                    :error-message="v1$.fullAddress.add1.$errors.length ? v1$.fullAddress.add1.$errors[0].$message : ''"
                 />
                 <FormInput 
                     placeholder="Città:"
@@ -127,6 +128,33 @@
             </div>
             <h1 class="mt-3 mb-4 text-gray-500 text-md">(Per ricevere notifiche di prenotazioni o comunicazioni importanti)</h1>
         </div>
+        <div v-if="currentStep === 2" class="step-2 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 max-md:max-w-full justify-center">
+            <h1 class="text-4xl text-gray-500 font-semibold">Officina specializzata in:</h1>
+            <h1 class="text-lg text-gray-500 font-semibold mt-3">(Selezionare piu di una casella se necessario)</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8 mt-8">
+                <RadioOption 
+                    v-for="(value, index) in workShopSpecs"
+                    :key="index"
+                    :label="value.label"
+                    :value="value.value"
+                    :isCheck="value.value === currentWorkShopSpec"
+                    @update:isCheck="currentWorkShopSpec = $event"
+                />
+            </div>
+        </div>
+        <div v-if="currentStep === 3" class="step-3 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 max-md:max-w-full justify-center">
+            <h1 class="text-4xl text-gray-500 font-semibold">Tipologia di servizi offerti</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8 mt-8">
+                <RadioOption
+                    v-for="(value, index) in serviceTypes"
+                    :key="index"
+                    :label="value.label"
+                    :value="value.value"
+                    :isCheck="value.value === currentServiceType"
+                    @update:isCheck="currentServiceType = $event"
+                />
+            </div>
+        </div>  
         <div class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 max-md:max-w-full justify-center">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <Button 
@@ -166,16 +194,21 @@
     import { required, email, minLength, maxLength, numeric, helpers } from '@vuelidate/validators';
     import FormInput from './FormInput.vue';
     import Button from './Button.vue';
+    import RadioOption from './RadioOption.vue'
 
     export default defineComponent({
         name: 'RegisterForm',
         components: {
             FormInput,
-            Button
+            Button,
+            RadioOption
         },
         setup() {
+            
             const useStore = useStepStore();
             const currentStep = ref(useStore.getCurrentStep);
+            
+            //step0
             const buttonDisable = ref(useStore.getStepZeroValue.buttonDisable);
             const name = ref(useStore.getStepZeroValue.name);
             const surname = ref(useStore.getStepZeroValue.surname);
@@ -185,9 +218,45 @@
             const postalCode = ref(useStore.getStepZeroValue.postalCode);
             const accept1 = ref(useStore.getStepZeroValue.accept1);
             const accept2 = ref(useStore.getStepZeroValue.accept2);
+            
+            // step1
             const fullAddress = ref(useStore.getStepOneValue.fullAddress);
             const companyContact = ref(useStore.getStepOneValue.companyContact);
             const referContact = ref(useStore.getStepOneValue.referContact);
+            
+            //step2
+            const currentWorkShopSpec = ref(useStore.getStepTwoValue.currentWorkShopSpec);
+            const workShopSpecs = [
+                { value: 1, label: 'Meccanica generale' },  
+                { value: 2, label: 'Flotte Aziendali e Noleggio' },  
+                { value: 3, label: 'Elettrauto' },  
+                { value: 4, label: 'Veicoli Elettrici e Ibridi' },  
+                { value: 5, label: 'Gommista' },  
+                { value: 6, label: 'Cristalli e Parabrezza' },  
+                { value: 7, label: 'Carrozzeria' },  
+                { value: 8, label: 'Veicoli Elettrici e Ibridi' },  
+                { value: 9, label: 'Centro revisioni' },  
+                { value: 10, label: 'Impianti GPL/Metano' },  
+            ]
+
+            //step3
+            const serviceTypes = [
+                { value: 1, label: 'Cambio olio' },
+                { value: 2, label: 'Rotazione pneumatici' },
+                { value: 3, label: 'Revisione Auto' },
+                { value: 4, label: 'Lucidatura fari' },
+                { value: 5, label: 'Ricarica gas clima' },
+                { value: 6, label: 'Oscuramento vetri  ' },
+                { value: 7, label: 'Ricarica batteria' },
+                { value: 8, label: 'Controllo pre-viaggio' },
+                { value: 9, label: 'Soccorso stradale' },
+                { value: 10, label: 'Assistenza Acquisto Auto' },
+                { value: 11, label: 'Lavagio sedili' },
+                { value: 12, label: 'Autodemolizione' },
+                { value: 13, label: 'Lavagio cruscotto' },
+                { value: 14, label: 'Lucidatura carozzeria' },
+            ]
+            const currentServiceType = ref(useStore.getStepThreeValue.currentServiceType);
 
             const rules = computed(() => {
                 return {
@@ -211,13 +280,52 @@
                     postalCode: { 
                         required: helpers.withMessage('Postal code is required', required),
                         numeric: helpers.withMessage('Postal code must be numeric', numeric) 
-                    },
+                    }
+                }
+            });
+
+            const rules1 = computed(() => {
+                return {
                     
+                    fullAddress: {
+                        add1: { 
+                            required: helpers.withMessage('Address line 1 is required', required) 
+                        },
+                        add2: { 
+                            required: helpers.withMessage('Address line 2 is required', required) 
+                        },
+                        add3: { 
+                            required: helpers.withMessage('Address line 3 is required', required) 
+                        },
+                        add4: { 
+                            required: helpers.withMessage('Address line 4 is required', required) 
+                        }
+                    },
+                    companyContact: {
+                        contact1: { 
+                            required: helpers.withMessage('Address line 1 is required', required) 
+                        },
+                        contact2: { 
+                            required: helpers.withMessage('Address line 2 is required', required) 
+                        }
+                    },
+                    referContact: {
+                        contact1: { 
+                            required: helpers.withMessage('Address line 1 is required', required) 
+                        },
+                        contact2: { 
+                            required: helpers.withMessage('Address line 2 is required', required) 
+                        },
+                        contact3: { 
+                            required: helpers.withMessage('Address line 3 is required', required) 
+                        }
+                    }
                 }
             });
 
             const v0$ = useVuelidate(rules, { name, surname, tel, email, workSpace, postalCode });
-
+            const v1$ = useVuelidate(rules1, { fullAddress, companyContact, referContact });
+            // const v2$ = useVuelidate(rules2, {  })
 
             const checkToggle = (check: number) => {
                 if(check === 1) {
@@ -230,26 +338,66 @@
                 useStore.setStep(step + 1);
                 currentStep.value = useStore.getCurrentStep;
             }
-            const saveCurrentStepData = (step: number) => {
+            const updateStepValues = async (step: number) => {
                 if(step === 0) {
                     useStore.setStepZeroValue({
-                        name,
-                        surname,
-                        tel,
-                        email,
-                        workSpace,
-                        postalCode,
-                        accept1,
-                        accept2,
-                        buttonDisable
-                    });
+                        name: name.value,
+                        surname: surname.value,
+                        tel: tel.value,
+                        email: email.value,
+                        workSpace: workSpace.value,
+                        postalCode: postalCode.value,
+                        accept1: accept1.value,
+                        accept2: accept2.value,
+                        buttonDisable: buttonDisable.value
+                    })
+                } else if(step === 1) {
+                    useStore.setStepOneValue({
+                        fullAddress: {
+                            add1: fullAddress.value.add1,
+                            add2: fullAddress.value.add2,
+                            add3: fullAddress.value.add3,
+                            add4: fullAddress.value.add4,
+                        },
+                        companyContact: {
+                            contact1: companyContact.value.contact1,
+                            contact2: companyContact.value.contact2,
+                        },
+                        referContact: {
+                            contact1: referContact.value.contact1,
+                            contact2: referContact.value.contact2,
+                            contact3: referContact.value.contact3
+                        }
+                    })
+                } else if(step === 2) {
+                    useStore.setStepTwoValue({
+                        currentWorkShopSpec: currentWorkShopSpec.value
+                    })
+                } else if(step === 3) {
+                    useStore.setStepThreeValue({
+                        currentServiceType: currentServiceType.value
+                    })
                 }
             }
             const stepValidation = async(step: number) => {
                 if(step === 0) {
                     return await v0$.value.$validate();
                 } else if (step === 1) {
-
+                    return await v1$.value.$validate();
+                } else if(step === 2) {
+                    if(currentWorkShopSpec.value) {
+                        return true;
+                    } else {
+                        alert('please select one');
+                        return false;
+                    }
+                } else if(step === 3) {
+                    if(currentServiceType.value) {
+                        return true;
+                    } else {
+                        alert('please select one');
+                        return false;
+                    }
                 }
             }
             const nextStep = async (step: number) => {
@@ -257,10 +405,11 @@
                     return ;
                 }
                 const isValid = await stepValidation(step);
+                console.log(step, isValid);
                 if(!isValid) {
                     return;
                 }
-                saveCurrentStepData(step);
+                updateStepValues(step);
                 updateCurrentStep(step);
             }
             const prevStep = async (step: number) => {
@@ -292,7 +441,12 @@
                 fullAddress,
                 companyContact,
                 referContact,
+                currentWorkShopSpec,
+                workShopSpecs,
+                currentServiceType,
+                serviceTypes,
                 v0$,
+                v1$,
                 currentStep,
                 checkToggle,
                 nextStep,
