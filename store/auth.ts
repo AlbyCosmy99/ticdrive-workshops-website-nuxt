@@ -14,7 +14,7 @@ const useAuthStore = defineStore('auth', {
   },
 });
 
-const useStepStore = defineStore('step', {
+export const useStepStore = defineStore('step', {
     state: () => ({
         step: 0,
         step_zero_value: {
