@@ -16,7 +16,7 @@
       </div>
 
       <!-- Right Section -->
-      <div class="overflow-y-auto p-4 flex flex-col min-h-0">
+      <div class="lg:overflow-y-auto p-4 flex flex-col min-h-0">
         <slot name="rightContent" />
       </div>
     </div>

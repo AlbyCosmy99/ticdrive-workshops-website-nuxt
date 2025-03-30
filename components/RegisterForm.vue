@@ -29,6 +29,21 @@
             v-model:stepValues="useStore.step_four_value"
             @update:isCheck="toggleMultiSelect('serviceDay', $event)"
             @update:plus="plusServiceTime($event)"
+            @update:remove="removeServiceTime($event)"
+        />
+        <Step6 
+            v-if="currentStep === 5"
+            ref="stepFiveRef"
+        />
+        <Step7 
+            v-if="currentStep === 6"
+            ref="stepSixRef"
+            v-model:stepValues="useStore.step_six_value"
+        />
+        <Step8 
+            v-if="currentStep === 7"
+            ref="stepSevenRef"
+            v-model:stepValues="useStore.step_seven_value"
         />
         <div class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -61,7 +76,7 @@
         </div>
     </div>  
 </template>
-<script lang="ts">
+<script lang="ts" setup>
     import { defineComponent, ref } from 'vue';
     import { useStepStore } from '~/store/step';
     import { useVuelidate } from '@vuelidate/core';
@@ -71,184 +86,181 @@
     import Step3 from './Auth/registrationSteps/Step3.vue';
     import Step4 from './Auth/registrationSteps/Step4.vue';
     import Step5 from './Auth/registrationSteps/Step5.vue';
+    import Step6 from './Auth/registrationSteps/Step6.vue';
+    import Step7 from './Auth/registrationSteps/Step7.vue';
+    import Step8 from './Auth/registrationSteps/Step8.vue';
+    const useStore = useStepStore();
+    const currentStep = ref(useStore.getCurrentStep);
 
-    export default defineComponent({
-        name: 'RegisterForm',
-        components: {
-            Step1,
-            Step2,
-            Step3,
-            Step4,
-            Step5,
-        },
-        setup() {
-            const useStore = useStepStore();
-            const currentStep = ref(useStore.getCurrentStep);
-            
-            //step0
-            const stepZeroRef = ref();
-            const stepOneRef = ref();
-            const stepTwoRef = ref();
-            const stepThreeRef = ref();
-            const stepFourRef = ref();
-            const stepFiveRef = ref();
-            const stepSixRef = ref();
-            const stepSevenRef = ref();
-            const buttonDisableStatus = computed(() => !useStore.step_zero_value.accept2);
-            
-            //step4
+    const stepZeroRef = ref();
+    const stepOneRef = ref();
+    const stepTwoRef = ref();
+    const stepThreeRef = ref();
+    const stepFourRef = ref();
+    const stepFiveRef = ref();
+    const stepSixRef = ref();
+    const stepSevenRef = ref();
+    const buttonDisableStatus = computed(() => !useStore.step_zero_value.accept2);
 
-            const checkToggle = (key: String, value: Boolean) => {
-                useStore.step_zero_value[key] = value;
+    const checkToggle = (key: String, value: Boolean) => {
+        useStore.step_zero_value[key] = value;
+    }
+    const updateCurrentStep = (step: number) => {
+        useStore.setStep(step);
+        currentStep.value = useStore.getCurrentStep;
+    }
+    
+    const stepValidation = async(step: number) => {
+        if(step === 0) {
+            return await stepZeroRef.value?.validate();
+        } else if (step === 1) {
+            return await stepOneRef.value?.validate();
+        } else if(step === 2) {
+            if(useStore.step_two_value.currentWorkShopSpec.length) {
+                return true;
+            } else {
+                alert('please select one');
+                return false;
             }
-            const updateCurrentStep = (step: number) => {
-                useStore.setStep(step);
-                currentStep.value = useStore.getCurrentStep;
+        } else if(step === 3) {
+            if(useStore.step_three_value.currentServiceType.length) {
+                return true;
+            } else {
+                alert('please select one');
+                return false;
             }
-            // const updateStepValues = async (step: number) => {
-            //     if(step === 0) {
-            //         useStore.setStepZeroValue({
-            //             name: name.value,
-            //             surname: surname.value,
-            //             tel: tel.value,
-            //             email: email.value,
-            //             workSpace: workSpace.value,
-            //             postalCode: postalCode.value,
-            //             accept1: accept1.value,
-            //             accept2: accept2.value,
-            //             buttonDisable: buttonDisable.value
-            //         })
-            //     } else if(step === 1) {
-            //         useStore.setStepOneValue({
-            //             fullAddress: {
-            //                 add1: fullAddress.value.add1,
-            //                 add2: fullAddress.value.add2,
-            //                 add3: fullAddress.value.add3,
-            //                 add4: fullAddress.value.add4,
-            //             },
-            //             companyContact: {
-            //                 contact1: companyContact.value.contact1,
-            //                 contact2: companyContact.value.contact2,
-            //             },
-            //             referContact: {
-            //                 contact1: referContact.value.contact1,
-            //                 contact2: referContact.value.contact2,
-            //                 contact3: referContact.value.contact3
-            //             }
-            //         })
-            //     } else if(step === 2) {
-            //         useStore.setStepTwoValue({
-            //             currentWorkShopSpec: currentWorkShopSpec.value
-            //         })
-            //     } else if(step === 3) {
-            //         useStore.setStepThreeValue({
-            //             currentServiceType: currentServiceType.value
-            //         })
-            //     }
-            // }
-            const stepValidation = async(step: number) => {
-                if(step === 0) {
-                    return await stepZeroRef.value?.validate();
-                } else if (step === 1) {
-                    return await stepOneRef.value?.validate();
-                } else if(step === 2) {
-                    if(useStore.step_two_value.currentWorkShopSpec.length) {
-                        return true;
-                    } else {
-                        alert('please select one');
-                        return false;
-                    }
-                } else if(step === 3) {
-                    if(useStore.step_three_value.currentServiceType.length) {
-                        return true;
-                    } else {
-                        alert('please select one');
-                        return false;
-                    }
-                }
+        } else if(step === 4) {
+            if(!useStore.step_four_value.currentServiceDays.length) {
+                alert('please select one');
+                return false
+            } else if(useStore.step_four_value.maxVehicleNumber === 0) {
+                alert('set the max vehicle number');
+                false;
+            } else {
+                return true
             }
-            const nextStep = async (step: number) => {
-                if(buttonDisableStatus.value) {
-                    return ;
-                }
-                const isValid = await stepValidation(step);
-                console.log(step, isValid);
-                if(!isValid) {
-                    return;
-                }
-                // updateStepValues(step);
-                updateCurrentStep(step+1);
+        } else if(step === 5) {
+            if(!useStore.step_five_value.images[4]) {
+                alert('please upload main image');
+                return false;
+            } else {
+                return true;
             }
-            const prevStep = async (step: number) => {
-                if(!currentStep.value) {
-                    return ;
-                }
-                // updateStepValues(step);
-                updateCurrentStep(step-1);
-            }
-            const plusServiceTime = (value: any) => {
-                console.log(value);
-                const existingObject = useStore.step_four_value.currentServiceDays.find(item => item.value === value);
-                if(existingObject) {
-                    existingObject.serviceTime2 = {
-                        start: '15:00',
-                        end: '19:00'
-                    }
-                }
-            }
-            const toggleMultiSelect = (type: any, value: any) => {
-                if(type === 'workShopSpec') {
-                    const index = useStore.step_two_value.currentWorkShopSpec.indexOf(value);
-                    if(index !== -1) {
-                        useStore.step_two_value.currentWorkShopSpec.splice(index, 1);
-                    } else {
-                        useStore.step_two_value.currentWorkShopSpec.push(value);
-                    }
-                } else if(type === 'serviceType') {
-                    const index = useStore.step_three_value.currentServiceType.indexOf(value);
-                    if(index !== -1) {
-                        useStore.step_three_value.currentServiceType.splice(index, 1);
-                    } else {
-                        useStore.step_three_value.currentServiceType.push(value);
-                    }
-                } else if(type === 'serviceDay') {
-                    const index = useStore.step_four_value.currentServiceDays.findIndex(day => day.value === value);
-                    if(index !== -1) {
-                        useStore.step_four_value.currentServiceDays.splice(index, 1);
-                    } else {
-                        useStore.step_four_value.currentServiceDays.push({
-                            value,
-                            serviceTime1: {
-                                start: '09:00',
-                                end: '12:00'
-                            },
-                            serviceTime2: {
-                                start: '',
-                                end: ''
-                            }
-                        });
-                    }
-                }
-            }
-
-            return {
-                useStore,
-                stepZeroRef,
-                stepOneRef,
-                stepTwoRef,
-                stepThreeRef,
-                stepFourRef,
-                stepFiveRef,
-                stepSixRef,
-                stepSevenRef,
-                buttonDisableStatus,
-                currentStep,
-                checkToggle,
-                nextStep,
-                prevStep,
-                toggleMultiSelect,
-                plusServiceTime
+        } else if(step === 6) {
+            return await stepSixRef.value.validate();
+        }
+    }
+    const nextStep = async (step: number) => {
+        if(buttonDisableStatus.value) {
+            return ;
+        }
+        const isValid = await stepValidation(step);
+        console.log(step, isValid);
+        if(!isValid) {
+            return;
+        }
+        // updateStepValues(step);
+        updateCurrentStep(step+1);
+    }
+    const prevStep = async (step: number) => {
+        if(!currentStep.value) {
+            return ;
+        }
+        // updateStepValues(step);
+        updateCurrentStep(step-1);
+    }
+    const plusServiceTime = (value: any) => {
+        const existingObject = useStore.step_four_value.currentServiceDays.find(item => item.value === value);
+        if(existingObject) {
+            existingObject.serviceTime2 = {
+                start: '15:00',
+                end: '19:00'
             }
         }
-    })
+    }
+    const removeServiceTime = (value: any) => {
+        const existingObject = useStore.step_four_value.currentServiceDays.find(item => item.value === value);
+        if(existingObject) {
+            existingObject.serviceTime2 = {
+                start: '',
+                end: ''
+            }
+        }
+    }
+    const toggleMultiSelect = (type: any, value: any) => {
+        if(type === 'workShopSpec') {
+            const index = useStore.step_two_value.currentWorkShopSpec.indexOf(value);
+            if(index !== -1) {
+                useStore.step_two_value.currentWorkShopSpec.splice(index, 1);
+            } else {
+                useStore.step_two_value.currentWorkShopSpec.push(value);
+            }
+        } else if(type === 'serviceType') {
+            const index = useStore.step_three_value.currentServiceType.indexOf(value);
+            if(index !== -1) {
+                useStore.step_three_value.currentServiceType.splice(index, 1);
+            } else {
+                useStore.step_three_value.currentServiceType.push(value);
+            }
+        } else if(type === 'serviceDay') {
+            const index = useStore.step_four_value.currentServiceDays.findIndex(day => day.value === value);
+            if(index !== -1) {
+                useStore.step_four_value.currentServiceDays.splice(index, 1);
+            } else {
+                useStore.step_four_value.currentServiceDays.push({
+                    value,
+                    serviceTime1: {
+                        start: '09:00',
+                        end: '12:00'
+                    },
+                    serviceTime2: {
+                        start: '',
+                        end: ''
+                    }
+                });
+            }
+        }
+    }
+
+    // const updateStepValues = async (step: number) => {
+    //     if(step === 0) {
+    //         useStore.setStepZeroValue({
+    //             name: name.value,
+    //             surname: surname.value,
+    //             tel: tel.value,
+    //             email: email.value,
+    //             workSpace: workSpace.value,
+    //             postalCode: postalCode.value,
+    //             accept1: accept1.value,
+    //             accept2: accept2.value,
+    //             buttonDisable: buttonDisable.value
+    //         })
+    //     } else if(step === 1) {
+    //         useStore.setStepOneValue({
+    //             fullAddress: {
+    //                 add1: fullAddress.value.add1,
+    //                 add2: fullAddress.value.add2,
+    //                 add3: fullAddress.value.add3,
+    //                 add4: fullAddress.value.add4,
+    //             },
+    //             companyContact: {
+    //                 contact1: companyContact.value.contact1,
+    //                 contact2: companyContact.value.contact2,
+    //             },
+    //             referContact: {
+    //                 contact1: referContact.value.contact1,
+    //                 contact2: referContact.value.contact2,
+    //                 contact3: referContact.value.contact3
+    //             }
+    //         })
+    //     } else if(step === 2) {
+    //         useStore.setStepTwoValue({
+    //             currentWorkShopSpec: currentWorkShopSpec.value
+    //         })
+    //     } else if(step === 3) {
+    //         useStore.setStepThreeValue({
+    //             currentServiceType: currentServiceType.value
+    //         })
+    //     }
+    // }
 </script>

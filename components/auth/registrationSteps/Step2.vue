@@ -68,7 +68,7 @@
 <script lang="ts" setup>
   import useVuelidate from '@vuelidate/core';
   import {helpers, required} from '@vuelidate/validators';
-  import { defineProps, defineEmits, defineExpose } from 'vue';
+  import { defineProps, defineExpose } from 'vue';
 
   const props = defineProps<{
     stepValues: any
