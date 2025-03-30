@@ -1,18 +1,18 @@
-import { defineStore } from 'pinia';
+import {defineStore} from 'pinia';
 
-export const useAuthStore = defineStore('auth', {
-    state: () => ({
-        user: null,
-    }),
-    actions: {
-        setUser(user: any) {
-            this.user = user
-        },
+const useAuthStore = defineStore('auth', {
+  state: () => ({
+    user: null,
+  }),
+  actions: {
+    setUser(user: any) {
+      this.user = user;
     },
-    getters: {
-        isAuthenticated: (state) => !!state.user
-    }
-})
+  },
+  getters: {
+    isAuthenticated: state => !!state.user,
+  },
+});
 
 export const useStepStore = defineStore('step', {
     state: () => ({
@@ -44,9 +44,21 @@ export const useStepStore = defineStore('step', {
                 contact2: '',
                 contact3: ''
             }
+        },
+        step_two_value: {
+            currentWorkShopSpec: []
+        },
+        step_three_value: {
+            currentServiceType: []
+        },
+        step_four_value: {
+            currentServiceDays: []
         }
     }),
     actions: {
+        resetStore() {
+            this.$reset();
+        },
         setStep(step: number) {
             this.step = step
         },
@@ -60,17 +72,39 @@ export const useStepStore = defineStore('step', {
                 postalCode: values.postalCode,
                 accept1: values.accept1,
                 accept2: values.accept2,
-                buttonDisable: values.buttonDisable
+                buttonDisable: values.buttonDisable,
             }
         },
-        setStepOneValue(value: any) {
-
+        setStepOneValue(values: any) {
+            this.step_one_value = {
+                fullAddress: values.fullAddress,
+                companyContact: values.companyContact,
+                referContact: values.referContact
+            }
+        },
+        setStepTwoValue(values: any) {
+            this.step_two_value = {
+                currentWorkShopSpec: values.currentWorkShopSpec
+            }
+        },
+        setStepThreeValue(values: any) {
+            this.step_three_value = {
+                currentServiceType: values.currentServiceType
+            }
+        },
+        setStepFourValue(values: any) {
+            this.step_four_value = {
+                currentServiceDays: values
+            }
         }
     },
     getters: {
         getCurrentStep: (state) => state.step,
         getStepZeroValue: (state) => state.step_zero_value,
-        getStepOneValue: (state) => state.step_one_value
+        getStepOneValue: (state) => state.step_one_value,
+        getStepTwoValue: (state) => state.step_two_value,
+        getStepThreeValue: (state) => state.step_three_value,
+        getStepFourValue: (state) => state.step_four_value,
     },
     persist: true
 })

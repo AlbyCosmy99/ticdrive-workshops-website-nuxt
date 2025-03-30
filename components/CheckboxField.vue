@@ -32,10 +32,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {defineComponent} from 'vue';
 
 export default defineComponent({
-  name: "CheckboxField",
+  name: 'CheckboxField',
   props: {
     id: {
       type: String,
@@ -50,10 +50,10 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ["update:modelValue"],
-  setup(props, { emit }) {
+  emits: ['update:modelValue'],
+  setup(props, {emit}) {
     const toggle = () => {
-      emit("update:modelValue", !props.modelValue);
+      emit('update:modelValue', !props.modelValue);
     };
 
     return {
