@@ -176,7 +176,6 @@
                     v-if="currentServiceDays.some(day => day.value === value.value)"
                 >
                 
-
                 </div>
             </div>
         </div>
@@ -209,7 +208,6 @@
                 </h1>
             </div>
         </div>
-        <DatePicker id="datepicker-timeonly" />
     </div>  
 </template>
 <script lang="ts">
@@ -265,6 +263,25 @@
                 { value: 8, label: 'Veicoli Elettrici e Ibridi' },  
                 { value: 9, label: 'Centro revisioni' },  
                 { value: 10, label: 'Impianti GPL/Metano' },  
+            ]
+
+            //step3
+            const currentServiceType  = ref(useStore.getStepThreeValue.currentServiceType);
+            const serviceTypes = [
+                { value: 1, label: 'Cambio olio' },
+                { value: 2, label: 'Rotazione pneumatici' },
+                { value: 3, label: 'Revisione Auto' },
+                { value: 4, label: 'Lucidatura fari' },
+                { value: 5, label: 'Ricarica gas clima' },
+                { value: 6, label: 'Oscuramento vetri  ' },
+                { value: 7, label: 'Ricarica batteria' },
+                { value: 8, label: 'Controllo pre-viaggio' },
+                { value: 9, label: 'Soccorso stradale' },
+                { value: 10, label: 'Assistenza Acquisto Auto' },
+                { value: 11, label: 'Lavagio sedili' },
+                { value: 12, label: 'Autodemolizione' },
+                { value: 13, label: 'Lavagio cruscotto' },
+                { value: 14, label: 'Lucidatura carozzeria' },
             ]
             
             //step4
