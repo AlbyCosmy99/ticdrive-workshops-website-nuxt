@@ -1,6 +1,4 @@
 <template>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <div class="px-4 py-10">
         <div v-if="currentStep > -1 && isRegisterRoute" class="grid grid-cols-8 gap-1 w-8/9 ps-6">
             <div 
@@ -32,7 +30,6 @@
             alt="logo"
             class="absolute right-0 top-0 w-[150px] h-[150px]"
         />
-=======
   <div class="p-4">
     <div class="grid grid-cols-8 gap-1 w-8/9 ps-6">
       <div v-for="(value, index) in steps" :key="index">
@@ -44,8 +41,6 @@
           <h1 class="text-sm text-gray-500">{{ value.value }}</h1>
         </div>
       </div>
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
-=======
   <div class="p-4">
     <div class="grid grid-cols-8 gap-1 w-8/9 ps-6">
       <div v-for="(value, index) in steps" :key="index">
@@ -57,7 +52,6 @@
           <h1 class="text-sm text-gray-500">{{ value.value }}</h1>
         </div>
       </div>
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
     </div>
     <NuxtImg
       src="/images/ticDriveLogo.png"
@@ -67,12 +61,10 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import {ref} from 'vue';
-import useStepStore from '~/store/step';
+import useStepStore from '~/store/auth';
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 export default defineComponent({
     name: "StepBar",
     setup() {
@@ -100,23 +92,3 @@ export default defineComponent({
 });
 
 </script>
-=======
-=======
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
-const stepStore = useStepStore();
-const currentStep = stepStore.getCurrentStep;
-const steps = ref([
-  {step: 1, value: 'Informazioni e contatti'},
-  {step: 1, value: 'Tipologia d’officina'},
-  {step: 1, value: 'Servizi offerti'},
-  {step: 1, value: 'Orari di apertura'},
-  {step: 1, value: 'Informazioni fiscali'},
-  {step: 1, value: 'Dati di profilo'},
-  {step: 1, value: 'Descrizione officina'},
-  {step: 1, value: 'Firma e accettazione'},
-]);
-</script>
-<<<<<<< HEAD
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
-=======
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100

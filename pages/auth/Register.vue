@@ -1,6 +1,4 @@
 <template>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <AuthRegistrationLayout
         :main-image="`/images/reg${currentStep}.jpg`"
     >
@@ -25,25 +23,3 @@
         }
     })
 </script>
-=======
-=======
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
-  <AuthRegistrationLayout main-image="/images/reg1.jpg">
-    <template #rightContent>
-      <RegisterForm />
-    </template>
-  </AuthRegistrationLayout>
-</template>
-
-<script setup lang="ts">
-import useStepStore from '~/store/step';
-
-const stepStore = useStepStore();
-onMounted(() => {
-  stepStore.currentStep++;
-});
-</script>
-<<<<<<< HEAD
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
-=======
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100

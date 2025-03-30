@@ -26,29 +26,6 @@
 </template>
 
 <script lang="ts">
-<<<<<<< HEAD
-<<<<<<< HEAD
-    import { defineComponent } from 'vue';
-    export default defineComponent({
-        name: 'RadioOption',
-        props: {
-            label: {
-                type: String,
-                default: ""
-            },
-            isCheck: {
-                type: Boolean,
-                default: false
-            },
-            value: {
-                type: null
-            }
-        },
-        emits: ['update:isCheck'],
-        setup(props, { emit }) {
-=======
-=======
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
 import {defineComponent} from 'vue';
 export default defineComponent({
   name: 'RadioOption',
@@ -70,11 +47,6 @@ export default defineComponent({
     const handleCheck = () => {
       emit('update:isCheck', props.value);
     };
-<<<<<<< HEAD
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
-=======
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
-
     return {
       handleCheck,
     };

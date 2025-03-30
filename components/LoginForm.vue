@@ -83,8 +83,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
-import { useStepStore } from '~/store/auth';
+import { defineComponent, ref } from "vue";
 import ToggleButton from "./ToggleButton.vue";
 import FormInput from "./FormInput.vue";
 import CheckboxField from "./CheckboxField.vue";
@@ -97,23 +96,10 @@ export default defineComponent({
     CheckboxField,
   },
   setup() {
-    const useStore = useStepStore();
     const username = ref("");
     const password = ref("");
     const rememberMe = ref(true);
     const passwordVisible = ref(false);
-=======
-<script lang="ts" setup>
-import {ref} from 'vue';
-import ToggleButton from './ToggleButton.vue';
-import FormInput from './FormInput.vue';
-import CheckboxField from './CheckboxField.vue';
-
-const username = ref('');
-const password = ref('');
-const rememberMe = ref(true);
-const passwordVisible = ref(false);
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
 
 const handleSubmit = () => {
   console.log('Login submitted', {
@@ -132,10 +118,6 @@ const togglePasswordVisibility = () => {
       // Handle forgot password logic here
     };
 
-    onMounted(() => {
-      useStore.resetStore();
-    })
-
     return {
       username,
       password,
@@ -147,32 +129,4 @@ const togglePasswordVisibility = () => {
     };
   },
 });
-=======
-<script lang="ts" setup>
-import {ref} from 'vue';
-import ToggleButton from './ToggleButton.vue';
-import FormInput from './FormInput.vue';
-import CheckboxField from './CheckboxField.vue';
-
-const username = ref('');
-const password = ref('');
-const rememberMe = ref(true);
-const passwordVisible = ref(false);
-
-const handleSubmit = () => {
-  console.log('Login submitted', {
-    username: username.value,
-    password: password.value,
-    rememberMe: rememberMe.value,
-  });
-};
-
-const togglePasswordVisibility = () => {
-  passwordVisible.value = !passwordVisible.value;
-};
-
-const forgotPassword = () => {
-  console.log('Forgot password clicked');
-};
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
 </script>

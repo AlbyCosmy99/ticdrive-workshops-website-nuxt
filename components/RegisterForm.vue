@@ -1,6 +1,4 @@
 <template>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <div class="px-3 w-full">
         <div v-if="currentStep === 0" class="step-0 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center">
             <h1 class="text-4xl text-zinc-600 text-center font-semibold">Benvenuto!</h1>
@@ -213,9 +211,6 @@
         </div>
         <DatePicker id="datepicker-timeonly" />
 
-=======
-=======
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
   <div class="px-3 w-full">
     <Step1 v-if="stepStore.currentStep === 1" />
     <Step2 v-if="stepStore.currentStep === 2" />
@@ -326,7 +321,6 @@ import Step3 from './auth/registrationSteps/Step3.vue';
 import Step4 from './auth/registrationSteps/Step4.vue';
 
 const stepStore = useStepStore();
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
 
 =======
 <script setup lang="ts">
@@ -574,83 +568,3 @@ const onBack = () => {
         }
     })
 </script>
-=======
-//what is this for exactly? pay attention how you use it. Break it in multiple functions in each Step component
-// const updateStepValues = (step: number) => {
-//   if (step === 0) {
-//     useStore.setStepZeroValue({
-//       name: name.value,
-//       surname: surname.value,
-//       tel: tel.value,
-//       email: email.value,
-//       workSpace: workSpace.value,
-//       postalCode: postalCode.value,
-//       accept1: accept1.value,
-//       accept2: accept2.value,
-//       buttonDisable: buttonDisable.value,
-//     });
-//   } else if (step === 1) {
-//     useStore.setStepOneValue({
-//       fullAddress: {...fullAddress.value},
-//       companyContact: {...companyContact.value},
-//       referContact: {...referContact.value},
-//     });
-//   } else if (step === 2) {
-//     useStore.setStepTwoValue({
-//       currentWorkShopSpec: currentWorkShopSpec.value,
-//     });
-//   } else if (step === 3) {
-//     useStore.setStepThreeValue({
-//       currentServiceType: currentServiceType.value,
-//     });
-//   }
-// };
-
-=======
-//what is this for exactly? pay attention how you use it. Break it in multiple functions in each Step component
-// const updateStepValues = (step: number) => {
-//   if (step === 0) {
-//     useStore.setStepZeroValue({
-//       name: name.value,
-//       surname: surname.value,
-//       tel: tel.value,
-//       email: email.value,
-//       workSpace: workSpace.value,
-//       postalCode: postalCode.value,
-//       accept1: accept1.value,
-//       accept2: accept2.value,
-//       buttonDisable: buttonDisable.value,
-//     });
-//   } else if (step === 1) {
-//     useStore.setStepOneValue({
-//       fullAddress: {...fullAddress.value},
-//       companyContact: {...companyContact.value},
-//       referContact: {...referContact.value},
-//     });
-//   } else if (step === 2) {
-//     useStore.setStepTwoValue({
-//       currentWorkShopSpec: currentWorkShopSpec.value,
-//     });
-//   } else if (step === 3) {
-//     useStore.setStepThreeValue({
-//       currentServiceType: currentServiceType.value,
-//     });
-//   }
-// };
-
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
-//what is this for exactly? pay attention how you use it. Break it in multiple functions in each Step component
-// const stepValidation = async (step: number) => {
-//   if (step === 0) return await v0$.value.$validate();
-//   if (step === 1) return await v1$.value.$validate();
-//   if (step === 2)
-//     return !!currentWorkShopSpec.value || alert('please select one');
-//   if (step === 3)
-//     return !!currentServiceType.value || alert('please select one');
-//   return true;
-// };
-</script>
-<<<<<<< HEAD
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
-=======
->>>>>>> fafb1a952f231c198146f3789fc53014d904c100
