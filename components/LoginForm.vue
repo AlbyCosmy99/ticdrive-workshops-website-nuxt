@@ -20,7 +20,10 @@
       </div>
     </div>
 
-    <form @submit.prevent="handleSubmit" class="flex flex-col items-center">
+    <form
+      @submit.prevent="handleSubmit"
+      class="flex flex-col w-full px-14 items-center m-auto max-w-lg lg:max-w-full"
+    >
       <FormInput
         id="username"
         label="Username"
@@ -28,12 +31,12 @@
         v-model="username"
       />
 
-      <div>
+      <div class="w-full max-w-lg lg:max-w-full">
         <div class="self-start mt-2.5 text-base text-black">
           <label for="password">Password</label>
         </div>
         <div
-          class="flex gap-5 justify-between px-8 py-4 mt-3 max-w-full text-base font-light bg-white rounded-3xl border border-solid border-neutral-400 border-opacity-60 text-neutral-400 w-[435px] max-md:px-5"
+          class="flex gap-5 justify-between px-8 py-4 mt-3 max-w-full w-full text-base font-light bg-white rounded-3xl border border-solid border-neutral-400 border-opacity-60 text-neutral-400 w-[435px] max-md:px-5"
         >
           <input
             type="password"
@@ -70,7 +73,8 @@
 
       <button
         type="submit"
-        class="self-center px-16 py-3.5 mt-4 max-w-full text-base text-white whitespace-nowrap bg-green-500 bg-opacity-50 rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+        :disabled="!password || !username"
+        class="self-center px-16 py-3.5 mt-4 max-w-full text-base text-white whitespace-nowrap bg-green-500 bg-opacity-50 rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
       >
         Login
       </button>
@@ -78,53 +82,54 @@
   </div>
 </template>
 
+
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import ToggleButton from "./ToggleButton.vue";
-import FormInput from "./FormInput.vue";
-import CheckboxField from "./CheckboxField.vue";
+  import { defineComponent, ref } from "vue";
+  import ToggleButton from "./ToggleButton.vue";
+  import FormInput from "./FormInput.vue";
+  import CheckboxField from "./CheckboxField.vue";
 
-export default defineComponent({
-  name: "LoginForm",
-  components: {
-    ToggleButton,
-    FormInput,
-    CheckboxField,
-  },
-  setup() {
-    const username = ref("");
-    const password = ref("");
-    const rememberMe = ref(true);
-    const passwordVisible = ref(false);
+  export default defineComponent({
+    name: "LoginForm",
+    components: {
+      ToggleButton,
+      FormInput,
+      CheckboxField,
+    },
+    setup() {
+      const username = ref("");
+      const password = ref("");
+      const rememberMe = ref(true);
+      const passwordVisible = ref(false);
 
-    const handleSubmit = () => {
-      console.log("Login submitted", {
-        username: username.value,
-        password: password.value,
-        rememberMe: rememberMe.value,
-      });
-      // Handle login logic here
-    };
+      const handleSubmit = () => {
+        console.log("Login submitted", {
+          username: username.value,
+          password: password.value,
+          rememberMe: rememberMe.value,
+        });
+        // Handle login logic here
+      };
 
-    const togglePasswordVisibility = () => {
-      passwordVisible.value = !passwordVisible.value;
-      // Would need to change the input type and icon based on visibility state
-    };
+      const togglePasswordVisibility = () => {
+        passwordVisible.value = !passwordVisible.value;
+        // Would need to change the input type and icon based on visibility state
+      };
 
-    const forgotPassword = () => {
-      console.log("Forgot password clicked");
-      // Handle forgot password logic here
-    };
+      const forgotPassword = () => {
+        console.log("Forgot password clicked");
+        // Handle forgot password logic here
+      };
 
-    return {
-      username,
-      password,
-      rememberMe,
-      passwordVisible,
-      handleSubmit,
-      togglePasswordVisibility,
-      forgotPassword,
-    };
-  },
-});
+      return {
+        username,
+        password,
+        rememberMe,
+        passwordVisible,
+        handleSubmit,
+        togglePasswordVisibility,
+        forgotPassword,
+      };
+    },
+  });
 </script>

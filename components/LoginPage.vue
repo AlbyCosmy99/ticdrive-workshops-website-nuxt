@@ -24,12 +24,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import NavigationBar from "./NavigationBar.vue";
-import LoginForm from "./LoginForm.vue";
+import {defineComponent} from 'vue';
+import NavigationBar from './NavigationBar.vue';
+import LoginForm from './LoginForm.vue';
 
 export default defineComponent({
-  name: "LoginPage",
+  name: 'LoginPage',
   components: {
     NavigationBar,
     LoginForm,
