@@ -84,7 +84,8 @@
 
 
 <script lang="ts">
-  import { defineComponent, ref } from "vue";
+  import { defineComponent, ref, onMounted } from "vue";
+  import useStepStore from "~/store/step";
   import ToggleButton from "./ToggleButton.vue";
   import FormInput from "./FormInput.vue";
   import CheckboxField from "./CheckboxField.vue";
@@ -97,6 +98,7 @@
       CheckboxField,
     },
     setup() {
+      const useStore = useStepStore();
       const username = ref("");
       const password = ref("");
       const rememberMe = ref(true);
@@ -120,6 +122,10 @@
         console.log("Forgot password clicked");
         // Handle forgot password logic here
       };
+
+      onMounted(() => {
+        useStore.resetStore();
+      })
 
       return {
         username,

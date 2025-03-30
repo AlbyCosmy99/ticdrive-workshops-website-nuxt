@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import {ref} from 'vue';
-import useStepStore from '~/store/auth';
+import useStepStore from '~/store/step';
 
 export default defineComponent({
     name: "StepBar",

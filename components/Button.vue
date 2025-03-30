@@ -16,7 +16,6 @@
 </template>
 
 <script lang="ts">
-    import { Style } from '#components';
 import { defineComponent } from 'vue';
     export default defineComponent({
         name: 'Button',

@@ -10,7 +10,7 @@
 
 <script lang="ts">
     import { defineComponent, ref } from 'vue';
-    import { useStepStore } from '~/store/auth';
+    import { useStepStore } from '~/store/step';
 
     export default defineComponent({
         setup() {

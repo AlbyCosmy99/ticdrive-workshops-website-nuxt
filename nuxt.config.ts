@@ -11,6 +11,12 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/image',
     '@pinia/nuxt',
-    'pinia-plugin-persistedstate/nuxt'
-  ]
+    'pinia-plugin-persistedstate/nuxt',
+    // '@primevue/nuxt-module'
+  ],
+  primevue: {
+    components: {
+      include: '*'
+    }
+  }
 });

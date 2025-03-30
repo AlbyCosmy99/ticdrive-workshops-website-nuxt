@@ -1,6 +1,6 @@
 <template>
   <div
-    class="step-2 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 max-md:max-w-full justify-center"
+    class="step-2 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
   >
     <h1 class="text-4xl text-gray-500 font-semibold">
       Officina specializzata in:
@@ -14,28 +14,37 @@
         :key="index"
         :label="value.label"
         :value="value.value"
-        :isCheck="value.value === stepStore.stepThreeData.currentWorkShopSpec"
-        @update:isCheck="stepStore.stepThreeData.currentWorkShopSpec = $event"
+        :isCheck="props.stepValues.currentWorkShopSpec.includes(value.value)"
+        @update:isCheck="handleRadioSelection"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import useStepStore from '~/store/step';
+  import { defineProps, defineEmits } from 'vue';
 
-const stepStore = useStepStore();
+  const workShopSpecs = [
+    { value: 1, label: 'Meccanica generale' },  
+    { value: 2, label: 'Flotte Aziendali e Noleggio' },  
+    { value: 3, label: 'Elettrauto' },  
+    { value: 4, label: 'Veicoli Elettrici e Ibridi' },  
+    { value: 5, label: 'Gommista' },  
+    { value: 6, label: 'Cristalli e Parabrezza' },  
+    { value: 7, label: 'Carrozzeria' },  
+    { value: 8, label: 'Veicoli Elettrici e Ibridi' },  
+    { value: 9, label: 'Centro revisioni' },  
+    { value: 10, label: 'Impianti GPL/Metano' },  
+  ]
 
-const workShopSpecs = [
-  {value: 1, label: 'Meccanica generale'},
-  {value: 2, label: 'Flotte Aziendali e Noleggio'},
-  {value: 3, label: 'Elettrauto'},
-  {value: 4, label: 'Veicoli Elettrici e Ibridi'},
-  {value: 5, label: 'Gommista'},
-  {value: 6, label: 'Cristalli e Parabrezza'},
-  {value: 7, label: 'Carrozzeria'},
-  {value: 8, label: 'Veicoli Elettrici e Ibridi'},
-  {value: 9, label: 'Centro revisioni'},
-  {value: 10, label: 'Impianti GPL/Metano'},
-];
+  const props = defineProps<{
+    stepValues: any
+  }>();
+
+  const emit = defineEmits(['update:isCheck']);
+
+  const handleRadioSelection = (value: any) => {
+    emit('update:isCheck', value);
+  }
+
 </script>
