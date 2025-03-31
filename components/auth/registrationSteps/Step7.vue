@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-    import { defineProps, defineEmits, defineExpose, ref } from 'vue';
+    import { defineProps, defineExpose } from 'vue';
     import { helpers, required, minLength } from '@vuelidate/validators';
     import useVuelidate from '@vuelidate/core';
     import useStepStore from '~/store/step';
@@ -52,7 +52,7 @@
     ]
 
     const props = defineProps<{
-        stepValues: any
+        stepValues: object
     }>();
     defineExpose({
         validate: async () => await v$.value.$validate()
@@ -64,7 +64,7 @@
             minLength: helpers.withMessage('History text must be at least 100 characters', minLength(100))
         }
     }))
-    const v$ = useVuelidate(rule, props.stepValues)
+    const v$ = useVuelidate(rule, props.stepValues);
 
     const langHandle = (value) => {
         useStore.step_six_value.lang = value;

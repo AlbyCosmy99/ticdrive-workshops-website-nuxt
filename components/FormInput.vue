@@ -1,25 +1,25 @@
 <template>
   <div class="w-full">
     <label
-      v-if="label"
-      :for="id"
+      v-if="props.label"
+      :for="props.id"
       class="self-start mt-4 text-base text-black block"
     >
-      {{ label }}
+      {{ props.label }}
     </label>
     <input
-      :type="type"
-      :id="id"
-      :placeholder="placeholder"
+      :type="props.type"
+      :id="props.id"
+      :placeholder="props.placeholder"
       :value="modelValue"
       @input="
         $emit('update:modelValue', ($event.target as HTMLInputElement).value)
       "
       :class="[
         'mt-3 max-w-full w-full text-base font-light bg-white rounded-3xl border border-solid border-neutral-400 text-black-400 w-[435px] max-md:px-5 outline-none focus:border-green-500',
-        size === 'standard'
+        props.size === 'standard'
           ? 'px-8 py-4'
-          : size === 'small'
+          : props.size === 'small'
             ? 'px-5 py-3'
             : 'px-8 py-4',
         {'input-error': errorMessage},
@@ -31,52 +31,49 @@
   </div>
 </template>
 
-<script lang="ts">
-import {defineComponent} from 'vue';
-
-export default defineComponent({
-  name: 'FormInput',
-  props: {
+<script lang="ts" setup>
+  import { defineEmits, defineProps } from 'vue'
+  const props = defineProps<{
     id: {
-      type: String,
+      type: string,
       default: '',
     },
     label: {
-      type: String,
+      type: string,
       default: '',
     },
     placeholder: {
-      type: String,
+      type: string,
       default: '',
     },
     size: {
-      type: String,
+      type: string,
       default: 'standard',
     },
     type: {
-      type: String,
+      type: string,
       default: 'text',
     },
     modelValue: {
-      type: String,
+      type: string,
       default: '',
     },
     errorMessage: {
-      type: String,
+      type: string,
       default: '',
     },
-  },
-  emits: ['update:modelValue'],
-});
+  }>();
+  const emits = defineEmits(['update:modelValue']);
+
 </script>
 
 <style scoped>
-.invalid-feedback {
-  color: rgb(211, 49, 49);
-  font-size: 14px;
-  margin-top: 5px;
-}
-.input-error {
-  border-color: rgb(211, 49, 49) !important;
-}
+  .invalid-feedback {
+    color: rgb(211, 49, 49);
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  .input-error {
+    border-color: rgb(211, 49, 49) !important;
+  }
 </style>

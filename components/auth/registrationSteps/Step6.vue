@@ -32,7 +32,13 @@
           <div v-if="!images[index]" class="transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 absolute">
             <img src="/images/add_photo.jpg" class="w-5 h-5 mx-auto"/>
             <h1 class="text-gray-500 text-md font-normal mt-2 text-center">Upload photo</h1>
-            <input type="file" accept="image/*" ref="inputRefs" class="hidden" @change="handleImage($event, index)" />
+            <input 
+              type="file"
+              accept="image/*" 
+              :ref="el => setInputRef(el, index)" 
+              class="hidden" 
+              @change="handleImage($event, index)" 
+            />
           </div>
           <div v-else class="relative w-full h-full">
             <img :src="images[index]" class="w-full h-full"/>
@@ -45,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { defineProps, defineEmits, ref } from 'vue';
+  import { ref } from 'vue';
   import useStepStore from '~/store/step';
 
   const useStore = useStepStore();
@@ -77,5 +83,9 @@
     images.value[index] = null;
     useStore.step_five_value.images[index] = null;
   }
+
+  const setInputRef = (el: HTMLInputElement | null, index: number) => {
+    inputRefs.value[index] = el;
+  };
 
 </script>

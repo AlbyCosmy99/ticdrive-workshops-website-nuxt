@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'rounded-full px-3 py-3 border flex items-center cursor-pointer',
+      'rounded-full px-3 py-3 border flex items-center cursor-pointer relative',
       isCheck ? 'border-green-500' : 'border-gray-500',
     ]"
     @click="handleCheck"
@@ -25,31 +25,25 @@
   </div>
 </template>
 
-<script lang="ts">
-import {defineComponent} from 'vue';
-export default defineComponent({
-  name: 'RadioOption',
-  props: {
+<script lang="ts" setup>
+import { defineEmits, defineProps } from 'vue';
+
+  const props = defineProps <{
     label: {
-      type: String,
+      type: string,
       default: '',
     },
     isCheck: {
-      type: Boolean,
+      type: boolean,
       default: false,
     },
     value: {
-      type: Number,
+      type: number,
     },
-  },
-  emits: ['update:isCheck'],
-  setup(props, {emit}) {
-    const handleCheck = () => {
-      emit('update:isCheck', props.value);
-    };
-    return {
-      handleCheck,
-    };
-  },
-});
+  }>();
+  const emit = defineEmits(['update:isCheck']);
+
+  const handleCheck = () => {
+    emit('update:isCheck', props.value);
+  };
 </script>

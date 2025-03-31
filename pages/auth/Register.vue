@@ -8,18 +8,10 @@
     </AuthRegistrationLayout>
 </template>
 
-<script lang="ts">
-    import { defineComponent, ref } from 'vue';
+<script lang="ts" setup>
     import { useStepStore } from '~/store/step';
 
-    export default defineComponent({
-        setup() {
-            const useStore = useStepStore();
-            const currentStep = computed(() => useStore.getCurrentStep);
+    const useStore = useStepStore();
+    const currentStep = computed(() => useStore.getCurrentStep);
 
-            return {
-                currentStep
-            }
-        }
-    })
 </script>

@@ -71,7 +71,7 @@
   import { defineProps, defineExpose } from 'vue';
 
   const props = defineProps<{
-    stepValues: any
+    stepValues: object
   }>();
 
   defineExpose({

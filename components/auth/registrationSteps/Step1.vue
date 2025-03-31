@@ -74,7 +74,7 @@
   import { defineProps, defineEmits, defineExpose } from 'vue';
 
   const props = defineProps <{ 
-    stepValues: any
+    stepValues: object
   }>();
 
   const emit = defineEmits([

@@ -77,21 +77,21 @@
     </div>  
 </template>
 <script lang="ts" setup>
-    import { defineComponent, ref } from 'vue';
+    import { ref } from 'vue';
     import { useStepStore } from '~/store/step';
-    import { useVuelidate } from '@vuelidate/core';
-    import { required, email, minLength, maxLength, numeric, helpers } from '@vuelidate/validators';
-    import Step1 from './Auth/registrationSteps/Step1.vue';
-    import Step2 from './Auth/registrationSteps/Step2.vue';
-    import Step3 from './Auth/registrationSteps/Step3.vue';
-    import Step4 from './Auth/registrationSteps/Step4.vue';
-    import Step5 from './Auth/registrationSteps/Step5.vue';
-    import Step6 from './Auth/registrationSteps/Step6.vue';
-    import Step7 from './Auth/registrationSteps/Step7.vue';
-    import Step8 from './Auth/registrationSteps/Step8.vue';
+    import Step1 from '~/components/Auth/registrationSteps/Step1.vue';
+    import Step2 from '~/components/Auth/registrationSteps/Step2.vue';
+    import Step3 from '~/components/Auth/registrationSteps/Step3.vue';
+    import Step4 from '~/components/Auth/registrationSteps/Step4.vue';
+    import Step5 from '~/components/Auth/registrationSteps/Step5.vue';
+    import Step6 from '~/components/Auth/registrationSteps/Step6.vue';
+    import Step7 from '~/components/Auth/registrationSteps/Step7.vue';
+    import Step8 from '~/components/Auth/registrationSteps/Step8.vue';
+    
     const useStore = useStepStore();
     const currentStep = ref(useStore.getCurrentStep);
-
+    const nuxtApp = useNuxtApp();
+    
     const stepZeroRef = ref();
     const stepOneRef = ref();
     const stepTwoRef = ref();
@@ -119,35 +119,46 @@
             if(useStore.step_two_value.currentWorkShopSpec.length) {
                 return true;
             } else {
-                alert('please select one');
+                nuxtApp.$toastMessage('info', 'Missing Workshop', 'You must select at least one workshop!');
                 return false;
             }
         } else if(step === 3) {
             if(useStore.step_three_value.currentServiceType.length) {
                 return true;
             } else {
-                alert('please select one');
+                nuxtApp.$toastMessage('info', 'Missing Type Of Service', 'You must select at least one type of service offered!');
                 return false;
             }
         } else if(step === 4) {
             if(!useStore.step_four_value.currentServiceDays.length) {
-                alert('please select one');
+                nuxtApp.$toastMessage('info', 'Missing Opening Hours', 'You must select at least one opening hour!');
                 return false
             } else if(useStore.step_four_value.maxVehicleNumber === 0) {
-                alert('set the max vehicle number');
+                nuxtApp.$toastMessage('info', 'Invalid Maximum Number', 'Maximum number of vehicles should be larger than zero!');
                 false;
             } else {
                 return true
             }
         } else if(step === 5) {
             if(!useStore.step_five_value.images[4]) {
-                alert('please upload main image');
+                nuxtApp.$toastMessage('info', 'Main Image Needed', 'Please upload main image!');
                 return false;
             } else {
                 return true;
             }
         } else if(step === 6) {
             return await stepSixRef.value.validate();
+        } else if(step === 7) {
+            const digitalRlt = await stepSevenRef.value.validate();
+            const allChecked = useStore.step_seven_value.currentConformities.length === 5;
+            if(digitalRlt && allChecked) {
+                return true;
+            } else if(digitalRlt) {
+                nuxtApp.$toastMessage('info', 'All-Check Needed', 'select all conformities!');
+                return false;
+            } else {
+                return false;
+            }
         }
     }
     const nextStep = async (step: number) => {
@@ -159,17 +170,15 @@
         if(!isValid) {
             return;
         }
-        // updateStepValues(step);
         updateCurrentStep(step+1);
     }
     const prevStep = async (step: number) => {
         if(!currentStep.value) {
             return ;
         }
-        // updateStepValues(step);
         updateCurrentStep(step-1);
     }
-    const plusServiceTime = (value: any) => {
+    const plusServiceTime = (value: number) => {
         const existingObject = useStore.step_four_value.currentServiceDays.find(item => item.value === value);
         if(existingObject) {
             existingObject.serviceTime2 = {
@@ -178,7 +187,7 @@
             }
         }
     }
-    const removeServiceTime = (value: any) => {
+    const removeServiceTime = (value: number) => {
         const existingObject = useStore.step_four_value.currentServiceDays.find(item => item.value === value);
         if(existingObject) {
             existingObject.serviceTime2 = {
@@ -187,7 +196,7 @@
             }
         }
     }
-    const toggleMultiSelect = (type: any, value: any) => {
+    const toggleMultiSelect = (type: string, value: number) => {
         if(type === 'workShopSpec') {
             const index = useStore.step_two_value.currentWorkShopSpec.indexOf(value);
             if(index !== -1) {
@@ -221,46 +230,4 @@
             }
         }
     }
-
-    // const updateStepValues = async (step: number) => {
-    //     if(step === 0) {
-    //         useStore.setStepZeroValue({
-    //             name: name.value,
-    //             surname: surname.value,
-    //             tel: tel.value,
-    //             email: email.value,
-    //             workSpace: workSpace.value,
-    //             postalCode: postalCode.value,
-    //             accept1: accept1.value,
-    //             accept2: accept2.value,
-    //             buttonDisable: buttonDisable.value
-    //         })
-    //     } else if(step === 1) {
-    //         useStore.setStepOneValue({
-    //             fullAddress: {
-    //                 add1: fullAddress.value.add1,
-    //                 add2: fullAddress.value.add2,
-    //                 add3: fullAddress.value.add3,
-    //                 add4: fullAddress.value.add4,
-    //             },
-    //             companyContact: {
-    //                 contact1: companyContact.value.contact1,
-    //                 contact2: companyContact.value.contact2,
-    //             },
-    //             referContact: {
-    //                 contact1: referContact.value.contact1,
-    //                 contact2: referContact.value.contact2,
-    //                 contact3: referContact.value.contact3
-    //             }
-    //         })
-    //     } else if(step === 2) {
-    //         useStore.setStepTwoValue({
-    //             currentWorkShopSpec: currentWorkShopSpec.value
-    //         })
-    //     } else if(step === 3) {
-    //         useStore.setStepThreeValue({
-    //             currentServiceType: currentServiceType.value
-    //         })
-    //     }
-    // }
 </script>

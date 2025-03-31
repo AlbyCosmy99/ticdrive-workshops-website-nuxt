@@ -37,7 +37,7 @@
   ]
 
   const props = defineProps<{
-    stepValues: any
+    stepValues: object
   }>();
 
   const emit = defineEmits(['update:isCheck']);

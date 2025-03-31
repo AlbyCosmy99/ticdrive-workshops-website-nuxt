@@ -4,7 +4,7 @@
         <div 
             v-for="(value, index) in serviceDays" 
             :key="index"
-            class="grid grid-cols-1 lg:grid-cols-3"
+            class="grid grid-cols-1 2xl:grid-cols-3"
         >
             <CheckBox         
                 :label="value.label"
@@ -102,14 +102,8 @@
 
 <script lang="ts" setup>
     import { defineProps, defineEmits, ref } from 'vue';
-    import PrimeVue from 'primevue/config';
     import DatePicker from 'primevue/datepicker';
     import useStepStore from '~/store/step';
-
-    const app = getCurrentInstance();
-    if(app) {
-        app.appContext.app.use(PrimeVue);
-    }
 
     const useStore = useStepStore();
 
@@ -126,7 +120,7 @@
 
     const emit = defineEmits(['update:isCheck', 'update:plus', 'update:remove']);
     const props = defineProps<{
-        stepValues: any
+        stepValues: object
     }>();
     
     const stringToDate = (timeStr: string) => {

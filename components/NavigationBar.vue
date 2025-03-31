@@ -18,10 +18,5 @@
   </nav>
 </template>
 
-<script lang="ts">
-import {defineComponent} from 'vue';
-
-export default defineComponent({
-  name: 'NavigationBar',
-});
+<script lang="ts" setup>
 </script>

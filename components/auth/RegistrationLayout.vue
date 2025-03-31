@@ -8,7 +8,7 @@
           class="relative w-[90%] aspect-square max-w-lg lg:max-w-[550px] lg:max-h-[550px] rounded-xl overflow-hidden"
         >
           <NuxtImg
-            :src="mainImage"
+            :src="props.mainImage"
             class="absolute inset-0 w-full h-full object-cover"
             alt="Centered Image"
           />
@@ -18,20 +18,20 @@
       <!-- Right Section -->
       <div class="lg:overflow-y-auto p-4 flex flex-col min-h-0">
         <slot name="rightContent" />
+        <Toast />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import StepBar from '../StepBar.vue';
+  import { defineProps } from 'vue';
+  import StepBar from '../StepBar.vue';
+  import Toast from 'primevue/toast';
 
-defineProps({
-  component: {
-    StepBar
-  },
-  mainImage: {
-    type: String,
-  },
-});
+  const props = defineProps<{
+    mainImage: {
+      type: string,
+    }
+  }>();
 </script>

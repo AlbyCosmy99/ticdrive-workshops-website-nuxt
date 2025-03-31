@@ -83,59 +83,39 @@
 </template>
 
 
-<script lang="ts">
-  import { defineComponent, ref, onMounted } from "vue";
+<script lang="ts" setup>
+  import { ref, onMounted } from "vue";
   import useStepStore from "~/store/step";
   import ToggleButton from "./ToggleButton.vue";
   import FormInput from "./FormInput.vue";
   import CheckboxField from "./CheckboxField.vue";
 
-  export default defineComponent({
-    name: "LoginForm",
-    components: {
-      ToggleButton,
-      FormInput,
-      CheckboxField,
-    },
-    setup() {
-      const useStore = useStepStore();
-      const username = ref("");
-      const password = ref("");
-      const rememberMe = ref(true);
-      const passwordVisible = ref(false);
+  const useStore = useStepStore();
+  const username = ref("");
+  const password = ref("");
+  const rememberMe = ref(true);
+  const passwordVisible = ref(false);
 
-      const handleSubmit = () => {
-        console.log("Login submitted", {
-          username: username.value,
-          password: password.value,
-          rememberMe: rememberMe.value,
-        });
-        // Handle login logic here
-      };
+  const handleSubmit = () => {
+    console.log("Login submitted", {
+      username: username.value,
+      password: password.value,
+      rememberMe: rememberMe.value,
+    });
+    // Handle login logic here
+  };
 
-      const togglePasswordVisibility = () => {
-        passwordVisible.value = !passwordVisible.value;
-        // Would need to change the input type and icon based on visibility state
-      };
+  const togglePasswordVisibility = () => {
+    passwordVisible.value = !passwordVisible.value;
+    // Would need to change the input type and icon based on visibility state
+  };
 
-      const forgotPassword = () => {
-        console.log("Forgot password clicked");
-        // Handle forgot password logic here
-      };
+  const forgotPassword = () => {
+    console.log("Forgot password clicked");
+    // Handle forgot password logic here
+  };
 
-      onMounted(() => {
-        useStore.resetStore();
-      })
-
-      return {
-        username,
-        password,
-        rememberMe,
-        passwordVisible,
-        handleSubmit,
-        togglePasswordVisibility,
-        forgotPassword,
-      };
-    },
-  });
+  onMounted(() => {
+    useStore.resetStore();
+  })
 </script>
