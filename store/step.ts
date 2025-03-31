@@ -2,55 +2,61 @@ import {defineStore} from 'pinia';
 
 export const useStepStore = defineStore('step', {
   state: () => ({
-      step: 0,
-      step_zero_value: {
+    step: 0,
+    step_zero_value: {
+      name: '',
+      surname: '',
+      tel: '',
+      email: '',
+      workSpace: '',
+      postalCode: '',
+      accept1: false,
+      accept2: false
+    },
+    step_one_value: {
+      fullAddress: {
+          add1: '',
+          add2: '',
+          add3: '',
+          add4: '',
+      },
+      companyContact: {
+          contact1: '',
+          contact2: ''
+      },
+      referContact: {
+          contact1: '',
+          contact2: '',
+          contact3: ''
+      }
+    },
+    step_two_value: {
+      currentWorkShopSpec: []
+    },
+    step_three_value: {
+      currentServiceType: []
+    },
+    step_four_value: {
+      currentServiceDays: [],
+      maxVehicleNumber: 0,
+      homeService: false
+    },
+    step_five_value: {
+      images: []
+    },
+    step_six_value: {
+      history: '',
+      lang: 1
+    },
+    step_seven_value: {
+      warranty: 0,
+      digital: {
         name: '',
         surname: '',
-        tel: '',
-        email: '',
-        workSpace: '',
-        postalCode: '',
-        accept1: false,
-        accept2: false
+        date: ''
       },
-      step_one_value: {
-        fullAddress: {
-            add1: '',
-            add2: '',
-            add3: '',
-            add4: '',
-        },
-        companyContact: {
-            contact1: '',
-            contact2: ''
-        },
-        referContact: {
-            contact1: '',
-            contact2: '',
-            contact3: ''
-        }
-      },
-      step_two_value: {
-        currentWorkShopSpec: []
-      },
-      step_three_value: {
-        currentServiceType: []
-      },
-      step_four_value: {
-        currentServiceDays: [],
-        maxVehicleNumber: 0,
-        homeService: false
-      },
-      step_five_value: {
-        images: []
-      },
-      step_six_value: {
-        history: '',
-        lang: 1
-      },
-      step_seven_value: {
-        warranty: 0
-      }
+      currentConformities: []
+    }
   }),
   actions: {
       resetStore() {
@@ -87,11 +93,6 @@ export const useStepStore = defineStore('step', {
       setStepThreeValue(values: any) {
           this.step_three_value = {
               currentServiceType: values.currentServiceType
-          }
-      },
-      setStepFourValue(values: any) {
-          this.step_four_value = {
-              currentServiceDays: values
           }
       }
   },
