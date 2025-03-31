@@ -37,24 +37,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+  import { ref, defineEmits } from "vue";
 
-export default defineComponent({
-  name: "ToggleButton",
-  emits: ["update:tab"],
-  setup(_, { emit }) {
-    const activeTab = ref("login");
+  const emit = defineEmits(["update:tab"]);
+  const activeTab = ref("login");
 
-    const setActiveTab = (tab: string) => {
-      activeTab.value = tab;
-      emit("update:tab", tab);
-    };
+  const setActiveTab = (tab: string) => {
+    activeTab.value = tab;
+    emit("update:tab", tab);
+    navigateTo(tab === 'login' ? '/auth/login' : '/auth/register');
+  };
 
-    return {
-      activeTab,
-      setActiveTab,
-    };
-  },
-});
 </script>

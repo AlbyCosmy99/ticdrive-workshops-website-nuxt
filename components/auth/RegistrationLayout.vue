@@ -1,14 +1,14 @@
 <template>
   <div class="h-screen flex flex-col">
-    <div class="bg-yellow-300">steps and logo</div>
-    <div class="bg-red-300 w-full grid grid-cols-2 flex-1">
+    <StepBar />
+    <div class="w-full grid grid-cols-1 lg:grid-cols-2 flex-1 min-h-0">
       <!-- Left Section -->
-      <div class="bg-green-300 flex-1 flex justify-center items-center p-4">
+      <div class="flex justify-center items-center p-4">
         <div
-          class="relative w-[90%] h-[70vw] max-w-[500px] max-h-[500px] rounded-xl overflow-hidden"
+          class="relative w-[90%] aspect-square max-w-lg lg:max-w-[550px] lg:max-h-[550px] rounded-xl overflow-hidden"
         >
           <NuxtImg
-            :src="mainImage"
+            :src="props.mainImage"
             class="absolute inset-0 w-full h-full object-cover"
             alt="Centered Image"
           />
@@ -16,17 +16,22 @@
       </div>
 
       <!-- Right Section -->
-      <div class="bg-blue-300 flex-1 flex items-center justify-center p-4 overflow-auto flex-col">
-        <slot name="rightContent"/>
+      <div class="lg:overflow-y-auto p-4 flex flex-col min-h-0">
+        <slot name="rightContent" />
+        <Toast />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps({
-  mainImage: {
-    type: String,
-  },
-});
+  import { defineProps } from 'vue';
+  import StepBar from '../StepBar.vue';
+  import Toast from 'primevue/toast';
+
+  const props = defineProps<{
+    mainImage: {
+      type: string,
+    }
+  }>();
 </script>

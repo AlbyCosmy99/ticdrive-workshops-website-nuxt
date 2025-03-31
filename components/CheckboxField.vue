@@ -3,12 +3,12 @@
     <div class="flex items-center">
       <button
         type="button"
-        :aria-checked="modelValue"
+        :aria-checked="props.modelValue"
         role="checkbox"
-        :id="id"
+        :id="props.id"
         class="flex justify-center items-center w-5 h-5 rounded min-h-5 focus:outline-none focus:ring-2 focus:ring-green-500"
         :class="
-          modelValue ? 'bg-green-500' : 'bg-white border border-neutral-400'
+          props.modelValue ? 'bg-green-500' : 'bg-white border border-neutral-400'
         "
         @click="toggle"
       >
@@ -22,21 +22,20 @@
       </button>
     </div>
     <label
-      :for="id"
+      :for="props.id"
       class="text-xs font-light text-black cursor-pointer"
       @click="toggle"
     >
-      {{ label }}
+      {{ props.label }}
     </label>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
 
-export default defineComponent({
-  name: "CheckboxField",
-  props: {
+  import { defineEmits, defineProps } from 'vue'
+
+  const props = defineProps<{
     id: {
       type: String,
       required: true,
@@ -49,16 +48,12 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-  },
-  emits: ["update:modelValue"],
-  setup(props, { emit }) {
-    const toggle = () => {
-      emit("update:modelValue", !props.modelValue);
-    };
+  }>();
 
-    return {
-      toggle,
-    };
-  },
-});
+  const emit = defineEmits(['update:modelValue']);
+
+  const toggle = () => {
+    emit('update:modelValue', !props.modelValue);
+  };
+
 </script>

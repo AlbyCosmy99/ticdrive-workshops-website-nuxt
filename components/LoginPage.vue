@@ -23,16 +23,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import NavigationBar from "./NavigationBar.vue";
-import LoginForm from "./LoginForm.vue";
+<script lang="ts" setup>
+  import NavigationBar from './NavigationBar.vue';
+  import LoginForm from './LoginForm.vue';
 
-export default defineComponent({
-  name: "LoginPage",
-  components: {
-    NavigationBar,
-    LoginForm,
-  },
-});
 </script>
