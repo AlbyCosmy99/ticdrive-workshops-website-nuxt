@@ -53,7 +53,7 @@ export const useStepStore = defineStore('step', {
       digital: {
         name: '',
         surname: '',
-        date: ''
+        date: null
       },
       currentConformities: []
     }

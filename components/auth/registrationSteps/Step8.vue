@@ -39,15 +39,14 @@
                 </div>
             </div>
             <div class="flex flex-col">
-                <input
+                <DatePicker
                     :class="[
-                        'outline-none border-none text-center bg-gray-100 px-5 py-2 max-h-10',
+                        'outline-none date-picker-wrapper text-center bg-gray-100 px-5 py-2 max-h-10',
                         {'input-error': v$.digital.date.$errors.length}
                     ]"
                     placeholder="(giorno/mese/anno)"
                     v-model="date"
-                    @input="dateHandle"
-                    @blur="storeDate"
+                    @update:model-value="storeDate"
                 />
                 <span v-if="v$.digital.date.$errors.length" class="invalid-feedback">
                     {{ v$.digital.date.$errors[0].$message }}
@@ -70,6 +69,7 @@
 <script lang="ts" setup>
     import { defineProps, defineExpose } from 'vue';
     import { helpers, required } from '@vuelidate/validators';
+    import DatePicker from 'primevue/datepicker';
     import useVuelidate from '@vuelidate/core';
     import useStepStore from '~/store/step';
 
@@ -97,19 +97,7 @@
                 required: helpers.withMessage('Surname is required', required)
             },
             date: {
-                validDate: helpers.withMessage('Invalid date format', 
-                    (value: string) => {
-                        const len = value.length;
-                        const month = Number(value.slice(3,5));
-                        const day = Number(value.slice(0,2));
-                        console.log(month, day);
-                        if(len < 10 || day > 31 || month > 12) {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    }
-                )
+                required: helpers.withMessage('Date is required', required)
             }
         }
     }))
@@ -138,17 +126,6 @@
         }
     }
 
-    const dateHandle = () => {
-        date.value = date.value.replace(/\D/g, '');
-        const len = date.value.length;
-        if(len>2 && len<=4) {
-            date.value = date.value.replace(/(\d{2})(?=\d)/, '$1/');
-        } else if(len >4) {
-            date.value = date.value.replace(/(\d{2})(\d{2})(?=\d)/, '$1/$2/');
-        }
-        date.value = date.value.slice(0,10);
-    }
-
     const storeDate = () => {
         useStore.step_seven_value.digital.date = date.value;
     }
@@ -162,5 +139,14 @@
     }
     .input-error {
         border: 1px solid rgb(211, 49, 49) !important;
+    }
+    .p-datepicker {
+        padding: 0 !important;
+    }
+    .p-inputtext {
+        background-color: oklch(0.967 0.003 264.542) !important;  
+    }
+    .date-picker-wrapper {
+        border-radius: 6px !important;
     }
 </style>
