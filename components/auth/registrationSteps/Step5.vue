@@ -13,10 +13,10 @@
                 @update:isCheck="handleCheckbox"
             />
             <div 
-                class="col-span-2 px-2 grid grid-cols-8 mt-2"
+                class="col-span-2 px-2 grid grid-cols-8 mt-2 gap-1 sm:gap-0"
                 v-if="props.stepValues.currentServiceDays.some(day => day.value === value.value)"
             >
-                <div class="col-span-3 flex m-auto">
+                <div class="col-span-6 sm:col-span-3 flex m-auto">
                     <DatePicker
                         v-model="timeSlots[value.value][0]['start']"
                         class="h-12 px-1 bg-gray-200 w-2/5"
@@ -34,14 +34,14 @@
                     />
                 </div>
                 <div 
-                    class="col-span-1 text-center leading-[48px] hover:border hover:border-green-500 cursor-pointer"
+                    class="col-span-2 sm:col-span-1 text-center leading-[48px] hover:border hover:border-green-500 cursor-pointer"
                     @click="plusHandle(value.value)"
                 >
                     +                    
                 </div>
                 <div 
                     v-if="timeSlots[value.value][1]['start'] && timeSlots[value.value][1]['end']"
-                    class="col-span-3 flex"
+                    class="col-span-6 sm:col-span-3 flex"
                 >
                     <DatePicker
                         v-model="timeSlots[value.value][1]['start']"
@@ -61,7 +61,7 @@
                 </div>
                 <div 
                     v-if="timeSlots[value.value][1]['start'] && timeSlots[value.value][1]['end']" 
-                    class="col-span-1 flex cursor-pointer"
+                    class="col-span-2 sm:col-span-1 flex cursor-pointer"
                     @click="removeHandle(value.value)"
                 >
                     <img class="h-6 w-6 m-auto" src="/images/delete.png" alt="delete" />          
@@ -208,5 +208,8 @@
     .p-datepicker-panel {
         z-index: 10 !important;
         background-color: #F3F3F3 !important;
+    }
+    .p-inputtext {
+        padding: 10px 0px !important;
     }
 </style>
