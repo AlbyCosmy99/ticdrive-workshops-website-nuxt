@@ -53,14 +53,14 @@
           />
         </div>
 
-        <div class="flex gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full">
-          <div class="flex flex-1 gap-3">
-            <CheckboxField
-              id="remember-me"
-              v-model="rememberMe"
-              label="Remember me"
-            />
-          </div>
+        <div
+          class="flex justify-between gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full"
+        >
+          <CheckboxField
+            id="remember-me"
+            v-model="rememberMe"
+            label="Remember me"
+          />
           <button
             type="button"
             class="self-start text-xs font-light text-black hover:underline focus:outline-none focus:underline"
@@ -82,40 +82,39 @@
   </div>
 </template>
 
-
 <script lang="ts" setup>
-  import { ref, onMounted } from "vue";
-  import useStepStore from "~/store/step";
-  import ToggleButton from "./ToggleButton.vue";
-  import FormInput from "./FormInput.vue";
-  import CheckboxField from "./CheckboxField.vue";
+import {ref, onMounted} from 'vue';
+import useStepStore from '~/store/step';
+import ToggleButton from './ToggleButton.vue';
+import FormInput from './FormInput.vue';
+import CheckboxField from './CheckboxField.vue';
 
-  const useStore = useStepStore();
-  const username = ref("");
-  const password = ref("");
-  const rememberMe = ref(true);
-  const passwordVisible = ref(false);
+const useStore = useStepStore();
+const username = ref('');
+const password = ref('');
+const rememberMe = ref(true);
+const passwordVisible = ref(false);
 
-  const handleSubmit = () => {
-    console.log("Login submitted", {
-      username: username.value,
-      password: password.value,
-      rememberMe: rememberMe.value,
-    });
-    // Handle login logic here
-  };
+const handleSubmit = () => {
+  console.log('Login submitted', {
+    username: username.value,
+    password: password.value,
+    rememberMe: rememberMe.value,
+  });
+  // Handle login logic here
+};
 
-  const togglePasswordVisibility = () => {
-    passwordVisible.value = !passwordVisible.value;
-    // Would need to change the input type and icon based on visibility state
-  };
+const togglePasswordVisibility = () => {
+  passwordVisible.value = !passwordVisible.value;
+  // Would need to change the input type and icon based on visibility state
+};
 
-  const forgotPassword = () => {
-    console.log("Forgot password clicked");
-    // Handle forgot password logic here
-  };
+const forgotPassword = () => {
+  console.log('Forgot password clicked');
+  // Handle forgot password logic here
+};
 
-  onMounted(() => {
-    useStore.resetStore();
-  })
+onMounted(() => {
+  useStore.resetStore();
+});
 </script>

@@ -24,7 +24,6 @@
 </template>
 
 <script lang="ts" setup>
-  import NavigationBar from './NavigationBar.vue';
-  import LoginForm from './LoginForm.vue';
-
+import NavigationBar from './NavigationBar.vue';
+import LoginForm from './LoginForm.vue';
 </script>

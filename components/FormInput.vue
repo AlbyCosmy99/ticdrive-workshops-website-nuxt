@@ -20,8 +20,8 @@
         props.size === 'standard'
           ? 'px-8 py-4'
           : props.size === 'small'
-            ? 'px-5 py-3'
-            : 'px-8 py-4',
+          ? 'px-5 py-3'
+          : 'px-8 py-4',
         {'input-error': errorMessage},
       ]"
     />
@@ -32,48 +32,47 @@
 </template>
 
 <script lang="ts" setup>
-  import { defineEmits, defineProps } from 'vue'
-  const props = defineProps<{
-    id: {
-      type: string,
-      default: '',
-    },
-    label: {
-      type: string,
-      default: '',
-    },
-    placeholder: {
-      type: string,
-      default: '',
-    },
-    size: {
-      type: string,
-      default: 'standard',
-    },
-    type: {
-      type: string,
-      default: 'text',
-    },
-    modelValue: {
-      type: string,
-      default: '',
-    },
-    errorMessage: {
-      type: string,
-      default: '',
-    },
-  }>();
-  const emits = defineEmits(['update:modelValue']);
-
+import {defineEmits, defineProps} from 'vue';
+const props = defineProps<{
+  id: {
+    type: string;
+    default: '';
+  };
+  label: {
+    type: string;
+    default: '';
+  };
+  placeholder: {
+    type: string;
+    default: '';
+  };
+  size: {
+    type: string;
+    default: 'standard';
+  };
+  type: {
+    type: string;
+    default: 'text';
+  };
+  modelValue: {
+    type: string;
+    default: '';
+  };
+  errorMessage: {
+    type: string;
+    default: '';
+  };
+}>();
+const emits = defineEmits(['update:modelValue']);
 </script>
 
 <style scoped>
-  .invalid-feedback {
-    color: rgb(211, 49, 49);
-    font-size: 14px;
-    margin-top: 5px;
-  }
-  .input-error {
-    border-color: rgb(211, 49, 49) !important;
-  }
+.invalid-feedback {
+  color: rgb(211, 49, 49);
+  font-size: 14px;
+  margin-top: 5px;
+}
+.input-error {
+  border-color: rgb(211, 49, 49) !important;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen flex flex-col">
-    <StepBar />
+    <StepBar v-if="stepStore.currentStep > 0" />
     <div class="w-full grid grid-cols-1 lg:grid-cols-2 flex-1 min-h-0">
       <!-- Left Section -->
       <div class="flex justify-center items-center p-4">
@@ -25,13 +25,14 @@
 </template>
 
 <script setup lang="ts">
-  import { defineProps } from 'vue';
-  import StepBar from '../StepBar.vue';
-  import Toast from 'primevue/toast';
+import {defineProps} from 'vue';
+import StepBar from '../StepBar.vue';
+import Toast from 'primevue/toast';
+import useStepStore from '~/store/step';
 
-  const props = defineProps<{
-    mainImage: {
-      type: string,
-    }
-  }>();
+const props = defineProps<{
+  mainImage: string;
+}>();
+
+const stepStore = useStepStore();
 </script>

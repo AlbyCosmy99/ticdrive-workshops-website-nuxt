@@ -1,17 +1,15 @@
 <template>
-    <AuthRegistrationLayout
-        :main-image="`/images/reg${currentStep}.jpg`"
-    >
-        <template #rightContent>
-            <RegisterForm />
-        </template>
-    </AuthRegistrationLayout>
+  <AuthRegistrationLayout
+    :main-image="`/images/reg${stepStore.currentStep}.jpg`"
+  >
+    <template #rightContent>
+      <RegisterForm />
+    </template>
+  </AuthRegistrationLayout>
 </template>
 
 <script lang="ts" setup>
-    import { useStepStore } from '~/store/step';
+import {useStepStore} from '~/store/step';
 
-    const useStore = useStepStore();
-    const currentStep = computed(() => useStore.getCurrentStep);
-
+const stepStore = useStepStore();
 </script>

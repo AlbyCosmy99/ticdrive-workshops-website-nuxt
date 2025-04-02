@@ -9,7 +9,7 @@
       :aria-selected="activeTab === 'login'"
       id="login-tab"
       aria-controls="login-panel"
-      class="gap-2.5 self-stretch px-4 py-4 my-auto text-center min-h-[50px] rounded-[30px] shadow-[0px_4px_10px_rgba(0,0,0,0.08)] w-[175px] focus:outline-none focus:ring-2 focus:ring-green-500"
+      class="cursor-pointer gap-2.5 self-stretch px-4 py-4 my-auto text-center min-h-[50px] rounded-[30px] shadow-[0px_4px_10px_rgba(0,0,0,0.08)] w-[175px] focus:outline-none focus:ring-2 focus:ring-green-500"
       :class="
         activeTab === 'login'
           ? 'text-white bg-green-500'
@@ -24,13 +24,18 @@
       :aria-selected="activeTab === 'register'"
       id="register-tab"
       aria-controls="register-panel"
-      class="gap-2.5 self-stretch px-4 py-4 my-auto text-center min-h-[50px] rounded-[30px] w-[175px] focus:outline-none focus:ring-2 focus:ring-green-500"
+      class="cursor-pointer gap-2.5 self-stretch px-4 py-4 my-auto text-center min-h-[50px] rounded-[30px] w-[175px] focus:outline-none focus:ring-2 focus:ring-green-500"
       :class="
         activeTab === 'register'
           ? 'text-white bg-green-500'
           : 'text-black bg-neutral-100'
       "
-      @click="setActiveTab('register')"
+      @click="
+        () => {
+          stepStore.currentStep++;
+          setActiveTab('register');
+        }
+      "
     >
       Registrati
     </button>
@@ -38,15 +43,17 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, defineEmits } from "vue";
+import {ref, defineEmits} from 'vue';
+import useStepStore from '~/store/step';
 
-  const emit = defineEmits(["update:tab"]);
-  const activeTab = ref("login");
+const stepStore = useStepStore();
 
-  const setActiveTab = (tab: string) => {
-    activeTab.value = tab;
-    emit("update:tab", tab);
-    navigateTo(tab === 'login' ? '/auth/login' : '/auth/register');
-  };
+const emit = defineEmits(['update:tab']);
+const activeTab = ref('login');
 
+const setActiveTab = (tab: string) => {
+  activeTab.value = tab;
+  emit('update:tab', tab);
+  navigateTo(tab === 'login' ? '/auth/login' : '/auth/register');
+};
 </script>

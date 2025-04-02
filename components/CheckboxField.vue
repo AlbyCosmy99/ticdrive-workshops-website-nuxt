@@ -6,9 +6,11 @@
         :aria-checked="props.modelValue"
         role="checkbox"
         :id="props.id"
-        class="flex justify-center items-center w-5 h-5 rounded min-h-5 focus:outline-none focus:ring-2 focus:ring-green-500"
+        class="cursor-pointer flex justify-center items-center w-5 h-5 rounded min-h-5 focus:outline-none focus:ring-2 focus:ring-green-500"
         :class="
-          props.modelValue ? 'bg-green-500' : 'bg-white border border-neutral-400'
+          props.modelValue
+            ? 'bg-green-500'
+            : 'bg-white border border-neutral-400'
         "
         @click="toggle"
       >
@@ -32,28 +34,26 @@
 </template>
 
 <script lang="ts" setup>
+import {defineEmits, defineProps} from 'vue';
 
-  import { defineEmits, defineProps } from 'vue'
-
-  const props = defineProps<{
-    id: {
-      type: String,
-      required: true,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
-    modelValue: {
-      type: Boolean,
-      default: false,
-    },
-  }>();
-
-  const emit = defineEmits(['update:modelValue']);
-
-  const toggle = () => {
-    emit('update:modelValue', !props.modelValue);
+const props = defineProps<{
+  id: {
+    type: String;
+    required: true;
   };
+  label: {
+    type: String;
+    required: true;
+  };
+  modelValue: {
+    type: Boolean;
+    default: false;
+  };
+}>();
 
+const emit = defineEmits(['update:modelValue']);
+
+const toggle = () => {
+  emit('update:modelValue', !props.modelValue);
+};
 </script>

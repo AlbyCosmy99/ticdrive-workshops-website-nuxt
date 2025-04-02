@@ -22,29 +22,28 @@
 </template>
 
 <script lang="ts" setup>
-  import { defineProps, defineEmits } from 'vue';
+import {defineProps, defineEmits} from 'vue';
 
-  const workShopSpecs = [
-    { value: 1, label: 'Meccanica generale' },  
-    { value: 2, label: 'Flotte Aziendali e Noleggio' },  
-    { value: 3, label: 'Elettrauto' },  
-    { value: 4, label: 'Veicoli Elettrici e Ibridi' },  
-    { value: 5, label: 'Gommista' },  
-    { value: 6, label: 'Cristalli e Parabrezza' },  
-    { value: 7, label: 'Carrozzeria' },  
-    { value: 8, label: 'Veicoli Elettrici e Ibridi' },  
-    { value: 9, label: 'Centro revisioni' },  
-    { value: 10, label: 'Impianti GPL/Metano' },  
-  ]
+const workShopSpecs = [
+  {value: 1, label: 'Meccanica generale'},
+  {value: 2, label: 'Flotte Aziendali e Noleggio'},
+  {value: 3, label: 'Elettrauto'},
+  {value: 4, label: 'Veicoli Elettrici e Ibridi'},
+  {value: 5, label: 'Gommista'},
+  {value: 6, label: 'Cristalli e Parabrezza'},
+  {value: 7, label: 'Carrozzeria'},
+  {value: 8, label: 'Veicoli Elettrici e Ibridi'},
+  {value: 9, label: 'Centro revisioni'},
+  {value: 10, label: 'Impianti GPL/Metano'},
+];
 
-  const props = defineProps<{
-    stepValues: object
-  }>();
+const props = defineProps<{
+  stepValues: object;
+}>();
 
-  const emit = defineEmits(['update:isCheck']);
+const emit = defineEmits(['update:isCheck']);
 
-  const handleRadioSelection = (value: any) => {
-    emit('update:isCheck', value);
-  }
-
+const handleRadioSelection = (value: any) => {
+  emit('update:isCheck', value);
+};
 </script>
