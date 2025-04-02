@@ -8,10 +8,9 @@ export const useStepStore = defineStore('step', {
       {step: 2, value: 'Tipologia d’officina'},
       {step: 3, value: 'Servizi offerti'},
       {step: 4, value: 'Orari di apertura'},
-      {step: 5, value: 'Informazioni fiscali'},
-      {step: 6, value: 'Dati di profilo'},
-      {step: 7, value: 'Descrizione officina'},
-      {step: 8, value: 'Firma e accettazione'},
+      {step: 5, value: 'Dati di profilo'},
+      {step: 6, value: 'Descrizione officina'},
+      {step: 7, value: 'Firma e accettazione'},
     ],
     step_zero_value: {
       name: '',

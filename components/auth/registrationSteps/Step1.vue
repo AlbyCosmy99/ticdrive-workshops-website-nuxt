@@ -3,7 +3,7 @@
     class="step-0 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
   >
     <h1 class="text-4xl text-zinc-600 text-center font-semibold">Benvenuto!</h1>
-    <h1 class="my-3 text-xl text-green-600 font-semibold text-center">
+    <h1 class="my-3 text-xl text-drive font-semibold text-center">
       Inserisci i tuoi dati per saperne di più.
     </h1>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">

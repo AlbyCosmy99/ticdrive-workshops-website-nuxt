@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-2 items-center justify-center">
+  <button class="flex gap-2 items-center justify-center" @click="toggle">
     <div class="flex items-center">
       <button
         type="button"
@@ -12,14 +12,15 @@
             ? 'bg-green-500'
             : 'bg-white border border-neutral-400'
         "
-        @click="toggle"
       >
-        <img
-          v-if="modelValue"
+        <NuxtImg
+          v-if="props.modelValue"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/fa13158c850602d991655f5fb4dddd60294f0b79bd26cb02697e2fc9ae9f76b6?placeholderIfAbsent=true&apiKey=60b2620725b44e1c95ff63fd7ebca566"
-          alt=""
+          alt="Checked icon"
           aria-hidden="true"
           class="object-contain w-3"
+          width="16"
+          height="16"
         />
       </button>
     </div>
@@ -30,7 +31,7 @@
     >
       {{ props.label }}
     </label>
-  </div>
+  </button>
 </template>
 
 <script lang="ts" setup>

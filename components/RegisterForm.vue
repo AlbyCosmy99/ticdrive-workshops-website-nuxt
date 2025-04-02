@@ -1,5 +1,5 @@
 <template>
-  <div class="px-3 w-full">
+  <div class="px-3 w-full my-4">
     <Step1
       v-if="stepStore.currentStep === 1"
       ref="stepOneRef"
@@ -195,6 +195,9 @@ const prevStep = async () => {
     return;
   }
   stepStore.currentStep--;
+  if (stepStore.currentStep === 0) {
+    navigateTo('/auth/login');
+  }
 };
 const plusServiceTime = (value: number) => {
   const existingObject = stepStore.step_four_value.currentServiceDays.find(
