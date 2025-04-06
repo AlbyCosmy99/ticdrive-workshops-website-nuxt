@@ -5,29 +5,30 @@
     <h1 class="text-gray-500 text-4xl font-semibold">
       Descrizione dell’officina
     </h1>
-    <h1 class="text-gray-500 text-2xl text-semibold mt-10">
+
+    <h1 class="text-gray-500 text-2xl font-semibold mt-10">
       Storia dell’officina
     </h1>
     <textarea
+      v-model="stepValues.history"
       :class="[
-        'border-2 border-gray-500 rounded-xl overflow-y-auto h-30 px-10 py-8 w-full mt-5 outline-none focus:border-green-500',
+        'border-2 border-gray-500 rounded-xl h-30 px-10 py-8 w-full mt-5 resize-none outline-none focus:border-green-500',
         {'input-error': v$.history.$errors.length},
       ]"
-      v-model="props.stepValues.history"
       placeholder="(breve descrizione della tua attività, valori e punti di forza – max 500 caratteri)"
     ></textarea>
     <span v-if="v$.history.$errors.length" class="invalid-feedback">
-      {{ v$.history.$errors[0].$message }}
+      {{ v$.history.$errors[0]?.$message || '' }}
     </span>
 
     <h1 class="text-gray-500 text-2xl font-semibold mt-5">Lingue Parlate:</h1>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4 mb-10">
       <RadioOption
-        v-for="(value, index) in langs"
-        :key="index"
-        :isCheck="value.value === props.stepValues.lang"
-        :label="value.label"
-        :value="value.value"
+        v-for="lang in langs"
+        :key="lang.value"
+        :label="lang.label"
+        :value="lang.value"
+        :isCheck="lang.value === stepValues.lang"
         @update:isCheck="langHandle"
       />
     </div>
@@ -35,12 +36,23 @@
 </template>
 
 <script lang="ts" setup>
-import {defineProps, defineExpose} from 'vue';
+import {defineProps, defineExpose, computed} from 'vue';
 import {helpers, required, minLength} from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import useStepStore from '~/store/step';
 
-const useStore = useStepStore();
+interface StepSevenData {
+  history: string;
+  lang: number;
+}
+
+const props = defineProps<{
+  stepValues: StepSevenData;
+}>();
+
+defineExpose({
+  validate: async () => await v$.value.$validate(),
+});
 
 const langs = [
   {value: 1, label: 'Italiano'},
@@ -51,26 +63,21 @@ const langs = [
   {value: 6, label: 'Altro'},
 ];
 
-const props = defineProps<{
-  stepValues: object;
-}>();
-defineExpose({
-  validate: async () => await v$.value.$validate(),
-});
-
-const rule = computed(() => ({
+const rules = computed(() => ({
   history: {
-    required: helpers.withMessage('History text is required', required),
-    minLength: helpers.withMessage(
-      'History text must be at least 100 characters',
-      minLength(100),
-    ),
+    required: helpers.withMessage('La descrizione è obbligatoria', required),
+    minLength: helpers.withMessage('Minimo 100 caratteri', minLength(100)),
   },
 }));
-const v$ = useVuelidate(rule, props.stepValues);
 
-const langHandle = value => {
-  useStore.step_six_value.lang = value;
+const v$ = useVuelidate(rules, props.stepValues);
+
+const stepStore = useStepStore();
+const stepValues = props.stepValues;
+
+const langHandle = (value: number) => {
+  stepValues.lang = value;
+  stepStore.stepSevenData.lang = value;
 };
 </script>
 

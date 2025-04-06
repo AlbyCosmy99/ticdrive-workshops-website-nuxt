@@ -1,25 +1,25 @@
 <template>
   <div class="w-full">
     <label
-      v-if="props.label"
-      :for="props.id"
+      v-if="label"
+      :for="id"
       class="self-start mt-4 text-base text-black block"
     >
-      {{ props.label }}
+      {{ label }}
     </label>
     <input
-      :type="props.type"
-      :id="props.id"
-      :placeholder="props.placeholder"
+      :type="type"
+      :id="id"
+      :placeholder="placeholder"
       :value="modelValue"
       @input="
         $emit('update:modelValue', ($event.target as HTMLInputElement).value)
       "
       :class="[
         'mt-3 max-w-full w-full text-base font-light bg-white rounded-3xl border border-solid border-neutral-400 text-black-400 w-[435px] max-md:px-5 outline-none focus:border-green-500',
-        props.size === 'standard'
+        size === 'standard'
           ? 'px-8 py-4'
-          : props.size === 'small'
+          : size === 'small'
           ? 'px-5 py-3'
           : 'px-8 py-4',
         {'input-error': errorMessage},
@@ -32,38 +32,34 @@
 </template>
 
 <script lang="ts" setup>
-import {defineEmits, defineProps} from 'vue';
-const props = defineProps<{
-  id: {
-    type: string;
-    default: '';
-  };
-  label: {
-    type: string;
-    default: '';
-  };
-  placeholder: {
-    type: string;
-    default: '';
-  };
-  size: {
-    type: string;
-    default: 'standard';
-  };
-  type: {
-    type: string;
-    default: 'text';
-  };
-  modelValue: {
-    type: string;
-    default: '';
-  };
-  errorMessage: {
-    type: string;
-    default: '';
-  };
+import {defineProps, defineEmits, withDefaults} from 'vue';
+
+type InputSize = 'standard' | 'small';
+type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
+
+const props = withDefaults(
+  defineProps<{
+    id?: string;
+    label?: string;
+    placeholder?: string;
+    size?: InputSize;
+    type?: InputType;
+    modelValue: string;
+    errorMessage?: string;
+  }>(),
+  {
+    id: '',
+    label: '',
+    placeholder: '',
+    size: 'standard',
+    type: 'text',
+    errorMessage: '',
+  },
+);
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string): void;
 }>();
-const emits = defineEmits(['update:modelValue']);
 </script>
 
 <style scoped>

@@ -82,7 +82,7 @@ const useStore = useStepStore();
 
 const inputRefs = ref<(HTMLInputElement | null)[]>([]);
 const mainInputRefs = ref<HTMLInputElement | null>();
-const images = ref<(string | null)[]>(useStore.step_five_value.images);
+const images = ref<(string | null)[]>(useStore.stepSixData.images);
 
 const openImage = (index: number) => {
   console.log(inputRefs);
@@ -98,14 +98,14 @@ const handleImage = (event: Event, index: number) => {
     const file = fileInput.files![0];
     const prevImageUrl = URL.createObjectURL(file);
     images.value[index] = prevImageUrl;
-    useStore.step_five_value.images[index] = prevImageUrl;
+    useStore.stepSixData.images[index] = prevImageUrl;
     console.log(file);
     console.log(images.value);
   }
 };
 const removeImage = (index: number) => {
   images.value[index] = null;
-  useStore.step_five_value.images[index] = null;
+  useStore.stepSixData.images[index] = null;
 };
 
 const setInputRef = (el: HTMLInputElement | null, index: number) => {

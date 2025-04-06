@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import {useStepStore} from '~/store/step';
+import useStepStore from '~/store/step';
 
 const stepStore = useStepStore();
 </script>

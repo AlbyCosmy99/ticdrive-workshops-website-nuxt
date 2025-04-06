@@ -1,18 +1,112 @@
 import {defineStore} from 'pinia';
 
-export const useStepStore = defineStore('step', {
-  state: () => ({
+interface StepOneData {
+  name: string;
+  surname: string;
+  tel: string;
+  email: string;
+  workSpace: string;
+  postalCode: string;
+  accept1: boolean;
+  accept2: boolean;
+}
+
+interface StepTwoData {
+  fullAddress: {
+    add1: string;
+    add2: string;
+    add3: string;
+    add4: string;
+  };
+  companyContact: {
+    contact1: string;
+    contact2: string;
+  };
+  referContact: {
+    contact1: string;
+    contact2: string;
+    contact3: string;
+  };
+}
+
+interface StepThreeData {
+  currentWorkShopSpec: number[];
+}
+
+interface StepFourData {
+  currentServiceType: number[];
+}
+
+interface ServiceTime {
+  start: string;
+  end: string;
+}
+
+interface ServiceDay {
+  value: number;
+  serviceTime1: ServiceTime;
+  serviceTime2: ServiceTime;
+}
+
+interface StepFiveData {
+  currentServiceDays: ServiceDay[];
+  maxVehicleNumber: number;
+  homeService: boolean;
+}
+
+interface StepSixData {
+  images: string[];
+}
+
+interface StepSevenData {
+  history: string;
+  lang: number;
+}
+
+interface DigitalSignature {
+  name: string;
+  surname: string;
+  date: string | null;
+}
+
+interface StepEightData {
+  warranty: number;
+  digital: DigitalSignature;
+  currentConformities: number[];
+}
+
+interface StepLabel {
+  step: number;
+  value: string;
+}
+
+interface StepState {
+  currentStep: number;
+  steps: StepLabel[];
+  stepOneData: StepOneData;
+  stepTwoData: StepTwoData;
+  stepThreeData: StepThreeData;
+  stepFourData: StepFourData;
+  stepFiveData: StepFiveData;
+  stepSixData: StepSixData;
+  stepSevenData: StepSevenData;
+  stepEightData: StepEightData;
+}
+
+const useStepStore = defineStore('step', {
+  state: (): StepState => ({
     currentStep: 0,
     steps: [
-      {step: 1, value: 'Informazioni e contatti'},
-      {step: 2, value: 'Tipologia d’officina'},
-      {step: 3, value: 'Servizi offerti'},
-      {step: 4, value: 'Orari di apertura'},
-      {step: 5, value: 'Dati di profilo'},
-      {step: 6, value: 'Descrizione officina'},
-      {step: 7, value: 'Firma e accettazione'},
+      // {step: 1, value: 'Benvenuto'},
+      {step: 2, value: 'Informazioni e contatti'},
+      {step: 3, value: 'Tipologia d’officina'},
+      {step: 4, value: 'Servizi offerti'},
+      {step: 5, value: 'Orari di apertura'},
+      {step: 6, value: 'Dati di profilo'},
+      {step: 7, value: 'Descrizione officina'},
+      {step: 8, value: 'Firma e accettazione'},
     ],
-    step_zero_value: {
+    stepOneData: {
       name: '',
       surname: '',
       tel: '',
@@ -22,7 +116,7 @@ export const useStepStore = defineStore('step', {
       accept1: false,
       accept2: false,
     },
-    step_one_value: {
+    stepTwoData: {
       fullAddress: {
         add1: '',
         add2: '',
@@ -39,25 +133,25 @@ export const useStepStore = defineStore('step', {
         contact3: '',
       },
     },
-    step_two_value: {
+    stepThreeData: {
       currentWorkShopSpec: [],
     },
-    step_three_value: {
+    stepFourData: {
       currentServiceType: [],
     },
-    step_four_value: {
+    stepFiveData: {
       currentServiceDays: [],
       maxVehicleNumber: 0,
       homeService: false,
     },
-    step_five_value: {
+    stepSixData: {
       images: [],
     },
-    step_six_value: {
+    stepSevenData: {
       history: '',
       lang: 1,
     },
-    step_seven_value: {
+    stepEightData: {
       warranty: 0,
       digital: {
         name: '',
@@ -72,7 +166,7 @@ export const useStepStore = defineStore('step', {
       this.$reset();
     },
     setStep(step: number) {
-      this.step = step;
+      this.currentStep = step;
     },
   },
 });

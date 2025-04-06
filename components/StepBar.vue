@@ -1,6 +1,5 @@
 <template>
   <div class="p-4 w-full max-w-lg lg:max-w-full mx-auto">
-    <!-- Logo with NuxtImg -->
     <NuxtImg
       v-if="isRegisterRoute"
       src="/images/ticDriveLogo.png"
@@ -10,17 +9,15 @@
       height="120"
     />
 
-    <!-- Step indicators, controlled by hideBar -->
     <div
       v-if="stepStore.currentStep >= 0 && isRegisterRoute && !hideBar"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-8 gap-1 w-8/9 ps-6"
     >
       <div v-for="(step, index) in stepStore.steps" :key="index" class="mt-2">
-        <!-- Step progress bar -->
         <div
           :class="[
             'h-[5px]',
-            index + 1 < stepStore.currentStep ? 'bg-green-500' : 'bg-gray-200',
+            index + 2 < stepStore.currentStep ? 'bg-green-500' : 'bg-gray-200',
           ]"
         ></div>
 
@@ -28,7 +25,7 @@
         <div class="flex justify-start items-center mt-2">
           <!-- Completed Step -->
           <NuxtImg
-            v-if="index + 1 < stepStore.currentStep"
+            v-if="index + 2 < stepStore.currentStep"
             class="me-1"
             src="/images/step-vector.svg"
             alt="step-check"
@@ -59,10 +56,8 @@ import {useRoute} from 'vue-router';
 const stepStore = useStepStore();
 const route = useRoute();
 
-// Computed property to check if it's the register route
 const isRegisterRoute = computed(() => route.path.startsWith('/auth/register'));
 
-// Prop to control hiding the progress bar
 const props = defineProps({
   hideBar: {
     type: Boolean,

@@ -3,89 +3,119 @@
     class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
   >
     <h1 class="text-gray-500 text-4xl font-semibold">Firma e Accettazione</h1>
+
+    <!-- Garanzia -->
     <h1 class="text-gray-500 text-2xl font-semibold mt-10">
       Garanzia e responsabilità
     </h1>
     <PlusMinusField
-      :isMinusDisable="!props.stepValues.warranty"
-      v-model:numberValue="props.stepValues.warranty"
+      :isMinusDisable="!stepValues.warranty"
+      v-model:numberValue="stepValues.warranty"
       label="Garanzia sulla manodopera (durata in mesi):"
-      @update:number="updateWarranty($event)"
+      @update:number="updateWarranty"
     />
+
+    <!-- Firma digitale -->
     <h1 class="text-gray-500 text-2xl font-semibold mt-8">Firma digitale</h1>
     <div
-      class="p-1 mt-2 outline-none border border-gray-500 rounded-xl w-full flex flex-col sm:flex-row gap-3 justify-between relative"
+      class="p-1 mt-2 border border-gray-500 rounded-xl w-full flex flex-col sm:flex-row gap-3 justify-between relative"
     >
-      <div class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-2 gap-3 w-full sm:w-2/3">
         <div class="flex flex-col">
           <input
+            v-model="stepValues.digital.name"
+            placeholder="Nome"
             :class="[
               'p-3 outline-none rounded-xl border border-gray-500 focus:border-green-500 w-full max-h-10',
               {'input-error': v$.digital.name.$errors.length},
             ]"
-            v-model="props.stepValues.digital.name"
-            placeholder="Nome"
           />
           <span v-if="v$.digital.name.$errors.length" class="invalid-feedback">
-            {{ v$.digital.name.$errors[0].$message }}
+            {{ v$.digital.name.$errors[0]?.$message || '' }}
           </span>
         </div>
         <div class="flex flex-col">
           <input
+            v-model="stepValues.digital.surname"
+            placeholder="Cognome"
             :class="[
               'p-3 outline-none rounded-xl border border-gray-500 focus:border-green-500 w-full max-h-10',
               {'input-error': v$.digital.surname.$errors.length},
             ]"
-            v-model="props.stepValues.digital.surname"
-            placeholder="Cognome"
           />
           <span
             v-if="v$.digital.surname.$errors.length"
             class="invalid-feedback"
           >
-            {{ v$.digital.surname.$errors[0].$message }}
+            {{ v$.digital.surname.$errors[0]?.$message || '' }}
           </span>
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col w-full sm:w-1/3">
         <DatePicker
+          v-model="date"
+          placeholder="(giorno/mese/anno)"
           :class="[
             'outline-none date-picker-wrapper text-center bg-gray-100 px-5 py-2 max-h-10',
             {'input-error': v$.digital.date.$errors.length},
           ]"
-          placeholder="(giorno/mese/anno)"
-          v-model="date"
           @update:model-value="storeDate"
         />
         <span v-if="v$.digital.date.$errors.length" class="invalid-feedback">
-          {{ v$.digital.date.$errors[0].$message }}
+          {{ v$.digital.date.$errors[0]?.$message || '' }}
         </span>
       </div>
     </div>
+
+    <!-- Conformità -->
     <h1 class="text-gray-500 text-2xl font-semibold mt-8 mb-1">
       Autodichiarazione di conformità
     </h1>
     <RadioOption
+      v-for="conf in conformities"
+      :key="conf.value"
       class="mt-2"
-      v-for="(value, index) in conformities"
-      :key="index"
-      :label="value.label"
-      :value="value.value"
-      :isCheck="props.stepValues.currentConformities.includes(value.value)"
-      @update:isCheck="checkHandle($event)"
+      :label="conf.label"
+      :value="conf.value"
+      :isCheck="stepValues.currentConformities.includes(conf.value)"
+      @update:isCheck="checkHandle"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-import {defineProps, defineExpose} from 'vue';
-import {helpers, required} from '@vuelidate/validators';
-import DatePicker from 'primevue/datepicker';
+import {defineProps, defineExpose, ref, computed} from 'vue';
+import {required, helpers} from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import useStepStore from '~/store/step';
+import DatePicker from 'primevue/datepicker';
+
+interface DigitalSignature {
+  name: string;
+  surname: string;
+  date: Date | null;
+}
+
+interface StepEightData {
+  warranty: number;
+  digital: DigitalSignature;
+  currentConformities: number[];
+}
+
+const props = defineProps<{
+  stepValues: StepEightData;
+}>();
 
 const useStore = useStepStore();
-const conformities = [
+const stepValues = props.stepValues;
+
+defineExpose({
+  validate: async () => await v$.value.$validate(),
+});
+
+const date = ref<Date | null>(stepValues.digital.date);
+
+const conformities: {value: number; label: string}[] = [
   {
     value: 1,
     label:
@@ -94,7 +124,7 @@ const conformities = [
   {
     value: 2,
     label:
-      'Accetto la trattenuta della commissione da parte della piattaforma e la modalità di accredito selezionata..',
+      'Accetto la trattenuta della commissione da parte della piattaforma e la modalità di accredito selezionata.',
   },
   {
     value: 3,
@@ -108,53 +138,43 @@ const conformities = [
       'Dichiaro di aver letto e accettato i Termini e Condizioni della piattaforma.',
   },
 ];
-const props = defineProps<{
-  stepValues: object;
-}>();
-defineExpose({
-  validate: async () => await v$.value.$validate(),
-});
 
-const rule = computed(() => ({
+const rules = computed(() => ({
   digital: {
     name: {
-      required: helpers.withMessage('Name is required', required),
+      required: helpers.withMessage('Nome obbligatorio', required),
     },
     surname: {
-      required: helpers.withMessage('Surname is required', required),
+      required: helpers.withMessage('Cognome obbligatorio', required),
     },
     date: {
-      required: helpers.withMessage('Date is required', required),
+      required: helpers.withMessage('Data obbligatoria', required),
     },
   },
 }));
-const v$ = useVuelidate(rule, props.stepValues);
-const date = ref(useStore.step_seven_value.digital.date);
 
-const updateWarranty = (value: string) => {
-  console.log(value);
-  if (value === 'minus') {
-    if (!useStore.step_seven_value.warranty) {
-      return;
-    }
-    useStore.step_seven_value.warranty = useStore.step_seven_value.warranty - 1;
-  } else {
-    useStore.step_seven_value.warranty = useStore.step_seven_value.warranty + 1;
+const v$ = useVuelidate(rules, stepValues);
+
+const updateWarranty = (action: 'plus' | 'minus') => {
+  const current = stepValues.warranty;
+  if (action === 'minus' && current > 0) {
+    stepValues.warranty = current - 1;
+  } else if (action === 'plus') {
+    stepValues.warranty = current + 1;
   }
 };
 
 const checkHandle = (value: number) => {
-  const index = useStore.step_seven_value.currentConformities.indexOf(value);
-  console.log(index);
+  const index = stepValues.currentConformities.indexOf(value);
   if (index !== -1) {
-    useStore.step_seven_value.currentConformities.splice(index, 1);
+    stepValues.currentConformities.splice(index, 1);
   } else {
-    useStore.step_seven_value.currentConformities.push(value);
+    stepValues.currentConformities.push(value);
   }
 };
 
 const storeDate = () => {
-  useStore.step_seven_value.digital.date = date.value;
+  stepValues.digital.date = date.value;
 };
 </script>
 
@@ -166,12 +186,6 @@ const storeDate = () => {
 }
 .input-error {
   border: 1px solid rgb(211, 49, 49) !important;
-}
-.p-datepicker {
-  padding: 0 !important;
-}
-.p-inputtext {
-  background-color: oklch(0.967 0.003 264.542) !important;
 }
 .date-picker-wrapper {
   border-radius: 6px !important;

@@ -6,7 +6,7 @@
       Officina specializzata in:
     </h1>
     <h1 class="text-lg text-gray-500 font-semibold mt-3">
-      (Selezionare piu di una casella se necessario)
+      (Selezionare più di una casella se necessario)
     </h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8 mt-8">
       <RadioOption
@@ -14,7 +14,7 @@
         :key="index"
         :label="value.label"
         :value="value.value"
-        :isCheck="props.stepValues.currentWorkShopSpec.includes(value.value)"
+        :isCheck="stepValues.currentWorkShopSpec.includes(value.value)"
         @update:isCheck="handleRadioSelection"
       />
     </div>
@@ -24,7 +24,24 @@
 <script lang="ts" setup>
 import {defineProps, defineEmits} from 'vue';
 
-const workShopSpecs = [
+interface WorkshopSpecOption {
+  value: number;
+  label: string;
+}
+
+interface StepThreeData {
+  currentWorkShopSpec: number[];
+}
+
+const props = defineProps<{
+  stepValues: StepThreeData;
+}>();
+
+const emit = defineEmits<{
+  (e: 'update:isCheck', value: number): void;
+}>();
+
+const workShopSpecs: WorkshopSpecOption[] = [
   {value: 1, label: 'Meccanica generale'},
   {value: 2, label: 'Flotte Aziendali e Noleggio'},
   {value: 3, label: 'Elettrauto'},
@@ -37,13 +54,7 @@ const workShopSpecs = [
   {value: 10, label: 'Impianti GPL/Metano'},
 ];
 
-const props = defineProps<{
-  stepValues: object;
-}>();
-
-const emit = defineEmits(['update:isCheck']);
-
-const handleRadioSelection = (value: any) => {
+const handleRadioSelection = (value: number) => {
   emit('update:isCheck', value);
 };
 </script>

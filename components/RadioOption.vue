@@ -26,22 +26,23 @@
 </template>
 
 <script lang="ts" setup>
-import {defineEmits, defineProps} from 'vue';
+import {defineProps, withDefaults, defineEmits} from 'vue';
 
-const props = defineProps<{
-  label: {
-    type: string;
-    default: '';
-  };
-  isCheck: {
-    type: boolean;
-    default: false;
-  };
-  value: {
-    type: number;
-  };
+const props = withDefaults(
+  defineProps<{
+    label: string;
+    isCheck: boolean;
+    value: number;
+  }>(),
+  {
+    label: '',
+    isCheck: false,
+  },
+);
+
+const emit = defineEmits<{
+  (e: 'update:isCheck', value: number): void;
 }>();
-const emit = defineEmits(['update:isCheck']);
 
 const handleCheck = () => {
   emit('update:isCheck', props.value);
