@@ -8,7 +8,7 @@
       <!-- Left Section -->
       <div class="flex justify-center items-center p-4">
         <div
-          class="relative w-[90%] aspect-square max-w-lg lg:max-w-[650px] lg:max-h-[650px] rounded-[30px] overflow-hidden"
+          class="relative w-[90%] aspect-square max-w-lg lg:max-w-[600px] lg:max-h-[600px] rounded-[30px] overflow-hidden"
         >
           <NuxtImg
             :src="props.mainImage"
