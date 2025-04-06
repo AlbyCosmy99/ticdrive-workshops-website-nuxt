@@ -94,6 +94,7 @@ import useStepStore from '~/store/step';
 import ToggleButton from './ToggleButton.vue';
 import FormInput from './FormInput.vue';
 import CheckboxField from './CheckboxField.vue';
+import useAuthStore from '~/store/auth';
 
 const useStore = useStepStore();
 const username = ref('');
@@ -105,13 +106,17 @@ const passwordVisible = ref(false);
 const passwordInputType = computed(() =>
   passwordVisible.value ? 'text' : 'password',
 );
+const authStore = useAuthStore();
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   console.log('Login submitted', {
     username: username.value,
     password: password.value,
     rememberMe: rememberMe.value,
   });
+  await authStore.login(username.value, password.value);
+  console.log('login done');
+  navigateTo({name: 'dashboard'});
 };
 
 const togglePasswordVisibility = () => {
