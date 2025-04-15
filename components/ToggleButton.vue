@@ -9,13 +9,13 @@
       :aria-selected="activeTab === 'login'"
       id="login-tab"
       aria-controls="login-panel"
-      class="cursor-pointer gap-2.5 self-stretch px-4 py-4 my-auto text-center min-h-[50px] rounded-[30px] shadow-[0px_4px_10px_rgba(0,0,0,0.08)] w-[175px] focus:outline-none focus:ring-2 focus:ring-green-500"
-      :class="
+      @click="setActiveTab('login')"
+      :class="[
+        baseButtonClasses,
         activeTab === 'login'
           ? 'text-white bg-green-500'
-          : 'text-black bg-neutral-100'
-      "
-      @click="setActiveTab('login')"
+          : 'text-black bg-neutral-100',
+      ]"
     >
       Login
     </button>
@@ -24,18 +24,13 @@
       :aria-selected="activeTab === 'register'"
       id="register-tab"
       aria-controls="register-panel"
-      class="cursor-pointer gap-2.5 self-stretch px-4 py-4 my-auto text-center min-h-[50px] rounded-[30px] w-[175px] focus:outline-none focus:ring-2 focus:ring-green-500"
-      :class="
+      @click="handleRegisterClick"
+      :class="[
+        baseButtonClasses,
         activeTab === 'register'
-          ? 'text-white bg-green-500'
-          : 'text-black bg-neutral-100'
-      "
-      @click="
-        () => {
-          stepStore.currentStep++;
-          setActiveTab('register');
-        }
-      "
+          ? 'text-white bg-drive'
+          : 'text-black bg-neutral-100',
+      ]"
     >
       Registrati
     </button>
@@ -47,13 +42,20 @@ import {ref, defineEmits} from 'vue';
 import useStepStore from '~/store/step';
 
 const stepStore = useStepStore();
-
 const emit = defineEmits(['update:tab']);
 const activeTab = ref('login');
+
+const baseButtonClasses =
+  'cursor-pointer gap-2.5 self-stretch px-4 py-4 my-auto text-center min-h-[50px] rounded-[30px] w-[175px] focus:outline-none focus:ring-0 transition-colors duration-200';
 
 const setActiveTab = (tab: string) => {
   activeTab.value = tab;
   emit('update:tab', tab);
   navigateTo(tab === 'login' ? '/auth/login' : '/auth/register');
+};
+
+const handleRegisterClick = () => {
+  stepStore.currentStep++;
+  setActiveTab('register');
 };
 </script>

@@ -1,55 +1,54 @@
 <template>
-  <div
+  <button
+    :disabled="disable"
     :class="[
-      props.customClass,
-      'rounded-full py-3 px-6 text-white text-center text-lg cursor-pointer hover:opacity-80 active:opacity-100',
-      {'disable-button': props.disable},
-      props.color === 'green'
-        ? 'bg-green-500'
-        : props.color === 'gray'
-        ? 'bg-gray-500'
-        : 'bg-green-500',
+      'rounded-full py-3 px-6 text-white text-center text-lg transition duration-200 ease-in-out',
+      'hover:opacity-80 active:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed',
+      colorClasses,
+      customClass,
     ]"
   >
     {{ label }}
-  </div>
+  </button>
 </template>
 
-<script lang="ts" setup>
-import {defineProps} from 'vue';
+<script setup lang="ts">
+import {computed} from 'vue';
 
-const props = defineProps<{
+const props = defineProps({
   label: {
-    type: string;
-  };
+    type: String,
+    required: true,
+  },
   type: {
-    type: string;
-    default: 'standard';
-  };
+    type: String,
+    default: 'standard',
+  },
   size: {
-    type: string;
-    default: 'standard';
-  };
+    type: String,
+    default: 'standard',
+  },
   color: {
-    type: string;
-    default: 'green';
-  };
+    type: String,
+    default: 'green',
+  },
   disable: {
-    type: boolean;
-    default: false;
-  };
+    type: Boolean,
+    default: false,
+  },
   customClass: {
-    type: string;
-    default: '';
-  };
-}>();
-</script>
+    type: String,
+    default: '',
+  },
+});
 
-<style scoped>
-.disable-button {
-  opacity: 0.5 !important;
-}
-.disable-button:hover {
-  cursor: not-allowed;
-}
-</style>
+const colorClasses = computed(() => {
+  switch (props.color) {
+    case 'gray':
+      return 'bg-gray-500';
+    case 'green':
+    default:
+      return 'bg-green-500';
+  }
+});
+</script>

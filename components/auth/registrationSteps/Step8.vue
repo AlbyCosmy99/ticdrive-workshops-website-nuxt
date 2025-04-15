@@ -24,6 +24,7 @@
         <div class="flex flex-col">
           <input
             v-model="stepValues.digital.name"
+            name="name"
             placeholder="Nome"
             :class="[
               'p-3 outline-none rounded-xl border border-gray-500 focus:border-green-500 w-full max-h-10',
@@ -37,6 +38,7 @@
         <div class="flex flex-col">
           <input
             v-model="stepValues.digital.surname"
+            name="surname"
             placeholder="Cognome"
             :class="[
               'p-3 outline-none rounded-xl border border-gray-500 focus:border-green-500 w-full max-h-10',
@@ -52,14 +54,13 @@
         </div>
       </div>
       <div class="flex flex-col w-full sm:w-1/3">
-        <DatePicker
+        <Calendar
           v-model="date"
           placeholder="(giorno/mese/anno)"
           :class="[
             'outline-none date-picker-wrapper text-center bg-gray-100 px-5 py-2 max-h-10',
             {'input-error': v$.digital.date.$errors.length},
           ]"
-          @update:model-value="storeDate"
         />
         <span v-if="v$.digital.date.$errors.length" class="invalid-feedback">
           {{ v$.digital.date.$errors[0]?.$message || '' }}
@@ -84,11 +85,11 @@
 </template>
 
 <script lang="ts" setup>
-import {defineProps, defineExpose, ref, computed} from 'vue';
+import {defineProps, defineExpose, computed} from 'vue';
 import {required, helpers} from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import useStepStore from '~/store/step';
-import DatePicker from 'primevue/datepicker';
+import Calendar from 'primevue/calendar';
 
 interface DigitalSignature {
   name: string;
@@ -113,7 +114,10 @@ defineExpose({
   validate: async () => await v$.value.$validate(),
 });
 
-const date = ref<Date | null>(stepValues.digital.date);
+const date = computed({
+  get: () => stepValues.digital.date,
+  set: (val: Date | null) => (stepValues.digital.date = val),
+});
 
 const conformities: {value: number; label: string}[] = [
   {
@@ -171,10 +175,6 @@ const checkHandle = (value: number) => {
   } else {
     stepValues.currentConformities.push(value);
   }
-};
-
-const storeDate = () => {
-  stepValues.digital.date = date.value;
 };
 </script>
 

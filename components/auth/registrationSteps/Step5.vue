@@ -22,19 +22,17 @@
         v-if="stepValues.currentServiceDays.some(d => d.value === day.value)"
       >
         <div class="col-span-6 sm:col-span-3 flex m-auto">
-          <DatePicker
+          <Calendar
             v-model="timeSlots[day.value][0].start"
             class="h-12 px-1 bg-gray-200 w-2/5"
             timeOnly
-            fluid
             @blur="updateTime(day.value)"
           />
           <h1 class="w-1/5 text-center leading-[48px]">–</h1>
-          <DatePicker
+          <Calendar
             v-model="timeSlots[day.value][0].end"
             class="h-12 px-1 bg-gray-200 w-2/5"
             timeOnly
-            fluid
             @blur="updateTime(day.value)"
           />
         </div>
@@ -50,19 +48,17 @@
           v-if="timeSlots[day.value][1].start && timeSlots[day.value][1].end"
           class="col-span-6 sm:col-span-3 flex"
         >
-          <DatePicker
+          <Calendar
             v-model="timeSlots[day.value][1].start"
             class="w-2/5 h-12 px-1 bg-gray-200"
             timeOnly
-            fluid
             @blur="updateTime(day.value)"
           />
           <h1 class="w-1/5 text-center leading-[48px]">-</h1>
-          <DatePicker
+          <Calendar
             v-model="timeSlots[day.value][1].end"
             class="w-2/5 h-12 px-1 bg-gray-200"
             timeOnly
-            fluid
             @blur="updateTime(day.value)"
           />
         </div>
@@ -116,7 +112,7 @@
 
 <script lang="ts" setup>
 import {defineProps, defineEmits, ref, computed} from 'vue';
-import DatePicker from 'primevue/datepicker';
+import Calendar from 'primevue/calendar';
 import useStepStore from '~/store/step';
 
 interface ServiceTime {
@@ -243,6 +239,7 @@ const updateHomeService = (isYes: boolean) => {
 <style>
 .p-inputtext {
   text-align: center !important;
+  padding: 10px 0px !important;
 }
 .p-inputtext:hover {
   cursor: pointer;
@@ -250,8 +247,5 @@ const updateHomeService = (isYes: boolean) => {
 .p-datepicker-panel {
   z-index: 10 !important;
   background-color: #f3f3f3 !important;
-}
-.p-inputtext {
-  padding: 10px 0px !important;
 }
 </style>
