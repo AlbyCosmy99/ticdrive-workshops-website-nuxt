@@ -107,19 +107,17 @@ const passwordInputType = computed(() =>
   passwordVisible.value ? 'text' : 'password',
 );
 const authStore = useAuthStore();
-const loading = ref(false)
+const loading = ref(false);
 
 const handleSubmit = async () => {
   try {
     loading.value = true;
     await authStore.login(username.value, password.value);
     navigateTo({name: 'dashboard'});
-  } catch(err) {
-
+  } catch (err) {
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-  
 };
 
 const togglePasswordVisibility = () => {

@@ -6,7 +6,7 @@ definePageMeta({
 
 <template>
   <div>
-    <h1 class="text-xl font-semibold mb-4">Dashboard</h1>
-    <p>This is the dashboard page content.</p>
+    <h1 class="text-xl font-semibold mb-4">Settings</h1>
+    <p>This is the settings page content.</p>
   </div>
 </template>
