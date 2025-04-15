@@ -6,8 +6,8 @@
       src="/images/ticDriveLogo.png"
       alt="Company logo"
       class="object-contain aspect-square"
-      width="100"
-      height="100"
+      width="120"
+      height="120"
     />
     <button
       @click="$router.push('/dashboard')"
