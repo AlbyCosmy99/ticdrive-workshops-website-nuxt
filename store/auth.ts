@@ -17,10 +17,10 @@ const useAuthStore = defineStore('auth', {
   actions: {
     async login(email: string, password: string) {
       const {data, error} = await useFetch<LoginResponse>(
-        'https://ticdrive.azurewebsites.net/api/auth/login',
+        'https://ticdrivebackend.onrender.com/api/auth/login',
         {
           method: 'POST',
-          body: {email, password},
+          body: {email, password, userType: 2},
         },
       );
 

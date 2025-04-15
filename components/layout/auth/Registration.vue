@@ -29,9 +29,9 @@
 
 <script setup lang="ts">
 import {defineProps} from 'vue';
-import StepBar from '../StepBar.vue';
 import Toast from 'primevue/toast';
 import useStepStore from '~/store/step';
+import StepBar from '~/components/StepBar.vue';
 
 const props = defineProps<{
   mainImage: string;

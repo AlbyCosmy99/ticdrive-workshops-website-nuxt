@@ -1,10 +1,13 @@
-<template>main</template>
+<template>
+  <p>main</p>
+</template>
 
 <script setup lang="ts">
 import {useRouter} from 'vue-router';
-import {onMounted} from 'vue';
-
+import {onMounted, ref} from 'vue';
 const router = useRouter();
+const name = ref('Andrei')
+
 
 onMounted(() => {
   router.push('/auth/login');
