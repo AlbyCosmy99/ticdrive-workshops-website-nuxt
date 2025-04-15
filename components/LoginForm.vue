@@ -79,10 +79,10 @@
       </div>
       <button
         type="submit"
-        :disabled="!password || !username"
+        :disabled="!password || !username || loading"
         class="self-center px-16 py-3.5 mt-10 max-w-full text-base text-white whitespace-nowrap bg-green-500 bg-opacity-50 rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
       >
-        Login
+        {{ loading ? 'Loading...' : 'Login' }}
       </button>
     </form>
   </div>
@@ -107,16 +107,19 @@ const passwordInputType = computed(() =>
   passwordVisible.value ? 'text' : 'password',
 );
 const authStore = useAuthStore();
+const loading = ref(false)
 
 const handleSubmit = async () => {
-  console.log('Login submitted', {
-    username: username.value,
-    password: password.value,
-    rememberMe: rememberMe.value,
-  });
-  await authStore.login(username.value, password.value);
-  console.log('login done');
-  navigateTo({name: 'dashboard'});
+  try {
+    loading.value = true;
+    await authStore.login(username.value, password.value);
+    navigateTo({name: 'dashboard'});
+  } catch(err) {
+
+  } finally {
+    loading.value = false
+  }
+  
 };
 
 const togglePasswordVisibility = () => {
