@@ -52,7 +52,4 @@ const props = defineProps<{
 .disable-button:hover {
   cursor: not-allowed;
 }
-.gray-button {
-  background-color: ;
-}
 </style>

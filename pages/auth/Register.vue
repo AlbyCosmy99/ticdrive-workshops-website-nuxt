@@ -13,4 +13,3 @@ import useStepStore from '~/store/step';
 
 const stepStore = useStepStore();
 </script>
-

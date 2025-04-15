@@ -7,8 +7,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#1DA1F2',
-        secondary: '#14171A',
+        tic: '#737373',
+        drive: '#39B269',
+        grey: {
+          light: '#ECECEC',
+        },
+        green: {
+          light: '#D4EEDE',
+          inter: '39B269',
+          dark: '#228E4D',
+        },
       },
     },
   },
