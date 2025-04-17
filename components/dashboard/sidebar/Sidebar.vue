@@ -1,37 +1,27 @@
 <template>
   <div
-    class="border border-tic py-4 px-6 rounded-lg h-[66.6667vh] flex flex-col items-center gap-4"
+    class="w-[220px] bg-white h-[66.6667vh] rounded-lg border border-gray-200 flex flex-col py-6 shadow-sm relative"
   >
-    <NuxtImg
-      src="/images/ticDriveLogo.png"
-      alt="Company logo"
-      class="object-contain aspect-square"
-      width="120"
-      height="120"
-    />
-    <button
-      @click="$router.push('/dashboard')"
-      class="mt-auto w-full bg-drive text-white py-2 px-4 rounded hover:bg-drive/90 transition"
-    >
-      Dashboard
-    </button>
-    <button
-      @click="$router.push('/bookings')"
-      class="mt-auto w-full bg-drive text-white py-2 px-4 rounded hover:bg-drive/90 transition"
-    >
-      Bookings
-    </button>
-    <button
-      @click="$router.push('/calendar')"
-      class="mt-auto w-full bg-drive text-white py-2 px-4 rounded hover:bg-drive/90 transition"
-    >
-      Calendar
-    </button>
-    <button
-      @click="$router.push('/settings')"
-      class="mt-auto w-full bg-drive text-white py-2 px-4 rounded hover:bg-drive/90 transition"
-    >
-      Settings
-    </button>
+    <div class="px-6 mb-12">
+      <div class="flex items-center justify-center">
+        <NuxtImg
+          src="/svg/ticDriveLogo.svg"
+          alt="TicDrive logo"
+          class="object-contain self-center max-w-full aspect-square"
+          width="120"
+          height="120"
+        />
+      </div>
+    </div>
+    <div class="flex flex-col flex-grow space-y-1 px-4">
+      <Element path="/dashboard" title="Dashboard" />
+      <Element path="/bookings" title="prenotazioni" />
+      <Element path="/calendar" title="Calendario" />
+      <Element path="/settings" title="Impostazioni" />
+    </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import Element from './Element.vue';
+</script>
