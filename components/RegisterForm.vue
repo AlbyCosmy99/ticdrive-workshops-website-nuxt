@@ -46,14 +46,14 @@
       class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
     >
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-        <Button
+        <TicDrivebutton
           label="Indietro"
           customClass="mt-4 bg-gray-500"
           color="gray"
           :disable="!stepStore.currentStep"
           @click="prevStep()"
         />
-        <Button
+        <TicDrivebutton
           label="Avanti"
           customClass="mt-4"
           :disable="buttonDisableStatus"
@@ -86,6 +86,7 @@ import Step5 from './auth/registrationSteps/Step5.vue';
 import Step6 from './auth/registrationSteps/Step6.vue';
 import Step7 from './auth/registrationSteps/Step7.vue';
 import Step8 from './auth/registrationSteps/Step8.vue';
+import TicDrivebutton from './ui/buttons/TicDrivebutton.vue';
 
 const stepStore = useStepStore();
 const nuxtApp = useNuxtApp();

@@ -2,8 +2,7 @@
   <button
     :disabled="disable"
     :class="[
-      'rounded-full py-3 px-6 text-white text-center text-lg transition duration-200 ease-in-out',
-      'hover:opacity-80 active:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed',
+      'cursor-pointer rounded-full py-3 px-6 text-white text-center text-lg transition duration-200 ease-in-out hover:opacity-80 active:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed',
       colorClasses,
       customClass,
     ]"
@@ -45,10 +44,10 @@ const props = defineProps({
 const colorClasses = computed(() => {
   switch (props.color) {
     case 'gray':
-      return 'bg-gray-500';
+      return 'bg-tic';
     case 'green':
     default:
-      return 'bg-green-500';
+      return 'bg-drive';
   }
 });
 </script>

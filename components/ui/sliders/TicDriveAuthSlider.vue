@@ -13,7 +13,7 @@
       :class="[
         baseButtonClasses,
         activeTab === 'login'
-          ? 'text-white bg-green-500'
+          ? 'text-white bg-drive'
           : 'text-black bg-neutral-100',
       ]"
     >

@@ -12,7 +12,7 @@
     <textarea
       v-model="stepValues.history"
       :class="[
-        'border-2 border-gray-500 rounded-xl h-30 px-10 py-8 w-full mt-5 resize-none outline-none focus:border-green-500',
+        'border-2 border-gray-500 rounded-xl h-30 px-2 py-2 w-full mt-5 resize-none outline-none focus:border-green-500',
         {'input-error': v$.history.$errors.length},
       ]"
       placeholder="(breve descrizione della tua attività, valori e punti di forza – max 500 caratteri)"

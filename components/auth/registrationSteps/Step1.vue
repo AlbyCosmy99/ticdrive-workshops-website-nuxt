@@ -1,11 +1,11 @@
 <template>
   <div
-    class="step-0 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
+    class="step-0 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center px-20"
   >
     <h1 class="text-4xl text-zinc-600 text-center font-semibold">Benvenuto!</h1>
-    <h1 class="my-3 text-xl text-drive font-semibold text-center">
+    <h4 class="my-3 text-xl text-drive font-semibold text-center">
       Inserisci i tuoi dati per saperne di più.
-    </h1>
+    </h4>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
       <FormInput
@@ -54,38 +54,20 @@
       :error-message="v$.postalCode.$errors[0]?.$message || ''"
     />
 
-    <div class="flex gap-1 mt-4 items-center">
-      <div
-        :class="[
-          'w-4 h-4 border rounded',
-          stepValues.accept1 ? 'border-green-600' : 'border-gray-600',
-        ]"
-        @click="checkToggle('accept1')"
-      >
-        <img v-if="stepValues.accept1" src="/images/vector.svg" alt="check" />
-      </div>
-      <h1 class="text-sm">
-        Accetto di ricevere aggiornamenti da TicDrive tramite WhatsApp o
-        piattaforme simili!
-      </h1>
+    <div class="my-1 mt-6">
+      <CheckboxField
+        id="accept-updates"
+        v-model="stepStore.stepOneData.accept1"
+        label="Accetto di ricevere aggiornamenti da TicDrive tramite WhatsApp o
+        piattaforme simili!"
+      />
     </div>
-
-    <div class="flex gap-1 mt-2 items-center">
-      <div
-        :class="[
-          'w-4 h-4 border rounded',
-          stepValues.accept2 ? 'border-green-600' : 'border-gray-600',
-        ]"
-        @click="checkToggle('accept2')"
-      >
-        <img v-if="stepValues.accept2" src="/images/vector.svg" alt="check" />
-      </div>
-      <h1 class="text-sm">
-        Accetto
-        <a href="" class="underline hover:text-green-600">
-          Privacy Policy Cookie Policy Terms and Conditions
-        </a>
-      </h1>
+    <div class="my-1">
+      <CheckboxField
+        id="accept-updates"
+        v-model="stepStore.stepOneData.accept2"
+        label="Accetto Privacy Policy Cookie Policy Terms and Conditions"
+      />
     </div>
   </div>
 </template>
@@ -94,6 +76,7 @@
 import useVuelidate from '@vuelidate/core';
 import {required, email, numeric, helpers} from '@vuelidate/validators';
 import {defineProps, defineEmits, defineExpose, computed} from 'vue';
+import useStepStore from '~/store/step';
 
 interface StepOneData {
   name: string;
@@ -120,6 +103,8 @@ defineExpose({
     return result;
   },
 });
+
+const stepStore = useStepStore();
 
 const rules = computed(() => ({
   name: {

@@ -1,13 +1,13 @@
 <template>
   <div
-    class="step-1 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
+    class="step-1 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center px-20"
   >
     <h1 class="text-4xl text-gray-500 font-semibold">
       Informazioni sull'attività
     </h1>
 
     <div class="flex flex-col mt-10">
-      <h1 class="text-2xl text-gray-500 font-semibold">Indirizzo completo:</h1>
+      <h4 class="text-2xl text-gray-500 font-semibold">Indirizzo completo:</h4>
 
       <FormInput
         placeholder="Via e Numero Civico:"
@@ -36,7 +36,7 @@
     </div>
 
     <div class="mt-4">
-      <h1 class="text-2xl text-gray-500 font-semibold">Contatti Aziendali</h1>
+      <h4 class="text-2xl text-gray-500 font-semibold">Contatti Aziendali</h4>
       <div class="flex flex-col">
         <FormInput
           placeholder="Numero di telefono aziendale (fisso o cellulare):"
@@ -52,9 +52,9 @@
     </div>
 
     <div class="mt-4">
-      <h1 class="text-2xl text-gray-500 font-semibold">
+      <h4 class="text-2xl text-gray-500 font-semibold">
         Contatti di Riferimento
-      </h1>
+      </h4>
       <FormInput
         placeholder="Nome e Cognome del Referente:"
         v-model="stepValues.referContact.contact1"
@@ -72,9 +72,9 @@
       />
     </div>
 
-    <h1 class="mt-3 mb-4 text-gray-500 text-md">
+    <h4 class="mt-3 mb-4 text-gray-500 text-md">
       (Per ricevere notifiche di prenotazioni o comunicazioni importanti)
-    </h1>
+    </h4>
   </div>
 </template>
 

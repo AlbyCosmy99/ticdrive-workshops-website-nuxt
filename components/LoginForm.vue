@@ -20,7 +20,7 @@
       <div
         class="flex gap-2.5 justify-center items-center mt-8 w-full text-base leading-tight text-center rounded-[30px] max-md:mt-10"
       >
-        <ToggleButton />
+        <TicDriveAuthSlider />
       </div>
     </div>
 
@@ -36,7 +36,6 @@
       />
 
       <div class="w-full max-w-lg lg:max-w-full">
-        <!-- Password Field -->
         <div class="self-start mt-2.5 text-base text-black">
           <label for="password">Password</label>
         </div>
@@ -80,7 +79,7 @@
       <button
         type="submit"
         :disabled="!password || !username || loading"
-        class="self-center px-16 py-3.5 mt-10 max-w-full text-base text-white whitespace-nowrap bg-green-500 bg-opacity-50 rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
+        class="self-center px-16 py-3.5 mt-10 max-w-full text-base text-white whitespace-nowrap bg-drive bg-opacity-50 rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-drive focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
       >
         {{ loading ? 'Loading...' : 'Login' }}
       </button>
@@ -91,10 +90,10 @@
 <script lang="ts" setup>
 import {ref, computed, onMounted} from 'vue';
 import useStepStore from '~/store/step';
-import ToggleButton from './ToggleButton.vue';
 import FormInput from './FormInput.vue';
 import CheckboxField from './CheckboxField.vue';
 import useAuthStore from '~/store/auth';
+import TicDriveAuthSlider from './ui/sliders/TicDriveAuthSlider.vue';
 
 const useStore = useStepStore();
 const username = ref('');
