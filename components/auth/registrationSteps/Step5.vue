@@ -9,7 +9,7 @@
       :key="index"
       class="grid grid-cols-1 2xl:grid-cols-3"
     >
-      <CheckBox
+      <TicDriveSlider
         :label="day.label"
         :value="day.value"
         :isCheck="
@@ -114,6 +114,7 @@
 import {defineProps, defineEmits, ref, computed} from 'vue';
 import Calendar from 'primevue/calendar';
 import useStepStore from '~/store/step';
+import TicDriveSlider from '~/components/ui/sliders/TicDriveSlider.vue';
 
 interface ServiceTime {
   start: string;
