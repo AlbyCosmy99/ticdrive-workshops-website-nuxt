@@ -73,7 +73,7 @@
             class="cursor-pointer self-start text-xs font-light text-black hover:underline focus:outline-none focus:underline"
             @click="forgotPassword"
           >
-            Password dimenticata?
+            Password dimenticataaa?
           </button>
         </div>
       </div>
