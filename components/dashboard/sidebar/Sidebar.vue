@@ -5,7 +5,7 @@
     <div class="px-6 mb-12">
       <div class="flex items-center justify-center">
         <NuxtImg
-          src="/svg/ticDriveLogo.svg"
+          src="/svg/TicDriveLogo.svg"
           alt="TicDrive logo"
           class="object-contain self-center max-w-full aspect-square"
           width="120"
@@ -14,10 +14,10 @@
       </div>
     </div>
     <div class="flex flex-col flex-grow space-y-1 px-4">
-      <Element path="/dashboard" title="Dashboard" />
-      <Element path="/bookings" title="prenotazioni" />
-      <Element path="/calendar" title="Calendario" />
-      <Element path="/settings" title="Impostazioni" />
+      <Element path="/dashboard" title="Dashboard" iconPath="/images/Vector(1).png" />
+      <Element path="/bookings" title="prenotazioni" iconPath="/images/Group.png" />
+      <Element path="/calendar" title="Calendario" iconPath="/images/Group(1).png" />
+      <Element path="/settings" title="Impostazioni" iconPath="/images/settings.png" />
     </div>
   </div>
 </template>
