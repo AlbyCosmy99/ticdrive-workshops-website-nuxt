@@ -1,6 +1,6 @@
 // nuxt.config.ts
 import tailwindcss from '@tailwindcss/vite';
-import svgLoader from 'vite-svg-loader'
+import svgLoader from 'vite-svg-loader';
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',

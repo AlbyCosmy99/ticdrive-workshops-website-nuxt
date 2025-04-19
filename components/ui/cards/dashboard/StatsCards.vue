@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import StatsCard from './StatsCard.vue';
-
 </script>
 
 <template>

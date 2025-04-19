@@ -3,7 +3,12 @@
   <div class="bg-white rounded-lg shadow p-4 flex flex-col">
     <div class="flex justify-between items-start mb-2">
       <h3 class="text-gray-500 text-sm font-medium">{{ title }}</h3>
-      <div :class="['w-10 h-10 rounded-full flex items-center justify-center', iconBgColor]">
+      <div
+        :class="[
+          'w-10 h-10 rounded-full flex items-center justify-center',
+          iconBgColor,
+        ]"
+      >
         <component :is="getIconComponent()" class="w-6 h-6" />
       </div>
     </div>
@@ -15,7 +20,10 @@
           <span class="text-gray-500">{{ trendLabel }}</span>
         </div>
       </div>
-      <div v-if="rating" class="flex items-center bg-amber-100 rounded-full px-2 py-1">
+      <div
+        v-if="rating"
+        class="flex items-center bg-amber-100 rounded-full px-2 py-1"
+      >
         <StarIcon class="w-4 h-4 text-amber-500 mr-1" />
         <span class="font-bold text-sm">{{ rating }}</span>
       </div>
@@ -24,12 +32,12 @@
 </template>
 
 <script setup lang="ts">
-import ClientIcon from "@/public/svg/logos/dashboard/ClientIcon.svg";
-import CalendarIcon from "@/public/svg/logos/dashboard/PrenotazRaggiunte.svg";
-import DashboardIcon from "@/public/svg/logos/dashboard/TotalGain.svg";
-import BookingsIcon from "@/public/svg/logos/dashboard/TotReview.svg";
-import SettingsIcon from "@/public/svg/logos/sidebar/notSelected/settings.svg";
-import StarIcon from "@/public/svg/logos/dashboard/StarsIcon.svg";
+import ClientIcon from '@/public/svg/logos/dashboard/ClientIcon.svg';
+import CalendarIcon from '@/public/svg/logos/dashboard/PrenotazRaggiunte.svg';
+import DashboardIcon from '@/public/svg/logos/dashboard/TotalGain.svg';
+import BookingsIcon from '@/public/svg/logos/dashboard/TotReview.svg';
+import SettingsIcon from '@/public/svg/logos/sidebar/notSelected/settings.svg';
+import StarIcon from '@/public/svg/logos/dashboard/StarsIcon.svg';
 
 interface StatsCardProps {
   title: string;
@@ -57,8 +65,7 @@ const getIconComponent = () => {
     case 'settings':
       return SettingsIcon;
     default:
-      return ClientIcon; 
-      
+      return ClientIcon;
   }
 };
 </script>
