@@ -32,8 +32,8 @@
           <div class="flex">
             <template v-for="i in 5" :key="i">
               <img 
-                v-if="starIconSvg" 
-                :src="starIconSvg" 
+                v-if="StarsIcon" 
+                :src="StarsIcon" 
                 :alt="i <= parseInt(rating) ? 'Filled star' : 'Empty star'"
                 :class="[
                   'w-4 h-4', 

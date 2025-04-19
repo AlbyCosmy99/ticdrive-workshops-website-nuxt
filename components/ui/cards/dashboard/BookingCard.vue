@@ -9,35 +9,38 @@
           <span class="font-medium">{{ name }}</span>
         </div>
         <div class="flex items-center text-amber-500 bg-amber-50 px-2 py-1 rounded text-sm">
-          <img v-if="statusIconSvg" :src="statusIconSvg" alt="Status" class="w-4 h-4 mr-1" />
+          <!-- specify the svg source for icon-->
           <span>In attesa di accettazione</span>
         </div>
       </div>
       
       <div class="grid grid-cols-2 gap-2 mb-4">
         <div class="flex items-center">
-          <img v-if="clockIconSvg" :src="clockIconSvg" alt="Clock" class="w-4 h-4 text-gray-500 mr-2" />
+          <!-- specify the svg source for icon-->
           <span class="text-sm">Ora</span>
         </div>
         <div class="text-right text-sm">{{ time }}</div>
         
         <div class="flex items-center">
-          <img v-if="toolsIconSvg" :src="toolsIconSvg" alt="Tools" class="w-4 h-4 text-gray-500 mr-2" />
+          <!-- specify the svg source for icon-->
           <span class="text-sm">Servizio</span>
         </div>
         <div class="text-right text-sm">{{ service }}</div>
         
         <div class="flex items-center">
-          <img v-if="carIconSvg" :src="carIconSvg" alt="Car" class="w-4 h-4 text-gray-500 mr-2" />
+          <!-- specify the svg source for icon-->
           <span class="text-sm">Veicolo</span>
         </div>
         <div class="text-right text-sm">{{ vehicle }}</div>
         
         <div class="flex items-center">
-          <img v-if="paymentIconSvg" :src="paymentIconSvg" alt="Payment" class="w-4 h-4 text-gray-500 mr-2" />
-          <span class="text-sm">Stato di pagamento</span>
+        <!-- specify the svg source for icon  -->
+         <!-- <img v-if="paymentIconSvg" :src="paymentIconSvg" alt="Payment" class="w-4 h-4 text-gray-500 mr-2" /> -->
+          <span class="text-sm">Pagamento</span>
         </div>
-        <div class="text-right text-sm font-medium">{{ price }}</div>
+        <div class="text-right text-sm font-medium">
+          {{ price }} <span v-if="paymentStatus" class="text-gray-600 font-normal">({{ paymentStatus }})</span>
+        </div>
       </div>
       
       <div class="flex space-x-2">
@@ -60,6 +63,7 @@
     service: string;
     vehicle: string;
     price: string;
+    paymentStatus?: string;
     userImageSrc?: string;
     statusIconSvg?: string;
     clockIconSvg?: string;
