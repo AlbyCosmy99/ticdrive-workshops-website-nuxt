@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[220px] bg-white h-[66.6667vh] rounded-lg border border-gray-200 flex flex-col py-6 shadow-sm relative"
+    class="w-[220px] bg-white h-[85vh] rounded-lg border border-gray-200 flex flex-col py-6 shadow-sm relative"
   >
     <div class="px-6 mb-12">
       <div class="flex items-center justify-center">
