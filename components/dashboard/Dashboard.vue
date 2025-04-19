@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col p-6 w-full">
-    <div class="mb-8">
+  <div class="flex flex-col w-full">
+    <div class="mb-4">
       <h1 class="text-2xl font-bold mb-1">Panoramica</h1>
     </div>
     <StatsCards />
