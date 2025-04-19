@@ -8,8 +8,5 @@ definePageMeta({
 </script>
 
 <template>
-  <div>
-    <Dashboard/>
-    <p>This is the dashboard page content.</p>
-  </div>
+  <Dashboard/>
 </template>

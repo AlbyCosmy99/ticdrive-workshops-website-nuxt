@@ -1,53 +1,10 @@
 <!-- Dashboard.vue -->
 <template>
     <div class="flex flex-col p-6 w-full">
-      <!-- Header Section -->
       <div class="mb-8">
         <h1 class="text-2xl font-bold mb-1">Panoramica</h1>
       </div>
-  
-      <!-- Stats Cards Section -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatsCard 
-          title="Clienti Unici" 
-          value="800" 
-          iconSvg="/svg/users-icon.svg"
-          iconBgColor="bg-blue-100"
-          trend="+28"
-          trendLabel="in più rispetto al mese scorso"
-          trendColor="text-green-500"
-        />
-        <StatsCard 
-          title="Prenotazioni Raggiunte" 
-          value="920" 
-          iconSvg="/svg/calendar-icon.svg"
-          iconBgColor="bg-amber-100"
-          trend="+31"
-          trendLabel="in più rispetto al mese scorso"
-          trendColor="text-green-500"
-        />
-        <StatsCard 
-          title="Guadagno Raggiunto" 
-          value="€212.739" 
-          iconSvg="/svg/chart-icon.svg"
-          iconBgColor="bg-green-100"
-          trend="-180€"
-          trendLabel="in meno rispetto al mese scorso"
-          trendColor="text-red-500"
-        />
-        <StatsCard 
-          title="Totale Recensioni" 
-          value="687" 
-          iconSvg="/svg/star-icon.svg"
-          iconBgColor="bg-amber-100"
-          rating="4.7"
-          trend="+18"
-          trendLabel="in più rispetto al mese scorso"
-          trendColor="text-green-500"
-        />
-      </div>
-  
-      <!-- Pending Bookings Section -->
+      <StatsCards />
       <div class="mb-8">
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-xl font-semibold">Prenotazioni In Attesa di Conferma</h2>
@@ -89,7 +46,6 @@
         </div>
       </div>
   
-      <!-- Recent Reviews Section -->
       <div>
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-xl font-semibold">Recensioni Recenti</h2>
@@ -105,7 +61,7 @@
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utente</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data Recensione</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Servizio</th>
@@ -154,11 +110,8 @@
   </template>
   
   <script setup lang="ts">
-  import { defineComponent } from 'vue';
   import StatsCard from '~/components/ui/cards/dashboard/StatsCard.vue';
   import BookingCard from '~/components/ui/cards/dashboard/BookingCard.vue';
   import ReviewRow from '~/components/ui/cards/dashboard/ReviewCard.vue';
-  
-  // This just ensures TypeScript recognizes this as a Vue component
- 
+import StatsCards from '../ui/cards/dashboard/StatsCards.vue';
   </script>

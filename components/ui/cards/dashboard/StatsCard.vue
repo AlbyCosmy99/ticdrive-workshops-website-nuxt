@@ -4,7 +4,6 @@
     <div class="flex justify-between items-start mb-2">
       <h3 class="text-gray-500 text-sm font-medium">{{ title }}</h3>
       <div :class="['w-10 h-10 rounded-full flex items-center justify-center', iconBgColor]">
-        <!-- Use dynamic component based on icon type -->
         <component :is="getIconComponent()" class="w-6 h-6" />
       </div>
     </div>
@@ -35,7 +34,7 @@ import StarIcon from "@/public/svg/logos/dashboard/StarsIcon.svg";
 interface StatsCardProps {
   title: string;
   value: string;
-  iconType: string; // Changed from iconSvg to iconType for clearer intent
+  iconType: string;
   iconBgColor: string;
   trend: string;
   trendLabel: string;
@@ -45,7 +44,6 @@ interface StatsCardProps {
 
 const props = defineProps<StatsCardProps>();
 
-// Function to get the correct icon component based on iconType
 const getIconComponent = () => {
   switch (props.iconType) {
     case 'client':
