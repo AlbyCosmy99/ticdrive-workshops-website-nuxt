@@ -1,5 +1,5 @@
 <template>
-  <LayoutAuthRegistration main-image="/images/reg0.png">
+  <LayoutAuthRegistration main-image="/images/reg0.jpg">
     <template #rightContent>
       <LoginForm />
     </template>
