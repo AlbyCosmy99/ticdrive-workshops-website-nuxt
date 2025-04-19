@@ -25,5 +25,4 @@
 </template>
 
 <script setup lang="ts">
-// Navbar stays consistent across all sections
 </script>
