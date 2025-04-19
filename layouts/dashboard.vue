@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import Sidebar from '~/components/dashboard/sidebar/Sidebar.vue';
-import Navbar from '~/components/dashboard/navbar/Navbar.vue';
+import Navbar from '~/components/navbar/Navbar.vue';
+import Sidebar from '~/components/sidebar/Sidebar.vue';
+
+
 
 </script>
 
@@ -9,7 +11,7 @@ import Navbar from '~/components/dashboard/navbar/Navbar.vue';
     <aside class="w-64 p-4">
       <Sidebar />
     </aside>
-    <main class="flex-1 p-6">
+    <main class="flex-1 p-4">
       <Navbar />
       <div class="mt-6">
         <NuxtPage />
