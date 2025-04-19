@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Calendar from '~/components/dashboard/calendar/Calendar.vue';
+import TicDriveCalendar from '~/components/dashboard/calendar/TicDriveCalendar.vue';
 
 definePageMeta({
   layout: 'dashboard',
@@ -8,7 +8,5 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="p-6">
-    <Calendar />
-  </div>
+  <TicDriveCalendar />
 </template>
