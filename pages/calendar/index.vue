@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Calendar from '~/components/dashboard/calendar/Calendar.vue';
+
 definePageMeta({
   layout: 'dashboard',
   middleware: 'auth',
@@ -6,8 +8,7 @@ definePageMeta({
 </script>
 
 <template>
-  <div>
-    <h1 class="text-xl font-semibold mb-4">Calendar</h1>
-    <p>This is the calendar page content.</p>
+  <div class="p-6">
+    <Calendar />
   </div>
 </template>
