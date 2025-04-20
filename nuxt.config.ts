@@ -1,5 +1,3 @@
-// nuxt.config.ts
-import tailwindcss from '@tailwindcss/vite';
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
@@ -14,12 +12,17 @@ export default defineNuxtConfig({
   ],
 
   vite: {
-    plugins: [tailwindcss(), svgLoader()],
+    plugins: [svgLoader()],
   },
 
   build: {
     transpile: ['primevue'],
   },
 
-  modules: ['@nuxt/image', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt'],
+  modules: [
+    '@nuxt/image',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+    '@nuxtjs/tailwindcss',
+  ],
 });
