@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @theme {
   --color-tic: #737373;
   --color-drive: #39b269;
