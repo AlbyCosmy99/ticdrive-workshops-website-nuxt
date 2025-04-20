@@ -1,4 +1,3 @@
-<!-- components/ui/settings/SettingsPage.vue -->
 <template>
   <div class="bg-white">
     <!-- Profile Section -->
@@ -109,10 +108,9 @@
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue';
+import {ref} from 'vue';
 import TicDrivebutton from '@/components/ui/buttons/TicDrivebutton.vue';
 
-// Props for profile image
 interface SettingsPageProps {
   profileImagePath?: string;
 }
@@ -121,11 +119,11 @@ const props = withDefaults(defineProps<SettingsPageProps>(), {
   profileImagePath: 'public/images/Profile.png',
 });
 
-// Emits
+const router = useRouter()
+
 const emit = defineEmits([
   'changePassword',
   'modifyWorkshop',
-  'logout',
   'deleteAccount',
   'modifyProfile',
 ]);
@@ -147,7 +145,9 @@ const modifyWorkshopDetails = () => {
 };
 
 const logout = () => {
-  emit('logout');
+  localStorage.removeItem('token')
+  router.replace('auth/login')
+  
 };
 
 const deleteAccount = () => {

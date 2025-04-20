@@ -26,37 +26,22 @@
       @submit.prevent="handleSubmit"
       class="flex flex-col w-[90%] px-14 items-center m-auto max-w-lg lg:max-w-full"
     >
-      <FormInput
+      <TicDriveInput
         id="username"
         label="Username"
         placeholder="Inserisci username"
         v-model="username"
       />
 
-      <div class="w-full max-w-lg lg:max-w-full">
-        <div class="self-start mt-2.5 text-base text-black">
-          <label for="password">Password</label>
-        </div>
+      <TicDriveInput
+        id="password"
+        label="Password"
+        type="password"
+        placeholder="Inserisci password"
+        v-model="password"
+      />
 
-        <div
-          class="flex gap-5 justify-between px-8 py-4 mt-3 max-w-full w-full text-base font-light bg-white rounded-3xl border border-solid border-neutral-400 border-opacity-60 text-neutral-400 w-[435px] max-md:px-5"
-        >
-          <input
-            :type="passwordVisible ? 'text' : 'password'"
-            id="password"
-            placeholder="Inserisci password"
-            v-model="password"
-            class="bg-transparent outline-none w-full text-neutral-400"
-          />
-          <NuxtImg
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/6985640710eeb41e49e1efa67ef16cb3f8b29c3408fb1e345a7504c0c37e74c5?placeholderIfAbsent=true&apiKey=60b2620725b44e1c95ff63fd7ebca566"
-            alt="Toggle password visibility"
-            class="object-contain shrink-0 my-auto aspect-square w-[18px] cursor-pointer"
-            @click="togglePasswordVisibility"
-            width="18"
-            height="18"
-          />
-        </div>
+      <div class="w-full max-w-lg lg:max-w-full">
         <div
           class="flex justify-between gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full"
         >
@@ -88,10 +73,10 @@
 <script lang="ts" setup>
 import {ref, computed, onMounted} from 'vue';
 import useStepStore from '~/store/step';
-import FormInput from './FormInput.vue';
 import CheckboxField from './CheckboxField.vue';
 import useAuthStore from '~/store/auth';
 import TicDriveAuthSlider from './ui/sliders/TicDriveAuthSlider.vue';
+import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue'
 
 const useStore = useStepStore();
 const username = ref('');

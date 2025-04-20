@@ -8,14 +8,14 @@
     </h4>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
-      <FormInput
+      <TicDriveInput
         id="name"
         label="Name"
         placeholder="es. Mario"
         v-model="stepValues.name"
         :error-message="v$.name.$errors[0]?.$message || ''"
       />
-      <FormInput
+      <TicDriveInput
         id="surname"
         label="Cognome"
         placeholder="es. Rossi"
@@ -24,7 +24,7 @@
       />
     </div>
 
-    <FormInput
+    <TicDriveInput
       id="tel"
       label="Telefono"
       placeholder="+39 *** *******"
@@ -32,21 +32,21 @@
       type="tel"
       :error-message="v$.phoneNumber.$errors[0]?.$message || ''"
     />
-    <FormInput
+    <TicDriveInput
       id="email"
       label="Email"
       placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
       v-model="stepValues.email"
       :error-message="v$.email.$errors[0]?.$message || ''"
     />
-    <FormInput
+    <TicDriveInput
       id="workshop"
       label="Nome dell’officina"
       placeholder="es. Autofficina rossi"
       v-model="stepValues.workshopName"
       :error-message="v$.workshopName.$errors[0]?.$message || ''"
     />
-    <FormInput
+    <TicDriveInput
       id="postalCode"
       label="Codice postale"
       placeholder="es. 20100"
@@ -78,6 +78,7 @@ import {required, email, numeric, helpers} from '@vuelidate/validators';
 import {defineProps, defineEmits, defineExpose, computed} from 'vue';
 import useStepStore from '~/store/step';
 import type {StepOneData} from '~/types/auth/steps/StepOneData';
+import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue'
 
 const props = defineProps<{
   stepValues: StepOneData;

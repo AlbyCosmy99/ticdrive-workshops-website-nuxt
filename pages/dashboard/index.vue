@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Dashboard from '~/components/dashboard/Dashboard.vue';
+
 definePageMeta({
   layout: 'dashboard',
   middleware: 'auth',
@@ -6,8 +8,5 @@ definePageMeta({
 </script>
 
 <template>
-  <div>
-    <h1 class="text-xl font-semibold mb-4">Dashboard</h1>
-    <p>This is the dashboard page content.</p>
-  </div>
+  <Dashboard />
 </template>
