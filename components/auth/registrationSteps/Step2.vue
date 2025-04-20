@@ -82,6 +82,7 @@
 import useVuelidate from '@vuelidate/core';
 import {helpers, required} from '@vuelidate/validators';
 import {defineProps, defineExpose, computed} from 'vue';
+import useStepStore from '~/store/step';
 
 interface StepTwoData {
   fullAddress: {
@@ -112,6 +113,8 @@ defineExpose({
   },
 });
 
+const stepStore = useStepStore()
+
 const rules = computed(() => ({
   fullAddress: {
     add1: {
@@ -130,4 +133,8 @@ const rules = computed(() => ({
 }));
 
 const v$ = useVuelidate(rules, props.stepValues);
+
+onMounted(() => {
+  console.log(stepStore.stepOneData)
+})
 </script>

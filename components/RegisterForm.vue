@@ -101,7 +101,7 @@ const stepSixRef = ref<InstanceType<typeof Step6> | null>(null);
 const stepSevenRef = ref<InstanceType<typeof Step7> | null>(null);
 const stepEightRef = ref<InstanceType<typeof Step8> | null>(null);
 
-const buttonDisableStatus = computed(() => !stepStore.stepOneData.accept2);
+const buttonDisableStatus = computed(() => !stepStore.stepOneData.acceptUpdates);
 
 const showToast = useToast()
 
