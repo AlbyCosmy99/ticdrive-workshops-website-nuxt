@@ -9,25 +9,25 @@
     <div class="flex flex-col mt-10">
       <h4 class="text-2xl text-gray-500 font-semibold">Indirizzo completo:</h4>
 
-      <FormInput
+      <TicDriveInput
         placeholder="Via e Numero Civico:"
         v-model="stepValues.fullAddress.add1"
         size="small"
         :error-message="v$.fullAddress.add1.$errors[0]?.$message || ''"
       />
-      <FormInput
+      <TicDriveInput
         placeholder="Città:"
         v-model="stepValues.fullAddress.add2"
         size="small"
         :error-message="v$.fullAddress.add2.$errors[0]?.$message || ''"
       />
-      <FormInput
+      <TicDriveInput
         placeholder="Provincia:"
         v-model="stepValues.fullAddress.add3"
         size="small"
         :error-message="v$.fullAddress.add3.$errors[0]?.$message || ''"
       />
-      <FormInput
+      <TicDriveInput
         placeholder="CAP:"
         v-model="stepValues.fullAddress.add4"
         size="small"
@@ -38,12 +38,12 @@
     <div class="mt-4">
       <h4 class="text-2xl text-gray-500 font-semibold">Contatti Aziendali</h4>
       <div class="flex flex-col">
-        <FormInput
+        <TicDriveInput
           placeholder="Numero di telefono aziendale (fisso o cellulare):"
           v-model="stepValues.companyContact.contact1"
           size="small"
         />
-        <FormInput
+        <TicDriveInput
           placeholder="Indirizzo email aziendale"
           v-model="stepValues.companyContact.contact2"
           size="small"
@@ -55,17 +55,17 @@
       <h4 class="text-2xl text-gray-500 font-semibold">
         Contatti di Riferimento
       </h4>
-      <FormInput
+      <TicDriveInput
         placeholder="Nome e Cognome del Referente:"
         v-model="stepValues.referContact.contact1"
         size="small"
       />
-      <FormInput
+      <TicDriveInput
         placeholder="Telefono diretto:"
         v-model="stepValues.referContact.contact2"
         size="small"
       />
-      <FormInput
+      <TicDriveInput
         placeholder="Email di contatto operativo:"
         v-model="stepValues.referContact.contact3"
         size="small"
@@ -83,6 +83,7 @@ import useVuelidate from '@vuelidate/core';
 import {helpers, required} from '@vuelidate/validators';
 import {defineProps, defineExpose, computed} from 'vue';
 import useStepStore from '~/store/step';
+import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue'
 
 interface StepTwoData {
   fullAddress: {
