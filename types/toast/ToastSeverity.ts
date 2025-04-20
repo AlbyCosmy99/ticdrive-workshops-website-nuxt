@@ -1,1 +1,7 @@
-export type ToastSeverity = 'success' | 'info' | 'warn' | 'error' | 'secondary' | 'contrast';
+export type ToastSeverity =
+  | 'success'
+  | 'info'
+  | 'warn'
+  | 'error'
+  | 'secondary'
+  | 'contrast';

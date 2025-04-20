@@ -88,7 +88,7 @@ import Step6 from './auth/registrationSteps/Step6.vue';
 import Step7 from './auth/registrationSteps/Step7.vue';
 import Step8 from './auth/registrationSteps/Step8.vue';
 import TicDrivebutton from './ui/buttons/TicDrivebutton.vue';
-import useToast from '@/composables/useToast'
+import useToast from '@/composables/useToast';
 
 const stepStore = useStepStore();
 
@@ -101,9 +101,11 @@ const stepSixRef = ref<InstanceType<typeof Step6> | null>(null);
 const stepSevenRef = ref<InstanceType<typeof Step7> | null>(null);
 const stepEightRef = ref<InstanceType<typeof Step8> | null>(null);
 
-const buttonDisableStatus = computed(() => !stepStore.stepOneData.acceptUpdates);
+const buttonDisableStatus = computed(
+  () => !stepStore.stepOneData.acceptUpdates,
+);
 
-const showToast = useToast()
+const showToast = useToast();
 
 const checkToggle = (
   key: keyof typeof stepStore.stepOneData,

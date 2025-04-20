@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import type { StepOneData } from '~/types/auth/steps/StepOneData';
+import type {StepOneData} from '~/types/auth/steps/StepOneData';
 
 interface StepTwoData {
   fullAddress: {

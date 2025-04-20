@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import Navbar from '~/components/navbar/Navbar.vue';
 import Sidebar from '~/components/sidebar/Sidebar.vue';
-
-
-
 </script>
 
 <template>
