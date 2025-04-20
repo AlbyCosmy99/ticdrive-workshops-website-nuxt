@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full max-md:mt-10 max-md:max-w-full">
     <NuxtImg
-      src="/svg/ticDriveLogo.svg"
+      src="/svg/TicDriveLogo.svg"
       alt="TicDrive logo"
       class="object-contain self-center max-w-full aspect-square"
       width="140"
