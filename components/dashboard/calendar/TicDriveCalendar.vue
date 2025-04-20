@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+  <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 flex flex-col h-[85vh]">
     <h1 class="text-2xl font-semibold mb-6">Calendario Prenotazioni</h1>
 
     <div class="flex justify-between items-center mb-6">
@@ -55,9 +55,11 @@
       </div>
     </div>
 
-    <DayView v-if="activeView === 'day'" />
-    <WeekView v-else-if="activeView === 'week'" />
-    <MonthView v-else-if="activeView === 'month'" />
+    <div class="flex-grow flex flex-col">
+      <DayView v-if="activeView === 'day'" class="flex-grow" />
+      <WeekView v-else-if="activeView === 'week'" class="flex-grow" />
+      <MonthView v-else-if="activeView === 'month'" class="flex-grow" />
+    </div>
   </div>
 </template>
 
