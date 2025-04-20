@@ -40,11 +40,11 @@
       :error-message="v$.email.$errors[0]?.$message || ''"
     />
     <FormInput
-      id="workSpace"
+      id="workshop"
       label="Nome dell’officina"
       placeholder="es. Autofficina rossi"
-      v-model="stepValues.workSpace"
-      :error-message="v$.workSpace.$errors[0]?.$message || ''"
+      v-model="stepValues.workshop"
+      :error-message="v$.workshop.$errors[0]?.$message || ''"
     />
     <FormInput
       id="postalCode"
@@ -83,7 +83,7 @@ interface StepOneData {
   surname: string;
   tel: string;
   email: string;
-  workSpace: string;
+  workshop: string;
   postalCode: string;
   accept1: boolean;
   accept2: boolean;
@@ -121,7 +121,7 @@ const rules = computed(() => ({
     required: helpers.withMessage('Email is required', required),
     email: helpers.withMessage('Invalid email format', email),
   },
-  workSpace: {
+  workshop: {
     required: helpers.withMessage('Workspace name is required', required),
   },
   postalCode: {

@@ -88,11 +88,9 @@ import Step6 from './auth/registrationSteps/Step6.vue';
 import Step7 from './auth/registrationSteps/Step7.vue';
 import Step8 from './auth/registrationSteps/Step8.vue';
 import TicDrivebutton from './ui/buttons/TicDrivebutton.vue';
-import type {ToastSeverity} from '~/types/toast/ToastSeverity';
 import useToast from '@/composables/useToast'
 
 const stepStore = useStepStore();
-const nuxtApp = useNuxtApp();
 
 const stepOneRef = ref<InstanceType<typeof Step1> | null>(null);
 const stepTwoRef = ref<InstanceType<typeof Step2> | null>(null);
