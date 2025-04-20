@@ -1,18 +1,17 @@
 <template>
-  <div class="flex flex-col w-full max-md:mt-10 max-md:max-w-full">
+  <div
+    class="flex flex-col w-full justify-center items-center max-md:max-w-full"
+  >
     <NuxtImg
       src="/svg/TicDriveLogo.svg"
       alt="TicDrive logo"
-      class="object-contain self-center max-w-full aspect-square"
-      width="140"
-      height="140"
+      width="130"
+      height="130"
     />
     <div
-      class="flex flex-col self-center max-w-full font-medium whitespace-nowrap w-[370px]"
+      class="mt-8 flex flex-col self-center max-w-full font-medium whitespace-nowrap w-[370px]"
     >
-      <h1
-        class="self-center max-w-full text-4xl rounded-none text-zinc-600 text-tic"
-      >
+      <h1 class="mb-4 self-center max-w-full text-4xl rounded-none text-tic">
         Benvenuto!
       </h1>
 
@@ -71,14 +70,14 @@
             class="cursor-pointer self-start text-xs font-light text-black hover:underline focus:outline-none focus:underline"
             @click="forgotPassword"
           >
-            Password dimenticataaa?
+            Password dimenticata?
           </button>
         </div>
       </div>
       <button
         type="submit"
         :disabled="!password || !username || loading"
-        class="self-center px-16 py-3.5 mt-10 max-w-full text-base text-white whitespace-nowrap bg-drive bg-opacity-50 rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-drive focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
+        class="self-center px-16 py-3.5 mt-10 max-w-full text-base text-white whitespace-nowrap bg-drive rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-drive focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
       >
         {{ loading ? 'Loading...' : 'Login' }}
       </button>

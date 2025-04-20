@@ -1,16 +1,19 @@
-import {useToast} from 'primevue/usetoast';
+import type {ToastSeverity} from '@/types/toast/ToastSeverity';
 
 export default defineNuxtPlugin(nuxtApp => {
-  const toast = useToast();
-
   nuxtApp.provide(
     'toastMessage',
-    (severity: string, summary: string, detail: string) => {
-      toast.add({
-        severity: severity,
-        summary: summary,
-        detail: detail,
-        life: 3000,
+    (
+      severity: ToastSeverity,
+      summary: string,
+      detail: string,
+      life: number = 3000,
+    ) => {
+      nuxtApp.vueApp.config.globalProperties.$toast.add({
+        severity,
+        summary,
+        detail,
+        life,
       });
     },
   );
