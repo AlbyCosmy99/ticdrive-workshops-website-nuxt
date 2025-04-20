@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col h-full">
     <!-- Week header showing current week range -->
     <div class="flex justify-center items-center mb-4">
       <h2 class="text-xl font-semibold">{{ weekRangeText }}</h2>
@@ -22,7 +22,7 @@
     </div>
 
     <!-- Calendar grid -->
-    <div class="border border-gray-200 rounded-lg overflow-hidden flex mt-4">
+    <div class="border border-gray-200 rounded-lg overflow-hidden flex mt-4 flex-grow">
       <!-- Time column -->
       <div class="w-20 border-r border-gray-200">
         <div
@@ -35,7 +35,7 @@
       </div>
 
       <!-- Events grid -->
-      <div class="flex-1 grid grid-cols-5">
+      <div class="flex-1 flex flex-col">
         <!-- For each time slot -->
         <template v-for="(time, timeIndex) in timeSlots" :key="time">
           <!-- For each day of the week -->
@@ -75,8 +75,8 @@
                   <span>Disponibilità</span>
                 </div>
               </div>
-            </div>
-          </template>
+            </template>
+          </div>
         </template>
       </div>
     </div>
@@ -130,7 +130,7 @@ const weekDays = ref([
 
 // Function to generate week days based on current displayedWeekStart
 const generateWeekDays = () => {
-  const dayNames = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven'];
+  const dayNames = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
   const newWeekDays = [];
 
   for (let i = 0; i < 5; i++) {

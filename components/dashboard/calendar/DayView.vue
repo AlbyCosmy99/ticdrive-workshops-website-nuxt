@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col h-full">
     <!-- Day header showing current date -->
     <div class="flex justify-center items-center mb-4">
       <button
@@ -45,7 +45,7 @@
       </button>
     </div>
 
-    <div class="border border-gray-200 rounded-lg overflow-hidden flex">
+    <div class="border border-gray-200 rounded-lg overflow-hidden flex flex-grow">
       <!-- Time column -->
       <div class="w-20 border-r border-gray-200">
         <div

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col h-full">
     <!-- Month header showing current month/year -->
     <div class="flex justify-center items-center mb-4">
       <button
@@ -59,13 +59,13 @@
     </div>
 
     <!-- Calendar grid -->
-    <div class="border border-gray-200 rounded-lg overflow-hidden mt-4">
-      <div class="grid grid-cols-7">
+    <div class="border border-gray-200 rounded-lg overflow-hidden mt-4 flex-grow">
+      <div class="grid grid-cols-7 h-full">
         <!-- For each day in month -->
         <div
           v-for="(day, index) in daysInMonth"
           :key="index"
-          class="h-28 border border-gray-200 p-2 relative"
+          class="border border-gray-200 p-2 relative"
           :class="{
             'bg-gray-50': !isCurrentMonth(day),
             'border-drive': isToday(day),
