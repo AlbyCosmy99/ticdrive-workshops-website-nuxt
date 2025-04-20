@@ -1,5 +1,3 @@
-process.env.TAILWIND_DISABLE_OXIDE = "1";
-
 module.exports = {
   content: [
     './pages/**/*.{vue,js,ts,jsx,tsx}',
