@@ -1,6 +1,6 @@
 <template>
   <div
-    class="step-1 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center px-20"
+    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center px-20"
   >
     <h1 class="text-4xl text-gray-500 font-semibold">
       Informazioni sull'attività
