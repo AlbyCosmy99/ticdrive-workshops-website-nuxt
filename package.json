@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@primevue/nuxt-module": "^4.3.3",
+    "rollup": "^4.40.0",
     "vite-svg-loader": "^5.1.0"
   }
 }
