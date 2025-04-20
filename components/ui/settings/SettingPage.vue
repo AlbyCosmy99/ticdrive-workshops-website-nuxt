@@ -8,7 +8,11 @@
         <div class="flex items-center gap-4 justify-between">
           <div class="flex items-center gap-4">
             <div class="rounded-full overflow-hidden h-16 w-16">
-              <img :src="profileImageSrc" alt="Profile Image" class="object-cover w-full h-full" />
+              <img
+                :src="profileImageSrc"
+                alt="Profile Image"
+                class="object-cover w-full h-full"
+              />
             </div>
             <div>
               <h3 class="text-lg font-semibold">{{ profileName }}</h3>
@@ -24,65 +28,76 @@
     <div class="bg-white">
       <div class="px-6">
         <h2 class="text-xl font-bold mb-6">Impostazioni</h2>
-        
+
         <!-- Name Field -->
         <div class="mb-6 border-b pb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Nome Cognome</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1"
+            >Nome Cognome</label
+          >
           <div class="text-gray-800">Mario Rossi</div>
         </div>
-        
+
         <!-- Email Field -->
         <div class="mb-6 border-b pb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1"
+            >Email</label
+          >
           <div class="text-gray-800">mariorossi@gmail.com</div>
         </div>
-        
+
         <!-- Phone Field -->
         <div class="mb-6 border-b pb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Numero di telefono</label>
-          <div class="text-gray-500">Aggiungi un numero di telefono per poterti contattare in caso di necesità</div>
+          <label class="block text-sm font-medium text-gray-700 mb-1"
+            >Numero di telefono</label
+          >
+          <div class="text-gray-500">
+            Aggiungi un numero di telefono per poterti contattare in caso di
+            necesità
+          </div>
         </div>
-        
+
         <!-- Address Field -->
         <div class="mb-6 border-b pb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Indirizzo</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1"
+            >Indirizzo</label
+          >
           <div class="text-gray-800">Via Mario Rossi, 12345, Padova PD</div>
         </div>
-        
+
         <!-- Password Change -->
         <div class="mb-6 border-b pb-6">
-          <button 
-            @click="changePassword" 
+          <button
+            @click="changePassword"
             class="text-green-600 font-medium hover:text-green-700"
           >
             Cambio Password
           </button>
         </div>
-        
+
         <!-- Modify Workshop Details -->
         <div class="mb-6 border-b pb-6">
-          <button 
-            @click="modifyWorkshopDetails" 
+          <button
+            @click="modifyWorkshopDetails"
             class="text-green-600 font-medium hover:text-green-700"
           >
             Modifica dettagli Officina
           </button>
         </div>
-        
+
         <!-- Logout -->
         <div class="mb-6 border-b pb-6">
-          <button 
-            @click="logout" 
+          <button
+            @click="logout"
             class="text-green-600 font-medium hover:text-green-700"
           >
             Logout
           </button>
         </div>
-        
+
         <!-- Delete Account -->
         <div class="pb-6">
-          <button 
-            @click="deleteAccount" 
+          <button
+            @click="deleteAccount"
             class="text-red-500 font-medium hover:text-red-600"
           >
             Elimina account
@@ -94,7 +109,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import {ref, computed} from 'vue';
 import TicDrivebutton from '@/components/ui/buttons/TicDrivebutton.vue';
 
 // Props for profile image
@@ -103,11 +118,17 @@ interface SettingsPageProps {
 }
 
 const props = withDefaults(defineProps<SettingsPageProps>(), {
-  profileImagePath: 'public/images/Profile.png'
+  profileImagePath: 'public/images/Profile.png',
 });
 
 // Emits
-const emit = defineEmits(['changePassword', 'modifyWorkshop', 'logout', 'deleteAccount', 'modifyProfile']);
+const emit = defineEmits([
+  'changePassword',
+  'modifyWorkshop',
+  'logout',
+  'deleteAccount',
+  'modifyProfile',
+]);
 
 // User profile data
 const profileName = ref('Alex Rossi');

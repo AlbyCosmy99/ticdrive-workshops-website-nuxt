@@ -19,7 +19,9 @@
       </div>
 
       <!-- Right Section -->
-      <div class="lg:overflow-y-auto p-4 flex justify-center items-center flex-col min-h-0">
+      <div
+        class="lg:overflow-y-auto p-4 flex justify-center items-center flex-col min-h-0"
+      >
         <slot name="rightContent" />
         <Toast />
       </div>

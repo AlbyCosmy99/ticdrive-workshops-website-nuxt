@@ -1,6 +1,6 @@
 <!-- pages/settings/index.vue -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import {ref} from 'vue';
 import PasswordChangeModal from '~/components/ui/settings/PasswordChangeModal.vue';
 import SettingsPage from '~/components/ui/settings/SettingPage.vue';
 
@@ -24,7 +24,10 @@ const closePasswordModal = () => {
   showPasswordModal.value = false;
 };
 
-const saveNewPassword = (passwordData: { currentPassword: string; newPassword: string }) => {
+const saveNewPassword = (passwordData: {
+  currentPassword: string;
+  newPassword: string;
+}) => {
   // Handle password change logic here
   console.log('Changing password:', passwordData);
   showPasswordModal.value = false;
@@ -50,14 +53,14 @@ const handleDeleteAccount = () => {
 
 <template>
   <div>
-    <SettingsPage 
+    <SettingsPage
       :profile-image-path="profileImagePath"
       @change-password="openPasswordModal"
       @modify-workshop="handleModifyWorkshop"
       @logout="handleLogout"
       @delete-account="handleDeleteAccount"
     />
-    <PasswordChangeModal 
+    <PasswordChangeModal
       :is-open="showPasswordModal"
       @close="closePasswordModal"
       @save="saveNewPassword"

@@ -113,7 +113,7 @@ defineExpose({
   },
 });
 
-const stepStore = useStepStore()
+const stepStore = useStepStore();
 
 const rules = computed(() => ({
   fullAddress: {
@@ -135,6 +135,6 @@ const rules = computed(() => ({
 const v$ = useVuelidate(rules, props.stepValues);
 
 onMounted(() => {
-  console.log(stepStore.stepOneData)
-})
+  console.log(stepStore.stepOneData);
+});
 </script>

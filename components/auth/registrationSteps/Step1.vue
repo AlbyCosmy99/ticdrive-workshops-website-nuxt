@@ -77,7 +77,7 @@ import useVuelidate from '@vuelidate/core';
 import {required, email, numeric, helpers} from '@vuelidate/validators';
 import {defineProps, defineEmits, defineExpose, computed} from 'vue';
 import useStepStore from '~/store/step';
-import type { StepOneData } from '~/types/auth/steps/StepOneData';
+import type {StepOneData} from '~/types/auth/steps/StepOneData';
 
 const props = defineProps<{
   stepValues: StepOneData;
