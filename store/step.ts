@@ -5,7 +5,7 @@ interface StepOneData {
   surname: string;
   tel: string;
   email: string;
-  workSpace: string;
+  workshop: string;
   postalCode: string;
   accept1: boolean;
   accept2: boolean;
@@ -111,7 +111,7 @@ const useStepStore = defineStore('step', {
       surname: '',
       tel: '',
       email: '',
-      workSpace: '',
+      workshop: '',
       postalCode: '',
       accept1: false,
       accept2: false,
