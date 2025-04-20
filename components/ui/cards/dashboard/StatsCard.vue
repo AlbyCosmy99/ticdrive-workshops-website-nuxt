@@ -1,13 +1,13 @@
 <!-- components/ui/StatsCard.vue -->
 <template>
-  <div class="bg-white rounded-lg shadow p-4 flex flex-col">
-    <div class="flex justify-between items-start mb-2">
+  <div :class="['bg-white rounded-lg shadow p-4 flex flex-col justify-between', cardClass]" style="width: 262px; height: 161px;">
+    <div class="flex justify-between items-start">
       <h3 class="text-gray-500 text-sm font-medium">{{ title }}</h3>
-      <div :class="['w-10 h-10 rounded-full flex items-center justify-center', iconBgColor]">
-        <component :is="getIconComponent()" class="w-6 h-6" />
+      <div class="flex items-center justify-center">
+        <img v-if="iconPath" :src="iconPath" :style="{ width: iconSize, height: iconSize }" alt="icon" />
       </div>
     </div>
-    <div class="flex items-end justify-between">
+    <div class="flex items-end justify-between mt-auto">
       <div>
         <h2 class="text-3xl font-bold">{{ value }}</h2>
         <div class="flex items-center mt-2 text-sm">
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div v-if="rating" class="flex items-center bg-amber-100 rounded-full px-2 py-1">
-        <StarIcon class="w-4 h-4 text-amber-500 mr-1" />
+        <img src="@/public/svg/logos/dashboard/StarsIcon.svg" class="w-4 h-4 text-amber-500 mr-1" alt="star" />
         <span class="font-bold text-sm">{{ rating }}</span>
       </div>
     </div>
@@ -24,41 +24,20 @@
 </template>
 
 <script setup lang="ts">
-import ClientIcon from "@/public/svg/logos/dashboard/ClientIcon.svg";
-import CalendarIcon from "@/public/svg/logos/dashboard/PrenotazRaggiunte.svg";
-import DashboardIcon from "@/public/svg/logos/dashboard/TotalGain.svg";
-import BookingsIcon from "@/public/svg/logos/dashboard/TotReview.svg";
-import SettingsIcon from "@/public/svg/logos/sidebar/notSelected/settings.svg";
-import StarIcon from "@/public/svg/logos/dashboard/StarsIcon.svg";
-
 interface StatsCardProps {
   title: string;
   value: string;
-  iconType: string;
-  iconBgColor: string;
+  iconPath: string;
   trend: string;
   trendLabel: string;
   trendColor: string;
   rating?: string;
+  iconSize?: string;
+  cardClass?: string;
 }
 
 const props = defineProps<StatsCardProps>();
 
-const getIconComponent = () => {
-  switch (props.iconType) {
-    case 'client':
-      return ClientIcon;
-    case 'calendar':
-      return CalendarIcon;
-    case 'dashboard':
-      return DashboardIcon;
-    case 'bookings':
-      return BookingsIcon;
-    case 'settings':
-      return SettingsIcon;
-    default:
-      return ClientIcon; 
-      
-  }
-};
+// Default values for optional props
+const iconSize = props.iconSize || '24px';
 </script>
