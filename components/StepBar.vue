@@ -2,7 +2,7 @@
   <div class="p-4 w-full max-w-lg lg:max-w-full mx-auto">
     <NuxtImg
       v-if="isRegisterRoute"
-      src="/images/ticDriveLogo.png"
+      src="/svg/TicDriveLogo.svg"
       alt="logo"
       class="mx-auto lg:absolute right-4 top-0 w-[120px] h-[120px]"
       width="120"

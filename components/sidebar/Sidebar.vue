@@ -5,7 +5,7 @@
     <div class="px-6 mb-12">
       <div class="flex items-center justify-center">
         <NuxtImg
-          src="/svg/ticDriveLogo.svg"
+          src="/svg/TicDriveLogo.svg"
           alt="TicDrive logo"
           class="object-contain self-center max-w-full aspect-square"
           width="120"
