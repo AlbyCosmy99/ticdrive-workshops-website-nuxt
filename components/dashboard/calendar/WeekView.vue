@@ -17,13 +17,13 @@
     </div>
 
     <!-- Grid -->
-    <div class="border border-gray-200 rounded-lg overflow-hidden flex mt-4 flex-grow">
+    <div class="border border-gray-200 rounded-lg overflow-hidden flex mt-4">
       <!-- Time column -->
       <div class="w-20 border-r border-gray-200 flex flex-col">
-        <div v-for="time in timeSlots" 
+        <div v-for="(time, index) in timeSlots" 
              :key="time" 
-             class="flex-1 flex items-center justify-center border-b border-gray-200 text-gray-600 font-medium"
-             :class="{ 'border-b-0': timeSlots.indexOf(time) === timeSlots.length - 1 }">
+             class="h-20 flex items-center justify-center border-b border-gray-200 text-gray-600 font-medium"
+             :class="{ 'border-b-0': index === timeSlots.length - 1 }">
           {{ time }}
         </div>
       </div>
@@ -31,13 +31,12 @@
       <!-- Events grid -->
       <div class="flex-1 flex flex-col">
         <template v-for="(time, timeIndex) in timeSlots" :key="time">
-          <div class="flex-1 grid grid-cols-7 border-b border-gray-200" :class="{ 'border-b-0': timeIndex === timeSlots.length - 1 }">
+          <div class="h-20 grid grid-cols-7 border-b border-gray-200" :class="{ 'border-b-0': timeIndex === timeSlots.length - 1 }">
             <!-- For each day of the week -->
             <template v-for="(day, dayIndex) in weekDays" :key="`${time}-${day.name}`">
               <div
-                class="h-20 w-full border-b border-r border-gray-200 p-1 relative"
+                class="h-20 w-full border-r border-gray-200 p-1 relative"
                 :class="{
-                  'border-b-0': timeIndex === timeSlots.length - 1,
                   'border-r-0': dayIndex === weekDays.length - 1,
                 }"
               >

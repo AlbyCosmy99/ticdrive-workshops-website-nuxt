@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <div class="flex-grow flex flex-col">
+    <div class="flex-grow flex flex-col overflow-auto">
       <DayView v-if="activeView === 'day'" class="flex-grow" />
       <WeekView v-else-if="activeView === 'week'" class="flex-grow" />
       <MonthView v-else-if="activeView === 'month'" class="flex-grow" />

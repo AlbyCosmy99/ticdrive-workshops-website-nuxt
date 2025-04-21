@@ -50,17 +50,17 @@
       <div class="w-20 border-r border-gray-200 flex flex-col">
         <div v-for="time in timeSlots" 
              :key="time" 
-             class="flex-1 flex items-center justify-center border-b border-gray-200 text-gray-600 font-medium"
+             class="h-20 flex items-center justify-center border-b border-gray-200 text-gray-600 font-medium"
              :class="{ 'border-b-0': timeSlots.indexOf(time) === timeSlots.length - 1 }">
           {{ time }}
         </div>
       </div>
 
       <!-- Events grid -->
-      <div class="flex-1 grid grid-cols-1">
+      <div class="flex-1 flex flex-col">
         <!-- Dynamic rows for each timeslot -->
         <template v-for="(time, timeIndex) in timeSlots" :key="time">
-          <div class="grid grid-cols-5 border-b border-gray-200 flex-1" :class="{ 'border-b-0': timeIndex === timeSlots.length - 1 }">
+          <div class="h-20 grid grid-cols-5 border-b border-gray-200" :class="{ 'border-b-0': timeIndex === timeSlots.length - 1 }">
             <!-- First column: 08:00, 09:00, etc. -->
             <template v-if="time === '09:00'">
               <div class="border-r border-gray-200 p-1"></div>
