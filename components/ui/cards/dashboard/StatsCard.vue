@@ -39,5 +39,6 @@ interface StatsCardProps {
 const props = defineProps<StatsCardProps>();
 
 // Default values for optional props
+// or tra iconSize a size =24
 const iconSize = props.iconSize || '24px';
 </script>

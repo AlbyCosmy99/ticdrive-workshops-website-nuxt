@@ -4,7 +4,7 @@ import StatsCard from './StatsCard.vue';
 <template>
   <div class="mb-8">
     <div class="flex flex-wrap gap-3 w-full">
-      <div class="flex flex-wrap justify-between w-full">
+      <div class="flex flex-wrap gap-2 justify-between w-full">
         <StatsCard
           title="Clienti Unici"
           value="800"
