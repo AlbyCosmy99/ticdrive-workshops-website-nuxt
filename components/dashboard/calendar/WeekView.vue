@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import AppointmentCard from './AppointmentCard.vue';
 
 const monthNames = [
@@ -108,7 +108,7 @@ const generateWeekDays = () => {
       number: day.getDate().toString(),
     });
   }
-  weekDays.value = result;
+  weekDays.value = newWeekDays;
 };
 generateWeekDays();
 
