@@ -26,12 +26,14 @@
     "pinia-plugin-persistedstate": "^4.2.0",
     "primeicons": "^7.0.0",
     "primevue": "^3.53.1",
-    "tailwindcss": "^4.0.14",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.13.2",
     "@primevue/nuxt-module": "^4.3.3",
+    "rollup": "^4.40.0",
+    "tailwindcss": "^3.4.17",
     "vite-svg-loader": "^5.1.0"
   }
 }

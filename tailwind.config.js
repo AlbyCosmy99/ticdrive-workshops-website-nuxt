@@ -1,4 +1,3 @@
-// tailwind.config.js
 module.exports = {
   content: [
     './pages/**/*.{vue,js,ts,jsx,tsx}',

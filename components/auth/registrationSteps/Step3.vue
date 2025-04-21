@@ -1,6 +1,6 @@
 <template>
   <div
-    class="step-2 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
+    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
   >
     <h1 class="text-4xl text-gray-500 font-semibold">
       Officina specializzata in:

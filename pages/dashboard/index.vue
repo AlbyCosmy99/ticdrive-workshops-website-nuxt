@@ -8,5 +8,5 @@ definePageMeta({
 </script>
 
 <template>
-  <Dashboard/>
+  <Dashboard />
 </template>

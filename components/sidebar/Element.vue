@@ -6,7 +6,10 @@
     ></div>
     <button
       @click="$router.push(path)"
-      :class="['cursor-pointer font-medium text-base flex items-center w-full py-3 px-4 rounded-md text-black transition-colors group', currentRoute === path && 'bg-drive text-white']"
+      :class="[
+        'cursor-pointer font-medium text-base flex items-center w-full py-3 px-4 rounded-md text-black transition-colors group',
+        currentRoute === path && 'bg-drive text-white',
+      ]"
     >
       <div class="w-8 mr-3 flex items-center justify-center">
         <slot name="icon" />
@@ -18,10 +21,10 @@
 
 <script setup lang="ts">
 defineProps<{
-  title: string
-  path: string
-}>()
+  title: string;
+  path: string;
+}>();
 
-const route = useRoute()
-const currentRoute = computed(() => route.path)
+const route = useRoute();
+const currentRoute = computed(() => route.path);
 </script>

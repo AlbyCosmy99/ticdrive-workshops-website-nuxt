@@ -1,11 +1,11 @@
 <template>
   <div
-    class="w-[220px] bg-white h-[66.6667vh] rounded-lg border border-gray-200 flex flex-col py-6 shadow-sm relative"
+    class="w-[220px] bg-white h-[85vh] rounded-lg border border-gray-200 flex flex-col py-6 shadow-sm relative"
   >
     <div class="px-6 mb-12">
       <div class="flex items-center justify-center">
         <NuxtImg
-          src="/svg/ticDriveLogo.svg"
+          src="/svg/TicDriveLogo.svg"
           alt="TicDrive logo"
           class="object-contain self-center max-w-full aspect-square"
           width="120"
@@ -16,26 +16,26 @@
     <div class="flex flex-col flex-grow space-y-1 px-4">
       <Element path="/dashboard" title="Dashboard">
         <template #icon>
-          <SelectedDashboardLogo v-if="currentRoute === '/dashboard'"/>
-          <DashboardLogo v-else/>
+          <SelectedDashboardLogo v-if="currentRoute === '/dashboard'" />
+          <DashboardLogo v-else />
         </template>
       </Element>
       <Element path="/bookings" title="Prenotazioni">
         <template #icon>
-          <SelectedBookingsLogo v-if="currentRoute === '/bookings'"/>
-          <BookingsLogo v-else/>
+          <SelectedBookingsLogo v-if="currentRoute === '/bookings'" />
+          <BookingsLogo v-else />
         </template>
       </Element>
       <Element path="/calendar" title="Calendario">
         <template #icon>
-          <SelectedCalendarLogo v-if="currentRoute === '/calendar'"/>
-          <CalendarLogo v-else/>
+          <SelectedCalendarLogo v-if="currentRoute === '/calendar'" />
+          <CalendarLogo v-else />
         </template>
       </Element>
       <Element path="/settings" title="Impostazioni">
         <template #icon>
-          <SelectedSettingsLogo v-if="currentRoute === '/settings'"/>
-          <SettingsLogo v-else/>
+          <SelectedSettingsLogo v-if="currentRoute === '/settings'" />
+          <SettingsLogo v-else />
         </template>
       </Element>
     </div>
@@ -52,6 +52,6 @@ import SelectedCalendarLogo from '@/public/svg/logos/sidebar/selected/calendar.s
 import CalendarLogo from '@/public/svg/logos/sidebar/notSelected/calendar.svg';
 import SelectedSettingsLogo from '@/public/svg/logos/sidebar/selected/settings.svg';
 import SettingsLogo from '@/public/svg/logos/sidebar/notSelected/settings.svg';
-const route = useRoute()
-const currentRoute = computed(() => route.path)
+const route = useRoute();
+const currentRoute = computed(() => route.path);
 </script>
