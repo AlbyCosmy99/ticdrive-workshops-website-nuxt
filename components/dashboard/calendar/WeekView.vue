@@ -7,15 +7,20 @@
 
     <!-- Days of the week headers -->
     <div class="flex border-b border-gray-200">
-      <div class="w-20"></div> <!-- Empty space for time column -->
-      <div v-for="day in weekDays" :key="day.name" class="flex-1 py-4 text-center">
+      <div class="w-20"></div>
+      <!-- Empty space for time column -->
+      <div
+        v-for="day in weekDays"
+        :key="day.name"
+        class="flex-1 py-4 text-center"
+      >
         <div class="font-medium flex justify-center items-center space-x-2">
           <span class="text-sm text-gray-600">{{ day.name }}</span>
           <span class="text-base font-semibold">{{ day.number }}</span>
         </div>
       </div>
     </div>
-    
+
     <!-- Calendar grid -->
     <div class="border border-gray-200 rounded-lg overflow-hidden flex mt-4 flex-grow">
       <!-- Time column -->
@@ -27,7 +32,7 @@
           {{ time }}
         </div>
       </div>
-      
+
       <!-- Events grid -->
       <div class="flex-1 flex flex-col">
         <!-- For each time slot -->
@@ -66,13 +71,23 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import {ref, computed} from 'vue';
 import AppointmentCard from './AppointmentCard.vue';
 
 // Month names in Italian
 const monthNames = [
-  'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-  'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'
+  'Gennaio',
+  'Febbraio',
+  'Marzo',
+  'Aprile',
+  'Maggio',
+  'Giugno',
+  'Luglio',
+  'Agosto',
+  'Settembre',
+  'Ottobre',
+  'Novembre',
+  'Dicembre',
 ];
 
 // Current date and week setup
@@ -112,10 +127,10 @@ const generateWeekDays = () => {
     day.setDate(day.getDate() + i);
     newWeekDays.push({
       name: dayNames[i],
-      number: day.getDate().toString()
+      number: day.getDate().toString(),
     });
   }
-  
+
   weekDays.value = newWeekDays;
 };
 
@@ -134,27 +149,35 @@ const appointments = [
 
 // Unavailable slots
 const unavailableSlots = [
-  { timeIndex: 0, dayIndex: 1 },
-  { timeIndex: 1, dayIndex: 1 },
-  { timeIndex: 2, dayIndex: 0 },
-  { timeIndex: 2, dayIndex: 1 },
-  { timeIndex: 3, dayIndex: 1 },
-  { timeIndex: 4, dayIndex: 1 },
-  { timeIndex: 5, dayIndex: 1 },
-  { timeIndex: 6, dayIndex: 1 },
-  { timeIndex: 6, dayIndex: 4 }
+  {timeIndex: 0, dayIndex: 1},
+  {timeIndex: 1, dayIndex: 1},
+  {timeIndex: 2, dayIndex: 0},
+  {timeIndex: 2, dayIndex: 1},
+  {timeIndex: 3, dayIndex: 1},
+  {timeIndex: 4, dayIndex: 1},
+  {timeIndex: 5, dayIndex: 1},
+  {timeIndex: 6, dayIndex: 1},
+  {timeIndex: 6, dayIndex: 4},
 ];
 
 const hasAppointment = (timeIndex: number, dayIndex: number) => {
-  return appointments.some(app => app.timeIndex === timeIndex && app.dayIndex === dayIndex);
+  return appointments.some(
+    app => app.timeIndex === timeIndex && app.dayIndex === dayIndex,
+  );
 };
 
 const getAppointment = (timeIndex: number, dayIndex: number) => {
-  return appointments.find(app => app.timeIndex === timeIndex && app.dayIndex === dayIndex) || {};
+  return (
+    appointments.find(
+      app => app.timeIndex === timeIndex && app.dayIndex === dayIndex,
+    ) || {}
+  );
 };
 
 const isUnavailable = (timeIndex: number, dayIndex: number) => {
-  return unavailableSlots.some(slot => slot.timeIndex === timeIndex && slot.dayIndex === dayIndex);
+  return unavailableSlots.some(
+    slot => slot.timeIndex === timeIndex && slot.dayIndex === dayIndex,
+  );
 };
 </script>
 

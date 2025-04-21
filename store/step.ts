@@ -1,15 +1,5 @@
 import {defineStore} from 'pinia';
-
-interface StepOneData {
-  name: string;
-  surname: string;
-  tel: string;
-  email: string;
-  workSpace: string;
-  postalCode: string;
-  accept1: boolean;
-  accept2: boolean;
-}
+import type {StepOneData} from '~/types/auth/steps/StepOneData';
 
 interface StepTwoData {
   fullAddress: {
@@ -109,12 +99,12 @@ const useStepStore = defineStore('step', {
     stepOneData: {
       name: '',
       surname: '',
-      tel: '',
+      phoneNumber: '',
       email: '',
-      workSpace: '',
+      workshopName: '',
       postalCode: '',
-      accept1: false,
-      accept2: false,
+      acceptPrivacyPolicy: false,
+      acceptUpdates: false,
     },
     stepTwoData: {
       fullAddress: {

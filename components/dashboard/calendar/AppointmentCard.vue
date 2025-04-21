@@ -17,29 +17,35 @@
         <div>{{ location }}</div>
       </div>
     </div>
-  </template>
-  
-  <script lang="ts" setup>
-  defineProps({
-    carModel: {
-      type: String,
-      required: true
-    },
-    serviceType: {
-      type: String,
-      required: true
-    },
-    appointmentId: {
-      type: String,
-      required: true
-    },
-    location: {
-      type: String,
-      required: true
-    },
-    carLogo: {
-      type: String,
-      default: ''
-    }
-  });
-  </script>
+    <div class="text-sm mb-auto">{{ serviceType }}</div>
+    <div class="flex justify-between text-xs mt-2 opacity-90">
+      <div>#{{ appointmentId }}</div>
+      <div>{{ location }}</div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+defineProps({
+  carModel: {
+    type: String,
+    required: true,
+  },
+  serviceType: {
+    type: String,
+    required: true,
+  },
+  appointmentId: {
+    type: String,
+    required: true,
+  },
+  location: {
+    type: String,
+    required: true,
+  },
+  carLogo: {
+    type: String,
+    default: '',
+  },
+});
+</script>

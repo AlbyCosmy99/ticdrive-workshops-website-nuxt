@@ -4,12 +4,14 @@
   >
     <div>
       <h1 class="font-semibold text-2xl">Ciao, Mario Rossi</h1>
-      <p class="text-sm font-normal">Organizziamo insieme il lavoro in officina oggi!</p>
+      <p class="text-sm font-normal">
+        Organizziamo insieme il lavoro in officina oggi!
+      </p>
     </div>
     <div class="flex items-center gap-8">
       <div class="flex items-center space-x-4">
-        <OptionButton image="/images/mail.png" alt="Messages"/>
-        <OptionButton image="/images/bell.png" alt="Notifications"/>
+        <OptionButton image="/images/mail.png" alt="Messages" />
+        <OptionButton image="/images/bell.png" alt="Notifications" />
       </div>
       <div class="flex items-center space-x-3">
         <div
@@ -25,7 +27,7 @@
           <span class="font-semibold text-gray-800 leading-tight">
             Andrei Riccardi
           </span>
-          <span class="text-xs font-normal ">Dependent</span>
+          <span class="text-xs font-normal">Dependent</span>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="step-4 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
+    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
   >
     <h1 class="text-4xl font-semibold text-gray-500 mb-8">Orari</h1>
 
