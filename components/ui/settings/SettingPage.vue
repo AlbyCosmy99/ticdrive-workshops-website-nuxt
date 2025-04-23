@@ -147,7 +147,6 @@ const modifyWorkshopDetails = () => {
 const logout = () => {
   localStorage.removeItem('token')
   router.replace('auth/login')
-  
 };
 
 const deleteAccount = () => {
