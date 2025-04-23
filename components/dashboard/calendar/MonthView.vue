@@ -1,5 +1,6 @@
 <template>
-  <div class="flex flex-col h-full">
+  <div class="h-full flex flex-col">
+    <!-- Month header -->
     <div class="flex justify-center items-center mb-4">
       <button
         @click="prevMonth"
@@ -45,61 +46,69 @@
         </svg>
       </button>
     </div>
-    <div class="grid grid-cols-7 border-b border-gray-200">
-      <div
-        v-for="day in weekDayNames"
-        :key="day"
-        class="py-4 text-center font-medium"
-      >
-        {{ day }}
-      </div>
-    </div>
 
-    <!-- Calendar grid -->
-    <div class="border border-gray-200 rounded-lg overflow-hidden mt-4 flex-grow">
-      <div class="grid grid-cols-7 h-full">
-        <!-- For each day in month -->
+    <!-- Calendar Grid -->
+    <div class="overflow-auto flex-grow h-full w-full">
+      <div
+        class="grid border border-gray-200 rounded-lg min-w-[900px] w-full h-full"
+        :style="`grid-template-columns: repeat(7, minmax(120px, 1fr)); grid-template-rows: auto repeat(${Math.ceil(daysInMonth.length / 7)}, 1fr);`"
+      >
+        <!-- Header row -->
         <div
-          v-for="(day, index) in daysInMonth"
-          :key="index"
-          class="border border-gray-200 p-2 relative"
-          :class="{
-            'bg-gray-50': !isCurrentMonth(day),
-            'border-drive': isToday(day),
-          }"
+          v-for="day in weekDayNames"
+          :key="day"
+          class="py-2 px-1 border-b border-gray-200 text-center font-medium text-sm text-gray-600 bg-white"
         >
+          {{ day }}
+        </div>
+
+        <!-- Calendar days grid -->
+        <template v-for="(day, index) in daysInMonth" :key="index">
           <div
-            class="text-sm font-medium mb-1"
-            :class="{'text-gray-400': !isCurrentMonth(day)}"
+            class="border border-gray-200 p-2 relative bg-white"
+            :class="{
+              'bg-gray-50': !isCurrentMonth(day),
+              'border-drive': isToday(day),
+            }"
           >
-            {{ day.date }}
-          </div>
-          <div class="space-y-1">
-            <template v-if="hasAppointmentsOnDay(day)">
-              <div
-                v-for="appointment in getAppointmentsForDay(day)"
-                :key="appointment.appointmentId"
-                class="bg-drive text-white rounded p-1 text-xs font-medium cursor-pointer truncate"
-                @click="showAppointmentDetails(appointment)"
-              >
-                {{ appointment.carModel }} - {{ appointment.serviceType }}
-              </div>
-            </template>
             <div
-              v-if="isDayUnavailable(day)"
-              class="bg-[#FFF5F5] bg-pattern-striped rounded p-1 text-xs text-red-500 font-medium text-center"
+              class="text-sm font-medium mb-1"
+              :class="{'text-gray-400': !isCurrentMonth(day)}"
             >
-              Nessuna Disponibilità
+              {{ day.date }}
+            </div>
+            
+            <div class="space-y-1">
+              <template v-if="hasAppointmentsOnDay(day)">
+                <div
+                  v-for="appointment in getAppointmentsForDay(day)"
+                  :key="appointment.appointmentId"
+                  class="bg-drive text-white rounded p-1 text-xs font-medium cursor-pointer truncate"
+                  @click="showAppointmentDetails(appointment)"
+                >
+                  {{ appointment.carModel }} - {{ appointment.serviceType }}
+                </div>
+              </template>
+              
+              <div
+                v-if="isDayUnavailable(day)"
+                class="bg-[#FFF5F5] bg-pattern-striped rounded p-1 text-xs text-red-500 font-medium text-center"
+              >
+                <div class="flex flex-col items-center justify-center h-full text-red-500 text-xs font-medium">
+                  <span>Nessuna</span>
+                  <span>Disponibilità</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 import AppointmentCard from './AppointmentCard.vue';
 
 const weekDayNames = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
