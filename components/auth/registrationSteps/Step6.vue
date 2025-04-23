@@ -1,6 +1,6 @@
 <template>
   <div
-    class="step-2 flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
+    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
   >
     <h1 class="text-gray-500 text-4xl font-semibold">Informazioni profilo</h1>
     <h1 class="text-gray-500 text-2xl font-semibold mt-10">

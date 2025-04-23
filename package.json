@@ -30,11 +30,10 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.13.2",
     "@primevue/nuxt-module": "^4.3.3",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.3",
     "rollup": "^4.40.0",
-    "tailwindcss": "^4.1.4",
+    "tailwindcss": "^3.4.17",
     "vite-svg-loader": "^5.1.0"
   }
 }

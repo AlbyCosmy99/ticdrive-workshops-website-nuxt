@@ -76,8 +76,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {ref} from 'vue';
+import {ref, computed} from 'vue';
 import useStepStore from '~/store/step';
+
 import Step1 from './auth/registrationSteps/Step1.vue';
 import Step2 from './auth/registrationSteps/Step2.vue';
 import Step3 from './auth/registrationSteps/Step3.vue';
@@ -87,174 +88,154 @@ import Step6 from './auth/registrationSteps/Step6.vue';
 import Step7 from './auth/registrationSteps/Step7.vue';
 import Step8 from './auth/registrationSteps/Step8.vue';
 import TicDrivebutton from './ui/buttons/TicDrivebutton.vue';
+import useToast from '@/composables/useToast';
 
 const stepStore = useStepStore();
-const nuxtApp = useNuxtApp();
 
-const stepOneRef = ref();
-const stepTwoRef = ref();
-const stepThreeRef = ref();
-const stepFourRef = ref();
-const stepFiveRef = ref();
-const stepSixRef = ref();
-const stepSevenRef = ref();
-const stepEightRef = ref();
-const buttonDisableStatus = computed(() => !stepStore.stepOneData.accept2);
+const stepOneRef = ref<InstanceType<typeof Step1> | null>(null);
+const stepTwoRef = ref<InstanceType<typeof Step2> | null>(null);
+const stepThreeRef = ref<InstanceType<typeof Step3> | null>(null);
+const stepFourRef = ref<InstanceType<typeof Step4> | null>(null);
+const stepFiveRef = ref<InstanceType<typeof Step5> | null>(null);
+const stepSixRef = ref<InstanceType<typeof Step6> | null>(null);
+const stepSevenRef = ref<InstanceType<typeof Step7> | null>(null);
+const stepEightRef = ref<InstanceType<typeof Step8> | null>(null);
 
-const checkToggle = (key: String, value: Boolean) => {
+const buttonDisableStatus = computed(
+  () => !stepStore.stepOneData.acceptUpdates,
+);
+
+const showToast = useToast();
+
+const checkToggle = (
+  key: keyof typeof stepStore.stepOneData,
+  value: boolean,
+): void => {
   stepStore.stepOneData[key] = value;
 };
 
-const stepValidation = async (step: number) => {
-  if (step === 1) {
-    return await stepOneRef.value?.validate();
-  } else if (step === 2) {
-    return await stepTwoRef.value?.validate();
-  } else if (step === 3) {
-    if (stepStore.stepThreeData.currentWorkShopSpec.length) {
+const stepValidation = async (step: number): Promise<boolean> => {
+  switch (step) {
+    case 1:
+      return await stepOneRef.value?.validate();
+    case 2:
+      return await stepTwoRef.value?.validate();
+    case 3:
+      if (!stepStore.stepThreeData.currentWorkShopSpec.length) {
+        showToast(
+          'info',
+          'Missing Workshop',
+          'You must select at least one workshop!',
+        );
+        return false;
+      }
       return true;
-    } else {
-      nuxtApp.$toastMessage(
-        'info',
-        'Missing Workshop',
-        'You must select at least one workshop!',
-      );
-      return false;
-    }
-  } else if (step === 4) {
-    if (stepStore.stepFourData.currentServiceType.length) {
+    case 4:
+      if (!stepStore.stepFourData.currentServiceType.length) {
+        showToast(
+          'info',
+          'Missing Type Of Service',
+          'You must select at least one type of service offered!',
+        );
+        return false;
+      }
       return true;
-    } else {
-      nuxtApp.$toastMessage(
-        'info',
-        'Missing Type Of Service',
-        'You must select at least one type of service offered!',
-      );
-      return false;
-    }
-  } else if (step === 5) {
-    if (!stepStore.stepFiveData.currentServiceDays.length) {
-      nuxtApp.$toastMessage(
-        'info',
-        'Missing Opening Hours',
-        'You must select at least one opening hour!',
-      );
-      return false;
-    } else if (stepStore.stepFiveData.maxVehicleNumber === 0) {
-      nuxtApp.$toastMessage(
-        'info',
-        'Invalid Maximum Number',
-        'Maximum number of vehicles should be larger than zero!',
-      );
-      false;
-    } else {
+    case 5:
+      if (!stepStore.stepFiveData.currentServiceDays.length) {
+        showToast(
+          'info',
+          'Missing Opening Hours',
+          'You must select at least one opening hour!',
+        );
+        return false;
+      }
+      if (stepStore.stepFiveData.maxVehicleNumber === 0) {
+        showToast(
+          'info',
+          'Invalid Maximum Number',
+          'Maximum number of vehicles should be larger than zero!',
+        );
+        return false;
+      }
       return true;
-    }
-  } else if (step === 6) {
-    if (!stepStore.stepSixData.images[4]) {
-      nuxtApp.$toastMessage(
-        'info',
-        'Main Image Needed',
-        'Please upload main image!',
-      );
-      return false;
-    } else {
+    case 6:
+      if (!stepStore.stepSixData.images[4]) {
+        showToast('info', 'Main Image Needed', 'Please upload main image!');
+        return false;
+      }
       return true;
-    }
-  } else if (step === 7) {
-    return await stepSevenRef.value.validate();
-  } else if (step === 8) {
-    const digitalRlt = await stepEightRef.value.validate();
-    const allChecked = stepStore.stepEightData.currentConformities.length === 5;
-    if (digitalRlt && allChecked) {
+    case 7:
+      return await stepSevenRef.value?.validate();
+    case 8:
+      const valid = await stepEightRef.value?.validate();
+      const allChecked =
+        stepStore.stepEightData.currentConformities.length === 5;
+      if (!valid) return false;
+      if (!allChecked) {
+        showToast('info', 'All-Check Needed', 'Select all conformities!');
+        return false;
+      }
       return true;
-    } else if (digitalRlt) {
-      nuxtApp.$toastMessage(
-        'info',
-        'All-Check Needed',
-        'select all conformities!',
-      );
+    default:
       return false;
-    } else {
-      return false;
-    }
   }
 };
-const nextStep = async () => {
-  if (buttonDisableStatus.value) {
-    return;
-  }
+
+const nextStep = async (): Promise<void> => {
+  if (buttonDisableStatus.value) return;
   const isValid = await stepValidation(stepStore.currentStep);
-  if (!isValid) {
-    return;
-  }
-  stepStore.currentStep++;
+  if (isValid) stepStore.currentStep++;
 };
-const prevStep = async () => {
-  if (!stepStore.currentStep) {
-    return;
-  }
+
+const prevStep = (): void => {
+  if (!stepStore.currentStep) return;
   stepStore.currentStep--;
-  if (stepStore.currentStep === 0) {
-    navigateTo('/auth/login');
-  }
+  if (stepStore.currentStep === 0) navigateTo('/auth/login');
 };
-const plusServiceTime = (value: number) => {
-  const existingObject = stepStore.stepFiveData.currentServiceDays.find(
+
+const plusServiceTime = (value: number): void => {
+  const existing = stepStore.stepFiveData.currentServiceDays.find(
     item => item.value === value,
   );
-  if (existingObject) {
-    existingObject.serviceTime2 = {
-      start: '15:00',
-      end: '19:00',
-    };
+  if (existing) {
+    existing.serviceTime2 = {start: '15:00', end: '19:00'};
   }
 };
-const removeServiceTime = (value: number) => {
-  const existingObject = stepStore.stepFiveData.currentServiceDays.find(
+
+const removeServiceTime = (value: number): void => {
+  const existing = stepStore.stepFiveData.currentServiceDays.find(
     item => item.value === value,
   );
-  if (existingObject) {
-    existingObject.serviceTime2 = {
-      start: '',
-      end: '',
-    };
+  if (existing) {
+    existing.serviceTime2 = {start: '', end: ''};
   }
 };
-const toggleMultiSelect = (type: string, value: number) => {
+
+const toggleMultiSelect = (
+  type: 'workShopSpec' | 'serviceType' | 'serviceDay',
+  value: number,
+): void => {
   if (type === 'workShopSpec') {
     const index = stepStore.stepThreeData.currentWorkShopSpec.indexOf(value);
-    if (index !== -1) {
-      stepStore.stepThreeData.currentWorkShopSpec.splice(index, 1);
-    } else {
-      stepStore.stepThreeData.currentWorkShopSpec.push(value);
-    }
+    index !== -1
+      ? stepStore.stepThreeData.currentWorkShopSpec.splice(index, 1)
+      : stepStore.stepThreeData.currentWorkShopSpec.push(value);
   } else if (type === 'serviceType') {
     const index = stepStore.stepFourData.currentServiceType.indexOf(value);
-    if (index !== -1) {
-      stepStore.stepFourData.currentServiceType.splice(index, 1);
-    } else {
-      stepStore.stepFourData.currentServiceType.push(value);
-    }
+    index !== -1
+      ? stepStore.stepFourData.currentServiceType.splice(index, 1)
+      : stepStore.stepFourData.currentServiceType.push(value);
   } else if (type === 'serviceDay') {
     const index = stepStore.stepFiveData.currentServiceDays.findIndex(
       day => day.value === value,
     );
-    if (index !== -1) {
-      stepStore.stepFiveData.currentServiceDays.splice(index, 1);
-    } else {
-      stepStore.stepFiveData.currentServiceDays.push({
-        value,
-        serviceTime1: {
-          start: '09:00',
-          end: '12:00',
-        },
-        serviceTime2: {
-          start: '',
-          end: '',
-        },
-      });
-    }
+    index !== -1
+      ? stepStore.stepFiveData.currentServiceDays.splice(index, 1)
+      : stepStore.stepFiveData.currentServiceDays.push({
+          value,
+          serviceTime1: {start: '09:00', end: '12:00'},
+          serviceTime2: {start: '', end: ''},
+        });
   }
 };
 </script>
