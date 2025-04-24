@@ -12,7 +12,7 @@
         <button
           class="flex items-center text-white bg-[#39b269] px-4 py-2 rounded-md"
         >
-          <SeeAllButton />
+          <SeeAllButton @on-click="router.push('/bookings')"/>
         </button>
       </div>
 
@@ -54,7 +54,7 @@
         <button
           class="flex items-center text-white bg-[#39b269] px-4 py-2 rounded-md"
         >
-          <SeeAllButton />
+          <SeeAllButton @on-click="router.push('/reviews')"/>
         </button>
       </div>
       <ReviewCards />
@@ -67,4 +67,6 @@ import BookingCard from '~/components/ui/cards/dashboard/BookingCard.vue';
 import StatsCards from '../ui/cards/dashboard/stats/StatsCards.vue';
 import SeeAllButton from '../ui/buttons/SeeAllButton.vue';
 import ReviewCards from '../ui/cards/reviews/ReviewCards.vue';
+
+const router = useRouter()
 </script>
