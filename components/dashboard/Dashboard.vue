@@ -6,7 +6,7 @@
     <StatsCards />
     <div class="mb-8">
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-semibold">
+        <h2 class="text-2xl font-semibold">
           Prenotazioni In Attesa di Conferma
         </h2>
         <button
@@ -23,12 +23,13 @@
           service="Cambio olio"
           vehicle="Toyota Corolla 2021"
           price="€120"
-          paymentStatus="pagati"
+          paymentStatus="paid"
           clockIconSvg="/svg/clock-icon.svg"
           toolsIconSvg="/svg/tools-icon.svg"
           carIconSvg="/svg/car-icon.svg"
           paymentIconSvg="/svg/payment-icon.svg"
           statusIconSvg="/svg/status-icon.svg"
+          userImageSrc="https://cdn-icons-png.flaticon.com/512/6858/6858504.png"
         />
         <BookingCard
           name="Mario Verdi"
@@ -36,12 +37,13 @@
           service="Cambio olio"
           vehicle="Toyota Corolla 2021"
           price="€120"
-          paymentStatus="pagati"
+          paymentStatus="paid"
           clockIconSvg="/svg/clock-icon.svg"
           toolsIconSvg="/svg/tools-icon.svg"
           carIconSvg="/svg/car-icon.svg"
           paymentIconSvg="/svg/payment-icon.svg"
           statusIconSvg="/svg/status-icon.svg"
+          userImageSrc="https://cdn-icons-png.flaticon.com/512/8090/8090457.png"
         />
       </div>
     </div>
