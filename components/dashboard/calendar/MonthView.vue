@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <!-- Month header showing current month/year -->
+  <div class="h-full flex flex-col">
+    <!-- Month header -->
     <div class="flex justify-center items-center mb-4">
       <button
         @click="prevMonth"
@@ -47,73 +47,72 @@
       </button>
     </div>
 
-    <!-- Days of week headers -->
-    <div class="grid grid-cols-7 border-b border-gray-200">
+    <!-- Calendar Grid -->
+    <div class="overflow-auto flex-grow h-full w-full">
       <div
-        v-for="day in weekDayNames"
-        :key="day"
-        class="py-4 text-center font-medium"
+        class="grid border border-gray-200 rounded-lg min-w-[900px] w-full h-full"
+        :style="`grid-template-columns: repeat(7, minmax(120px, 1fr)); grid-template-rows: auto repeat(${Math.ceil(daysInMonth.length / 7)}, 1fr);`"
       >
-        {{ day }}
-      </div>
-    </div>
-
-    <!-- Calendar grid -->
-    <div class="border border-gray-200 rounded-lg overflow-hidden mt-4">
-      <div class="grid grid-cols-7">
-        <!-- For each day in month -->
+        <!-- Header row -->
         <div
-          v-for="(day, index) in daysInMonth"
-          :key="index"
-          class="h-28 border border-gray-200 p-2 relative"
-          :class="{
-            'bg-gray-50': !isCurrentMonth(day),
-            'border-drive': isToday(day),
-          }"
+          v-for="day in weekDayNames"
+          :key="day"
+          class="py-2 px-1 border-b border-gray-200 text-center font-medium text-sm text-gray-600 bg-white"
         >
-          <!-- Day number -->
+          {{ day }}
+        </div>
+
+        <!-- Calendar days grid -->
+        <template v-for="(day, index) in daysInMonth" :key="index">
           <div
-            class="text-sm font-medium mb-1"
-            :class="{'text-gray-400': !isCurrentMonth(day)}"
+            class="border border-gray-200 p-2 relative bg-white"
+            :class="{
+              'bg-gray-50': !isCurrentMonth(day),
+              'border-drive': isToday(day),
+            }"
           >
-            {{ day.date }}
-          </div>
-
-          <!-- Appointments -->
-          <div class="space-y-1">
-            <template v-if="hasAppointmentsOnDay(day)">
-              <div
-                v-for="appointment in getAppointmentsForDay(day)"
-                :key="appointment.appointmentId"
-                class="bg-drive text-white rounded p-1 text-xs font-medium cursor-pointer truncate"
-                @click="showAppointmentDetails(appointment)"
-              >
-                {{ appointment.carModel }} - {{ appointment.serviceType }}
-              </div>
-            </template>
-
-            <!-- Unavailable indicator -->
             <div
-              v-if="isDayUnavailable(day)"
-              class="bg-[#FFF5F5] bg-pattern-striped rounded p-1 text-xs text-red-500 font-medium text-center"
+              class="text-sm font-medium mb-1"
+              :class="{'text-gray-400': !isCurrentMonth(day)}"
             >
-              Nessuna Disponibilità
+              {{ day.date }}
+            </div>
+            
+            <div class="space-y-1">
+              <template v-if="hasAppointmentsOnDay(day)">
+                <div
+                  v-for="appointment in getAppointmentsForDay(day)"
+                  :key="appointment.appointmentId"
+                  class="bg-drive text-white rounded p-1 text-xs font-medium cursor-pointer truncate"
+                  @click="showAppointmentDetails(appointment)"
+                >
+                  {{ appointment.carModel }} - {{ appointment.serviceType }}
+                </div>
+              </template>
+              
+              <div
+                v-if="isDayUnavailable(day)"
+                class="bg-[#FFF5F5] bg-pattern-striped rounded p-1 text-xs text-red-500 font-medium text-center"
+              >
+                <div class="flex flex-col items-center justify-center h-full text-red-500 text-xs font-medium">
+                  <span>Nessuna</span>
+                  <span>Disponibilità</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 import AppointmentCard from './AppointmentCard.vue';
 
-// Days of the week
 const weekDayNames = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
 
-// Month names in Italian
 const monthNames = [
   'Gennaio',
   'Febbraio',
@@ -129,16 +128,13 @@ const monthNames = [
   'Dicembre',
 ];
 
-// Current date info
 const today = new Date();
 const displayedMonth = ref(today.getMonth());
 const displayedYear = ref(today.getFullYear());
 
-// Computed properties for display
 const currentMonthName = computed(() => monthNames[displayedMonth.value]);
 const currentYear = computed(() => displayedYear.value);
 
-// Navigation functions
 const nextMonth = () => {
   if (displayedMonth.value === 11) {
     displayedMonth.value = 0;
@@ -157,7 +153,6 @@ const prevMonth = () => {
   }
 };
 
-// Generate days for the month view
 const daysInMonth = computed(() => {
   const result = [];
   const firstDayOfMonth = new Date(
@@ -171,12 +166,9 @@ const daysInMonth = computed(() => {
     0,
   );
 
-  // Get the day of the week for the first day (0-6, 0 is Sunday)
   let firstDay = firstDayOfMonth.getDay();
-  // Adjust for Monday as first day of week (0-6, 0 is Monday)
   firstDay = firstDay === 0 ? 6 : firstDay - 1;
 
-  // Add days from previous month
   const daysFromPrevMonth = firstDay;
   const prevMonthLastDay = new Date(
     displayedYear.value,
@@ -200,7 +192,6 @@ const daysInMonth = computed(() => {
     });
   }
 
-  // Add days for current month
   for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
     result.push({
       date: i,
@@ -210,7 +201,6 @@ const daysInMonth = computed(() => {
     });
   }
 
-  // Add days from next month to complete grid (up to 42 days total for 6 weeks)
   const totalDaysToShow =
     Math.ceil((firstDay + lastDayOfMonth.getDate()) / 7) * 7;
   const daysFromNextMonth = totalDaysToShow - result.length;
@@ -230,7 +220,6 @@ const daysInMonth = computed(() => {
   return result;
 });
 
-// Sample appointments data
 const appointments = computed(() => [
   {
     date: 7,
@@ -264,7 +253,6 @@ const appointments = computed(() => [
   },
 ]);
 
-// Unavailable days
 const unavailableDays = computed(() => [
   {date: 8, month: displayedMonth.value, year: displayedYear.value},
   {date: 9, month: displayedMonth.value, year: displayedYear.value},
@@ -272,7 +260,6 @@ const unavailableDays = computed(() => [
   {date: 26, month: displayedMonth.value, year: displayedYear.value},
 ]);
 
-// Helper functions
 const isCurrentMonth = day => day.isCurrentMonth;
 
 const isToday = day => {
@@ -307,7 +294,6 @@ const isDayUnavailable = day => {
 };
 
 const showAppointmentDetails = appointment => {
-  // This would show a modal or navigate to appointment details
   console.log('Appointment details:', appointment);
 };
 </script>
