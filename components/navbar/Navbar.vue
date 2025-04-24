@@ -25,9 +25,9 @@
         </div>
         <div class="flex flex-col items-start justify-center">
           <span class="font-semibold text-gray-800 leading-tight">
-            Andrei Riccardi
+            Mario Rossi
           </span>
-          <span class="text-xs font-normal">Dependent</span>
+          <span class="text-xs font-normal">Titolare</span>
         </div>
       </div>
     </div>
