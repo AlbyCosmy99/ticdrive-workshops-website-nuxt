@@ -1,59 +1,52 @@
-<!-- components/ui/BookingCard.vue -->
 <template>
   <div class="bg-white rounded-lg shadow p-4 border border-gray-100">
-    <div class="flex justify-between items-start mb-4">
+    <div class="flex justify-between items-center mb-4">
       <div class="flex items-center">
         <div class="w-10 h-10 bg-gray-200 rounded-full mr-3 overflow-hidden">
-          <img
+          <NuxtImg
             v-if="userImageSrc"
             :src="userImageSrc"
             :alt="`${name}'s avatar`"
             class="w-full h-full object-cover"
+            width="48"
+            height="48"
           />
         </div>
-        <span class="font-medium">{{ name }}</span>
+        <span class="font-bold text-base">{{ name }}</span>
       </div>
-      <div
-        class="flex items-center text-amber-500 bg-amber-50 px-2 py-1 rounded text-sm"
-      >
-        <!-- specify the svg source for icon-->
-        <span>In attesa di accettazione</span>
+      <WaitingConfirmationCard />
+    </div>
+    <hr />
+
+    <div class="grid grid-cols-2 gap-2 mb-4 mt-6">
+      <div class="flex items-center gap-2">
+        <EventAvailableIcon />
+        <p class="text-base font-medium text-tic">Ora</p>
       </div>
+      <p class="text-base font-medium text-right">{{ time }}</p>
+
+      <div class="flex items-center gap-2 mt-1">
+        <CarRepairIcon />
+        <p class="text-base font-medium text-tic">Servizio</p>
+      </div>
+      <p class="text-base font-medium text-right mt-1">{{ service }}</p>
+
+      <div class="flex items-center gap-2 mt-1">
+        <Car1Icon />
+        <p class="text-base font-medium text-tic">Veicolo</p>
+      </div>
+      <p class="text-base font-medium text-right mt-1">{{ vehicle }}</p>
+
+      <div class="flex items-center gap-2 mt-1">
+        <PaymentDoneIcon />
+        <p class="text-base font-medium text-tic">Pagamento</p>
+      </div>
+      <p class="text-base font-medium text-right mt-1">
+        {{ price }} {{ paymentStatus }}
+      </p>
     </div>
 
-    <div class="grid grid-cols-2 gap-2 mb-4">
-      <div class="flex items-center">
-        <!-- specify the svg source for icon-->
-        <span class="text-sm">Ora</span>
-      </div>
-      <div class="text-right text-sm">{{ time }}</div>
-
-      <div class="flex items-center">
-        <!-- specify the svg source for icon-->
-        <span class="text-sm">Servizio</span>
-      </div>
-      <div class="text-right text-sm">{{ service }}</div>
-
-      <div class="flex items-center">
-        <!-- specify the svg source for icon-->
-        <span class="text-sm">Veicolo</span>
-      </div>
-      <div class="text-right text-sm">{{ vehicle }}</div>
-
-      <div class="flex items-center">
-        <!-- specify the svg source for icon  -->
-        <!-- <img v-if="paymentIconSvg" :src="paymentIconSvg" alt="Payment" class="w-4 h-4 text-gray-500 mr-2" /> -->
-        <span class="text-sm">Pagamento</span>
-      </div>
-      <div class="text-right text-sm font-medium">
-        {{ price }}
-        <span v-if="paymentStatus" class="text-gray-600 font-normal"
-          >({{ paymentStatus }})</span
-        >
-      </div>
-    </div>
-
-    <div class="flex space-x-2">
+    <div class="flex space-x-2 mb-3">
       <button class="flex-1 py-2 border border-gray-300 rounded-md text-center">
         Rifiuta
       </button>
@@ -63,15 +56,18 @@
         Accetta
       </button>
     </div>
-
-    <div class="text-center mt-2 text-sm text-gray-500">
+    <p class="text-center mt-2 text-sm font-semibold text-tic cursor-pointer hover:underline">
       Vuoi suggerire un orario diverso?
-    </div>
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import {defineComponent} from 'vue';
+import WaitingConfirmationCard from '../bookings/WaitingConfirmationCard.vue';
+import EventAvailableIcon from '@/public/svg/time/event_available.svg'
+import CarRepairIcon from '@/public/svg/cars/car_repair.svg'
+import Car1Icon from '@/public/svg/cars/car1.svg'
+import PaymentDoneIcon from '@/public/svg/payment/payment_done.svg'
 
 interface BookingCardProps {
   name: string;
@@ -79,18 +75,10 @@ interface BookingCardProps {
   service: string;
   vehicle: string;
   price: string;
-  paymentStatus?: string;
+  paymentStatus?: 'paid' | 'to pay';
   userImageSrc?: string;
-  statusIconSvg?: string;
-  clockIconSvg?: string;
-  toolsIconSvg?: string;
-  carIconSvg?: string;
   paymentIconSvg?: string;
 }
-
-defineComponent({
-  name: 'BookingCard',
-});
 
 defineProps<BookingCardProps>();
 </script>
