@@ -19,7 +19,7 @@
     <div class="flex flex-col flex-grow space-y-1 px-4">
       <Element path="/dashboard" title="Dashboard">
         <template #icon>
-          <SelectedDashboardLogo v-if="currentRoute === '/dashboard'" />
+          <SelectedDashboardLogo v-if="currentRoute === '/dashboard' || currentRoute === '/reviews'" />
           <DashboardLogo v-else />
         </template>
       </Element>
