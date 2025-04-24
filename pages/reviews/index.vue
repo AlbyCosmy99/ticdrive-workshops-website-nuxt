@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import FullReviwes from '~/components/dashboard/fullReviews/FullReviews.vue';
+
 definePageMeta({
   layout: 'dashboard',
   middleware: 'auth',
@@ -6,5 +8,5 @@ definePageMeta({
 </script>
 
 <template>
-  <p>reviews</p>
+  <FullReviwes />
 </template>
