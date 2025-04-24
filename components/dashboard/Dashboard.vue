@@ -48,96 +48,23 @@
       </div>
     </div>
 
-    <div>
+    <div class="mb-2">
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-semibold">Recensioni Recenti</h2>
+        <h2 class="text-2xl font-semibold">Recensioni Recenti</h2>
         <button
           class="flex items-center text-white bg-[#39b269] px-4 py-2 rounded-md"
         >
           <SeeAllButton />
         </button>
       </div>
-
-      <div class="bg-white rounded-lg shadow overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                No.
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Utente
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Data Recensione
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Servizio
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Voto
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <ReviewRow
-              number="01"
-              user="Mario Rossi"
-              userId="#A000001"
-              date="24 Dicembre, 2024"
-              time="11:35"
-              service="Tagliando"
-              rating="5"
-              starIconSvg="/svg/star-icon.svg"
-              userImageSrc="/img/users/user1.jpg"
-            />
-            <ReviewRow
-              number="02"
-              user="Paolo Verdi"
-              userId="#A000002"
-              date="15 Gennaio, 2025"
-              time="18:02"
-              service="Cambio pastiglie"
-              rating="4"
-              starIconSvg="/svg/star-icon.svg"
-              userImageSrc="/img/users/user2.jpg"
-            />
-            <ReviewRow
-              number="03"
-              user="Marietta Rosa"
-              userId="#A000003"
-              date="3 Febbraio, 2025"
-              time="13:52"
-              service="Cambio Olio"
-              rating="3"
-              starIconSvg="/svg/star-icon.svg"
-              userImageSrc="/img/users/user3.jpg"
-            />
-          </tbody>
-        </table>
-      </div>
+      <ReviewCards />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import BookingCard from '~/components/ui/cards/dashboard/BookingCard.vue';
-import ReviewRow from '~/components/ui/cards/dashboard/ReviewCard.vue';
 import StatsCards from '../ui/cards/dashboard/stats/StatsCards.vue';
 import SeeAllButton from '../ui/buttons/SeeAllButton.vue';
+import ReviewCards from '../ui/cards/reviews/ReviewCards.vue';
 </script>

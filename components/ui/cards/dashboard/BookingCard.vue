@@ -63,7 +63,6 @@
 </template>
 
 <script setup lang="ts">
-import {defineComponent} from 'vue';
 import WaitingConfirmationCard from '../bookings/WaitingConfirmationCard.vue';
 import EventAvailableIcon from '@/public/svg/time/event_available.svg'
 import CarRepairIcon from '@/public/svg/cars/car_repair.svg'
@@ -80,10 +79,6 @@ interface BookingCardProps {
   userImageSrc?: string;
   paymentIconSvg?: string;
 }
-
-defineComponent({
-  name: 'BookingCard',
-});
 
 defineProps<BookingCardProps>();
 </script>
