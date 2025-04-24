@@ -51,7 +51,7 @@
         Rifiuta
       </button>
       <button
-        class="flex-1 py-2 bg-[#39b269] text-white rounded-md text-center"
+        class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark"
       >
         Accetta
       </button>

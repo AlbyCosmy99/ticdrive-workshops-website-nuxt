@@ -1,4 +1,6 @@
 <script setup>
+
+import TicDriveBooking from '~/components/ui/prenotation/Prenotation.vue';
 definePageMeta({
   layout: 'dashboard',
   middleware: 'auth',
@@ -6,8 +8,5 @@ definePageMeta({
 </script>
 
 <template>
-  <div>
-    <h1 class="text-xl font-semibold mb-4">Bookings</h1>
-    <p>This is the bookings page content.</p>
-  </div>
+  <TicDriveBooking />
 </template>
