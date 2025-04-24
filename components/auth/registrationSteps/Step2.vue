@@ -83,7 +83,7 @@ import useVuelidate from '@vuelidate/core';
 import {helpers, required} from '@vuelidate/validators';
 import {defineProps, defineExpose, computed} from 'vue';
 import useStepStore from '~/store/step';
-import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue'
+import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
 
 interface StepTwoData {
   fullAddress: {

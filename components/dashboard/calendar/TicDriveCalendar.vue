@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 flex flex-col h-[85vh]">
+  <div
+    class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 flex flex-col h-[85vh]"
+  >
     <h1 class="text-2xl font-semibold mb-6">Calendario Prenotazioni</h1>
 
     <div class="flex justify-between items-center mb-6">

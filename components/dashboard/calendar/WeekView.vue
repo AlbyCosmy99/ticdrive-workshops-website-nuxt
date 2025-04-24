@@ -27,15 +27,20 @@
         <!-- Time and grid cells -->
         <template v-for="(time, timeIndex) in timeSlots" :key="time">
           <!-- Time label -->
-          <div class="h-20 flex items-center justify-center border-t border-gray-200 text-gray-600 text-sm font-medium bg-white sticky left-0 z-10">
+          <div
+            class="h-20 flex items-center justify-center border-t border-gray-200 text-gray-600 text-sm font-medium bg-white sticky left-0 z-10"
+          >
             {{ time }}
           </div>
 
           <!-- Each day column -->
-          <template v-for="(day, dayIndex) in weekDays" :key="`${time}-${day.name}`">
+          <template
+            v-for="(day, dayIndex) in weekDays"
+            :key="`${time}-${day.name}`"
+          >
             <div
               class="h-20 border-t border-l border-gray-200 p-1 relative bg-white"
-              :class="{ 'border-l-0': dayIndex === 0 }"
+              :class="{'border-l-0': dayIndex === 0}"
             >
               <template v-if="hasAppointment(timeIndex, dayIndex)">
                 <AppointmentCard v-bind="getAppointment(timeIndex, dayIndex)" />
@@ -45,7 +50,9 @@
                 v-else-if="isUnavailable(timeIndex, dayIndex)"
                 class="h-full w-full bg-[#FFF5F5] bg-pattern-striped"
               >
-                <div class="flex flex-col items-center justify-center h-full text-red-500 text-xs font-medium">
+                <div
+                  class="flex flex-col items-center justify-center h-full text-red-500 text-xs font-medium"
+                >
                   <span>Nessuna</span>
                   <span>Disponibilità</span>
                 </div>
@@ -59,7 +66,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import {ref, computed} from 'vue';
 import AppointmentCard from './AppointmentCard.vue';
 
 const today = new Date();
@@ -75,7 +82,20 @@ adjustToMonday();
 
 // Generate week range
 const weekDays = ref([]);
-const monthNames = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+const monthNames = [
+  'Gennaio',
+  'Febbraio',
+  'Marzo',
+  'Aprile',
+  'Maggio',
+  'Giugno',
+  'Luglio',
+  'Agosto',
+  'Settembre',
+  'Ottobre',
+  'Novembre',
+  'Dicembre',
+];
 
 const generateWeekDays = () => {
   const dayNames = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
@@ -105,30 +125,71 @@ const weekRangeText = computed(() => {
 });
 
 const timeSlots = [
-  '08:00', '09:00', '10:00', '11:00',
-  '12:00', '13:00', '14:00', '15:00',
-  '16:00', '17:00', '18:00', '19:00'
+  '08:00',
+  '09:00',
+  '10:00',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+  '16:00',
+  '17:00',
+  '18:00',
+  '19:00',
 ];
 
 // Sample appointments
 const appointments = [
-  { timeIndex: 0, dayIndex: 0, carModel: 'Nissan Micra', serviceType: 'Tagliando', appointmentId: 'A00001', location: 'FB144MD', carLogo: 'nissan' },
-  { timeIndex: 5, dayIndex: 3, carModel: 'Peugeot 208', serviceType: 'Cambio Pneumatici', appointmentId: 'A00003', location: 'FB144MD', carLogo: 'peugeot' },
-  { timeIndex: 8, dayIndex: 1, carModel: 'Ford Focus', serviceType: 'Manutenzione', appointmentId: 'A00004', location: 'FB144MD', carLogo: 'ford' },
-  { timeIndex: 10, dayIndex: 5, carModel: 'Fiat 500', serviceType: 'Revisione', appointmentId: 'A00005', location: 'FB144MD', carLogo: 'fiat' }
+  {
+    timeIndex: 0,
+    dayIndex: 0,
+    carModel: 'Nissan Micra',
+    serviceType: 'Tagliando',
+    appointmentId: 'A00001',
+    location: 'FB144MD',
+    carLogo: 'nissan',
+  },
+  {
+    timeIndex: 5,
+    dayIndex: 3,
+    carModel: 'Peugeot 208',
+    serviceType: 'Cambio Pneumatici',
+    appointmentId: 'A00003',
+    location: 'FB144MD',
+    carLogo: 'peugeot',
+  },
+  {
+    timeIndex: 8,
+    dayIndex: 1,
+    carModel: 'Ford Focus',
+    serviceType: 'Manutenzione',
+    appointmentId: 'A00004',
+    location: 'FB144MD',
+    carLogo: 'ford',
+  },
+  {
+    timeIndex: 10,
+    dayIndex: 5,
+    carModel: 'Fiat 500',
+    serviceType: 'Revisione',
+    appointmentId: 'A00005',
+    location: 'FB144MD',
+    carLogo: 'fiat',
+  },
 ];
 
 // Sample unavailable slots
 const unavailableSlots = [
-  { timeIndex: 0, dayIndex: 1 },
-  { timeIndex: 1, dayIndex: 1 },
-  { timeIndex: 2, dayIndex: 0 },
-  { timeIndex: 2, dayIndex: 1 },
-  { timeIndex: 3, dayIndex: 1 },
-  { timeIndex: 4, dayIndex: 1 },
-  { timeIndex: 5, dayIndex: 1 },
-  { timeIndex: 6, dayIndex: 1 },
-  { timeIndex: 6, dayIndex: 4 },
+  {timeIndex: 0, dayIndex: 1},
+  {timeIndex: 1, dayIndex: 1},
+  {timeIndex: 2, dayIndex: 0},
+  {timeIndex: 2, dayIndex: 1},
+  {timeIndex: 3, dayIndex: 1},
+  {timeIndex: 4, dayIndex: 1},
+  {timeIndex: 5, dayIndex: 1},
+  {timeIndex: 6, dayIndex: 1},
+  {timeIndex: 6, dayIndex: 4},
 ];
 
 const hasAppointment = (timeIndex: number, dayIndex: number) =>
@@ -138,7 +199,9 @@ const getAppointment = (timeIndex: number, dayIndex: number) =>
   appointments.find(a => a.timeIndex === timeIndex && a.dayIndex === dayIndex)!;
 
 const isUnavailable = (timeIndex: number, dayIndex: number) =>
-  unavailableSlots.some(s => s.timeIndex === timeIndex && s.dayIndex === dayIndex);
+  unavailableSlots.some(
+    s => s.timeIndex === timeIndex && s.dayIndex === dayIndex,
+  );
 </script>
 
 <style scoped>

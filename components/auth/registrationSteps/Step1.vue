@@ -78,7 +78,7 @@ import {required, email, numeric, helpers} from '@vuelidate/validators';
 import {defineProps, defineEmits, defineExpose, computed} from 'vue';
 import useStepStore from '~/store/step';
 import type {StepOneData} from '~/types/auth/steps/StepOneData';
-import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue'
+import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
 
 const props = defineProps<{
   stepValues: StepOneData;

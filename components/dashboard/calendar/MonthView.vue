@@ -77,7 +77,7 @@
             >
               {{ day.date }}
             </div>
-            
+
             <div class="space-y-1">
               <template v-if="hasAppointmentsOnDay(day)">
                 <div
@@ -89,12 +89,14 @@
                   {{ appointment.carModel }} - {{ appointment.serviceType }}
                 </div>
               </template>
-              
+
               <div
                 v-if="isDayUnavailable(day)"
                 class="bg-[#FFF5F5] bg-pattern-striped rounded p-1 text-xs text-red-500 font-medium text-center"
               >
-                <div class="flex flex-col items-center justify-center h-full text-red-500 text-xs font-medium">
+                <div
+                  class="flex flex-col items-center justify-center h-full text-red-500 text-xs font-medium"
+                >
                   <span>Nessuna</span>
                   <span>Disponibilità</span>
                 </div>
@@ -108,7 +110,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import {computed, ref} from 'vue';
 import AppointmentCard from './AppointmentCard.vue';
 
 const weekDayNames = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];

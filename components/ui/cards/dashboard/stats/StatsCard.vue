@@ -16,7 +16,13 @@
       <PositiveTrendIcon v-if="trendDirection === 'positive'" />
       <NegativeTrendIcon v-else />
       <div class="flex items-center">
-        <span :class="['mr-1', `text-${trendDirection === 'positive' ? 'green' : 'red'}-500`]">{{ trendValue }}</span>
+        <span
+          :class="[
+            'mr-1',
+            `text-${trendDirection === 'positive' ? 'green' : 'red'}-500`,
+          ]"
+          >{{ trendValue }}</span
+        >
         <span class="text-xs text-gray-500"
           >{{ trendDirection === 'positive' ? 'in piu' : 'in meno' }} rispetto
           al mese scorso</span

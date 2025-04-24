@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import ReviewCard from './ReviewCard.vue';
-
 </script>
 
 <template>

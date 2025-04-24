@@ -17,25 +17,43 @@
       </button>
     </div>
     <div class="flex flex-col flex-grow space-y-1 px-4">
-      <Element path="/dashboard" title="Dashboard">
+      <Element
+        path="/dashboard"
+        title="Dashboard"
+        :selected="currentRoute === '/dashboard' || currentRoute === '/reviews'"
+      >
         <template #icon>
-          <SelectedDashboardLogo v-if="currentRoute === '/dashboard' || currentRoute === '/reviews'" />
+          <SelectedDashboardLogo
+            v-if="currentRoute === '/dashboard' || currentRoute === '/reviews'"
+          />
           <DashboardLogo v-else />
         </template>
       </Element>
-      <Element path="/bookings" title="Prenotazioni">
+      <Element
+        path="/bookings"
+        title="Prenotazioni"
+        :selected="currentRoute === '/bookings'"
+      >
         <template #icon>
           <SelectedBookingsLogo v-if="currentRoute === '/bookings'" />
           <BookingsLogo v-else />
         </template>
       </Element>
-      <Element path="/calendar" title="Calendario">
+      <Element
+        path="/calendar"
+        title="Calendario"
+        :selected="currentRoute === '/calendar'"
+      >
         <template #icon>
           <SelectedCalendarLogo v-if="currentRoute === '/calendar'" />
           <CalendarLogo v-else />
         </template>
       </Element>
-      <Element path="/settings" title="Impostazioni">
+      <Element
+        path="/settings"
+        title="Impostazioni"
+        :selected="currentRoute === '/settings'"
+      >
         <template #icon>
           <SelectedSettingsLogo v-if="currentRoute === '/settings'" />
           <SettingsLogo v-else />

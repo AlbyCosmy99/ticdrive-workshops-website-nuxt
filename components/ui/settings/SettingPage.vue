@@ -119,7 +119,7 @@ const props = withDefaults(defineProps<SettingsPageProps>(), {
   profileImagePath: 'public/images/Profile.png',
 });
 
-const router = useRouter()
+const router = useRouter();
 
 const emit = defineEmits([
   'changePassword',
@@ -145,8 +145,8 @@ const modifyWorkshopDetails = () => {
 };
 
 const logout = () => {
-  localStorage.removeItem('token')
-  router.replace('auth/login')
+  localStorage.removeItem('token');
+  router.replace('auth/login');
 };
 
 const deleteAccount = () => {

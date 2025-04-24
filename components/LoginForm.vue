@@ -76,14 +76,14 @@ import useStepStore from '~/store/step';
 import CheckboxField from './CheckboxField.vue';
 import useAuthStore from '~/store/auth';
 import TicDriveAuthSlider from './ui/sliders/TicDriveAuthSlider.vue';
-import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue'
+import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
 
 const useStore = useStepStore();
 const username = ref('');
 const password = ref('');
 const rememberMe = ref(true);
 const passwordVisible = ref(false);
-const showToast = useToast()
+const showToast = useToast();
 
 // Computed property for password input type
 const passwordInputType = computed(() =>
@@ -98,7 +98,7 @@ const handleSubmit = async () => {
     await authStore.login(username.value, password.value);
     navigateTo({name: 'dashboard'});
   } catch (err) {
-    showToast('error', "Wrong credentials", err.response.data, 5000)
+    showToast('error', 'Wrong credentials', err.response.data, 5000);
   } finally {
     loading.value = false;
   }

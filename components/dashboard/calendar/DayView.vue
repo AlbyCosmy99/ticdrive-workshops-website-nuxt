@@ -7,8 +7,19 @@
         class="p-2 text-gray-500 hover:text-drive"
         aria-label="Previous day"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
       </button>
       <h2 class="text-xl font-semibold mx-4">
@@ -19,32 +30,53 @@
         class="p-2 text-gray-500 hover:text-drive"
         aria-label="Next day"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"
+          />
         </svg>
       </button>
     </div>
 
     <!-- Calendar Grid -->
     <div class="overflow-x-auto flex-grow">
-      <div class="min-w-[800px] grid border border-gray-200 rounded-lg"
-           :style="`grid-template-columns: 5rem repeat(5, 1fr);`">
+      <div
+        class="min-w-[800px] grid border border-gray-200 rounded-lg"
+        :style="`grid-template-columns: 5rem repeat(5, 1fr);`"
+      >
         <!-- Header row -->
         <div class="bg-white border-b border-gray-200"></div>
-        <div v-for="i in 5" :key="i" class="text-center text-sm font-medium py-2 border-b border-gray-200 bg-white">
+        <div
+          v-for="i in 5"
+          :key="i"
+          class="text-center text-sm font-medium py-2 border-b border-gray-200 bg-white"
+        >
           Slot {{ i }}
         </div>
 
         <!-- Time rows -->
         <template v-for="(time, timeIndex) in timeSlots" :key="time">
           <!-- Time label -->
-          <div class="h-20 flex items-center justify-center border-t border-gray-200 text-gray-600 text-sm font-medium bg-white sticky left-0 z-10">
+          <div
+            class="h-20 flex items-center justify-center border-t border-gray-200 text-gray-600 text-sm font-medium bg-white sticky left-0 z-10"
+          >
             {{ time }}
           </div>
 
           <!-- Slot columns -->
           <template v-for="colIndex in 5" :key="`${time}-${colIndex}`">
-            <div class="h-20 border-t border-l border-gray-200 p-1 relative bg-white">
+            <div
+              class="h-20 border-t border-l border-gray-200 p-1 relative bg-white"
+            >
               <!-- Hardcoded appointments example -->
               <AppointmentCard
                 v-if="shouldRenderCard(time, colIndex)"
@@ -59,21 +91,51 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import {ref, computed} from 'vue';
 import AppointmentCard from './AppointmentCard.vue';
 
 const timeSlots = [
-  '08:00', '09:00', '10:00', '11:00',
-  '12:00', '13:00', '14:00', '15:00',
-  '16:00', '17:00', '18:00', '19:00'
+  '08:00',
+  '09:00',
+  '10:00',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+  '16:00',
+  '17:00',
+  '18:00',
+  '19:00',
 ];
 
 const today = new Date();
 const displayedDate = ref(new Date(today));
 
 // Italian labels
-const monthNames = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
-const dayNames = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+const monthNames = [
+  'Gennaio',
+  'Febbraio',
+  'Marzo',
+  'Aprile',
+  'Maggio',
+  'Giugno',
+  'Luglio',
+  'Agosto',
+  'Settembre',
+  'Ottobre',
+  'Novembre',
+  'Dicembre',
+];
+const dayNames = [
+  'Domenica',
+  'Lunedì',
+  'Martedì',
+  'Mercoledì',
+  'Giovedì',
+  'Venerdì',
+  'Sabato',
+];
 
 const displayedDay = computed(() => displayedDate.value.getDate());
 const displayedMonth = computed(() => displayedDate.value.getMonth());
@@ -95,12 +157,48 @@ const prevDay = () => {
 
 // Appointment rendering logic (mock)
 const appointmentMap = {
-  '09:00-2': { carModel: 'Nissan Micra', serviceType: 'Tagliando', appointmentId: 'A00001', location: 'FB144MD', carLogo: 'nissan' },
-  '10:00-2': { carModel: 'Peugeot 208', serviceType: 'Cambio Olio', appointmentId: 'A00002', location: 'FB144MD', carLogo: 'peugeot' },
-  '10:00-4': { carModel: 'Peugeot 2008', serviceType: 'Cambio Pneumatici', appointmentId: 'A00002', location: 'FB144MD', carLogo: 'peugeot' },
-  '12:00-3': { carModel: 'Nissan Skyline', serviceType: 'Cambio Pastiglie', appointmentId: 'A00002', location: 'FB144MD', carLogo: 'nissan' },
-  '12:00-4': { carModel: 'Peugeot 2008', serviceType: 'Cambio Pneumatici', appointmentId: 'A00002', location: 'FB144MD', carLogo: 'peugeot' },
-  '16:00-2': { carModel: 'Ford Focus', serviceType: 'Manutenzione', appointmentId: 'A00004', location: 'FB144MD', carLogo: 'ford' },
+  '09:00-2': {
+    carModel: 'Nissan Micra',
+    serviceType: 'Tagliando',
+    appointmentId: 'A00001',
+    location: 'FB144MD',
+    carLogo: 'nissan',
+  },
+  '10:00-2': {
+    carModel: 'Peugeot 208',
+    serviceType: 'Cambio Olio',
+    appointmentId: 'A00002',
+    location: 'FB144MD',
+    carLogo: 'peugeot',
+  },
+  '10:00-4': {
+    carModel: 'Peugeot 2008',
+    serviceType: 'Cambio Pneumatici',
+    appointmentId: 'A00002',
+    location: 'FB144MD',
+    carLogo: 'peugeot',
+  },
+  '12:00-3': {
+    carModel: 'Nissan Skyline',
+    serviceType: 'Cambio Pastiglie',
+    appointmentId: 'A00002',
+    location: 'FB144MD',
+    carLogo: 'nissan',
+  },
+  '12:00-4': {
+    carModel: 'Peugeot 2008',
+    serviceType: 'Cambio Pneumatici',
+    appointmentId: 'A00002',
+    location: 'FB144MD',
+    carLogo: 'peugeot',
+  },
+  '16:00-2': {
+    carModel: 'Ford Focus',
+    serviceType: 'Manutenzione',
+    appointmentId: 'A00004',
+    location: 'FB144MD',
+    carLogo: 'ford',
+  },
 };
 
 const shouldRenderCard = (time: string, column: number) => {

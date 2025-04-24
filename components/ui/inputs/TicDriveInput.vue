@@ -23,7 +23,9 @@
         :autocomplete="autocomplete"
         :disabled="disabled"
         :readonly="readonly"
-        @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+        @input="
+          $emit('update:modelValue', ($event.target as HTMLInputElement).value)
+        "
       />
 
       <NuxtImg
@@ -43,9 +45,8 @@
   </div>
 </template>
 
-
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import {ref, computed} from 'vue';
 
 type InputSize = 'standard' | 'small';
 type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
@@ -82,7 +83,11 @@ const emit = defineEmits<{
 
 const showPassword = ref(false);
 const localType = computed(() =>
-  props.type === 'password' ? (showPassword.value ? 'text' : 'password') : props.type
+  props.type === 'password'
+    ? showPassword.value
+      ? 'text'
+      : 'password'
+    : props.type,
 );
 
 const togglePasswordVisibility = () => {

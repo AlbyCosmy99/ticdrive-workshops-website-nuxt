@@ -56,7 +56,9 @@
         Accetta
       </button>
     </div>
-    <p class="text-center mt-2 text-sm font-semibold text-tic cursor-pointer hover:underline">
+    <p
+      class="text-center mt-2 text-sm font-semibold text-tic cursor-pointer hover:underline"
+    >
       Vuoi suggerire un orario diverso?
     </p>
   </div>
@@ -64,10 +66,10 @@
 
 <script setup lang="ts">
 import WaitingConfirmationCard from '../bookings/WaitingConfirmationCard.vue';
-import EventAvailableIcon from '@/public/svg/time/event_available.svg'
-import CarRepairIcon from '@/public/svg/cars/car_repair.svg'
-import Car1Icon from '@/public/svg/cars/car1.svg'
-import PaymentDoneIcon from '@/public/svg/payment/payment_done.svg'
+import EventAvailableIcon from '@/public/svg/time/event_available.svg';
+import CarRepairIcon from '@/public/svg/cars/car_repair.svg';
+import Car1Icon from '@/public/svg/cars/car1.svg';
+import PaymentDoneIcon from '@/public/svg/payment/payment_done.svg';
 
 interface BookingCardProps {
   name: string;

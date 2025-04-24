@@ -2,13 +2,13 @@
   <div class="relative">
     <div
       class="absolute top-1/2 -translate-y-1/2 -left-4 w-1 h-13 bg-drive transition-all rounded-r-md"
-      :class="currentRoute === path ? 'opacity-100' : 'opacity-0'"
+      :class="selected ? 'opacity-100' : 'opacity-0'"
     ></div>
     <button
       @click="$router.push(path)"
       :class="[
         'cursor-pointer font-medium text-base flex items-center w-full py-3 px-4 rounded-md text-black transition-colors group',
-        currentRoute === path && 'bg-drive text-white',
+        selected && 'bg-drive text-white',
       ]"
     >
       <div class="w-8 mr-3 flex items-center justify-center">
@@ -23,8 +23,6 @@
 defineProps<{
   title: string;
   path: string;
+  selected: boolean;
 }>();
-
-const route = useRoute();
-const currentRoute = computed(() => route.path);
 </script>
