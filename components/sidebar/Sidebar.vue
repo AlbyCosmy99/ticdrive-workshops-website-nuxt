@@ -2,8 +2,11 @@
   <div
     class="w-[220px] bg-white h-[85vh] rounded-lg border border-gray-200 flex flex-col py-6 shadow-sm relative"
   >
-    <div class="px-6 mb-12">
-      <div class="flex items-center justify-center">
+    <div class="px-6 mb-12 flex items-center justify-center">
+      <button
+        class="flex items-center justify-center"
+        @click="router.push('/')"
+      >
         <NuxtImg
           src="/svg/TicDriveLogo.svg"
           alt="TicDrive logo"
@@ -11,7 +14,7 @@
           width="120"
           height="120"
         />
-      </div>
+      </button>
     </div>
     <div class="flex flex-col flex-grow space-y-1 px-4">
       <Element path="/dashboard" title="Dashboard">
@@ -52,6 +55,8 @@ import SelectedCalendarLogo from '@/public/svg/logos/sidebar/selected/calendar.s
 import CalendarLogo from '@/public/svg/logos/sidebar/notSelected/calendar.svg';
 import SelectedSettingsLogo from '@/public/svg/logos/sidebar/selected/settings.svg';
 import SettingsLogo from '@/public/svg/logos/sidebar/notSelected/settings.svg';
+
+const router = useRouter();
 const route = useRoute();
 const currentRoute = computed(() => route.path);
 </script>
