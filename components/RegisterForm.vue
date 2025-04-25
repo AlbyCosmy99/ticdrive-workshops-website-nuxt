@@ -18,14 +18,11 @@
     <Step4
       v-if="stepStore.currentStep === 4"
       ref="stepFourRef"
-      v-model:stepValues="stepStore.stepFourData"
-      @update:isCheck="toggleMultiSelect('serviceType', $event)"
     />
     <Step5
       v-if="stepStore.currentStep === 5"
       ref="stepFiveRef"
       v-model:stepValues="stepStore.stepFiveData"
-      @update:isCheck="toggleMultiSelect('serviceDay', $event)"
       @update:plus="plusServiceTime($event)"
       @update:remove="removeServiceTime($event)"
     />
@@ -130,7 +127,7 @@ const stepValidation = async (step: number): Promise<boolean> => {
       }
       return true;
     case 4:
-      if (!stepStore.stepFourData.currentServiceType.length) {
+      if (!stepStore.stepFourData.services.length) {
         showToast(
           'info',
           'Missing Type Of Service',
@@ -184,7 +181,7 @@ const nextStep = async (): Promise<void> => {
   if (buttonDisableStatus.value) return;
   const isValid = await stepValidation(stepStore.currentStep);
   if (isValid) stepStore.currentStep++;
-  console.log(stepStore.stepThreeData);
+  console.log(stepStore.stepFourData);
 };
 
 const prevStep = (): void => {
@@ -208,34 +205,6 @@ const removeServiceTime = (value: number): void => {
   );
   if (existing) {
     existing.serviceTime2 = {start: '', end: ''};
-  }
-};
-
-const toggleMultiSelect = (
-  type: 'workShopSpec' | 'serviceType' | 'serviceDay',
-  value: Specialization,
-): void => {
-  if (type === 'workShopSpec') {
-    const index = stepStore.stepThreeData.specializations.indexOf(value);
-    index !== -1
-      ? stepStore.stepThreeData.specializations.splice(index, 1)
-      : stepStore.stepThreeData.specializations.push(value);
-  } else if (type === 'serviceType') {
-    const index = stepStore.stepFourData.currentServiceType.indexOf(value);
-    index !== -1
-      ? stepStore.stepFourData.currentServiceType.splice(index, 1)
-      : stepStore.stepFourData.currentServiceType.push(value);
-  } else if (type === 'serviceDay') {
-    const index = stepStore.stepFiveData.currentServiceDays.findIndex(
-      day => day.value === value,
-    );
-    index !== -1
-      ? stepStore.stepFiveData.currentServiceDays.splice(index, 1)
-      : stepStore.stepFiveData.currentServiceDays.push({
-          value,
-          serviceTime1: {start: '09:00', end: '12:00'},
-          serviceTime2: {start: '', end: ''},
-        });
   }
 };
 </script>
