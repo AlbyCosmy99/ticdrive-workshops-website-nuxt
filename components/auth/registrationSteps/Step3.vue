@@ -9,13 +9,18 @@
       (Selezionare più di una casella se necessario)
     </h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8 mt-8">
-      <RadioOption
-        v-for="(value, index) in workShopSpecs"
-        :key="index"
-        :label="value.label"
-        :value="value.value"
-        :isCheck="stepValues.currentWorkShopSpec.includes(value.value)"
-        @update:isCheck="handleRadioSelection"
+      <TicDriveRadio
+        v-for="specialization in specializations"
+        :key="specialization.id"
+        :id="specialization.id"
+        :name="specialization.name"
+        :value="specialization"
+        :isChecked="
+          !!stepStore.stepThreeData.specializations.find(
+            s => s.id === specialization.id,
+          )
+        "
+        @update:check="handleRadioSelection"
       />
     </div>
   </div>
@@ -23,38 +28,45 @@
 
 <script lang="ts" setup>
 import {defineProps, defineEmits} from 'vue';
-
-interface WorkshopSpecOption {
-  value: number;
-  label: string;
-}
-
-interface StepThreeData {
-  currentWorkShopSpec: number[];
-}
+import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
+import useStepStore from '~/store/step';
+import type {
+  Specialization,
+  StepThreeData,
+} from '~/types/auth/steps/StepThreeData';
 
 const props = defineProps<{
   stepValues: StepThreeData;
 }>();
 
+const stepStore = useStepStore();
+
 const emit = defineEmits<{
   (e: 'update:isCheck', value: number): void;
 }>();
 
-const workShopSpecs: WorkshopSpecOption[] = [
-  {value: 1, label: 'Meccanica generale'},
-  {value: 2, label: 'Flotte Aziendali e Noleggio'},
-  {value: 3, label: 'Elettrauto'},
-  {value: 4, label: 'Veicoli Elettrici e Ibridi'},
-  {value: 5, label: 'Gommista'},
-  {value: 6, label: 'Cristalli e Parabrezza'},
-  {value: 7, label: 'Carrozzeria'},
-  {value: 8, label: 'Veicoli Elettrici e Ibridi'},
-  {value: 9, label: 'Centro revisioni'},
-  {value: 10, label: 'Impianti GPL/Metano'},
+//mock
+const specializations: Specialization[] = [
+  {id: 1, name: 'Meccanica generale'},
+  {id: 2, name: 'Flotte Aziendali e Noleggio'},
+  {id: 3, name: 'Elettrauto'},
+  {id: 4, name: 'Veicoli Elettrici e Ibridi'},
+  {id: 5, name: 'Gommista'},
+  {id: 6, name: 'Cristalli e Parabrezza'},
+  {id: 7, name: 'Carrozzeria'},
+  {id: 8, name: 'Veicoli Elettrici e Ibridi'},
+  {id: 9, name: 'Centro revisioni'},
+  {id: 10, name: 'Impianti GPL/Metano'},
 ];
 
-const handleRadioSelection = (value: number) => {
-  emit('update:isCheck', value);
+const handleRadioSelection = (specialization: Specialization) => {
+  const index = stepStore.stepThreeData.specializations.findIndex(
+    s => s.id === specialization.id,
+  );
+  if (index === -1) {
+    stepStore.stepThreeData.specializations.push(specialization);
+  } else {
+    stepStore.stepThreeData.specializations.splice(index, 1);
+  }
 };
 </script>

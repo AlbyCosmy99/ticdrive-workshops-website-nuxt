@@ -1,27 +1,7 @@
 import {defineStore} from 'pinia';
 import type {StepOneData} from '~/types/auth/steps/StepOneData';
-
-interface StepTwoData {
-  fullAddress: {
-    add1: string;
-    add2: string;
-    add3: string;
-    add4: string;
-  };
-  companyContact: {
-    contact1: string;
-    contact2: string;
-  };
-  referContact: {
-    contact1: string;
-    contact2: string;
-    contact3: string;
-  };
-}
-
-interface StepThreeData {
-  currentWorkShopSpec: number[];
-}
+import type {StepThreeData} from '~/types/auth/steps/StepThreeData';
+import type {StepTwoData} from '~/types/auth/steps/StepTwoData';
 
 interface StepFourData {
   currentServiceType: number[];
@@ -108,23 +88,23 @@ const useStepStore = defineStore('step', {
     },
     stepTwoData: {
       fullAddress: {
-        add1: '',
-        add2: '',
-        add3: '',
-        add4: '',
+        streetAddress: '',
+        city: '',
+        province: '',
+        postalCode: '',
       },
       companyContact: {
-        contact1: '',
-        contact2: '',
+        phone: '',
+        email: '',
       },
       referContact: {
-        contact1: '',
-        contact2: '',
-        contact3: '',
+        fullName: '',
+        phone: '',
+        email: '',
       },
     },
     stepThreeData: {
-      currentWorkShopSpec: [],
+      specializations: [],
     },
     stepFourData: {
       currentServiceType: [],

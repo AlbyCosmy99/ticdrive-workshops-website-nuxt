@@ -89,6 +89,7 @@ import Step7 from './auth/registrationSteps/Step7.vue';
 import Step8 from './auth/registrationSteps/Step8.vue';
 import TicDrivebutton from './ui/buttons/TicDrivebutton.vue';
 import useToast from '@/composables/useToast';
+import type {Specialization} from '~/types/auth/steps/StepThreeData';
 
 const stepStore = useStepStore();
 
@@ -121,7 +122,7 @@ const stepValidation = async (step: number): Promise<boolean> => {
     case 2:
       return await stepTwoRef.value?.validate();
     case 3:
-      if (!stepStore.stepThreeData.currentWorkShopSpec.length) {
+      if (!stepStore.stepThreeData.specializations.length) {
         showToast(
           'info',
           'Missing Workshop',
@@ -185,6 +186,7 @@ const nextStep = async (): Promise<void> => {
   if (buttonDisableStatus.value) return;
   const isValid = await stepValidation(stepStore.currentStep);
   if (isValid) stepStore.currentStep++;
+  console.log(stepStore.stepThreeData);
 };
 
 const prevStep = (): void => {
@@ -213,13 +215,13 @@ const removeServiceTime = (value: number): void => {
 
 const toggleMultiSelect = (
   type: 'workShopSpec' | 'serviceType' | 'serviceDay',
-  value: number,
+  value: Specialization,
 ): void => {
   if (type === 'workShopSpec') {
-    const index = stepStore.stepThreeData.currentWorkShopSpec.indexOf(value);
+    const index = stepStore.stepThreeData.specializations.indexOf(value);
     index !== -1
-      ? stepStore.stepThreeData.currentWorkShopSpec.splice(index, 1)
-      : stepStore.stepThreeData.currentWorkShopSpec.push(value);
+      ? stepStore.stepThreeData.specializations.splice(index, 1)
+      : stepStore.stepThreeData.specializations.push(value);
   } else if (type === 'serviceType') {
     const index = stepStore.stepFourData.currentServiceType.indexOf(value);
     index !== -1

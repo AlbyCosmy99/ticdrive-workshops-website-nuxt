@@ -5,7 +5,6 @@
       :hide-bar="stepStore.currentStep === 1"
     />
     <div class="w-full grid grid-cols-1 lg:grid-cols-2 flex-1 min-h-0">
-      
       <!-- Left Section -->
       <div class="flex justify-center items-center p-4">
         <div

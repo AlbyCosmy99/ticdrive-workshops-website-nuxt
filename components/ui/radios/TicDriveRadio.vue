@@ -2,25 +2,25 @@
   <div
     :class="[
       'rounded-full px-3 py-3 border flex items-center cursor-pointer relative',
-      isCheck ? 'border-green-500' : 'border-gray-500',
+      isChecked ? 'border-green-500' : 'border-gray-500',
     ]"
-    @click="handleCheck"
+    @click="handleChecked"
   >
     <div
       :class="[
         'rounded-full border w-6 h-6 absolute',
-        isCheck ? 'border-green-500' : 'border-gray-500',
+        isChecked ? 'border-green-500' : 'border-gray-500',
       ]"
     >
       <img
-        v-if="isCheck"
+        v-if="isChecked"
         src="/images/vector.svg"
         alt="check"
         class="w-4 h-4 m-auto"
       />
     </div>
-    <h1 :class="['ms-8 text-sm font-semibold', {'text-green-600': isCheck}]">
-      {{ label }}
+    <h1 :class="['ms-8 text-sm font-semibold', {'text-green-600': isChecked}]">
+      {{ name }}
     </h1>
   </div>
 </template>
@@ -28,23 +28,26 @@
 <script lang="ts" setup>
 import {defineProps, withDefaults, defineEmits} from 'vue';
 
+type SharedValue = any;
+
 const props = withDefaults(
   defineProps<{
-    label: string;
-    isCheck: boolean;
-    value: number;
+    id: number;
+    name: string;
+    value: SharedValue;
+    isChecked: boolean;
   }>(),
   {
     label: '',
-    isCheck: false,
+    isChecked: false,
   },
 );
 
 const emit = defineEmits<{
-  (e: 'update:isCheck', value: number): void;
+  (e: 'update:check', value: SharedValue): void;
 }>();
 
-const handleCheck = () => {
-  emit('update:isCheck', props.value);
+const handleChecked = () => {
+  emit('update:check', props.value);
 };
 </script>

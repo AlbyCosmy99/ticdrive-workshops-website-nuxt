@@ -6,7 +6,7 @@
       Tipologia di servizi offerti
     </h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8 mt-8">
-      <RadioOption
+      <TicDriveRadio
         v-for="(service, index) in serviceTypes"
         :key="index"
         :label="service.label"
