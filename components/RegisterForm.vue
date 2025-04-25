@@ -1,5 +1,5 @@
 <template>
-  <div class="px-3 w-full my-4">
+  <div class="px-3 w-full mt-2 mb-4 overflow-auto">
     <Step1
       v-if="stepStore.currentStep === 1"
       ref="stepOneRef"
