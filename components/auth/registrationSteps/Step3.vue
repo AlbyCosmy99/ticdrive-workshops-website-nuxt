@@ -35,10 +35,6 @@ import type {
   StepThreeData,
 } from '~/types/auth/steps/StepThreeData';
 
-const props = defineProps<{
-  stepValues: StepThreeData;
-}>();
-
 const stepStore = useStepStore();
 
 const emit = defineEmits<{

@@ -14,8 +14,6 @@
     <Step3
       v-if="stepStore.currentStep === 3"
       ref="stepThreeRef"
-      v-model:stepValues="stepStore.stepThreeData"
-      @update:isCheck="toggleMultiSelect('workShopSpec', $event)"
     />
     <Step4
       v-if="stepStore.currentStep === 4"
