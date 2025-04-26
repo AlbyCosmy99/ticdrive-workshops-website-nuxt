@@ -74,7 +74,7 @@
     </div>
 
     <PlusMinusField
-      :label="'Numero massimo di veicoli gestibili contemporaneamente:'"
+      :label="'Numero massimo di veicoli gestibili al giorno:'"
       :numberValue="stepValues.maxVehicleNumber"
       :isMinusDisable="!stepValues.maxVehicleNumber"
       @update:number="updateMaxVehicle"

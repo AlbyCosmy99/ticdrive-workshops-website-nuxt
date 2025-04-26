@@ -84,7 +84,6 @@ import Step7 from './auth/registrationSteps/Step7.vue';
 import Step8 from './auth/registrationSteps/Step8.vue';
 import TicDrivebutton from './ui/buttons/TicDrivebutton.vue';
 import useToast from '@/composables/useToast';
-import type {Specialization} from '~/types/auth/steps/StepThreeData';
 
 const stepStore = useStepStore();
 
