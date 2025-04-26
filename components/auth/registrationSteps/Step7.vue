@@ -23,7 +23,7 @@
 
     <h1 class="text-gray-500 text-2xl font-semibold mt-5">Lingue Parlate:</h1>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4 mb-10">
-      <RadioOption
+      <TicDriveRadio
         v-for="lang in langs"
         :key="lang.value"
         :label="lang.label"

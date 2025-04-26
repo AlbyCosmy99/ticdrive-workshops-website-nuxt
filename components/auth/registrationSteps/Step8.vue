@@ -72,7 +72,7 @@
     <h1 class="text-gray-500 text-2xl font-semibold mt-8 mb-1">
       Autodichiarazione di conformità
     </h1>
-    <RadioOption
+    <TicDriveRadio
       v-for="conf in conformities"
       :key="conf.value"
       class="mt-2"
