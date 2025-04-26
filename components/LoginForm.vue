@@ -97,7 +97,7 @@ const handleSubmit = async () => {
     loading.value = true;
     await authStore.login(username.value, password.value);
     navigateTo({name: 'dashboard'});
-  } catch (err) {
+  } catch (err: any) {
     showToast('error', 'Wrong credentials', err.response.data, 5000);
   } finally {
     loading.value = false;

@@ -11,14 +11,8 @@
       ref="stepTwoRef"
       v-model:stepValues="stepStore.stepTwoData"
     />
-    <Step3
-      v-if="stepStore.currentStep === 3"
-      ref="stepThreeRef"
-    />
-    <Step4
-      v-if="stepStore.currentStep === 4"
-      ref="stepFourRef"
-    />
+    <Step3 v-if="stepStore.currentStep === 3" ref="stepThreeRef" />
+    <Step4 v-if="stepStore.currentStep === 4" ref="stepFourRef" />
     <Step5
       v-if="stepStore.currentStep === 5"
       ref="stepFiveRef"
