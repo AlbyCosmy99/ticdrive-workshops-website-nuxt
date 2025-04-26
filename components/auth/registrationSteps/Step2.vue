@@ -117,8 +117,4 @@ const rules = computed(() => ({
 }));
 
 const v$ = useVuelidate(rules, props.stepValues);
-
-onMounted(() => {
-  console.log(stepStore.stepOneData);
-});
 </script>

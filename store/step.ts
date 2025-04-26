@@ -1,29 +1,10 @@
 import {defineStore} from 'pinia';
-import type { StepFourData } from '~/types/auth/steps/StepFourData';
+import type {StepFiveData} from '~/types/auth/steps/StepFiveData';
+import type {StepFourData} from '~/types/auth/steps/StepFourData';
 import type {StepOneData} from '~/types/auth/steps/StepOneData';
+import type {StepSixData} from '~/types/auth/steps/StepSixData';
 import type {StepThreeData} from '~/types/auth/steps/StepThreeData';
 import type {StepTwoData} from '~/types/auth/steps/StepTwoData';
-
-interface ServiceTime {
-  start: string;
-  end: string;
-}
-
-interface ServiceDay {
-  value: number;
-  serviceTime1: ServiceTime;
-  serviceTime2: ServiceTime;
-}
-
-interface StepFiveData {
-  currentServiceDays: ServiceDay[];
-  maxVehicleNumber: number;
-  homeService: boolean;
-}
-
-interface StepSixData {
-  images: string[];
-}
 
 interface StepSevenData {
   history: string;
@@ -107,9 +88,10 @@ const useStepStore = defineStore('step', {
       services: [],
     },
     stepFiveData: {
-      currentServiceDays: [],
-      maxVehicleNumber: 0,
+      activeDays: [],
+      maxPerDay: 0,
       homeService: false,
+      timeSlots: [],
     },
     stepSixData: {
       images: [],
