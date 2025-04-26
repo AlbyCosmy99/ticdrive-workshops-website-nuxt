@@ -2,17 +2,17 @@
   <div
     :class="[
       'py-2 px-6 rounded-xl border relative flex mt-2 items-center justify-between',
-      isCheck ? 'border-green-500' : 'border-gray-500',
+      isChecked ? 'border-green-500' : 'border-gray-500',
     ]"
   >
     <h1 class="text-gray-500 text-2xl font-semibold">
-      {{ label }}
+      {{ name }}
     </h1>
     <div class="relative w-14 h-6 cursor-pointer" @click="handleClick">
       <div
         :class="[
           'absolute inset-0 rounded-full transition-all duration-300 ease-in-out',
-          isCheck
+          isChecked
             ? 'bg-green-500 border-green-500'
             : 'bg-gray-500 border-gray-500',
         ]"
@@ -20,7 +20,7 @@
       <div
         :class="[
           'absolute top-1/2 transform -translate-y-1/2 bg-white w-6 h-6 rounded-full shadow-md transition-all duration-300 ease-in-out',
-          isCheck ? 'left-7' : 'left-1',
+          isChecked ? 'left-7' : 'left-1',
         ]"
       ></div>
     </div>
@@ -30,23 +30,26 @@
 <script lang="ts" setup>
 import {defineProps, defineEmits, withDefaults} from 'vue';
 
+type SharedValue = any;
+
 const props = withDefaults(
   defineProps<{
-    isCheck: boolean;
-    value: number;
-    label: string;
+    id: number;
+    isChecked: boolean;
+    name: string;
+    value: SharedValue;
   }>(),
   {
-    isCheck: false,
-    label: '',
+    isChecked: false,
+    name: '',
   },
 );
 
 const emit = defineEmits<{
-  (e: 'update:isCheck', value: number): void;
+  (e: 'update:check', value: SharedValue): void;
 }>();
 
 const handleClick = () => {
-  emit('update:isCheck', props.value);
+  emit('update:check', props.value);
 };
 </script>
