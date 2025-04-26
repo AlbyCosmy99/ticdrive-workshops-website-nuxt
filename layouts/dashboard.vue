@@ -18,7 +18,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <p v-if="loading">loading...</p>
+  <UiSpinnersTicDriveSpinner v-if="loading"/>
   <div v-else class="flex min-h-screen bg-gray-50">
     <aside class="w-64 p-4">
       <Sidebar />
