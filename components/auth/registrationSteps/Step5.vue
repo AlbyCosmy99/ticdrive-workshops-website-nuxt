@@ -1,17 +1,28 @@
 <template>
-  <div class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center">
+  <div
+    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
+  >
     <h1 class="text-4xl font-semibold text-gray-500 mb-8">Orari</h1>
 
-    <div v-for="day in days" :key="day.id" class="grid grid-cols-1 2xl:grid-cols-3">
+    <div
+      v-for="day in days"
+      :key="day.id"
+      class="grid grid-cols-1 2xl:grid-cols-3"
+    >
       <TicDriveSlider
         :id="day.id"
         :name="day.label"
         :value="day"
-        :isChecked="!!stepStore.stepFiveData.activeDays.find(d => d.id === day.id)"
+        :isChecked="
+          !!stepStore.stepFiveData.activeDays.find(d => d.id === day.id)
+        "
         @update:check="handleCheckbox(day)"
       />
 
-      <div v-if="!!stepStore.stepFiveData.activeDays.find(d => d.id === day.id)" class="col-span-2 px-2 grid grid-cols-8 mt-2 gap-1 sm:gap-0">
+      <div
+        v-if="!!stepStore.stepFiveData.activeDays.find(d => d.id === day.id)"
+        class="col-span-2 px-2 grid grid-cols-8 mt-2 gap-1 sm:gap-0"
+      >
         <div class="col-span-6 sm:col-span-3 flex m-auto">
           <Calendar
             v-model="stepStore.stepFiveData.timeSlots[day.id][0].start"
@@ -35,7 +46,10 @@
         </div>
 
         <div
-          v-if="stepStore.stepFiveData.timeSlots[day.id][1]?.start && stepStore.stepFiveData.timeSlots[day.id][1]?.end"
+          v-if="
+            stepStore.stepFiveData.timeSlots[day.id][1]?.start &&
+            stepStore.stepFiveData.timeSlots[day.id][1]?.end
+          "
           class="col-span-6 sm:col-span-3 flex"
         >
           <Calendar
@@ -52,7 +66,10 @@
         </div>
 
         <div
-          v-if="stepStore.stepFiveData.timeSlots[day.id][1]?.start && stepStore.stepFiveData.timeSlots[day.id][1]?.end"
+          v-if="
+            stepStore.stepFiveData.timeSlots[day.id][1]?.start &&
+            stepStore.stepFiveData.timeSlots[day.id][1]?.end
+          "
           class="col-span-2 sm:col-span-1 flex cursor-pointer"
           @click="removeHandle(day.id)"
         >
@@ -68,7 +85,9 @@
       @update:number="updateMaxVehicle"
     />
 
-    <div class="border-2 border-gray-500 p-4 flex flex-col sm:flex-row justify-between items-center mt-4 rounded-xl mb-10">
+    <div
+      class="border-2 border-gray-500 p-4 flex flex-col sm:flex-row justify-between items-center mt-4 rounded-xl mb-10"
+    >
       <h1 class="text-lg text-gray-500 font-semibold">
         Servizi a domicilio disponibili?
       </h1>
@@ -76,7 +95,9 @@
         <div
           :class="[
             'w-20 h-12 leading-12 text-white font-semibold rounded text-xl text-center cursor-pointer',
-            !stepStore.stepFiveData.homeService ? 'bg-green-500' : 'bg-gray-200',
+            !stepStore.stepFiveData.homeService
+              ? 'bg-green-500'
+              : 'bg-gray-200',
           ]"
           @click="updateHomeService(false)"
         >
@@ -97,24 +118,24 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import Calendar from 'primevue/calendar';
 import TicDriveSlider from '~/components/ui/sliders/TicDriveSlider.vue';
 import PlusMinusField from '~/components/PlusMinusField.vue';
 import useStepStore from '~/store/step';
-import type { Day } from '~/types/datetime/Day';
+import type {Day} from '~/types/datetime/Day';
 
 const stepStore = useStepStore();
 
 // Static days
 const days = [
-  { id: 1, label: 'Lunedì' },
-  { id: 2, label: 'Martedì' },
-  { id: 3, label: 'Mercoledì' },
-  { id: 4, label: 'Giovedì' },
-  { id: 5, label: 'Venerdì' },
-  { id: 6, label: 'Sabato' },
-  { id: 7, label: 'Domenica' },
+  {id: 1, label: 'Lunedì'},
+  {id: 2, label: 'Martedì'},
+  {id: 3, label: 'Mercoledì'},
+  {id: 4, label: 'Giovedì'},
+  {id: 5, label: 'Venerdì'},
+  {id: 6, label: 'Sabato'},
+  {id: 7, label: 'Domenica'},
 ];
 
 // Utilities
@@ -128,7 +149,9 @@ const stringToDate = (timeStr: string): Date | null => {
 
 // Handlers
 const handleCheckbox = (day: Day) => {
-  const index = stepStore.stepFiveData.activeDays.findIndex(d => d.id === day.id);
+  const index = stepStore.stepFiveData.activeDays.findIndex(
+    d => d.id === day.id,
+  );
   if (index !== -1) {
     stepStore.stepFiveData.activeDays.splice(index, 1);
   } else {
@@ -150,10 +173,10 @@ const plusHandle = (day: Day) => {
   const firstSlotEnd = stepStore.stepFiveData.timeSlots[day.id][0]?.end;
   if (!firstSlotEnd) return;
 
-  const newStart = new Date(firstSlotEnd.getTime() + 1 * 60 * 60 * 1000); // +1 hour
+  const newStart = new Date(firstSlotEnd.getTime() + 1 * 60 * 60 * 1000);
   stepStore.stepFiveData.timeSlots[day.id][1] = {
     start: newStart,
-    end: new Date(newStart.getTime() + 3 * 60 * 60 * 1000), // +3h
+    end: new Date(newStart.getTime() + 3 * 60 * 60 * 1000),
   };
 };
 
@@ -164,15 +187,17 @@ const checkAndAdaptSecondSlot = (dayId: number) => {
   if (!firstSlotEnd || !secondSlotStart) return;
 
   if (secondSlotStart <= firstSlotEnd) {
-    const newStart = new Date(firstSlotEnd.getTime() + 1 * 60 * 60 * 1000); // +1 hour
+    const newStart = new Date(firstSlotEnd.getTime() + 1 * 60 * 60 * 1000);
     stepStore.stepFiveData.timeSlots[dayId][1].start = newStart;
-    stepStore.stepFiveData.timeSlots[dayId][1].end = new Date(newStart.getTime() + 3 * 60 * 60 * 1000); // +3h
+    stepStore.stepFiveData.timeSlots[dayId][1].end = new Date(
+      newStart.getTime() + 3 * 60 * 60 * 1000,
+    );
   }
 };
 
 const removeHandle = (dayId: number) => {
   if (stepStore.stepFiveData.timeSlots[dayId][1]) {
-    stepStore.stepFiveData.timeSlots[dayId][1] = { start: null, end: null };
+    stepStore.stepFiveData.timeSlots[dayId][1] = {start: null, end: null};
   }
 };
 

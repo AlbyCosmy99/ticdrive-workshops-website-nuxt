@@ -168,7 +168,7 @@ const nextStep = async (): Promise<void> => {
   if (buttonDisableStatus.value) return;
   const isValid = await stepValidation(stepStore.currentStep);
   if (isValid) stepStore.currentStep++;
-  console.log(stepStore.stepFiveData);
+  console.log(stepStore.stepSixData);
 };
 
 const prevStep = (): void => {

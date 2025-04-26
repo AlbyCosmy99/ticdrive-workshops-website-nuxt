@@ -2,17 +2,9 @@ import {defineStore} from 'pinia';
 import type {StepFiveData} from '~/types/auth/steps/StepFiveData';
 import type {StepFourData} from '~/types/auth/steps/StepFourData';
 import type {StepOneData} from '~/types/auth/steps/StepOneData';
+import type {StepSixData} from '~/types/auth/steps/StepSixData';
 import type {StepThreeData} from '~/types/auth/steps/StepThreeData';
 import type {StepTwoData} from '~/types/auth/steps/StepTwoData';
-
-interface ServiceTime {
-  start: string;
-  end: string;
-}
-
-interface StepSixData {
-  images: string[];
-}
 
 interface StepSevenData {
   history: string;

@@ -40,6 +40,7 @@ import {defineProps, defineExpose, computed} from 'vue';
 import {helpers, required, minLength} from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import useStepStore from '~/store/step';
+import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
 
 interface StepSevenData {
   history: string;
@@ -54,7 +55,7 @@ defineExpose({
   validate: async () => await v$.value.$validate(),
 });
 
-const langs = [
+const languages = [
   {value: 1, label: 'Italiano'},
   {value: 2, label: 'Tedesco'},
   {value: 3, label: 'Inglese'},
