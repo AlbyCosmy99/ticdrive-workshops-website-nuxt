@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import type { StepFourData } from '~/types/auth/steps/StepFourData';
+import type {StepFourData} from '~/types/auth/steps/StepFourData';
 import type {StepOneData} from '~/types/auth/steps/StepOneData';
 import type {StepThreeData} from '~/types/auth/steps/StepThreeData';
 import type {StepTwoData} from '~/types/auth/steps/StepTwoData';
