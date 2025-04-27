@@ -1,7 +1,7 @@
 <!-- pages/settings/index.vue -->
 <script setup lang="ts">
 import {ref} from 'vue';
-import PasswordChangeModal from '~/components/ui/settings/PasswordChangeModal.vue';
+import ChangePasswordModal from '~/components/ui/modals/ChangePasswordModal.vue';
 import SettingsPage from '~/components/ui/settings/SettingPage.vue';
 
 definePageMeta({
@@ -60,7 +60,7 @@ const handleDeleteAccount = () => {
       @logout="handleLogout"
       @delete-account="handleDeleteAccount"
     />
-    <PasswordChangeModal
+    <ChangePasswordModal
       :is-open="showPasswordModal"
       @close="closePasswordModal"
       @save="saveNewPassword"
