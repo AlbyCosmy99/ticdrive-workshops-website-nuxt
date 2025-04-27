@@ -52,12 +52,6 @@
   import { ref, computed } from 'vue';
   import FinalReviewCard from '/components/ui/cards/reviews/FinalReviewCard.vue';
   
-  // User info
-  const userName = ref('Mario Rossi');
-  const userRole = ref('Titolare');
-  const userAvatar = ref('/path/to/avatar.jpg');
-  const welcomeMessage = ref('Organizziamo insieme il lavoro in officina oggi!');
-  
   // Reviews data
   const totalReviews = ref(57);
   const averageRating = ref('4.4');
