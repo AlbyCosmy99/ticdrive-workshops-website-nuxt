@@ -1,15 +1,11 @@
 import axios from 'axios';
 import {defineStore} from 'pinia';
+import useUserData from '~/composables/http/auth/getUserData';
 
 interface User {
   id: number;
   name: string;
   email: string;
-}
-
-interface LoginResponse {
-  user: User;
-  token: string;
 }
 
 interface AuthState {
@@ -25,27 +21,23 @@ const useAuthStore = defineStore('auth', {
 
   actions: {
     async login(email: string, password: string): Promise<void> {
-      try {
-        const res = await axios.post(
-          'https://ticdrivebackend.onrender.com/api/auth/login',
-          {
-            email,
-            password,
-            userType: 2,
-          },
-        );
-        localStorage.setItem('token', res.data.token);
+      const $ticDriveAxios = useTicDriveAxios();
+      const res = await $ticDriveAxios.post('auth/login', {
+        email,
+        password,
+        userType: 2,
+      });
 
-        if (!res?.data) {
-          throw new Error('No data received from login API');
-        }
-
-        this.user = res.data.user;
-        this.token = res.data.token;
-      } catch (err) {
-        console.error('Login error:', err);
-        throw err;
+      if (!res?.data) {
+        throw new Error('No data received from login API');
       }
+
+      localStorage.setItem('token', res.data.token);
+
+      this.token = res.data.token;
+
+      const data = await useUserData();
+      this.user = data;
     },
 
     logout() {

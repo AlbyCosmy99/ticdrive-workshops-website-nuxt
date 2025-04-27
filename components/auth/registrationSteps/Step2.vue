@@ -11,27 +11,27 @@
 
       <TicDriveInput
         placeholder="Via e Numero Civico:"
-        v-model="stepValues.fullAddress.add1"
+        v-model="stepValues.fullAddress.streetAddress"
         size="small"
-        :error-message="v$.fullAddress.add1.$errors[0]?.$message || ''"
+        :error-message="v$.fullAddress.streetAddress.$errors[0]?.$message || ''"
       />
       <TicDriveInput
         placeholder="Città:"
-        v-model="stepValues.fullAddress.add2"
+        v-model="stepValues.fullAddress.city"
         size="small"
-        :error-message="v$.fullAddress.add2.$errors[0]?.$message || ''"
+        :error-message="v$.fullAddress.city.$errors[0]?.$message || ''"
       />
       <TicDriveInput
         placeholder="Provincia:"
-        v-model="stepValues.fullAddress.add3"
+        v-model="stepValues.fullAddress.province"
         size="small"
-        :error-message="v$.fullAddress.add3.$errors[0]?.$message || ''"
+        :error-message="v$.fullAddress.province.$errors[0]?.$message || ''"
       />
       <TicDriveInput
         placeholder="CAP:"
-        v-model="stepValues.fullAddress.add4"
+        v-model="stepValues.fullAddress.postalCode"
         size="small"
-        :error-message="v$.fullAddress.add4.$errors[0]?.$message || ''"
+        :error-message="v$.fullAddress.postalCode.$errors[0]?.$message || ''"
       />
     </div>
 
@@ -40,12 +40,12 @@
       <div class="flex flex-col">
         <TicDriveInput
           placeholder="Numero di telefono aziendale (fisso o cellulare):"
-          v-model="stepValues.companyContact.contact1"
+          v-model="stepValues.companyContact.phone"
           size="small"
         />
         <TicDriveInput
           placeholder="Indirizzo email aziendale"
-          v-model="stepValues.companyContact.contact2"
+          v-model="stepValues.companyContact.email"
           size="small"
         />
       </div>
@@ -57,17 +57,17 @@
       </h4>
       <TicDriveInput
         placeholder="Nome e Cognome del Referente:"
-        v-model="stepValues.referContact.contact1"
+        v-model="stepValues.referContact.fullname"
         size="small"
       />
       <TicDriveInput
         placeholder="Telefono diretto:"
-        v-model="stepValues.referContact.contact2"
+        v-model="stepValues.referContact.phone"
         size="small"
       />
       <TicDriveInput
         placeholder="Email di contatto operativo:"
-        v-model="stepValues.referContact.contact3"
+        v-model="stepValues.referContact.email"
         size="small"
       />
     </div>
@@ -84,24 +84,7 @@ import {helpers, required} from '@vuelidate/validators';
 import {defineProps, defineExpose, computed} from 'vue';
 import useStepStore from '~/store/step';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
-
-interface StepTwoData {
-  fullAddress: {
-    add1: string;
-    add2: string;
-    add3: string;
-    add4: string;
-  };
-  companyContact: {
-    contact1: string;
-    contact2: string;
-  };
-  referContact: {
-    contact1: string;
-    contact2: string;
-    contact3: string;
-  };
-}
+import type {StepTwoData} from '~/types/auth/steps/StepTwoData';
 
 const props = defineProps<{
   stepValues: StepTwoData;
@@ -118,24 +101,20 @@ const stepStore = useStepStore();
 
 const rules = computed(() => ({
   fullAddress: {
-    add1: {
+    streetAddress: {
       required: helpers.withMessage('Indirizzo obbligatorio', required),
     },
-    add2: {
+    city: {
       required: helpers.withMessage('Città obbligatoria', required),
     },
-    add3: {
+    province: {
       required: helpers.withMessage('Provincia obbligatoria', required),
     },
-    add4: {
+    postalCode: {
       required: helpers.withMessage('CAP obbligatorio', required),
     },
   },
 }));
 
 const v$ = useVuelidate(rules, props.stepValues);
-
-onMounted(() => {
-  console.log(stepStore.stepOneData);
-});
 </script>

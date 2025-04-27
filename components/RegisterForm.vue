@@ -1,5 +1,5 @@
 <template>
-  <div class="px-3 w-full my-4">
+  <div class="px-3 w-full mt-2 mb-4 overflow-auto">
     <Step1
       v-if="stepStore.currentStep === 1"
       ref="stepOneRef"
@@ -11,26 +11,9 @@
       ref="stepTwoRef"
       v-model:stepValues="stepStore.stepTwoData"
     />
-    <Step3
-      v-if="stepStore.currentStep === 3"
-      ref="stepThreeRef"
-      v-model:stepValues="stepStore.stepThreeData"
-      @update:isCheck="toggleMultiSelect('workShopSpec', $event)"
-    />
-    <Step4
-      v-if="stepStore.currentStep === 4"
-      ref="stepFourRef"
-      v-model:stepValues="stepStore.stepFourData"
-      @update:isCheck="toggleMultiSelect('serviceType', $event)"
-    />
-    <Step5
-      v-if="stepStore.currentStep === 5"
-      ref="stepFiveRef"
-      v-model:stepValues="stepStore.stepFiveData"
-      @update:isCheck="toggleMultiSelect('serviceDay', $event)"
-      @update:plus="plusServiceTime($event)"
-      @update:remove="removeServiceTime($event)"
-    />
+    <Step3 v-if="stepStore.currentStep === 3" ref="stepThreeRef" />
+    <Step4 v-if="stepStore.currentStep === 4" ref="stepFourRef" />
+    <Step5 v-if="stepStore.currentStep === 5" ref="stepFiveRef" />
     <Step6 v-if="stepStore.currentStep === 6" ref="stepSixRef" />
     <Step7
       v-if="stepStore.currentStep === 7"
@@ -121,7 +104,7 @@ const stepValidation = async (step: number): Promise<boolean> => {
     case 2:
       return await stepTwoRef.value?.validate();
     case 3:
-      if (!stepStore.stepThreeData.currentWorkShopSpec.length) {
+      if (!stepStore.stepThreeData.specializations.length) {
         showToast(
           'info',
           'Missing Workshop',
@@ -131,7 +114,7 @@ const stepValidation = async (step: number): Promise<boolean> => {
       }
       return true;
     case 4:
-      if (!stepStore.stepFourData.currentServiceType.length) {
+      if (!stepStore.stepFourData.services.length) {
         showToast(
           'info',
           'Missing Type Of Service',
@@ -141,7 +124,7 @@ const stepValidation = async (step: number): Promise<boolean> => {
       }
       return true;
     case 5:
-      if (!stepStore.stepFiveData.currentServiceDays.length) {
+      if (!stepStore.stepFiveData.activeDays.length) {
         showToast(
           'info',
           'Missing Opening Hours',
@@ -149,7 +132,7 @@ const stepValidation = async (step: number): Promise<boolean> => {
         );
         return false;
       }
-      if (stepStore.stepFiveData.maxVehicleNumber === 0) {
+      if (stepStore.stepFiveData.maxPerDay === 0) {
         showToast(
           'info',
           'Invalid Maximum Number',
@@ -185,57 +168,12 @@ const nextStep = async (): Promise<void> => {
   if (buttonDisableStatus.value) return;
   const isValid = await stepValidation(stepStore.currentStep);
   if (isValid) stepStore.currentStep++;
+  console.log(stepStore.stepSixData);
 };
 
 const prevStep = (): void => {
   if (!stepStore.currentStep) return;
   stepStore.currentStep--;
   if (stepStore.currentStep === 0) navigateTo('/auth/login');
-};
-
-const plusServiceTime = (value: number): void => {
-  const existing = stepStore.stepFiveData.currentServiceDays.find(
-    item => item.value === value,
-  );
-  if (existing) {
-    existing.serviceTime2 = {start: '15:00', end: '19:00'};
-  }
-};
-
-const removeServiceTime = (value: number): void => {
-  const existing = stepStore.stepFiveData.currentServiceDays.find(
-    item => item.value === value,
-  );
-  if (existing) {
-    existing.serviceTime2 = {start: '', end: ''};
-  }
-};
-
-const toggleMultiSelect = (
-  type: 'workShopSpec' | 'serviceType' | 'serviceDay',
-  value: number,
-): void => {
-  if (type === 'workShopSpec') {
-    const index = stepStore.stepThreeData.currentWorkShopSpec.indexOf(value);
-    index !== -1
-      ? stepStore.stepThreeData.currentWorkShopSpec.splice(index, 1)
-      : stepStore.stepThreeData.currentWorkShopSpec.push(value);
-  } else if (type === 'serviceType') {
-    const index = stepStore.stepFourData.currentServiceType.indexOf(value);
-    index !== -1
-      ? stepStore.stepFourData.currentServiceType.splice(index, 1)
-      : stepStore.stepFourData.currentServiceType.push(value);
-  } else if (type === 'serviceDay') {
-    const index = stepStore.stepFiveData.currentServiceDays.findIndex(
-      day => day.value === value,
-    );
-    index !== -1
-      ? stepStore.stepFiveData.currentServiceDays.splice(index, 1)
-      : stepStore.stepFiveData.currentServiceDays.push({
-          value,
-          serviceTime1: {start: '09:00', end: '12:00'},
-          serviceTime2: {start: '', end: ''},
-        });
-  }
 };
 </script>

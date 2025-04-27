@@ -23,7 +23,7 @@
 
     <h1 class="text-gray-500 text-2xl font-semibold mt-5">Lingue Parlate:</h1>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4 mb-10">
-      <RadioOption
+      <TicDriveRadio
         v-for="lang in langs"
         :key="lang.value"
         :label="lang.label"
@@ -40,6 +40,7 @@ import {defineProps, defineExpose, computed} from 'vue';
 import {helpers, required, minLength} from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import useStepStore from '~/store/step';
+import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
 
 interface StepSevenData {
   history: string;
@@ -54,7 +55,7 @@ defineExpose({
   validate: async () => await v$.value.$validate(),
 });
 
-const langs = [
+const languages = [
   {value: 1, label: 'Italiano'},
   {value: 2, label: 'Tedesco'},
   {value: 3, label: 'Inglese'},

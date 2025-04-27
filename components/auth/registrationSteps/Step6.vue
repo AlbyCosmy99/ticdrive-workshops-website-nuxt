@@ -9,13 +9,14 @@
     <h1 class="text-gray-500 text-lg font-semibold mt-3">
       Carica fino a 5 foto dell'autofficina per mostrarle ai clienti.
     </h1>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-5 mb-10">
       <div
         class="w-full relative bg-gray-200 aspect-[1/1] hover:bg-gray-300 active:bg-gray-200 rounded-xl"
         @click="openImage(-1)"
       >
         <div
-          v-if="!images[4]"
+          v-if="!useStore.stepSixData.images[4]?.preview"
           class="transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 absolute"
         >
           <img src="/images/add_photo.jpg" class="w-5 h-5 mx-auto" />
@@ -23,13 +24,16 @@
           <input
             type="file"
             accept="image/*"
-            ref="mainInputRefs"
+            ref="mainInputRef"
             class="hidden"
             @change="handleImage($event, 4)"
           />
         </div>
         <div v-else class="relative w-full h-full">
-          <img :src="images[4]" class="w-full h-full" />
+          <img
+            :src="useStore.stepSixData.images[4].preview"
+            class="w-full h-full object-cover rounded-xl"
+          />
           <img
             src="/images/image-delete.png"
             class="w-10 h-10 absolute top-2 right-2 cursor-pointer"
@@ -37,15 +41,16 @@
           />
         </div>
       </div>
-      <div class="grid grid-cols sm:grid-cols-2 gap-2 rounded-xl">
+
+      <div class="grid grid-cols sm:grid-cols-2 gap-2">
         <div
-          v-for="(value, index) in [...Array(4).keys()]"
+          v-for="(value, index) in 4"
           :key="index"
           class="w-full relative bg-gray-200 aspect-[1/1] hover:bg-gray-300 active:bg-gray-200 rounded-xl"
           @click="openImage(index)"
         >
           <div
-            v-if="!images[index]"
+            v-if="!useStore.stepSixData.images[index]?.preview"
             class="transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 absolute"
           >
             <img src="/images/add_photo.jpg" class="w-5 h-5 mx-auto" />
@@ -61,7 +66,10 @@
             />
           </div>
           <div v-else class="relative w-full h-full">
-            <img :src="images[index]" class="w-full h-full" />
+            <img
+              :src="useStore.stepSixData.images[index].preview"
+              class="w-full h-full object-cover rounded-xl"
+            />
             <img
               src="/images/image-delete.png"
               class="w-6 h-6 absolute top-2 right-2 cursor-pointer"
@@ -81,34 +89,67 @@ import useStepStore from '~/store/step';
 const useStore = useStepStore();
 
 const inputRefs = ref<(HTMLInputElement | null)[]>([]);
-const mainInputRefs = ref<HTMLInputElement | null>();
-const images = ref<(string | null)[]>(useStore.stepSixData.images);
+const mainInputRef = ref<HTMLInputElement | null>();
 
 const openImage = (index: number) => {
-  console.log(inputRefs);
-  if (inputRefs.value[index]) {
-    inputRefs.value[index]!.click();
-  } else if (index === -1) {
-    mainInputRefs.value!.click();
+  if (index === -1) {
+    mainInputRef.value?.click();
+  } else {
+    inputRefs.value[index]?.click();
   }
 };
+
 const handleImage = (event: Event, index: number) => {
   const fileInput = event.target as HTMLInputElement;
-  if (fileInput) {
-    const file = fileInput.files![0];
-    const prevImageUrl = URL.createObjectURL(file);
-    images.value[index] = prevImageUrl;
-    useStore.stepSixData.images[index] = prevImageUrl;
-    console.log(file);
-    console.log(images.value);
+  if (fileInput && fileInput.files?.[0]) {
+    const file = fileInput.files[0];
+
+    if (useStore.stepSixData.images[index]?.preview) {
+      URL.revokeObjectURL(useStore.stepSixData.images[index].preview!);
+    }
+
+    const preview = URL.createObjectURL(file);
+
+    useStore.stepSixData.images[index] = {file, preview};
   }
 };
+
 const removeImage = (index: number) => {
-  images.value[index] = null;
-  useStore.stepSixData.images[index] = null;
+  if (useStore.stepSixData.images[index]?.preview) {
+    URL.revokeObjectURL(useStore.stepSixData.images[index].preview!);
+  }
+  useStore.stepSixData.images[index] = {file: null, preview: null};
 };
 
 const setInputRef = (el: HTMLInputElement | null, index: number) => {
   inputRefs.value[index] = el;
+};
+
+const uploadImages = async () => {
+  const formData = new FormData();
+
+  useStore.stepSixData.images.forEach(img => {
+    if (img.file) {
+      formData.append('images', img.file);
+    }
+  });
+
+  try {
+    const response = await fetch(
+      `https://your-backend.com/api/images/upload?userId=12345`,
+      {
+        method: 'POST',
+        body: formData,
+      },
+    );
+
+    if (!response.ok) {
+      console.error('Failed to upload images');
+    } else {
+      console.log('Images uploaded successfully');
+    }
+  } catch (error) {
+    console.error('Error uploading images:', error);
+  }
 };
 </script>
