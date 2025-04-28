@@ -1,4 +1,3 @@
-<!-- components/ui/settings/PasswordChangeModal.vue -->
 <template>
   <div
     v-if="isOpen"

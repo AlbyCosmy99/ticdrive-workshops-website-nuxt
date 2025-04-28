@@ -1,21 +1,20 @@
 <template>
   <div class="bg-white">
-    <!-- Profile Section -->
     <div class="bg-white mb-6">
       <div class="py-4 px-6">
-        <h2 class="text-xl font-bold mb-4">Profilo Gestore Officina</h2>
+        <h2 class="text-2xl font-semibold mb-4">Profilo Gestore Officina</h2>
         <div class="flex items-center gap-4 justify-between">
           <div class="flex items-center gap-4">
             <div class="rounded-full overflow-hidden h-16 w-16">
               <img
-                :src="profileImageSrc"
+                :src="authStore.user?.profileImageUrl"
                 alt="Profile Image"
                 class="object-cover w-full h-full"
               />
             </div>
             <div>
-              <h3 class="text-lg font-semibold">{{ profileName }}</h3>
-              <p class="text-gray-500">{{ profileEmail }}</p>
+              <h3 class="text-lg font-semibold">{{ authStore.user?.name }}</h3>
+              <p class="text-gray-500">{{ authStore.user?.email }}</p>
             </div>
           </div>
           <TicDrivebutton label="Modifica" @click="modifyProfile" />
@@ -23,47 +22,45 @@
       </div>
     </div>
 
-    <!-- Settings Form -->
     <div class="bg-white">
       <div class="px-6">
         <h2 class="text-xl font-bold mb-6">Impostazioni</h2>
 
-        <!-- Name Field -->
         <div class="mb-6 border-b pb-6">
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Nome Cognome</label
           >
-          <div class="text-gray-800">Mario Rossi</div>
+          <div class="text-gray-800">{{ authStore.user?.name }}</div>
         </div>
 
-        <!-- Email Field -->
         <div class="mb-6 border-b pb-6">
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Email</label
           >
-          <div class="text-gray-800">mariorossi@gmail.com</div>
+          <div class="text-gray-800">{{ authStore.user?.email }}</div>
         </div>
 
-        <!-- Phone Field -->
         <div class="mb-6 border-b pb-6">
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Numero di telefono</label
           >
-          <div class="text-gray-500">
-            Aggiungi un numero di telefono per poterti contattare in caso di
-            necesità
+          <div class="text-gray-800">
+            {{
+              authStore.user?.phoneNumber ||
+              'Numero di telefono non disponibile'
+            }}
           </div>
         </div>
 
-        <!-- Address Field -->
         <div class="mb-6 border-b pb-6">
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Indirizzo</label
           >
-          <div class="text-gray-800">Via Mario Rossi, 12345, Padova PD</div>
+          <div class="text-gray-800">
+            {{ authStore.user?.address || 'Indirizzo non disponibile' }}
+          </div>
         </div>
 
-        <!-- Password Change -->
         <div class="mb-6 border-b pb-6">
           <button
             @click="changePassword"
@@ -73,7 +70,6 @@
           </button>
         </div>
 
-        <!-- Modify Workshop Details -->
         <div class="mb-6 border-b pb-6">
           <button
             @click="modifyWorkshopDetails"
@@ -83,7 +79,6 @@
           </button>
         </div>
 
-        <!-- Logout -->
         <div class="mb-6 border-b pb-6">
           <button
             @click="logout"
@@ -93,7 +88,6 @@
           </button>
         </div>
 
-        <!-- Delete Account -->
         <div class="pb-6">
           <button
             @click="deleteAccount"
@@ -109,6 +103,8 @@
 
 <script setup lang="ts">
 import {ref} from 'vue';
+import {useRouter} from 'vue-router';
+import useAuthStore from '~/store/auth';
 import TicDrivebutton from '@/components/ui/buttons/TicDrivebutton.vue';
 
 interface SettingsPageProps {
@@ -120,6 +116,7 @@ const props = withDefaults(defineProps<SettingsPageProps>(), {
 });
 
 const router = useRouter();
+const authStore = useAuthStore();
 
 const emit = defineEmits([
   'changePassword',
@@ -128,14 +125,6 @@ const emit = defineEmits([
   'modifyProfile',
 ]);
 
-// User profile data
-const profileName = ref('Alex Rossi');
-const profileEmail = ref('alexarossi@gmail.com');
-
-// Compute profile image source with proper PNG handling
-const profileImageSrc = ref('/images/Profile.png');
-
-// Functions
 const changePassword = () => {
   emit('changePassword');
 };
@@ -145,8 +134,9 @@ const modifyWorkshopDetails = () => {
 };
 
 const logout = () => {
+  authStore.logout();
   localStorage.removeItem('token');
-  router.replace('auth/login');
+  router.replace('/auth/login');
 };
 
 const deleteAccount = () => {

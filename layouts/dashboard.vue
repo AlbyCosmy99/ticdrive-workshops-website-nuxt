@@ -10,15 +10,21 @@ const authStore = useAuthStore();
 
 //initial configurations on reserved area setup
 onMounted(async () => {
-  const token = localStorage.getItem('token');
-  authStore.token = token;
-  authStore.user = await useUserData();
-  loading.value = false;
+  try {
+    const token = localStorage.getItem('token');
+    authStore.token = token;
+    authStore.user = await useUserData();
+  } catch (e) {
+    localStorage.removeItem('token');
+    navigateTo('/auth/login');
+  } finally {
+    loading.value = false;
+  }
 });
 </script>
 
 <template>
-  <UiSpinnersTicDriveSpinner v-if="loading"/>
+  <UiSpinnersTicDriveSpinner v-if="loading" />
   <div v-else class="flex min-h-screen bg-gray-50">
     <aside class="w-64 p-4">
       <Sidebar />

@@ -10,75 +10,77 @@
       Storia dell’officina
     </h1>
     <textarea
-      v-model="stepValues.history"
+      v-model="stepStore.stepSevenData.description"
       :class="[
         'border-2 border-gray-500 rounded-xl h-30 px-2 py-2 w-full mt-5 resize-none outline-none focus:border-green-500',
-        {'input-error': v$.history.$errors.length},
+        {'input-error': v$.description.$errors.length},
       ]"
       placeholder="(breve descrizione della tua attività, valori e punti di forza – max 500 caratteri)"
     ></textarea>
-    <span v-if="v$.history.$errors.length" class="invalid-feedback">
-      {{ v$.history.$errors[0]?.$message || '' }}
+    <span v-if="v$.description.$errors.length" class="invalid-feedback">
+      {{ v$.description.$errors[0]?.$message || '' }}
     </span>
 
     <h1 class="text-gray-500 text-2xl font-semibold mt-5">Lingue Parlate:</h1>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4 mb-10">
       <TicDriveRadio
-        v-for="lang in langs"
-        :key="lang.value"
-        :label="lang.label"
-        :value="lang.value"
-        :isCheck="lang.value === stepValues.lang"
-        @update:isCheck="langHandle"
+        v-for="language in languages"
+        :key="language.id"
+        :id="language.id"
+        :name="language.label"
+        :value="language"
+        :isChecked="
+          !!stepStore.stepSevenData.languages.find(
+            lang => lang.id === language.id,
+          )
+        "
+        @update:check="checkLanguage"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {defineProps, defineExpose, computed} from 'vue';
+import {defineExpose, computed} from 'vue';
 import {helpers, required, minLength} from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import useStepStore from '~/store/step';
 import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
-
-interface StepSevenData {
-  history: string;
-  lang: number;
-}
-
-const props = defineProps<{
-  stepValues: StepSevenData;
-}>();
+import type {Language} from '~/types/Language';
 
 defineExpose({
   validate: async () => await v$.value.$validate(),
 });
 
-const languages = [
-  {value: 1, label: 'Italiano'},
-  {value: 2, label: 'Tedesco'},
-  {value: 3, label: 'Inglese'},
-  {value: 4, label: 'Francese'},
-  {value: 5, label: 'Spagnolo'},
-  {value: 6, label: 'Altro'},
+const stepStore = useStepStore();
+
+const languages: Language[] = [
+  {id: 1, label: 'Italiano'},
+  {id: 2, label: 'Tedesco'},
+  {id: 3, label: 'Inglese'},
+  {id: 4, label: 'Francese'},
+  {id: 5, label: 'Spagnolo'},
+  {id: 6, label: 'Altro'},
 ];
 
 const rules = computed(() => ({
-  history: {
+  description: {
     required: helpers.withMessage('La descrizione è obbligatoria', required),
     minLength: helpers.withMessage('Minimo 100 caratteri', minLength(100)),
   },
 }));
 
-const v$ = useVuelidate(rules, props.stepValues);
+const v$ = useVuelidate(rules, stepStore.stepSevenData);
 
-const stepStore = useStepStore();
-const stepValues = props.stepValues;
-
-const langHandle = (value: number) => {
-  stepValues.lang = value;
-  stepStore.stepSevenData.lang = value;
+const checkLanguage = (language: Language) => {
+  const index = stepStore.stepSevenData.languages.findIndex(
+    l => l.id === language.id,
+  );
+  if (index === -1) {
+    stepStore.stepSevenData.languages.push(language);
+  } else {
+    stepStore.stepSevenData.languages.splice(index, 1);
+  }
 };
 </script>
 
