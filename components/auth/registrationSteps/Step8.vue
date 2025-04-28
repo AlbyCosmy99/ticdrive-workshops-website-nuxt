@@ -9,8 +9,8 @@
       Garanzia e responsabilità
     </h1>
     <PlusMinusField
-      :isMinusDisable="!stepValues.warranty"
-      v-model:numberValue="stepValues.warranty"
+      :isMinusDisable="!stepStore.stepEightData.warranty"
+      v-model:numberValue="stepStore.stepEightData.warranty"
       label="Garanzia sulla manodopera (durata in mesi):"
       @update:number="updateWarranty"
     />
@@ -23,47 +23,51 @@
       <div class="grid grid-cols-2 gap-3 w-full sm:w-2/3">
         <div class="flex flex-col">
           <input
-            v-model="stepValues.digital.name"
+            v-model="stepStore.stepEightData.signature.name"
             name="name"
             placeholder="Nome"
             :class="[
               'p-3 outline-none rounded-xl border border-gray-500 focus:border-green-500 w-full max-h-10',
-              {'input-error': v$.digital.name.$errors.length},
+              {'input-error': v$.signature.name.$errors.length},
             ]"
           />
-          <span v-if="v$.digital.name.$errors.length" class="invalid-feedback">
-            {{ v$.digital.name.$errors[0]?.$message || '' }}
+          <span
+            v-if="v$.signature.name.$errors.length"
+            class="invalid-feedback"
+          >
+            {{ v$.signature.name.$errors[0]?.$message || '' }}
           </span>
         </div>
         <div class="flex flex-col">
           <input
-            v-model="stepValues.digital.surname"
+            v-model="stepStore.stepEightData.signature.surname"
             name="surname"
             placeholder="Cognome"
             :class="[
               'p-3 outline-none rounded-xl border border-gray-500 focus:border-green-500 w-full max-h-10',
-              {'input-error': v$.digital.surname.$errors.length},
+              {'input-error': v$.signature.surname.$errors.length},
             ]"
           />
           <span
-            v-if="v$.digital.surname.$errors.length"
+            v-if="v$.signature.surname.$errors.length"
             class="invalid-feedback"
           >
-            {{ v$.digital.surname.$errors[0]?.$message || '' }}
+            {{ v$.signature.surname.$errors[0]?.$message || '' }}
           </span>
         </div>
       </div>
       <div class="flex flex-col w-full sm:w-1/3">
         <Calendar
-          v-model="date"
+          v-model="stepStore.stepEightData.signature.date"
+          readonly
           placeholder="(giorno/mese/anno)"
           :class="[
             'outline-none date-picker-wrapper text-center bg-gray-100 px-5 py-2 max-h-10',
-            {'input-error': v$.digital.date.$errors.length},
+            {'input-error': v$.signature.date.$errors.length},
           ]"
         />
-        <span v-if="v$.digital.date.$errors.length" class="invalid-feedback">
-          {{ v$.digital.date.$errors[0]?.$message || '' }}
+        <span v-if="v$.signature.date.$errors.length" class="invalid-feedback">
+          {{ v$.signature.date.$errors[0]?.$message || '' }}
         </span>
       </div>
     </div>
@@ -73,13 +77,16 @@
       Autodichiarazione di conformità
     </h1>
     <TicDriveRadio
-      v-for="conf in conformities"
-      :key="conf.value"
+      v-for="conformity in conformities"
+      :key="conformity.id"
+      :id="conformity.id"
       class="mt-2"
-      :label="conf.label"
-      :value="conf.value"
-      :isCheck="stepValues.currentConformities.includes(conf.value)"
-      @update:isCheck="checkHandle"
+      :name="conformity.text"
+      :value="conformity"
+      :isChecked="
+        !!stepStore.stepEightData.conformities.find(c => c.id === conformity.id)
+      "
+      @update:check="checkConformity"
     />
   </div>
 </template>
@@ -90,61 +97,47 @@ import {required, helpers} from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import useStepStore from '~/store/step';
 import Calendar from 'primevue/calendar';
-
-interface DigitalSignature {
-  name: string;
-  surname: string;
-  date: Date | null;
-}
-
-interface StepEightData {
-  warranty: number;
-  digital: DigitalSignature;
-  currentConformities: number[];
-}
+import type {StepEightData} from '~/types/auth/steps/StepEightData';
+import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
+import type {Conformity} from '~/types/auth/Conformity';
 
 const props = defineProps<{
   stepValues: StepEightData;
 }>();
 
-const useStore = useStepStore();
-const stepValues = props.stepValues;
+const stepStore = useStepStore();
 
 defineExpose({
   validate: async () => await v$.value.$validate(),
 });
 
 const date = computed({
-  get: () => stepValues.digital.date,
-  set: (val: Date | null) => (stepValues.digital.date = val),
+  get: () => stepStore.stepEightData.signature.date,
+  set: (val: Date) => (stepStore.stepEightData.signature.date = val),
 });
 
-const conformities: {value: number; label: string}[] = [
+const conformities: Conformity[] = [
   {
-    value: 1,
-    label:
-      'Dichiaro che l’autofficina è regolarmente registrata e in possesso di tutti i documenti richiesti dalla normativa italiana per operare legalmente.',
+    id: 1,
+    text: 'Dichiaro che l’autofficina è regolarmente registrata e in possesso di tutti i documenti richiesti dalla normativa italiana per operare legalmente.',
   },
   {
-    value: 2,
-    label:
-      'Accetto la trattenuta della commissione da parte della piattaforma e la modalità di accredito selezionata.',
+    id: 2,
+    text: 'Accetto la trattenuta della commissione da parte della piattaforma e la modalità di accredito selezionata.',
   },
   {
-    value: 3,
-    label:
-      "Accetto le condizioni di utilizzo della piattaforma e l'informativa sulla privacy (GDPR).",
+    id: 3,
+    text: "Accetto le condizioni di utilizzo della piattaforma e l'informativa sulla privacy (GDPR).",
   },
-  {value: 4, label: 'Dichiaro di aderire alla piattaforma.'},
+  {id: 4, text: 'Dichiaro di aderire alla piattaforma.'},
   {
-    value: 5,
-    label:
-      'Dichiaro di aver letto e accettato i Termini e Condizioni della piattaforma.',
+    id: 5,
+    text: 'Dichiaro di aver letto e accettato i Termini e Condizioni della piattaforma.',
   },
 ];
 
 const rules = computed(() => ({
-  digital: {
+  signature: {
     name: {
       required: helpers.withMessage('Nome obbligatorio', required),
     },
@@ -157,23 +150,25 @@ const rules = computed(() => ({
   },
 }));
 
-const v$ = useVuelidate(rules, stepValues);
+const v$ = useVuelidate(rules, stepStore.stepEightData);
 
 const updateWarranty = (action: 'plus' | 'minus') => {
-  const current = stepValues.warranty;
+  const current = stepStore.stepEightData.warranty;
   if (action === 'minus' && current > 0) {
-    stepValues.warranty = current - 1;
+    stepStore.stepEightData.warranty = current - 1;
   } else if (action === 'plus') {
-    stepValues.warranty = current + 1;
+    stepStore.stepEightData.warranty = current + 1;
   }
 };
 
-const checkHandle = (value: number) => {
-  const index = stepValues.currentConformities.indexOf(value);
-  if (index !== -1) {
-    stepValues.currentConformities.splice(index, 1);
+const checkConformity = (conformity: Conformity) => {
+  const index = stepStore.stepEightData.conformities.findIndex(
+    c => c.id === conformity.id,
+  );
+  if (index === -1) {
+    stepStore.stepEightData.conformities.push(conformity);
   } else {
-    stepValues.currentConformities.push(value);
+    stepStore.stepEightData.conformities.splice(index, 1);
   }
 };
 </script>
