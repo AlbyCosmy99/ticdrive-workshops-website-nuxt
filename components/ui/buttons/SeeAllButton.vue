@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex gap-2 items-center justify-center"
+    class="flex text-white bg-[#39b269] px-4 py-2 rounded-md flex gap-2 items-center justify-center"
     @click="emit('onClick')"
   >
     <h6>Vedi tutto</h6>
