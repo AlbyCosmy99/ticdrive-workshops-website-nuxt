@@ -1,14 +1,6 @@
-import axios from 'axios';
 import {defineStore} from 'pinia';
 import useUserData from '~/composables/http/auth/getUserData';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  address: string | null;
-  phoneNumber: string | null;
-}
+import type {User} from '~/types/auth/User';
 
 interface AuthState {
   user: User | null;

@@ -1,6 +1,5 @@
 <template>
   <div class="bg-white">
-    <!-- Profile Section -->
     <div class="bg-white mb-6">
       <div class="py-4 px-6">
         <h2 class="text-xl font-bold mb-4">Profilo Gestore Officina</h2>
@@ -8,7 +7,7 @@
           <div class="flex items-center gap-4">
             <div class="rounded-full overflow-hidden h-16 w-16">
               <img
-                :src="profileImageSrc"
+                :src="authStore.user?.profileImageUrl"
                 alt="Profile Image"
                 class="object-cover w-full h-full"
               />
@@ -49,7 +48,12 @@
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Numero di telefono</label
           >
-          <div class="text-gray-800">{{ authStore.user?.phoneNumber || "Numero di telefono non disponibile" }}</div>
+          <div class="text-gray-800">
+            {{
+              authStore.user?.phoneNumber ||
+              'Numero di telefono non disponibile'
+            }}
+          </div>
         </div>
 
         <!-- Address Field -->
@@ -57,7 +61,9 @@
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Indirizzo</label
           >
-          <div class="text-gray-800">{{ authStore.user?.address || "Indirizzo non disponibile" }}</div>
+          <div class="text-gray-800">
+            {{ authStore.user?.address || 'Indirizzo non disponibile' }}
+          </div>
         </div>
 
         <!-- Password Change -->
@@ -105,8 +111,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import {ref} from 'vue';
+import {useRouter} from 'vue-router';
 import useAuthStore from '~/store/auth';
 import TicDrivebutton from '@/components/ui/buttons/TicDrivebutton.vue';
 
