@@ -18,7 +18,7 @@
           class="cursor-pointer w-[48px] h-[48px] rounded-full overflow-hidden flex items-center justify-center transition-colors shadow-sm"
         >
           <img
-            src="/images/Profile.png"
+            :src="authStore.user?.profileImageUrl"
             alt="Profile"
             class="w-full h-full object-cover rounded-full"
           />
