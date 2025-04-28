@@ -22,12 +22,10 @@
       </div>
     </div>
 
-    <!-- Settings Form -->
     <div class="bg-white">
       <div class="px-6">
         <h2 class="text-xl font-bold mb-6">Impostazioni</h2>
 
-        <!-- Name Field -->
         <div class="mb-6 border-b pb-6">
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Nome Cognome</label
@@ -35,7 +33,6 @@
           <div class="text-gray-800">{{ authStore.user?.name }}</div>
         </div>
 
-        <!-- Email Field -->
         <div class="mb-6 border-b pb-6">
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Email</label
@@ -43,7 +40,6 @@
           <div class="text-gray-800">{{ authStore.user?.email }}</div>
         </div>
 
-        <!-- Phone Field -->
         <div class="mb-6 border-b pb-6">
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Numero di telefono</label
@@ -56,7 +52,6 @@
           </div>
         </div>
 
-        <!-- Address Field -->
         <div class="mb-6 border-b pb-6">
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Indirizzo</label
@@ -66,7 +61,6 @@
           </div>
         </div>
 
-        <!-- Password Change -->
         <div class="mb-6 border-b pb-6">
           <button
             @click="changePassword"
@@ -76,7 +70,6 @@
           </button>
         </div>
 
-        <!-- Modify Workshop Details -->
         <div class="mb-6 border-b pb-6">
           <button
             @click="modifyWorkshopDetails"
@@ -86,7 +79,6 @@
           </button>
         </div>
 
-        <!-- Logout -->
         <div class="mb-6 border-b pb-6">
           <button
             @click="logout"
@@ -96,7 +88,6 @@
           </button>
         </div>
 
-        <!-- Delete Account -->
         <div class="pb-6">
           <button
             @click="deleteAccount"
@@ -134,11 +125,6 @@ const emit = defineEmits([
   'modifyProfile',
 ]);
 
-// Compute profile image source with proper PNG handling
-const profileImageSrc = ref('/images/Profile.png');
-const workshopAddress = ref('Via Mario Rossi, 12345, Padova PD');
-
-// Functions
 const changePassword = () => {
   emit('changePassword');
 };
