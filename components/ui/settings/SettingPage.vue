@@ -14,8 +14,8 @@
               />
             </div>
             <div>
-              <h3 class="text-lg font-semibold">{{ profileName }}</h3>
-              <p class="text-gray-500">{{ profileEmail }}</p>
+              <h3 class="text-lg font-semibold">{{ authStore.user?.name }}</h3>
+              <p class="text-gray-500">{{ authStore.user?.email }}</p>
             </div>
           </div>
           <TicDrivebutton label="Modifica" @click="modifyProfile" />
@@ -33,7 +33,7 @@
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Nome Cognome</label
           >
-          <div class="text-gray-800">Mario Rossi</div>
+          <div class="text-gray-800">{{ authStore.user?.name }}</div>
         </div>
 
         <!-- Email Field -->
@@ -41,7 +41,7 @@
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Email</label
           >
-          <div class="text-gray-800">mariorossi@gmail.com</div>
+          <div class="text-gray-800">{{ authStore.user?.email }}</div>
         </div>
 
         <!-- Phone Field -->
@@ -49,10 +49,7 @@
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Numero di telefono</label
           >
-          <div class="text-gray-500">
-            Aggiungi un numero di telefono per poterti contattare in caso di
-            necesità
-          </div>
+          <div class="text-gray-800">{{ authStore.user?.phoneNumber || "Numero di telefono non disponibile" }}</div>
         </div>
 
         <!-- Address Field -->
@@ -60,7 +57,7 @@
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Indirizzo</label
           >
-          <div class="text-gray-800">Via Mario Rossi, 12345, Padova PD</div>
+          <div class="text-gray-800">{{ authStore.user?.address || "Indirizzo non disponibile" }}</div>
         </div>
 
         <!-- Password Change -->
@@ -108,7 +105,9 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import useAuthStore from '~/store/auth';
 import TicDrivebutton from '@/components/ui/buttons/TicDrivebutton.vue';
 
 interface SettingsPageProps {
@@ -120,6 +119,7 @@ const props = withDefaults(defineProps<SettingsPageProps>(), {
 });
 
 const router = useRouter();
+const authStore = useAuthStore();
 
 const emit = defineEmits([
   'changePassword',
@@ -128,12 +128,9 @@ const emit = defineEmits([
   'modifyProfile',
 ]);
 
-// User profile data
-const profileName = ref('Alex Rossi');
-const profileEmail = ref('alexarossi@gmail.com');
-
 // Compute profile image source with proper PNG handling
 const profileImageSrc = ref('/images/Profile.png');
+const workshopAddress = ref('Via Mario Rossi, 12345, Padova PD');
 
 // Functions
 const changePassword = () => {
@@ -145,8 +142,9 @@ const modifyWorkshopDetails = () => {
 };
 
 const logout = () => {
+  authStore.logout();
   localStorage.removeItem('token');
-  router.replace('auth/login');
+  router.replace('/auth/login');
 };
 
 const deleteAccount = () => {
