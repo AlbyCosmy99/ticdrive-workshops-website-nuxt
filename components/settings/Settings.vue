@@ -2,7 +2,7 @@
   <div class="bg-white">
     <div class="bg-white mb-6">
       <div class="py-4 px-6">
-        <h2 class="text-xl font-bold mb-4">Profilo Gestore Officina</h2>
+        <h2 class="text-2xl font-semibold mb-4">Profilo Gestore Officina</h2>
         <div class="flex items-center gap-4 justify-between">
           <div class="flex items-center gap-4">
             <div class="rounded-full overflow-hidden h-16 w-16">
