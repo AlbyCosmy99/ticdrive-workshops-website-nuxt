@@ -15,16 +15,8 @@
     <Step4 v-if="stepStore.currentStep === 4" ref="stepFourRef" />
     <Step5 v-if="stepStore.currentStep === 5" ref="stepFiveRef" />
     <Step6 v-if="stepStore.currentStep === 6" ref="stepSixRef" />
-    <Step7
-      v-if="stepStore.currentStep === 7"
-      ref="stepSevenRef"
-      v-model:stepValues="stepStore.stepSevenData"
-    />
-    <Step8
-      v-if="stepStore.currentStep === 8"
-      ref="stepEightRef"
-      v-model:stepValues="stepStore.stepEightData"
-    />
+    <Step7 v-if="stepStore.currentStep === 7" ref="stepSevenRef" />
+    <Step8 v-if="stepStore.currentStep === 8" ref="stepEightRef" />
     <div
       class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
     >
@@ -97,7 +89,7 @@ const checkToggle = (
   stepStore.stepOneData[key] = value;
 };
 
-const stepValidation = async (step: number): Promise<boolean> => {
+const stepValidation = async (step: number): Promise<boolean | undefined> => {
   switch (step) {
     case 1:
       return await stepOneRef.value?.validate();
@@ -151,8 +143,7 @@ const stepValidation = async (step: number): Promise<boolean> => {
       return await stepSevenRef.value?.validate();
     case 8:
       const valid = await stepEightRef.value?.validate();
-      const allChecked =
-        stepStore.stepEightData.currentConformities.length === 5;
+      const allChecked = stepStore.stepEightData.conformities.length === 5;
       if (!valid) return false;
       if (!allChecked) {
         showToast('info', 'All-Check Needed', 'Select all conformities!');

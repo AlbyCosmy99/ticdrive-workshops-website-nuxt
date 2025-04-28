@@ -14,10 +14,9 @@ onMounted(async () => {
     const token = localStorage.getItem('token');
     authStore.token = token;
     authStore.user = await useUserData();
-
-  } catch(e) {
-    localStorage.removeItem('token')
-    navigateTo('/auth/login')
+  } catch (e) {
+    localStorage.removeItem('token');
+    navigateTo('/auth/login');
   } finally {
     loading.value = false;
   }

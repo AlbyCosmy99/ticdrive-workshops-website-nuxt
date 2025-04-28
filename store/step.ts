@@ -1,27 +1,13 @@
 import {defineStore} from 'pinia';
+import type {Signature} from '~/types/auth/Signature';
+import type {StepEightData} from '~/types/auth/steps/StepEightData';
 import type {StepFiveData} from '~/types/auth/steps/StepFiveData';
 import type {StepFourData} from '~/types/auth/steps/StepFourData';
 import type {StepOneData} from '~/types/auth/steps/StepOneData';
+import type {StepSevenData} from '~/types/auth/steps/StepSevenData';
 import type {StepSixData} from '~/types/auth/steps/StepSixData';
 import type {StepThreeData} from '~/types/auth/steps/StepThreeData';
 import type {StepTwoData} from '~/types/auth/steps/StepTwoData';
-
-interface StepSevenData {
-  history: string;
-  lang: number;
-}
-
-interface DigitalSignature {
-  name: string;
-  surname: string;
-  date: string | null;
-}
-
-interface StepEightData {
-  warranty: number;
-  digital: DigitalSignature;
-  currentConformities: number[];
-}
 
 interface StepLabel {
   step: number;
@@ -97,17 +83,17 @@ const useStepStore = defineStore('step', {
       images: [],
     },
     stepSevenData: {
-      history: '',
-      lang: 1,
+      description: '',
+      languages: [],
     },
     stepEightData: {
       warranty: 0,
-      digital: {
+      signature: {
         name: '',
         surname: '',
-        date: null,
+        date: new Date(),
       },
-      currentConformities: [],
+      conformities: [],
     },
   }),
   actions: {
