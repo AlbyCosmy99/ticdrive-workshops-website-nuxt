@@ -1,5 +1,7 @@
 <template>
-  <div class="block md:hidden h-screen text-drive flex justify-center items-center flex-col gap-10 mx-10">
+  <div
+    class="block md:hidden h-screen text-drive flex justify-center items-center flex-col gap-10 mx-10"
+  >
     <NuxtImg
       src="/svg/TicDriveLogo.svg"
       alt="TicDrive logo"
@@ -7,22 +9,33 @@
       height="130"
     />
     <p class="text-center">
-      Piattaforma non ancora disponibile per mobile. Lo sara' molto presto. Da utilizzare da tablet o pc.
+      Piattaforma non ancora disponibile per mobile. Lo sara' molto presto. Da
+      utilizzare da tablet o pc.
     </p>
   </div>
-  <div class=" hidden md:block h-screen flex flex-col">
-    <StepBar v-if="stepStore.currentStep > 0" :hide-bar="stepStore.currentStep === 1" />
+  <div class="hidden md:flex h-screen flex-col">
+    <StepBar
+      v-if="stepStore.currentStep > 0"
+      :hide-bar="stepStore.currentStep === 1"
+    />
     <div class="w-full grid grid-cols-1 lg:grid-cols-2 flex-1 min-h-0">
       <!-- Left Section -->
       <div class="flex justify-center items-center p-4">
         <div
-          class="relative w-[90%] aspect-square max-w-lg lg:max-w-[600px] lg:max-h-[600px] rounded-[30px] overflow-hidden">
-          <NuxtImg :src="props.mainImage" class="absolute inset-0 w-full h-full object-cover" alt="Centered Image" />
+          class="relative w-[90%] aspect-square max-w-lg lg:max-w-[600px] lg:max-h-[600px] rounded-[30px] overflow-hidden"
+        >
+          <NuxtImg
+            :src="props.mainImage"
+            class="absolute inset-0 w-full h-full object-cover"
+            alt="Centered Image"
+          />
         </div>
       </div>
 
       <!-- Right Section -->
-      <div class="lg:overflow-y-auto p-4 flex justify-center items-center flex-col min-h-0">
+      <div
+        class="lg:overflow-y-auto p-4 flex justify-center items-center flex-col min-h-0"
+      >
         <slot name="rightContent" />
         <Toast />
       </div>
@@ -31,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import {defineProps} from 'vue';
 import Toast from 'primevue/toast';
 import useStepStore from '~/store/step';
 import StepBar from '~/components/StepBar.vue';
