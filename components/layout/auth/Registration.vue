@@ -7,7 +7,7 @@
       height="130"
     />
     <p class="text-center">
-      Piattaforma non ancora disponibile per mobile. Lo sara' molto presto.
+      Piattaforma non ancora disponibile per mobile. Lo sara' molto presto. Da utilizzare da tablet o pc.
     </p>
   </div>
   <div class="h-screen flex flex-col" v-else>
