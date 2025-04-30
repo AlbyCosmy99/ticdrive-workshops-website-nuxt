@@ -24,7 +24,7 @@
 
     <div class="bg-white">
       <div class="px-6">
-        <h2 class=" text-[20px]text-xl font-bold mb-6">Impostazioni</h2>
+        <h2 class=" text-[20px] text-xl font-bold mb-6">Impostazioni</h2>
 
         <div class="mb-6 border-b pb-6">
           <label class="block text-[16px] font-poppins text-gray-700 mb-1"
