@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isMobile" class=" h-screen text-drive flex justify-center items-center flex-col gap-10 mx-10">
+  <div class="block md:hidden h-screen text-drive flex justify-center items-center flex-col gap-10 mx-10">
     <NuxtImg
       src="/svg/TicDriveLogo.svg"
       alt="TicDrive logo"
@@ -10,7 +10,7 @@
       Piattaforma non ancora disponibile per mobile. Lo sara' molto presto. Da utilizzare da tablet o pc.
     </p>
   </div>
-  <div class="h-screen flex flex-col" v-else>
+  <div class="h-screen flex flex-col hidden md:block">
     <StepBar v-if="stepStore.currentStep > 0" :hide-bar="stepStore.currentStep === 1" />
     <div class="w-full grid grid-cols-1 lg:grid-cols-2 flex-1 min-h-0">
       <!-- Left Section -->
@@ -39,11 +39,6 @@ import StepBar from '~/components/StepBar.vue';
 const props = defineProps<{
   mainImage: string;
 }>();
-
-const isMobile = ref(false);
-onMounted(() => {
-  isMobile.value = window.innerWidth < 768;
-});
 
 const stepStore = useStepStore();
 </script>
