@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import useUserData from '~/composables/http/auth/getUserData';
+import useUserData from '~/composables/http/auth/useUserData';
 import type {User} from '~/types/auth/User';
 
 interface AuthState {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Navbar from '~/components/navbar/Navbar.vue';
 import Sidebar from '~/components/sidebar/Sidebar.vue';
-import useUserData from '~/composables/http/auth/getUserData';
+import useUserData from '~/composables/http/auth/useUserData';
 import useAuthStore from '~/store/auth';
 
 const loading = ref(true);
@@ -24,7 +24,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <UiSpinnersTicDriveSpinner v-if="loading" />
+  <div
+    v-if="loading"
+    class="flex w-full min-h-screen justify-center items-center bg-white"
+  >
+    <UiSpinnersTicDriveSpinner />
+  </div>
+
   <div v-else class="flex min-h-screen bg-gray-50">
     <aside class="w-64 p-4">
       <Sidebar />
