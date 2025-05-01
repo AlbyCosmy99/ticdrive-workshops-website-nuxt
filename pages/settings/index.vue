@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {ref} from 'vue';
+import {useRouter} from 'vue-router';
 import Settings from '~/components/settings/Settings.vue';
 import ChangePasswordModal from '~/components/ui/modals/ChangePasswordModal.vue';
 
@@ -8,6 +9,7 @@ definePageMeta({
   middleware: 'auth',
 });
 
+const router = useRouter();
 const showPasswordModal = ref(false);
 
 const openPasswordModal = () => {
@@ -35,7 +37,7 @@ const handleLogout = () => {
 };
 
 const handleDeleteAccount = () => {
-  console.log('Delete account');
+  router.push('/settings/deleteaccount');
 };
 </script>
 
