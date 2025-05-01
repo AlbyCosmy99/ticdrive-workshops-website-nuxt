@@ -1,82 +1,49 @@
 <template>
-  <div
-    class="flex flex-col w-full justify-center items-center max-md:max-w-full"
-  >
-    <NuxtImg
-      src="/svg/TicDriveLogo.svg"
-      alt="TicDrive logo"
-      width="130"
-      height="130"
-    />
-    <div
-      class="mt-8 flex flex-col self-center max-w-full font-medium whitespace-nowrap w-[370px]"
-    >
+  <div class="flex flex-col w-full justify-center items-center max-md:max-w-full">
+    <NuxtImg src="/svg/TicDriveLogo.svg" alt="TicDrive logo" width="130" height="130" />
+    <div class="mt-8 flex flex-col self-center max-w-full font-medium whitespace-nowrap w-[370px]">
       <h1 class="mb-4 self-center max-w-full text-4xl rounded-none text-tic">
         Benvenuto!
       </h1>
-
       <div
-        class="flex gap-2.5 justify-center items-center mt-8 w-full text-base leading-tight text-center rounded-[30px] max-md:mt-10"
-      >
+        class="flex gap-2.5 justify-center items-center mt-8 w-full text-base leading-tight text-center rounded-[30px] max-md:mt-10">
         <TicDriveAuthSlider />
       </div>
     </div>
-
-    <form
-      @submit.prevent="handleSubmit"
-      class="flex flex-col w-[90%] px-14 items-center m-auto max-w-lg lg:max-w-full"
-    >
-      <TicDriveInput
-        id="username"
-        label="Username"
-        placeholder="Inserisci username"
-        v-model="username"
-      />
-
-      <TicDriveInput
-        id="password"
-        label="Password"
-        type="password"
-        placeholder="Inserisci password"
-        v-model="password"
-      />
-
+    <form @submit.prevent="handleSubmit" class="flex flex-col w-[90%] px-14 items-center m-auto max-w-lg lg:max-w-full">
+      <TicDriveInput id="username" label="Username" placeholder="Inserisci username" v-model="username" />
+      <TicDriveInput id="password" label="Password" type="password" placeholder="Inserisci password"
+        v-model="password" />
       <div class="w-full max-w-lg lg:max-w-full">
-        <div
-          class="flex justify-between gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full"
-        >
-          <CheckboxField
-            id="remember-me"
-            v-model="rememberMe"
-            label="Remember me"
-          />
-          <button
-            type="button"
+        <div class="flex justify-between gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full">
+          <CheckboxField id="remember-me" v-model="rememberMe" label="Remember me" />
+          <button type="button"
             class="cursor-pointer self-start text-xs font-light text-black hover:underline focus:outline-none focus:underline"
-            @click="forgotPassword"
-          >
+            @click="openForgotPasswordModal">
             Password dimenticata?
           </button>
         </div>
       </div>
-      <button
-        type="submit"
-        :disabled="!password || !username || loading"
-        class="self-center px-16 py-3.5 mt-10 max-w-full text-base text-white whitespace-nowrap bg-drive rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-drive focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
-      >
+      <button type="submit" :disabled="!password || !username || loading"
+        class="self-center px-16 py-3.5 mt-10 max-w-full text-base text-white whitespace-nowrap bg-drive rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-drive focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300">
         {{ loading ? 'Loading...' : 'Login' }}
       </button>
     </form>
+
+    <!-- Add the ForgotPasswordModal to know where file are linked -->
+    <ForgotPasswordModal :isOpen="isForgotPasswordModalOpen" @close="isForgotPasswordModalOpen = false"
+      @submit="handleForgotPassword" @verification-success="handleVerificationSuccess" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import {ref, computed, onMounted} from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import useStepStore from '~/store/step';
 import CheckboxField from './CheckboxField.vue';
 import useAuthStore from '~/store/auth';
 import TicDriveAuthSlider from './ui/sliders/TicDriveAuthSlider.vue';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
+import ForgotPasswordModal from '@/components/ui/modals/ForgotPasswordModal.vue';
 
 const useStore = useStepStore();
 const username = ref('');
@@ -84,11 +51,13 @@ const password = ref('');
 const rememberMe = ref(true);
 const passwordVisible = ref(false);
 const showToast = useToast();
+const isForgotPasswordModalOpen = ref(false);
 
 // Computed property for password input type
 const passwordInputType = computed(() =>
   passwordVisible.value ? 'text' : 'password',
 );
+
 const authStore = useAuthStore();
 const loading = ref(false);
 
@@ -96,7 +65,7 @@ const handleSubmit = async () => {
   try {
     loading.value = true;
     await authStore.login(username.value, password.value);
-    navigateTo({name: 'dashboard'});
+    navigateTo({ name: 'dashboard' });
   } catch (err: any) {
     showToast('error', 'Wrong credentials', err.response.data, 5000);
   } finally {
@@ -108,8 +77,39 @@ const togglePasswordVisibility = () => {
   passwordVisible.value = !passwordVisible.value;
 };
 
-const forgotPassword = () => {
-  console.log('Forgot password clicked');
+const openForgotPasswordModal = () => {
+  isForgotPasswordModalOpen.value = true;
+  // If you're using Vue Router, you can add this to update the URL without navigation
+  // This is optional but can help with browser history
+  // window.history.pushState({}, '', '/forgot-password');
+};
+
+const handleForgotPassword = async (data) => {
+  try {
+    // Here you would call your API to handle password reset
+    // For example: await authStore.requestPasswordReset(data.email);
+
+    // Show a toast, but don't close the modal - allow verification step to show
+    showToast('success', 'Email inviata', 'Controlla la tua email per il codice di verifica', 5000);
+
+    // Important: Do not close the modal here to allow the verification step to show
+    // isForgotPasswordModalOpen.value = false;
+  } catch (error) {
+    showToast('error', 'Errore', 'Non è stato possibile inviare l\'email di recupero', 5000);
+  }
+};
+
+const handleVerificationSuccess = async (data) => {
+  try {
+    // Here you would call your API to verify the code and reset password
+    // For example: await authStore.verifyResetCode(data.email, data.code);
+
+    showToast('success', 'Codice verificato', 'Il codice è stato verificato. Ora puoi reimpostare la tua password.', 5000);
+    // Close the modal after successful verification
+    isForgotPasswordModalOpen.value = false;
+  } catch (error) {
+    showToast('error', 'Errore', 'Codice di verifica non valido', 5000);
+  }
 };
 
 onMounted(() => {
