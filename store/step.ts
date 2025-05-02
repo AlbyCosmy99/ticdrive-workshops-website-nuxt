@@ -45,8 +45,9 @@ const useStepStore = defineStore('step', {
       surname: '',
       phoneNumber: '',
       email: '',
+      password: '',
+      repeatedPassword: '',
       workshopName: '',
-      postalCode: '',
       acceptPrivacyPolicy: false,
       acceptUpdates: false,
     },
@@ -62,7 +63,6 @@ const useStepStore = defineStore('step', {
         email: '',
       },
       referContact: {
-        fullName: '',
         phone: '',
         email: '',
       },

@@ -71,7 +71,7 @@
 </template>
 
 <script lang="ts" setup>
-import {ref, computed, onMounted} from 'vue';
+import {ref, onMounted} from 'vue';
 import useStepStore from '~/store/step';
 import CheckboxField from './CheckboxField.vue';
 import useAuthStore from '~/store/auth';
@@ -82,13 +82,8 @@ const useStore = useStepStore();
 const username = ref('');
 const password = ref('');
 const rememberMe = ref(true);
-const passwordVisible = ref(false);
 const showToast = useToast();
 
-// Computed property for password input type
-const passwordInputType = computed(() =>
-  passwordVisible.value ? 'text' : 'password',
-);
 const authStore = useAuthStore();
 const loading = ref(false);
 
@@ -98,14 +93,15 @@ const handleSubmit = async () => {
     await authStore.login(username.value, password.value);
     navigateTo({name: 'dashboard'});
   } catch (err: any) {
-    showToast('error', 'Wrong credentials', err.response.data, 5000);
+    showToast(
+      'error',
+      'Wrong credentials',
+      err?.response?.data || 'Wrong credentials. Try again.',
+      5000,
+    );
   } finally {
     loading.value = false;
   }
-};
-
-const togglePasswordVisibility = () => {
-  passwordVisible.value = !passwordVisible.value;
 };
 
 const forgotPassword = () => {

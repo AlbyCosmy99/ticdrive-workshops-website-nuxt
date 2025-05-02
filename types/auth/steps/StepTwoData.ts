@@ -10,7 +10,6 @@ export interface StepTwoData {
     email: string;
   };
   referContact: {
-    fullName: string;
     phone: string;
     email: string;
   };

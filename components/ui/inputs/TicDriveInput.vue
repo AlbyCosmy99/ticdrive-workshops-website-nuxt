@@ -14,10 +14,7 @@
         :id="id"
         :placeholder="placeholder"
         :value="modelValue"
-        :class="[
-          inputClasses,
-          'pr-12', // space for the icon
-        ]"
+        :class="[inputClasses, 'pr-12']"
         :aria-invalid="Boolean(errorMessage)"
         :aria-describedby="errorMessage ? `${id}-error` : undefined"
         :autocomplete="autocomplete"
@@ -39,9 +36,13 @@
       />
     </div>
 
-    <span v-if="errorMessage" :id="`${id}-error`" class="invalid-feedback">
+    <div
+      v-if="errorMessage"
+      :id="`${id}-error`"
+      class="invalid-feedback text-red-500 mt-0.5"
+    >
       {{ errorMessage }}
-    </span>
+    </div>
   </div>
 </template>
 
