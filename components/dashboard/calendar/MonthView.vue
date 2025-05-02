@@ -1,102 +1,69 @@
 <template>
   <div class="h-full flex flex-col">
-    <!-- Month header -->
-    <div class="flex justify-center items-center mb-4">
-      <button
-        @click="prevMonth"
-        class="p-2 text-gray-500 hover:text-drive"
-        aria-label="Previous month"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"
-          />
+
+    <div class="flex justify-center items-center gap-0 mb-4">
+      <button @click="prevMonth" class="p-2 text-gray-500 hover:text-drive" aria-label="Previous month">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
-      <h2 class="text-xl font-semibold mx-4">
-        {{ currentMonthName }} {{ currentYear }}
-      </h2>
-      <button
-        @click="nextMonth"
-        class="p-2 text-gray-500 hover:text-drive"
-        aria-label="Next month"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5l7 7-7 7"
-          />
+
+      <div class="relative mx-2">
+        <div class="flex items-center rounded-md px-4 py-1 gap-0">
+          <h2 class="text-xl font-semibold mx-4">
+            {{ currentMonthName }} {{ currentYear }}
+          </h2>
+          <button @click="toggleChangeModal" class="p-1 text-white hover:text-gray-200"
+            aria-label="Change disponibility">
+            <img src="/svg/directions/AvabilityIcon.svg" alt="Availability Icon" class="h-8 w-8" />
+          </button>
+
+        </div>
+
+
+        <ChangeDisponibilty :isOpen="showChangeModal" :currentMonth="displayedMonth" :currentYear="displayedYear"
+          @close="closeChangeModal" @nessunaDispo="handleNessunaDispo" />
+      </div>
+
+      <button @click="nextMonth" class="p-2 text-gray-500 hover:text-drive" aria-label="Next month">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
       </button>
     </div>
 
-    <!-- Calendar Grid -->
+
     <div class="overflow-auto flex-grow h-full w-full">
-      <div
-        class="grid border border-gray-200 rounded-lg min-w-[900px] w-full h-full"
-        :style="`grid-template-columns: repeat(7, minmax(120px, 1fr)); grid-template-rows: auto repeat(${Math.ceil(daysInMonth.length / 7)}, 1fr);`"
-      >
-        <!-- Header row -->
-        <div
-          v-for="day in weekDayNames"
-          :key="day"
-          class="py-2 px-1 border-b border-gray-200 text-center font-medium text-sm text-gray-600 bg-white"
-        >
+      <div class="grid border border-gray-200 rounded-lg min-w-[900px] w-full h-full"
+        :style="`grid-template-columns: repeat(7, minmax(120px, 1fr)); grid-template-rows: auto repeat(${Math.ceil(daysInMonth.length / 7)}, 1fr);`">
+
+        <div v-for="day in weekDayNames" :key="day"
+          class="py-2 px-1 border-b border-gray-200 text-center font-medium text-sm text-gray-600 bg-white">
           {{ day }}
         </div>
 
-        <!-- Calendar days grid -->
+
         <template v-for="(day, index) in daysInMonth" :key="index">
-          <div
-            class="border border-gray-200 p-2 relative bg-white"
-            :class="{
-              'bg-gray-50': !isCurrentMonth(day),
-              'border-drive': isToday(day),
-            }"
-          >
-            <div
-              class="text-sm font-medium mb-1"
-              :class="{'text-gray-400': !isCurrentMonth(day)}"
-            >
+          <div class="border border-gray-200 p-2 relative bg-white" :class="{
+            'bg-gray-50': !isCurrentMonth(day),
+            'border-drive': isToday(day),
+          }">
+            <div class="text-sm font-medium mb-1" :class="{ 'text-gray-400': !isCurrentMonth(day) }">
               {{ day.date }}
             </div>
 
             <div class="space-y-1">
               <template v-if="hasAppointmentsOnDay(day)">
-                <div
-                  v-for="appointment in getAppointmentsForDay(day)"
-                  :key="appointment.appointmentId"
+                <div v-for="appointment in getAppointmentsForDay(day)" :key="appointment.appointmentId"
                   class="bg-drive text-white rounded p-1 text-xs font-medium cursor-pointer truncate"
-                  @click="showAppointmentDetails(appointment)"
-                >
+                  @click="showAppointmentDetails(appointment)">
                   {{ appointment.carModel }} - {{ appointment.serviceType }}
                 </div>
               </template>
 
-              <div
-                v-if="isDayUnavailable(day)"
-                class="bg-[#FFF5F5] bg-pattern-striped rounded p-1 text-xs text-red-500 font-medium text-center"
-              >
-                <div
-                  class="flex flex-col items-center justify-center h-full text-red-500 text-xs font-medium"
-                >
+              <div v-if="isDayUnavailable(day)"
+                class="bg-[#FFF5F5] bg-pattern-striped rounded p-1 text-xs text-red-500 font-medium text-center">
+                <div class="flex flex-col items-center justify-center h-full text-red-500 text-xs font-medium">
                   <span>Nessuna</span>
                   <span>Disponibilità</span>
                 </div>
@@ -106,12 +73,15 @@
         </template>
       </div>
     </div>
+
+
   </div>
 </template>
 
 <script lang="ts" setup>
-import {computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 import AppointmentCard from './AppointmentCard.vue';
+import ChangeDisponibilty from '/home/riccardo/Scrivania/provaVueFine/tic-drive-workshops-site/components/ui/modals/ChangeAvailability.vue';
 
 const weekDayNames = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
 
@@ -134,8 +104,27 @@ const today = new Date();
 const displayedMonth = ref(today.getMonth());
 const displayedYear = ref(today.getFullYear());
 
+// Modal state
+const showChangeModal = ref(false);
+
 const currentMonthName = computed(() => monthNames[displayedMonth.value]);
 const currentYear = computed(() => displayedYear.value);
+
+const toggleChangeModal = () => {
+  showChangeModal.value = !showChangeModal.value;
+};
+
+const closeChangeModal = () => {
+  showChangeModal.value = false;
+};
+
+const handleNessunaDispo = ({ month, year }) => {
+  // Logic to handle setting "Nessuna Disponibilità" for the month
+  console.log(`Set Nessuna Disponibilità for ${monthNames[month]} ${year}`);
+
+  // Close the modal
+  closeChangeModal();
+};
 
 const nextMonth = () => {
   if (displayedMonth.value === 11) {
@@ -256,10 +245,10 @@ const appointments = computed(() => [
 ]);
 
 const unavailableDays = computed(() => [
-  {date: 8, month: displayedMonth.value, year: displayedYear.value},
-  {date: 9, month: displayedMonth.value, year: displayedYear.value},
-  {date: 17, month: displayedMonth.value, year: displayedYear.value},
-  {date: 26, month: displayedMonth.value, year: displayedYear.value},
+  { date: 8, month: displayedMonth.value, year: displayedYear.value },
+  { date: 9, month: displayedMonth.value, year: displayedYear.value },
+  { date: 17, month: displayedMonth.value, year: displayedYear.value },
+  { date: 26, month: displayedMonth.value, year: displayedYear.value },
 ]);
 
 const isCurrentMonth = day => day.isCurrentMonth;
@@ -302,12 +291,15 @@ const showAppointmentDetails = appointment => {
 
 <style scoped>
 .bg-pattern-striped {
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(255, 235, 235, 0.5),
-    rgba(255, 235, 235, 0.5) 10px,
-    rgba(255, 245, 245, 0.7) 10px,
-    rgba(255, 245, 245, 0.7) 20px
-  );
+  background-image: repeating-linear-gradient(45deg,
+      rgba(255, 235, 235, 0.5),
+      rgba(255, 235, 235, 0.5) 10px,
+      rgba(255, 245, 245, 0.7) 10px,
+      rgba(255, 245, 245, 0.7) 20px);
+}
+
+.bg-drive {
+  background-color: #00a550;
+  /* Green color from your image */
 }
 </style>
