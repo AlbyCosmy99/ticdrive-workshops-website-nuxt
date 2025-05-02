@@ -3,8 +3,9 @@ export interface StepOneData {
   surname: string;
   phoneNumber: string;
   email: string;
+  password: string;
+  repeatedPassword: string;
   workshopName: string;
-  postalCode: string;
   acceptPrivacyPolicy: boolean;
   acceptUpdates: boolean;
 }

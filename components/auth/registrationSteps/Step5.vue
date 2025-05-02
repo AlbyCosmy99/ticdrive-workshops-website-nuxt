@@ -94,23 +94,23 @@
       <div class="flex justify-between items-center gap-2">
         <div
           :class="[
-            'w-20 h-12 leading-12 text-white font-semibold rounded text-xl text-center cursor-pointer',
+            'w-20 h-12 leading-12 text-white font-semibold rounded text-xl text-center cursor-pointer flex justify-center items-center',
             !stepStore.stepFiveData.homeService
               ? 'bg-green-500'
               : 'bg-gray-200',
           ]"
           @click="updateHomeService(false)"
         >
-          No
+          <p>No</p>
         </div>
         <div
           :class="[
-            'w-20 h-12 leading-12 text-white font-semibold rounded text-xl text-center cursor-pointer',
+            'w-20 h-12 leading-12 text-white font-semibold rounded text-xl text-center cursor-pointer flex justify-center items-center',
             stepStore.stepFiveData.homeService ? 'bg-green-500' : 'bg-gray-200',
           ]"
           @click="updateHomeService(true)"
         >
-          Yes
+          <p>Si</p>
         </div>
       </div>
     </div>

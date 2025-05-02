@@ -11,25 +11,25 @@
 
       <TicDriveInput
         placeholder="Via e Numero Civico:"
-        v-model="stepValues.fullAddress.streetAddress"
+        v-model="stepStore.stepTwoData.fullAddress.streetAddress"
         size="small"
         :error-message="v$.fullAddress.streetAddress.$errors[0]?.$message || ''"
       />
       <TicDriveInput
         placeholder="Città:"
-        v-model="stepValues.fullAddress.city"
+        v-model="stepStore.stepTwoData.fullAddress.city"
         size="small"
         :error-message="v$.fullAddress.city.$errors[0]?.$message || ''"
       />
       <TicDriveInput
         placeholder="Provincia:"
-        v-model="stepValues.fullAddress.province"
+        v-model="stepStore.stepTwoData.fullAddress.province"
         size="small"
         :error-message="v$.fullAddress.province.$errors[0]?.$message || ''"
       />
       <TicDriveInput
         placeholder="CAP:"
-        v-model="stepValues.fullAddress.postalCode"
+        v-model="stepStore.stepTwoData.fullAddress.postalCode"
         size="small"
         :error-message="v$.fullAddress.postalCode.$errors[0]?.$message || ''"
       />
@@ -40,12 +40,12 @@
       <div class="flex flex-col">
         <TicDriveInput
           placeholder="Numero di telefono aziendale (fisso o cellulare):"
-          v-model="stepValues.companyContact.phone"
+          v-model="stepStore.stepTwoData.companyContact.phone"
           size="small"
         />
         <TicDriveInput
-          placeholder="Indirizzo email aziendale"
-          v-model="stepValues.companyContact.email"
+          placeholder="Indirizzo email aziendale:"
+          v-model="stepStore.stepTwoData.companyContact.email"
           size="small"
         />
       </div>
@@ -56,39 +56,25 @@
         Contatti di Riferimento
       </h4>
       <TicDriveInput
-        placeholder="Nome e Cognome del Referente:"
-        v-model="stepValues.referContact.fullname"
-        size="small"
-      />
-      <TicDriveInput
         placeholder="Telefono diretto:"
-        v-model="stepValues.referContact.phone"
+        v-model="stepStore.stepTwoData.referContact.phone"
         size="small"
       />
       <TicDriveInput
-        placeholder="Email di contatto operativo:"
-        v-model="stepValues.referContact.email"
+        placeholder="Email di contatto diretto:"
+        v-model="stepStore.stepTwoData.referContact.email"
         size="small"
       />
     </div>
-
-    <h4 class="mt-3 mb-4 text-gray-500 text-md">
-      (Per ricevere notifiche di prenotazioni o comunicazioni importanti)
-    </h4>
   </div>
 </template>
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
 import {helpers, required} from '@vuelidate/validators';
-import {defineProps, defineExpose, computed} from 'vue';
+import {defineExpose, computed} from 'vue';
 import useStepStore from '~/store/step';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
-import type {StepTwoData} from '~/types/auth/steps/StepTwoData';
-
-const props = defineProps<{
-  stepValues: StepTwoData;
-}>();
 
 defineExpose({
   validate: async () => {
@@ -116,5 +102,5 @@ const rules = computed(() => ({
   },
 }));
 
-const v$ = useVuelidate(rules, props.stepValues);
+const v$ = useVuelidate(rules, stepStore.stepTwoData);
 </script>
