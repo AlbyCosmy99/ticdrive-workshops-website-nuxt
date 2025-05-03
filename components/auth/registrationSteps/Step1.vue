@@ -23,13 +23,21 @@
       />
     </div>
 
+    
     <TicDriveInput
       id="tel"
-      label="Telefono*"
+      label="Telefono Aziendale*"
       placeholder="+39 *** *******"
       v-model="stepStore.stepOneData.phoneNumber"
       type="tel"
       :error-message="v$.phoneNumber.$errors[0]?.$message || ''"
+    />
+    <TicDriveInput
+      id="email"
+      label="Email Aziendale*"
+      placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
+      v-model="stepStore.stepOneData.email"
+      :error-message="v$.email.$errors[0]?.$message || ''"
     />
     <TicDriveInput
       id="workshop"
@@ -37,13 +45,6 @@
       placeholder="es. Autofficina rossi"
       v-model="stepStore.stepOneData.workshopName"
       :error-message="v$.workshopName.$errors[0]?.$message || ''"
-    />
-    <TicDriveInput
-      id="email"
-      label="Email*"
-      placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
-      v-model="stepStore.stepOneData.email"
-      :error-message="v$.email.$errors[0]?.$message || ''"
     />
     <TicDriveInput
       id="password"

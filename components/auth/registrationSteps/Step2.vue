@@ -36,22 +36,6 @@
     </div>
 
     <div class="mt-4">
-      <h4 class="text-2xl text-gray-500 font-semibold">Contatti Aziendali</h4>
-      <div class="flex flex-col">
-        <TicDriveInput
-          placeholder="Numero di telefono aziendale (fisso o cellulare):"
-          v-model="stepStore.stepTwoData.companyContact.phone"
-          size="small"
-        />
-        <TicDriveInput
-          placeholder="Indirizzo email aziendale:"
-          v-model="stepStore.stepTwoData.companyContact.email"
-          size="small"
-        />
-      </div>
-    </div>
-
-    <div class="mt-4">
       <h4 class="text-2xl text-gray-500 font-semibold">
         Contatti di Riferimento
       </h4>
