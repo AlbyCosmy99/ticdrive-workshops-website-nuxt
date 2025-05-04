@@ -162,9 +162,9 @@ const nextStep = async (): Promise<void> => {
   if (buttonDisableStatus.value) return;
   const isValid = await stepValidation(stepStore.currentStep);
 
-  if(isValid) {
-    if(stepStore.currentStep === 8) {
-      register()
+  if (isValid) {
+    if (stepStore.currentStep === 8) {
+      register();
     } else {
       stepStore.currentStep++;
     }
