@@ -1,5 +1,15 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-2">
+   <div v-if="reviews.length === 0" class="flex flex-col items-center justify-center py-12 px-4 bg-white rounded-lg shadow-sm text-center">
+    <h2 class="text-xl font-semibold text-gray-700 mb-2">Nessuna recensione disponibile</h2>
+    <p class="text-gray-500 mb-4">Quando un utente prenota un servizio e lascia una recensione, sarà disponibile in questa sezione.</p>
+    <button
+      class="mt-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 px-4 rounded transition"
+      @click="navigateTo('/dashboard')"
+    >
+      Vai alla Dashboard
+    </button>
+  </div>
+  <div v-else class="bg-white rounded-lg shadow-sm p-2">
     <div class="mb-8">
       <h2 class="flex items-center text-2xl font-semibold">
         <span class="text-amber-500 mr-2">★</span>
