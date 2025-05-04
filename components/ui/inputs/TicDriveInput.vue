@@ -1,53 +1,33 @@
 <template>
   <div class="w-full">
-    <label
-      v-if="label"
-      :for="id"
-      class="self-start mt-4 text-base text-black block"
-    >
+    <label v-if="label" :for="id" class="self-start mt-4 text-base text-black block">
       {{ label }}
     </label>
 
     <div class="relative mt-3">
-      <input
-        :type="localType"
-        :id="id"
-        :placeholder="placeholder"
-        :value="modelValue"
-        :class="[inputClasses, 'pr-12']"
-        :aria-invalid="Boolean(errorMessage)"
-        :aria-describedby="errorMessage ? `${id}-error` : undefined"
-        :autocomplete="autocomplete"
-        :disabled="disabled"
-        :readonly="readonly"
-        @input="
-          $emit('update:modelValue', ($event.target as HTMLInputElement).value)
-        "
-      />
+      <input :type="localType" :id="id" :placeholder="placeholder" :value="modelValue"
+        :class="[inputClasses, type === 'password' ? 'pr-12' : '']" :aria-invalid="Boolean(errorMessage)"
+        :aria-describedby="errorMessage ? `${id}-error` : undefined" :autocomplete="autocomplete" :disabled="disabled"
+        :readonly="readonly" @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
 
-      <NuxtImg
-        v-if="type === 'password'"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/6985640710eeb41e49e1efa67ef16cb3f8b29c3408fb1e345a7504c0c37e74c5?placeholderIfAbsent=true&apiKey=60b2620725b44e1c95ff63fd7ebca566"
-        alt="Toggle password visibility"
-        class="absolute right-8 top-1/2 transform -translate-y-1/2 w-[18px] cursor-pointer"
-        @click="togglePasswordVisibility"
-        width="18"
-        height="18"
-      />
+      <!-- Password visibility toggle -->
+      <div v-if="type === 'password'" class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+        @click="togglePasswordVisibility">
+        <NuxtImg v-if="showPassword" src="/svg/stars/occhioaperto.svg" alt="Hide password" class="w-[18px] h-[18px]"
+          width="18" height="18" />
+        <NuxtImg v-else src="/svg/stars/occhiobarrato.svg" alt="Show password" class="w-[18px] h-[18px]" width="18"
+          height="18" />
+      </div>
     </div>
 
-    <div
-      v-if="errorMessage"
-      :id="`${id}-error`"
-      class="invalid-feedback text-red-500 mt-0.5"
-    >
+    <div v-if="errorMessage" :id="`${id}-error`" class="invalid-feedback text-red-500 mt-0.5">
       {{ errorMessage }}
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {ref, computed} from 'vue';
+import { ref, computed } from 'vue';
 
 type InputSize = 'standard' | 'small';
 type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
