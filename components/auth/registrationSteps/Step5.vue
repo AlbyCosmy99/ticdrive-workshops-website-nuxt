@@ -28,7 +28,7 @@
 
       <div
         v-if="!!stepStore.stepFiveData.activeDays.find(d => d.id === day.id)"
-        class="col-span-2 px-2 grid grid-cols-8 mt-2 gap-1 sm:gap-0"
+        class="col-span-2 px-2 grid grid-cols-8 mt-2 gap-1 sm:gap-0 flex items-center"
       >
         <div class="col-span-6 sm:col-span-3 flex m-auto">
           <Calendar
@@ -46,8 +46,9 @@
         </div>
 
         <div
-          class="col-span-2 sm:col-span-1 text-center leading-[48px] hover:border hover:border-green-500 cursor-pointer"
           @click="plusHandle(day)"
+          class="col-span-2 sm:col-span-1 flex items-center justify-center h-10 w-10 mx-auto border border-gray-300 rounded-md text-gray-600 text-lg font-semibold cursor-pointer hover:bg-gray-100 hover:shadow-sm active:scale-95 transition-all duration-150"
+          aria-label="Aggiungi orario"
         >
           +
         </div>
@@ -77,10 +78,11 @@
             stepStore.stepFiveData.timeSlots[day.id][1]?.start &&
             stepStore.stepFiveData.timeSlots[day.id][1]?.end
           "
-          class="col-span-2 sm:col-span-1 flex cursor-pointer"
           @click="removeHandle(day.id)"
+          class="col-span-2 sm:col-span-1 flex items-center justify-center h-10 w-10 mx-auto border border-gray-300 rounded-md text-gray-500 hover:text-red-500 hover:border-red-400 cursor-pointer transition-all duration-150"
+          aria-label="Rimuovi orario"
         >
-          <img class="h-6 w-6 m-auto" src="/images/delete.png" alt="delete" />
+          <Trash class="w-5 h-5" />
         </div>
       </div>
     </div>
@@ -131,6 +133,7 @@ import PlusMinusField from '~/components/PlusMinusField.vue';
 import useStepStore from '~/store/step';
 import type {Day} from '~/types/datetime/Day';
 import useTimeStore from '~/store/time';
+import {Trash} from 'lucide-vue-next';
 
 const stepStore = useStepStore();
 const timeStore = useTimeStore();
@@ -214,17 +217,56 @@ const updateHomeService = (isYes: boolean) => {
 </script>
 
 <style scoped>
-.p-inputtext {
+:deep(.p-inputtext) {
   text-align: center !important;
-  padding: 10px 0px !important;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  transition: all 0.2s ease-in-out;
+  font-size: 1rem;
+  color: #374151;
 }
 
-.p-inputtext:hover {
-  cursor: pointer;
+:deep(.p-inputtext:focus) {
+  border-color: #10b981 !important; /* Tailwind: green-500 */
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+  outline: none !important;
 }
 
-.p-datepicker-panel {
-  z-index: 10 !important;
-  background-color: #f3f3f3 !important;
+:deep(.p-inputwrapper.p-focus) {
+  box-shadow: none !important;
+}
+
+:deep(.p-datepicker .p-datepicker-buttonbar button),
+:deep(.p-datepicker .p-datepicker-prev),
+:deep(.p-datepicker .p-datepicker-next),
+:deep(.p-datepicker .p-datepicker-today),
+:deep(.p-datepicker .p-datepicker-clear-button) {
+  background-color: #10b981 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0.375rem !important;
+  padding: 0.4rem 0.75rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+:deep(.p-datepicker .p-datepicker-prev:hover),
+:deep(.p-datepicker .p-datepicker-next:hover),
+:deep(.p-datepicker .p-datepicker-today:hover),
+:deep(.p-datepicker .p-datepicker-clear-button:hover),
+:deep(.p-datepicker .p-datepicker-buttonbar button:hover) {
+  background-color: #059669 !important;
+}
+
+:deep(.p-datepicker td.p-datepicker-today > span.p-highlight) {
+  background-color: #10b981 !important;
+  color: white !important;
+  border-radius: 9999px !important;
+}
+
+.p-inputwrapper {
+  background-color: white;
 }
 </style>
