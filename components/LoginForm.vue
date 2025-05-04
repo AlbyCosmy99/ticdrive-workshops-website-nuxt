@@ -64,7 +64,7 @@
         :disabled="!password || !companyEmail || loading"
         class="self-center px-16 py-3.5 mt-10 max-w-full text-base text-white whitespace-nowrap bg-drive rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-drive focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
       >
-        {{ loading ? 'Loading...' : 'Login' }}
+        {{ loading ? 'Caricando...' : 'Login' }}
       </button>
     </form>
   </div>

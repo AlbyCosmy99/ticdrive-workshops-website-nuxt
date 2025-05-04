@@ -5,4 +5,5 @@ export interface User {
   address?: string;
   phoneNumber?: string;
   profileImageUrl?: string;
+  emailConfirmed?: boolean;
 }

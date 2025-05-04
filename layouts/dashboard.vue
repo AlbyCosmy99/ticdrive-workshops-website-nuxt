@@ -15,6 +15,10 @@ onMounted(async () => {
     const token = localStorage.getItem('token');
     authStore.token = token;
     authStore.user = await useUserData();
+
+    if (!authStore.user?.emailConfirmed) {
+      navigateTo('/auth/confirm-email');
+    }
   } catch (e) {
     localStorage.removeItem('token');
     navigateTo('/auth/login');

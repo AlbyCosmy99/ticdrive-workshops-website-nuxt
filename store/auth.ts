@@ -120,8 +120,11 @@ const useAuthStore = defineStore('auth', {
     },
 
     logout() {
+      const router = useRouter();
       this.user = null;
       this.token = null;
+      localStorage.removeItem('token');
+      router.replace('/auth/login');
     },
   },
 });

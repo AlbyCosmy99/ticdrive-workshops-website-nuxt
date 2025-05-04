@@ -91,7 +91,7 @@
 
         <div class="mb-6 border-b pb-6">
           <button
-            @click="logout"
+            @click="authStore.logout()"
             class="text-drive text-base font-normal hover:text-green-700"
           >
             Logout
@@ -141,12 +141,6 @@ const changePassword = () => {
 
 const modifyWorkshopDetails = () => {
   emit('modifyWorkshop');
-};
-
-const logout = () => {
-  authStore.logout();
-  localStorage.removeItem('token');
-  router.replace('/auth/login');
 };
 
 const deleteAccount = () => {
