@@ -268,5 +268,6 @@ const updateHomeService = (isYes: boolean) => {
 
 .p-inputwrapper {
   background-color: white;
+  width: fit-content;
 }
 </style>
