@@ -10,18 +10,20 @@
       </button>
 
 
-      <div class="relative mx-2 flex items-center rounded-md px-4 py-1 gap-2 text-black">
+      <div class="flex items-center gap-2 px-4 py-1 mx-2 text-black">
         <h2 class="text-xl font-semibold mx-2">
           {{ displayedDayName }} {{ displayedDay }} {{ displayedMonthName }}
         </h2>
-        <button @click="toggleChangeModal" class="p-1 hover:text-gray-200" aria-label="Change disponibilità">
-          <img src="/svg/directions/AvabilityIcon.svg" alt="Availability Icon" class="h-8 w-8" />
-        </button>
+        <div class="relative">
+          <button @click="toggleChangeModal" class="p-1 hover:text-gray-200" aria-label="Change disponibilità">
+            <img src="/svg/directions/AvabilityIcon.svg" alt="Availability Icon" class="h-8 w-8" />
+          </button>
 
-
-        <ChangeAvailability v-if="showChangeModal" class="absolute inset-x-0 top-5" :isOpen="showChangeModal"
-          :currentMonth="displayedMonth" :currentYear="displayedDate.getFullYear()" @close="closeChangeModal"
-          @nessunaDispo="handleNessunaDispo" />
+          <ChangeAvailability v-if="showChangeModal"
+            class="absolute left-1/2 top-full z-50 transform -translate-x-1/2 mt-1" :isOpen="showChangeModal"
+            :currentMonth="displayedMonth" :currentYear="displayedDate.getFullYear()" @close="closeChangeModal"
+            @nessunaDispo="handleNessunaDispo" />
+        </div>
       </div>
 
 
@@ -76,7 +78,7 @@ const timeSlots = [
 const today = new Date();
 const displayedDate = ref(new Date(today));
 
-// Labels in Italian
+
 const monthNames = [
   'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
   'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre',
@@ -103,7 +105,7 @@ const prevDay = () => {
   displayedDate.value = newDate;
 };
 
-// Modal handling
+
 const showChangeModal = ref(false);
 const toggleChangeModal = () => {
   showChangeModal.value = !showChangeModal.value;
@@ -112,10 +114,10 @@ const closeChangeModal = () => {
   showChangeModal.value = false;
 };
 const handleNessunaDispo = () => {
-  // Optional callback logic
+
 };
 
-// Mock data for appointments
+
 const appointmentMap = {
   '09:00-2': {
     carModel: 'Nissan Micra',
