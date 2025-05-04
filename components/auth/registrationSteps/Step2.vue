@@ -7,7 +7,7 @@
     </h1>
 
     <div class="flex flex-col mt-10">
-      <h4 class="text-2xl text-gray-500 font-semibold">Indirizzo completo:</h4>
+      <h4 class="text-2xl text-gray-500 font-semibold">Indirizzo completo*:</h4>
 
       <TicDriveInput
         placeholder="Via e Numero Civico:"

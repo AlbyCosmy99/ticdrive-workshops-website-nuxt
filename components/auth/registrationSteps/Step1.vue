@@ -23,7 +23,6 @@
       />
     </div>
 
-    
     <TicDriveInput
       id="tel"
       label="Telefono Aziendale*"
@@ -41,7 +40,7 @@
     />
     <TicDriveInput
       id="workshop"
-      label="Nome dell’officina"
+      label="Nome dell’officina*"
       placeholder="es. Autofficina rossi"
       v-model="stepStore.stepOneData.workshopName"
       :error-message="v$.workshopName.$errors[0]?.$message || ''"
@@ -64,20 +63,24 @@
       :error-message="v$.repeatedPassword.$errors[0]?.$message || ''"
       autocomplete="new-password"
     />
-    <div class="my-1 mt-6">
-      <CheckboxField
-        id="accept-privacy-policy"
-        v-model="stepStore.stepOneData.acceptPrivacyPolicy"
-        label="Accetto di ricevere aggiornamenti da TicDrive tramite WhatsApp o
-        piattaforme simili!"
-      />
+    <div v-if="stepStore.loading" class="mt-4 flex justify-center items-center">
+      <UiSpinnersTicDriveSpinner />
     </div>
-    <div class="my-1">
-      <CheckboxField
-        id="accept-updates"
-        v-model="stepStore.stepOneData.acceptUpdates"
-        label="Accetto Privacy Policy Cookie Policy Terms and Conditions"
-      />
+    <div v-else>
+      <div v-if="stepStore.socialUpdatesConsent" class="my-1 mt-6">
+        <CheckboxField
+          id="accept-updates"
+          v-model="stepStore.stepOneData.acceptUpdates"
+          :label="stepStore.socialUpdatesConsent?.content"
+        />
+      </div>
+      <div v-if="stepStore.privacyPolicy" class="my-1">
+        <CheckboxField
+          id="accept-privacy-policy"
+          v-model="stepStore.stepOneData.acceptPrivacyPolicy"
+          :label="stepStore.privacyPolicy?.content"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -92,13 +95,16 @@ import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
 defineExpose({
   validate: async () => {
     const result = await v$.value.$validate();
-    console.log('VALID?', result);
-    console.log('Validation errors:', v$.value.$errors);
     return result;
   },
 });
 
 const stepStore = useStepStore();
+
+onMounted(() => {
+  stepStore.getSocialUpdatesConsent();
+  stepStore.getPrivacyPolicy();
+});
 
 const passwordRule = helpers.withMessage(
   'La password deve contenere almeno 8 caratteri, una lettera maiuscola e un numero.',

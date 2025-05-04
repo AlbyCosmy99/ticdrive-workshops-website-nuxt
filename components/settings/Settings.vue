@@ -14,10 +14,16 @@
             </div>
             <div>
               <h3 class="text-lg font-semibold">{{ authStore.user?.name }}</h3>
-              <p class="text-gray-500 font-poppins">{{ authStore.user?.email }}</p>
+              <p class="text-gray-500 font-poppins">
+                {{ authStore.user?.email }}
+              </p>
             </div>
           </div>
-          <TicDrivebutton label="Modifica" @click="modifyProfile" custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5"/>
+          <TicDrivebutton
+            label="Modifica"
+            @click="modifyProfile"
+            custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5"
+          />
         </div>
       </div>
     </div>
@@ -30,14 +36,18 @@
           <label class="block text-base font-normal text-gray-700 mb-1"
             >Nome Cognome</label
           >
-          <div class="text-sm font-normal text-tic">{{ authStore.user?.name }}</div>
+          <div class="text-sm font-normal text-tic">
+            {{ authStore.user?.name }}
+          </div>
         </div>
 
         <div class="mb-6 border-b pb-6">
           <label class="block text-base font-normal text-gray-700 mb-1"
             >Email</label
           >
-          <div class="text-sm font-normal text-tic">{{ authStore.user?.email }}</div>
+          <div class="text-sm font-normal text-tic">
+            {{ authStore.user?.email }}
+          </div>
         </div>
 
         <div class="mb-6 border-b pb-6">
@@ -81,7 +91,7 @@
 
         <div class="mb-6 border-b pb-6">
           <button
-            @click="logout"
+            @click="authStore.logout()"
             class="text-drive text-base font-normal hover:text-green-700"
           >
             Logout
@@ -131,12 +141,6 @@ const changePassword = () => {
 
 const modifyWorkshopDetails = () => {
   emit('modifyWorkshop');
-};
-
-const logout = () => {
-  authStore.logout();
-  localStorage.removeItem('token');
-  router.replace('/auth/login');
 };
 
 const deleteAccount = () => {

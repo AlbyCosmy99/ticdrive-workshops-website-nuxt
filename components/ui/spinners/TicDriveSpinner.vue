@@ -3,6 +3,12 @@
     <div
       class="w-6 h-6 border-4 border-drive border-dashed rounded-full animate-spin"
     ></div>
-    <p class="text-drive font-semibold text-lg">Loading...</p>
+    <p class="text-drive font-semibold text-lg">
+      {{ props.text || 'Caricando...' }}
+    </p>
   </div>
 </template>
+
+<script lang="ts" setup>
+const props = defineProps<{text?: string}>();
+</script>

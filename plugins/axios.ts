@@ -23,7 +23,7 @@ export default defineNuxtPlugin(nuxtApp => {
     error => {
       const status = error.response?.status;
 
-      if (status >= 400 && status < 600) {
+      if (status === 401 || status === 403) {
         const auth = useAuthStore();
         auth.token = null;
         localStorage.removeItem('token');

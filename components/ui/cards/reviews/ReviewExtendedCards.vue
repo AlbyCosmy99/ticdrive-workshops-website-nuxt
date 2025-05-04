@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import ReviewExtendedCard from './ReviewExtendedCard.vue';
-
-
 </script>
 
 <template>

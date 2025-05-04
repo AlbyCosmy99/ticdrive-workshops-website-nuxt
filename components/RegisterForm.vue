@@ -1,5 +1,11 @@
 <template>
-  <div class="px-3 w-full mt-2 mb-4 overflow-auto">
+  <div
+    v-if="authStore.loading"
+    class="flex justify-center items-center overflow-auto h-80"
+  >
+    <UiSpinnersTicDriveSpinner text="Registrazione in corso..." />
+  </div>
+  <div v-else class="px-3 w-full mt-2 mb-4 overflow-auto">
     <Step1 v-if="stepStore.currentStep === 1" ref="stepOneRef" />
     <Step2 v-if="stepStore.currentStep === 2" ref="stepTwoRef" />
     <Step3 v-if="stepStore.currentStep === 3" ref="stepThreeRef" />
@@ -55,8 +61,11 @@ import Step7 from './auth/registrationSteps/Step7.vue';
 import Step8 from './auth/registrationSteps/Step8.vue';
 import TicDrivebutton from './ui/buttons/TicDrivebutton.vue';
 import useToast from '@/composables/useToast';
+import useAuthStore from '~/store/auth';
 
 const stepStore = useStepStore();
+const authStore = useAuthStore();
+console.log(stepStore.currentStep);
 
 const stepOneRef = ref<InstanceType<typeof Step1> | null>(null);
 const stepTwoRef = ref<InstanceType<typeof Step2> | null>(null);
@@ -68,17 +77,10 @@ const stepSevenRef = ref<InstanceType<typeof Step7> | null>(null);
 const stepEightRef = ref<InstanceType<typeof Step8> | null>(null);
 
 const buttonDisableStatus = computed(
-  () => !stepStore.stepOneData.acceptUpdates,
+  () => !stepStore.stepOneData.acceptPrivacyPolicy,
 );
 
 const showToast = useToast();
-
-const checkToggle = (
-  key: keyof typeof stepStore.stepOneData,
-  value: boolean,
-): void => {
-  stepStore.stepOneData[key] = value;
-};
 
 const stepValidation = async (step: number): Promise<boolean | undefined> => {
   switch (step) {
@@ -90,8 +92,8 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
       if (!stepStore.stepThreeData.specializations.length) {
         showToast(
           'info',
-          'Missing Workshop',
-          'You must select at least one workshop!',
+          'Specializzazione mancante.',
+          'Devi selezionare almeno una specializzazione!',
         );
         return false;
       }
@@ -100,8 +102,8 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
       if (!stepStore.stepFourData.services.length) {
         showToast(
           'info',
-          'Missing Type Of Service',
-          'You must select at least one type of service offered!',
+          'Servizio offerto mancante.',
+          'Devi selezionare almeno un servizio!',
         );
         return false;
       }
@@ -110,23 +112,27 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
       if (!stepStore.stepFiveData.activeDays.length) {
         showToast(
           'info',
-          'Missing Opening Hours',
-          'You must select at least one opening hour!',
+          'Orario di apertura mancante.',
+          'Devi selezionare almeno un giorno e un orario di apertura!',
         );
         return false;
       }
       if (stepStore.stepFiveData.maxPerDay === 0) {
         showToast(
           'info',
-          'Invalid Maximum Number',
-          'Maximum number of vehicles should be larger than zero!',
+          'Numero di veicoli gestiti giornalmente errato',
+          'Il numero di veicoli gestiti giornalmente deve essere maggiore di zero!',
         );
         return false;
       }
       return true;
     case 6:
       if (!stepStore.stepSixData.images[4]) {
-        showToast('info', 'Main Image Needed', 'Please upload main image!');
+        showToast(
+          'info',
+          'Immagine principale mancante.',
+          "Per favore carica un' immagine principale!",
+        );
         return false;
       }
       return true;
@@ -134,10 +140,16 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
       return await stepSevenRef.value?.validate();
     case 8:
       const valid = await stepEightRef.value?.validate();
-      const allChecked = stepStore.stepEightData.conformities.length === 5;
+      const allChecked =
+        stepStore.stepEightData.conformities.length ===
+        stepStore.declarationsOfConformity.length;
       if (!valid) return false;
       if (!allChecked) {
-        showToast('info', 'All-Check Needed', 'Select all conformities!');
+        showToast(
+          'info',
+          'Tutte le caselle devono essere selezionate.',
+          'Seleziona tutte le caselle!',
+        );
         return false;
       }
       return true;
@@ -149,10 +161,13 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
 const nextStep = async (): Promise<void> => {
   if (buttonDisableStatus.value) return;
   const isValid = await stepValidation(stepStore.currentStep);
-  if (stepStore.currentStep === 8) {
-    register();
-  } else if (isValid) {
-    stepStore.currentStep++;
+
+  if (isValid) {
+    if (stepStore.currentStep === 8) {
+      register();
+    } else {
+      stepStore.currentStep++;
+    }
   }
 };
 
@@ -163,7 +178,6 @@ const prevStep = (): void => {
 };
 
 const register = () => {
-  console.log('register');
-  console.log(stepStore);
+  authStore.register();
 };
 </script>
