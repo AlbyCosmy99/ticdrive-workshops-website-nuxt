@@ -1,12 +1,16 @@
 <template>
   <NuxtLayout>
     <NuxtPage />
-    <Analytics/>
-    <SpeedInsights/>
   </NuxtLayout>
 </template>
 
-<script lang="ts" setup>
-import { Analytics } from '@vercel/analytics/nuxt'
-import { SpeedInsights } from "@vercel/speed-insights/nuxt"
+<script setup>
+useHead({
+  script: process.env.NODE_ENV === 'production'
+    ? [{
+        src: 'https://vercel.com/analytics/script.js',
+        defer: true,
+      }]
+    : []
+})
 </script>
