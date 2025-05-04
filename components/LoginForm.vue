@@ -53,7 +53,7 @@
           <button
             type="button"
             class="cursor-pointer self-start text-xs font-light text-black hover:underline focus:outline-none focus:underline"
-            @click="forgotPassword"
+            @click="openForgotPasswordModal"
           >
             Password dimenticata?
           </button>
@@ -67,6 +67,10 @@
         {{ loading ? 'Caricando...' : 'Login' }}
       </button>
     </form>
+    <ForgotPasswordModal
+      :isOpen="isForgotPasswordModalOpen"
+      @close="isForgotPasswordModalOpen = false"
+    />
   </div>
 </template>
 
@@ -77,12 +81,14 @@ import CheckboxField from './CheckboxField.vue';
 import useAuthStore from '~/store/auth';
 import TicDriveAuthSlider from './ui/sliders/TicDriveAuthSlider.vue';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
+import ForgotPasswordModal from './ui/modals/ForgotPasswordModal.vue';
 
 const useStore = useStepStore();
 const companyEmail = ref('');
 const password = ref('');
 const rememberMe = ref(true);
 const showToast = useToast();
+const isForgotPasswordModalOpen = ref(false);
 
 const authStore = useAuthStore();
 const loading = ref(false);
@@ -104,8 +110,8 @@ const handleSubmit = async () => {
   }
 };
 
-const forgotPassword = () => {
-  console.log('Forgot password clicked');
+const openForgotPasswordModal = () => {
+  isForgotPasswordModalOpen.value = true;
 };
 
 onMounted(() => {
