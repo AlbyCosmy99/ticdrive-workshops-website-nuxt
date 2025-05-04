@@ -23,7 +23,6 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
-    '@nuxtjs/tailwindcss',
-    '@vercel/analytics/nuxt'
+    '@nuxtjs/tailwindcss'
   ],
 });
