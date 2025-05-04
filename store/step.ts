@@ -162,6 +162,9 @@ const useStepStore = defineStore('step', {
       this.currentStep = step;
     },
   },
+  persist: {
+    paths: ['currentStep'],
+  },
 });
 
 export default useStepStore;

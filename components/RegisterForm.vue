@@ -65,6 +65,7 @@ import useAuthStore from '~/store/auth';
 
 const stepStore = useStepStore();
 const authStore = useAuthStore();
+console.log(stepStore.currentStep);
 
 const stepOneRef = ref<InstanceType<typeof Step1> | null>(null);
 const stepTwoRef = ref<InstanceType<typeof Step2> | null>(null);
