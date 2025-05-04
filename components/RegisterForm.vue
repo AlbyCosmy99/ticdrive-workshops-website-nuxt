@@ -1,16 +1,7 @@
 <template>
   <div class="px-3 w-full mt-2 mb-4 overflow-auto">
-    <Step1
-      v-if="stepStore.currentStep === 1"
-      ref="stepOneRef"
-      :stepValues="stepStore.stepOneData"
-      @updateStepValues="checkToggle"
-    />
-    <Step2
-      v-if="stepStore.currentStep === 2"
-      ref="stepTwoRef"
-      v-model:stepValues="stepStore.stepTwoData"
-    />
+    <Step1 v-if="stepStore.currentStep === 1" ref="stepOneRef" />
+    <Step2 v-if="stepStore.currentStep === 2" ref="stepTwoRef" />
     <Step3 v-if="stepStore.currentStep === 3" ref="stepThreeRef" />
     <Step4 v-if="stepStore.currentStep === 4" ref="stepFourRef" />
     <Step5 v-if="stepStore.currentStep === 5" ref="stepFiveRef" />
@@ -158,13 +149,21 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
 const nextStep = async (): Promise<void> => {
   if (buttonDisableStatus.value) return;
   const isValid = await stepValidation(stepStore.currentStep);
-  if (isValid) stepStore.currentStep++;
-  console.log(stepStore.stepSixData);
+  if (stepStore.currentStep === 8) {
+    register();
+  } else if (isValid) {
+    stepStore.currentStep++;
+  }
 };
 
 const prevStep = (): void => {
   if (!stepStore.currentStep) return;
   stepStore.currentStep--;
   if (stepStore.currentStep === 0) navigateTo('/auth/login');
+};
+
+const register = () => {
+  console.log('register');
+  console.log(stepStore);
 };
 </script>

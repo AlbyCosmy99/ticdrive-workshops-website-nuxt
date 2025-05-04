@@ -92,18 +92,13 @@
 </template>
 
 <script lang="ts" setup>
-import {defineProps, defineExpose, computed} from 'vue';
+import {defineExpose, computed} from 'vue';
 import {required, helpers} from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import useStepStore from '~/store/step';
 import Calendar from 'primevue/calendar';
-import type {StepEightData} from '~/types/auth/steps/StepEightData';
 import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
 import type {Conformity} from '~/types/auth/Conformity';
-
-const props = defineProps<{
-  stepValues: StepEightData;
-}>();
 
 const stepStore = useStepStore();
 
