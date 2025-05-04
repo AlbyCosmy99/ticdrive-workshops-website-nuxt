@@ -1,10 +1,10 @@
 <template>
   <NuxtLayout>
+    <Analytics />
     <NuxtPage />
   </NuxtLayout>
 </template>
 
 <script setup>
-import { inject } from "@vercel/analytics"
-inject()
+import { Analytics } from '@vercel/analytics/nuxt';
 </script>
