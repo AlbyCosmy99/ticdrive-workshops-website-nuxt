@@ -10,6 +10,7 @@ const authStore = useAuthStore();
 
 //initial configurations on reserved area setup
 onMounted(async () => {
+  console.log(authStore.user);
   try {
     const token = localStorage.getItem('token');
     authStore.token = token;

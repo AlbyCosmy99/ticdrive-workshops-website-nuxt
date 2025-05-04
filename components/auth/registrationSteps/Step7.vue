@@ -22,9 +22,15 @@
     </span>
 
     <h1 class="text-gray-500 text-2xl font-semibold mt-5">Lingue Parlate:</h1>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4 mb-10">
+    <div
+      v-if="languageStore.loading"
+      class="flex justify-center items-center overflow-auto h-40"
+    >
+      <UiSpinnersTicDriveSpinner />
+    </div>
+    <div v-else class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4 mb-10">
       <TicDriveRadio
-        v-for="language in languages"
+        v-for="language in languageStore.languages"
         :key="language.id"
         :id="language.id"
         :name="language.label"
@@ -47,21 +53,15 @@ import useVuelidate from '@vuelidate/core';
 import useStepStore from '~/store/step';
 import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
 import type {Language} from '~/types/Language';
+import useLanguageStore from '~/store/language';
 
 defineExpose({
   validate: async () => await v$.value.$validate(),
 });
 
 const stepStore = useStepStore();
-
-const languages: Language[] = [
-  {id: 1, label: 'Italiano'},
-  {id: 2, label: 'Tedesco'},
-  {id: 3, label: 'Inglese'},
-  {id: 4, label: 'Francese'},
-  {id: 5, label: 'Spagnolo'},
-  {id: 6, label: 'Altro'},
-];
+const languageStore = useLanguageStore();
+languageStore.getLanguages();
 
 const rules = computed(() => ({
   description: {

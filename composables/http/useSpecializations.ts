@@ -1,6 +1,6 @@
 import {ref} from 'vue';
 import useTicDriveAxios from '@/composables/useTicDriveAxios';
-import type { Specialization } from '~/types/Specialization';
+import type {Specialization} from '~/types/Specialization';
 
 const useSpecializations = () => {
   const loading = ref(false);
@@ -16,7 +16,11 @@ const useSpecializations = () => {
       const response = await $ticDriveAxios.get('workshops/specializations');
       specializations.value = response.data;
     } catch (e: any) {
-      showToast('error', 'Errore', 'Errore nel recupero delle specializzazioni!');
+      showToast(
+        'error',
+        'Errore',
+        'Errore nel recupero delle specializzazioni!',
+      );
     } finally {
       loading.value = false;
     }

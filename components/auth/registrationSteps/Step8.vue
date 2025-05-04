@@ -73,15 +73,18 @@
     </div>
 
     <!-- Conformità -->
-    <h1 class="text-gray-500 text-2xl font-semibold mt-8 mb-1">
+    <h1
+      v-if="stepStore.declarationsOfConformity.length"
+      class="text-gray-500 text-2xl font-semibold mt-8 mb-1"
+    >
       Autodichiarazione di conformità
     </h1>
     <TicDriveRadio
-      v-for="conformity in conformities"
+      v-for="conformity in stepStore.declarationsOfConformity"
       :key="conformity.id"
       :id="conformity.id"
       class="mt-2"
-      :name="conformity.text"
+      :name="conformity.content"
       :value="conformity"
       :isChecked="
         !!stepStore.stepEightData.conformities.find(c => c.id === conformity.id)
@@ -101,35 +104,11 @@ import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
 import type {Conformity} from '~/types/auth/Conformity';
 
 const stepStore = useStepStore();
+stepStore.getDeclarationsOfConformity();
 
 defineExpose({
   validate: async () => await v$.value.$validate(),
 });
-
-const date = computed({
-  get: () => stepStore.stepEightData.signature.date,
-  set: (val: Date) => (stepStore.stepEightData.signature.date = val),
-});
-
-const conformities: Conformity[] = [
-  {
-    id: 1,
-    text: 'Dichiaro che l’autofficina è regolarmente registrata e in possesso di tutti i documenti richiesti dalla normativa italiana per operare legalmente.',
-  },
-  {
-    id: 2,
-    text: 'Accetto la trattenuta della commissione da parte della piattaforma e la modalità di accredito selezionata.',
-  },
-  {
-    id: 3,
-    text: "Accetto le condizioni di utilizzo della piattaforma e l'informativa sulla privacy (GDPR).",
-  },
-  {id: 4, text: 'Dichiaro di aderire alla piattaforma.'},
-  {
-    id: 5,
-    text: 'Dichiaro di aver letto e accettato i Termini e Condizioni della piattaforma.',
-  },
-];
 
 const rules = computed(() => ({
   signature: {

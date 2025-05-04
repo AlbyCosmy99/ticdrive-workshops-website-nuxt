@@ -1,5 +1,11 @@
 <template>
-  <div class="px-3 w-full mt-2 mb-4 overflow-auto">
+  <div
+    v-if="authStore.loading"
+    class="flex justify-center items-center overflow-auto h-80"
+  >
+    <UiSpinnersTicDriveSpinner text="Registrazione in corso..." />
+  </div>
+  <div v-else class="px-3 w-full mt-2 mb-4 overflow-auto">
     <Step1 v-if="stepStore.currentStep === 1" ref="stepOneRef" />
     <Step2 v-if="stepStore.currentStep === 2" ref="stepTwoRef" />
     <Step3 v-if="stepStore.currentStep === 3" ref="stepThreeRef" />
@@ -58,7 +64,7 @@ import useToast from '@/composables/useToast';
 import useAuthStore from '~/store/auth';
 
 const stepStore = useStepStore();
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 
 const stepOneRef = ref<InstanceType<typeof Step1> | null>(null);
 const stepTwoRef = ref<InstanceType<typeof Step2> | null>(null);
@@ -128,7 +134,11 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
       return true;
     case 6:
       if (!stepStore.stepSixData.images[4]) {
-        showToast('info', "Immagine principale mancante.", "Per favore carica un' immagine principale!");
+        showToast(
+          'info',
+          'Immagine principale mancante.',
+          "Per favore carica un' immagine principale!",
+        );
         return false;
       }
       return true;
@@ -136,10 +146,16 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
       return await stepSevenRef.value?.validate();
     case 8:
       const valid = await stepEightRef.value?.validate();
-      const allChecked = stepStore.stepEightData.conformities.length === 5;
+      const allChecked =
+        stepStore.stepEightData.conformities.length ===
+        stepStore.declarationsOfConformity.length;
       if (!valid) return false;
       if (!allChecked) {
-        showToast('info', 'Tutte le caselle devono essere selezionate.', 'Seleziona tutte le caselle!');
+        showToast(
+          'info',
+          'Tutte le caselle devono essere selezionate.',
+          'Seleziona tutte le caselle!',
+        );
         return false;
       }
       return true;
@@ -165,6 +181,6 @@ const prevStep = (): void => {
 };
 
 const register = () => {
-  authStore.register()
+  authStore.register();
 };
 </script>

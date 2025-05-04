@@ -7,12 +7,14 @@ import getCoordinates from '~/services/location/getCoordinatesFromGoogleApi';
 interface AuthState {
   user: User | null;
   token: string | null;
+  loading: boolean;
 }
 
 const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     user: null,
     token: null,
+    loading: false,
   }),
 
   actions: {
@@ -37,9 +39,11 @@ const useAuthStore = defineStore('auth', {
     },
 
     async register(): Promise<void> {
+      this.loading = true;
       const $ticDriveAxios = useTicDriveAxios();
       const stepStore = useStepStore();
-    
+      const showToast = useToast();
+
       const {
         stepOneData,
         stepTwoData,
@@ -48,20 +52,24 @@ const useAuthStore = defineStore('auth', {
         stepFiveData,
         stepSixData,
         stepSevenData,
-        stepEightData
+        stepEightData,
       } = stepStore;
-    
+
       const fullAddress = stepTwoData.fullAddress;
       const address = `${fullAddress.streetAddress}, ${fullAddress.postalCode} ${fullAddress.city}, ${fullAddress.province}, Italy`;
-    
-      let coordinates = { lat: null, lng: null };
+
+      let coordinates = {lat: null, lng: null};
       try {
         const location = await getCoordinates(address);
         if (location) coordinates = location;
-      } catch (err) {
-        console.warn('Could not fetch coordinates:', err);
+      } catch (err: any) {
+        showToast(
+          'error',
+          'Non è stato possibile ottenere le coordinate geografiche!',
+          err.message,
+        );
       }
-    
+
       const payload = {
         name: stepOneData.name,
         surname: stepOneData.surname,
@@ -83,28 +91,33 @@ const useAuthStore = defineStore('auth', {
         description: stepSevenData.description,
         laborWarrantyMonths: stepEightData.warranty,
         signatureName: stepEightData.signature.name,
-        signatureSurname: stepEightData.signature.surname
+        signatureSurname: stepEightData.signature.surname,
       };
-    
+
       try {
         const res = await $ticDriveAxios.post('auth/register', payload);
-    
+
         if (!res?.data?.token) {
-          throw new Error('No token received from registration API');
+          showToast(
+            'error',
+            'Registrazione fallita!',
+            "Qualcosa e' andato storto. Riprova o contatta il supporto di TicDrive per assistenza.",
+          );
         }
-    
+
         localStorage.setItem('token', res.data.token);
         this.token = res.data.token;
-    
+
         const data = await useUserData();
         this.user = data;
-    
+
+        navigateTo('/dashboard');
       } catch (error: any) {
-        console.error('Registration failed:', error?.response?.data || error.message);
-        throw new Error(error?.response?.data?.message || 'Registration failed');
+        showToast('error', 'Registrazione fallita!', error.message);
+      } finally {
+        this.loading = false;
       }
     },
-    
 
     logout() {
       this.user = null;

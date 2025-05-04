@@ -25,7 +25,9 @@
         :name="specialization.name"
         :value="specialization"
         :isChecked="
-          !!stepStore.stepThreeData.specializations.find(s => s.id === specialization.id)
+          !!stepStore.stepThreeData.specializations.find(
+            s => s.id === specialization.id,
+          )
         "
         @update:check="handleRadioSelection"
       />
@@ -34,13 +36,11 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits} from 'vue';
+import {defineEmits} from 'vue';
 import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
 import useSpecializations from '~/composables/http/useSpecializations';
 import useStepStore from '~/store/step';
-import type {
-  Specialization,
-} from '~/types/auth/steps/StepThreeData';
+import type {Specialization} from '~/types/auth/steps/StepThreeData';
 
 const stepStore = useStepStore();
 

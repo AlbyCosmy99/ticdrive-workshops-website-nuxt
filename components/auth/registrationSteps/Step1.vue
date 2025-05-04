@@ -103,7 +103,7 @@ const stepStore = useStepStore();
 
 onMounted(() => {
   stepStore.getSocialUpdatesConsent();
-  stepStore.getPrivacyPolicy()
+  stepStore.getPrivacyPolicy();
 });
 
 const passwordRule = helpers.withMessage(

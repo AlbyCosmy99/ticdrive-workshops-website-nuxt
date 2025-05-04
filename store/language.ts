@@ -1,31 +1,32 @@
 import {defineStore} from 'pinia';
-import type {Day} from '~/types/datetime/Day';
+import type {Language} from '~/types/Language';
 
-interface TimeState {
-  days: Day[];
+interface LanguageState {
+  languages: Language[];
   loading: boolean;
 }
 
-const useTimeStore = defineStore('time', {
-  state: (): TimeState => ({
-    days: [],
+const useLanguageStore = defineStore('language', {
+  state: (): LanguageState => ({
+    languages: [],
     loading: false,
   }),
 
   actions: {
-    async getDays(): Promise<void> {
+    async getLanguages(): Promise<void> {
       const $ticDriveAxios = useTicDriveAxios();
       const showToast = useToast();
 
       this.loading = true;
 
       try {
-        const response = await $ticDriveAxios.get('datetime/days');
+        const response = await $ticDriveAxios.get('languages');
 
         if (Array.isArray(response.data)) {
-          this.days = response.data.map(day => ({
+          this.languages = response.data.map(day => ({
             id: day.id,
             label: day.name,
+            code: day.code,
           }));
         } else {
           showToast('error', 'Error', 'Unexpected response format');
@@ -40,4 +41,4 @@ const useTimeStore = defineStore('time', {
   },
 });
 
-export default useTimeStore;
+export default useLanguageStore;
