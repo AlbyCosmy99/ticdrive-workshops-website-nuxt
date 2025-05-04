@@ -5,12 +5,6 @@
 </template>
 
 <script setup>
-useHead({
-  script: process.env.NODE_ENV === 'production'
-    ? [{
-        src: 'https://vercel.com/analytics/script.js',
-        defer: true,
-      }]
-    : []
-})
+import { inject } from "@vercel/analytics"
+inject()
 </script>
