@@ -45,9 +45,9 @@
                                 class="w-full p-4 bg-gray-100 rounded-lg focus:outline-none" required />
                         </div>
 
-                        <button type="submit" :disabled="!email || isLoading"
+                        <button type="submit" :disabled="!email || loading"
                             class="w-full py-4 bg-green-inter text-white font-medium rounded-lg hover:bg-green-dark focus:outline-none transition duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed">
-                            {{ isLoading ? 'Invio in corso...' : 'Reimposta password' }}
+                            {{ loading ? 'Invio in corso...' : 'Reimposta password' }}
                         </button>
                     </form>
                 </div>
@@ -72,9 +72,9 @@
                         </div>
 
                         <button type="submit"
-                            :disabled="!verificationCode || isLoading || verificationCode.length !== 6"
+                            :disabled="!verificationCode || loading || verificationCode.length !== 6"
                             class="w-full py-4 bg-green-inter text-white font-medium rounded-lg hover:bg-green-dark focus:outline-none transition duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed">
-                            {{ isLoading ? 'Verifica in corso...' : 'Verifica codice' }}
+                            {{ loading ? 'Verifica in corso...' : 'Verifica codice' }}
                         </button>
                     </form>
                 </div>
@@ -92,20 +92,17 @@ interface PasswordResetModalProps {
 
 const props = defineProps<PasswordResetModalProps>();
 
-// Define emits with types
 const emit = defineEmits<{
     (e: 'close'): void;
-    (e: 'submit', data: { email: string }): void;
-    (e: 'verification-success', data: { email: string, code: string }): void;
 }>();
 
-// Form data
 const currentStep = ref<'email' | 'verification'>('email');
 const email = ref('');
 const verificationCode = ref('');
-const isLoading = ref(false);
+const loading = ref(false);
+const showToast = useToast()
+const $ticDriveAxios = useTicDriveAxios()
 
-// Methods
 const handleBackButton = () => {
     if (currentStep.value === 'verification') {
         currentStep.value = 'email';
@@ -123,49 +120,39 @@ const resetForm = () => {
     currentStep.value = 'email';
     email.value = '';
     verificationCode.value = '';
-    isLoading.value = false;
+    loading.value = false;
 };
 
 const submitEmail = async () => {
     if (!email.value) return;
-
-    isLoading.value = true;
+    loading.value = true;
     try {
-        // Simulate API call - just a brief delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-
-        // Emit submit event with email
-        emit('submit', { email: email.value });
-
-        // Immediately transition to verification screen WITH showing a notification
+        await $ticDriveAxios.post('/auth/forgot-password', {
+            email: email.value
+        })
         currentStep.value = 'verification';
     } catch (error) {
-        console.error('Error processing email:', error);
+        showToast('error', "Riprova", "Errore durante l'invio della mail.")
     } finally {
-        isLoading.value = false;
+        loading.value = false;
     }
 };
 
 const submitVerificationCode = async () => {
     if (!verificationCode.value || verificationCode.value.length !== 6) return;
 
-    isLoading.value = true;
+    loading.value = true;
     try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 500));
-
-        // Emit success event with email and code
-        emit('verification-success', {
+        await $ticDriveAxios.post('/auth/send-code-password-forgot',  {
             email: email.value,
             code: verificationCode.value
-        });
+        })
 
-        // Reset form after successful verification
         resetForm();
     } catch (error) {
-        console.error('Error verifying code:', error);
+        showToast('error', "Riprova", "Il codice non è valido.")
     } finally {
-        isLoading.value = false;
+        loading.value = false;
     }
 };
 </script>

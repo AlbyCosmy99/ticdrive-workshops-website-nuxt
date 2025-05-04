@@ -30,9 +30,7 @@
       </button>
     </form>
 
-    <!-- Add the ForgotPasswordModal to know where file are linked -->
-    <ForgotPasswordModal :isOpen="isForgotPasswordModalOpen" @close="isForgotPasswordModalOpen = false"
-      @submit="handleForgotPassword" @verification-success="handleVerificationSuccess" />
+    <ForgotPasswordModal :isOpen="isForgotPasswordModalOpen" @close="isForgotPasswordModalOpen = false" />
   </div>
 </template>
 
@@ -72,43 +70,8 @@ const handleSubmit = async () => {
   }
 };
 
-const togglePasswordVisibility = () => {
-  passwordVisible.value = !passwordVisible.value;
-};
-
 const openForgotPasswordModal = () => {
   isForgotPasswordModalOpen.value = true;
-  // If you're using Vue Router, you can add this to update the URL without navigation
-  // This is optional but can help with browser history
-  // window.history.pushState({}, '', '/forgot-password');
-};
-
-const handleForgotPassword = async (data) => {
-  try {
-    // Here you would call your API to handle password reset
-    // For example: await authStore.requestPasswordReset(data.email);
-
-    // Show a toast, but don't close the modal - allow verification step to show
-    showToast('success', 'Email inviata', 'Controlla la tua email per il codice di verifica', 5000);
-
-    // Important: Do not close the modal here to allow the verification step to show
-    // isForgotPasswordModalOpen.value = false;
-  } catch (error) {
-    showToast('error', 'Errore', 'Non è stato possibile inviare l\'email di recupero', 5000);
-  }
-};
-
-const handleVerificationSuccess = async (data) => {
-  try {
-    // Here you would call your API to verify the code and reset password
-    // For example: await authStore.verifyResetCode(data.email, data.code);
-
-    showToast('success', 'Codice verificato', 'Il codice è stato verificato. Ora puoi reimpostare la tua password.', 5000);
-    // Close the modal after successful verification
-    isForgotPasswordModalOpen.value = false;
-  } catch (error) {
-    showToast('error', 'Errore', 'Codice di verifica non valido', 5000);
-  }
 };
 
 onMounted(() => {
