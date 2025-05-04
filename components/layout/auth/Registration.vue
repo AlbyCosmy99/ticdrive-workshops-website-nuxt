@@ -1,5 +1,19 @@
 <template>
-  <div class="h-screen flex flex-col">
+  <div
+    class="block md:hidden h-screen text-drive flex justify-center items-center flex-col gap-10 mx-10"
+  >
+    <NuxtImg
+      src="/svg/TicDriveLogo.svg"
+      alt="TicDrive logo"
+      width="130"
+      height="130"
+    />
+    <p class="text-center">
+      Piattaforma non ancora disponibile per mobile. Lo sara' molto presto. Da
+      utilizzare da tablet o pc.
+    </p>
+  </div>
+  <div class="hidden md:flex h-screen flex-col">
     <StepBar
       v-if="stepStore.currentStep > 0"
       :hide-bar="stepStore.currentStep === 1"

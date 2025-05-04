@@ -21,11 +21,17 @@ export default defineNuxtPlugin(nuxtApp => {
       return response;
     },
     error => {
-      console.error(
-        '[TicDrive Response Error]',
-        error.response?.status,
-        error.response?.data,
-      );
+      const status = error.response?.status;
+
+      if (status >= 400 && status < 600) {
+        const auth = useAuthStore();
+        auth.token = null;
+        localStorage.removeItem('token');
+
+        navigateTo('/auth/login');
+      }
+
+      console.error('[TicDrive Response Error]', status, error.response?.data);
       return Promise.reject(error);
     },
   );

@@ -2,7 +2,7 @@
   <button
     :disabled="disable"
     :class="[
-      'cursor-pointer rounded-full py-3 px-6 text-white text-center text-lg transition duration-200 ease-in-out hover:opacity-80 active:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed',
+      'cursor-pointer rounded-full py-3 px-6 text-white text-center text-lg transition duration-200 ease-in-out hover:opacity-90 active:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed',
       colorClasses,
       customClass,
     ]"
