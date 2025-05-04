@@ -60,6 +60,5 @@ import StatsCards from '../ui/cards/dashboard/stats/StatsCards.vue';
 import SeeAllButton from '../ui/buttons/SeeAllButton.vue';
 import ReviewExtendedCards from '../ui/cards/reviews/ReviewExtendedCards.vue';
 
-
 const router = useRouter();
 </script>
