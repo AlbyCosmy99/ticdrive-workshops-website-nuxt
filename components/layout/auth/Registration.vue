@@ -9,7 +9,7 @@
       height="130"
     />
     <p class="text-center">
-      TicDrive per le officine non è ancora disponibile per mobile. Lo sara' molto presto. Da
+      TicDrive per le officine non è ancora disponibile per mobile. Lo sarà molto presto. Da
       utilizzare da tablet o pc.
     </p>
   </div>
