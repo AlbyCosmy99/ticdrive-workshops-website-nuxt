@@ -1,23 +1,12 @@
 <template>
-  <div
-    class="flex flex-col w-full justify-center items-center max-md:max-w-full"
-  >
-    <NuxtImg
-      src="/svg/TicDriveLogo.svg"
-      alt="TicDrive logo"
-      width="130"
-      height="130"
-    />
-    <div
-      class="mt-8 flex flex-col self-center max-w-full font-medium whitespace-nowrap w-[370px]"
-    >
+  <div class="flex flex-col w-full justify-center items-center max-md:max-w-full">
+    <NuxtImg src="/svg/TicDriveLogo.svg" alt="TicDrive logo" width="130" height="130" />
+    <div class="mt-8 flex flex-col self-center max-w-full font-medium whitespace-nowrap w-[370px]">
       <h1 class="mb-4 self-center max-w-full text-4xl rounded-none text-tic">
         Benvenuto!
       </h1>
-
       <div
-        class="flex gap-2.5 justify-center items-center mt-8 w-full text-base leading-tight text-center rounded-[30px] max-md:mt-10"
-      >
+        class="flex gap-2.5 justify-center items-center mt-8 w-full text-base leading-tight text-center rounded-[30px] max-md:mt-10">
         <TicDriveAuthSlider />
       </div>
     </div>
@@ -42,19 +31,11 @@
       />
 
       <div class="w-full max-w-lg lg:max-w-full">
-        <div
-          class="flex justify-between gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full"
-        >
-          <CheckboxField
-            id="remember-me"
-            v-model="rememberMe"
-            label="Remember me"
-          />
-          <button
-            type="button"
+        <div class="flex justify-between gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full">
+          <CheckboxField id="remember-me" v-model="rememberMe" label="Remember me" />
+          <button type="button"
             class="cursor-pointer self-start text-xs font-light text-black hover:underline focus:outline-none focus:underline"
-            @click="forgotPassword"
-          >
+            @click="openForgotPasswordModal">
             Password dimenticata?
           </button>
         </div>
@@ -67,6 +48,8 @@
         {{ loading ? 'Caricando...' : 'Login' }}
       </button>
     </form>
+
+    <ForgotPasswordModal :isOpen="isForgotPasswordModalOpen" @close="isForgotPasswordModalOpen = false" />
   </div>
 </template>
 
@@ -77,12 +60,14 @@ import CheckboxField from './CheckboxField.vue';
 import useAuthStore from '~/store/auth';
 import TicDriveAuthSlider from './ui/sliders/TicDriveAuthSlider.vue';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
+import ForgotPasswordModal from '@/components/ui/modals/ForgotPasswordModal.vue';
 
 const useStore = useStepStore();
 const companyEmail = ref('');
 const password = ref('');
 const rememberMe = ref(true);
 const showToast = useToast();
+const isForgotPasswordModalOpen = ref(false);
 
 const authStore = useAuthStore();
 const loading = ref(false);
@@ -104,8 +89,8 @@ const handleSubmit = async () => {
   }
 };
 
-const forgotPassword = () => {
-  console.log('Forgot password clicked');
+const openForgotPasswordModal = () => {
+  isForgotPasswordModalOpen.value = true;
 };
 
 onMounted(() => {

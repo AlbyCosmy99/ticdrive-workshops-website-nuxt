@@ -6,5 +6,5 @@ definePageMeta({
 </script>
 
 <template>
-  <p>reviews</p>
+  <Reviews />
 </template>
