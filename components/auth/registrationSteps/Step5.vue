@@ -5,7 +5,14 @@
     <h1 class="text-4xl font-semibold text-gray-500 mb-8">Orari</h1>
 
     <div
-      v-for="day in days"
+      v-if="timeStore.loading"
+      class="flex justify-center items-center overflow-auto h-80"
+    >
+      <UiSpinnersTicDriveSpinner />
+    </div>
+    <div
+      v-else
+      v-for="day in timeStore.days"
       :key="day.id"
       class="grid grid-cols-1 2xl:grid-cols-3"
     >
@@ -118,25 +125,17 @@
 </template>
 
 <script lang="ts" setup>
-import {ref} from 'vue';
 import Calendar from 'primevue/calendar';
 import TicDriveSlider from '~/components/ui/sliders/TicDriveSlider.vue';
 import PlusMinusField from '~/components/PlusMinusField.vue';
 import useStepStore from '~/store/step';
 import type {Day} from '~/types/datetime/Day';
+import useTimeStore from '~/store/time';
 
 const stepStore = useStepStore();
+const timeStore = useTimeStore();
 
-// Static days
-const days = [
-  {id: 1, label: 'Lunedì'},
-  {id: 2, label: 'Martedì'},
-  {id: 3, label: 'Mercoledì'},
-  {id: 4, label: 'Giovedì'},
-  {id: 5, label: 'Venerdì'},
-  {id: 6, label: 'Sabato'},
-  {id: 7, label: 'Domenica'},
-];
+timeStore.getDays();
 
 // Utilities
 const stringToDate = (timeStr: string): Date | null => {

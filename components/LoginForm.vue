@@ -27,10 +27,10 @@
       class="flex flex-col w-[90%] px-14 items-center m-auto max-w-lg lg:max-w-full"
     >
       <TicDriveInput
-        id="username"
-        label="Username"
-        placeholder="Inserisci username"
-        v-model="username"
+        id="companyEmail"
+        label="Email Aziendale"
+        placeholder="Inserisci la Email Aziendale"
+        v-model="companyEmail"
       />
 
       <TicDriveInput
@@ -61,7 +61,7 @@
       </div>
       <button
         type="submit"
-        :disabled="!password || !username || loading"
+        :disabled="!password || !companyEmail || loading"
         class="self-center px-16 py-3.5 mt-10 max-w-full text-base text-white whitespace-nowrap bg-drive rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-drive focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
       >
         {{ loading ? 'Loading...' : 'Login' }}
@@ -79,7 +79,7 @@ import TicDriveAuthSlider from './ui/sliders/TicDriveAuthSlider.vue';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
 
 const useStore = useStepStore();
-const username = ref('');
+const companyEmail = ref('');
 const password = ref('');
 const rememberMe = ref(true);
 const showToast = useToast();
@@ -90,7 +90,7 @@ const loading = ref(false);
 const handleSubmit = async () => {
   try {
     loading.value = true;
-    await authStore.login(username.value, password.value);
+    await authStore.login(companyEmail.value, password.value);
     navigateTo({name: 'dashboard'});
   } catch (err: any) {
     showToast(
