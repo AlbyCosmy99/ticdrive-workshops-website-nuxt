@@ -148,8 +148,8 @@ const useStepStore = defineStore('step', {
         const showToast = useToast();
         showToast(
           'error',
-          'Error',
-          'Error while loading the declarations of conformity',
+          'Errore',
+          'Errore durante il caricamento dei consensi.',
         );
       } finally {
         this.loading = false;

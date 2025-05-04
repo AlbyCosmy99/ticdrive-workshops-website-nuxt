@@ -79,7 +79,14 @@
     >
       Autodichiarazione di conformità
     </h1>
+    <div
+      v-if="stepStore.loading"
+      class="flex justify-center  overflow-auto h-40"
+    >
+      <UiSpinnersTicDriveSpinner />
+    </div>
     <TicDriveRadio
+      v-else
       v-for="conformity in stepStore.declarationsOfConformity"
       :key="conformity.id"
       :id="conformity.id"
@@ -102,6 +109,7 @@ import useStepStore from '~/store/step';
 import Calendar from 'primevue/calendar';
 import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
 import type {Conformity} from '~/types/auth/Conformity';
+import { UiSpinnersTicDriveSpinner } from '#components';
 
 const stepStore = useStepStore();
 stepStore.getDeclarationsOfConformity();
