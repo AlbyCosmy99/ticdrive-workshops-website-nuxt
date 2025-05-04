@@ -113,7 +113,7 @@ const useAuthStore = defineStore('auth', {
 
         navigateTo('/dashboard');
       } catch (error: any) {
-        showToast('error', 'Registrazione fallita!', error.message);
+        showToast('error', 'Registrazione fallita!', "Qualcosa e' andato storto. Riprova o contatta il supporto di TicDrive per assistenza.");
       } finally {
         this.loading = false;
       }

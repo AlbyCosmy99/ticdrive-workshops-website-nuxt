@@ -82,13 +82,6 @@ const buttonDisableStatus = computed(
 
 const showToast = useToast();
 
-const checkToggle = (
-  key: keyof typeof stepStore.stepOneData,
-  value: boolean,
-): void => {
-  stepStore.stepOneData[key] = value;
-};
-
 const stepValidation = async (step: number): Promise<boolean | undefined> => {
   switch (step) {
     case 1:
@@ -168,10 +161,13 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
 const nextStep = async (): Promise<void> => {
   if (buttonDisableStatus.value) return;
   const isValid = await stepValidation(stepStore.currentStep);
-  if (stepStore.currentStep === 8) {
-    register();
-  } else if (isValid) {
-    stepStore.currentStep++;
+
+  if(isValid) {
+    if(stepStore.currentStep === 8) {
+      register()
+    } else {
+      stepStore.currentStep++;
+    }
   }
 };
 
