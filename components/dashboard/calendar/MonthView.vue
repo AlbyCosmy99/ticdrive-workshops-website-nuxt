@@ -21,7 +21,7 @@
         </div>
 
 
-        <ChangeDisponibilty :isOpen="showChangeModal" :currentMonth="displayedMonth" :currentYear="displayedYear"
+        <ChangeAvailability :isOpen="showChangeModal" :currentMonth="displayedMonth" :currentYear="displayedYear"
           @close="closeChangeModal" @nessunaDispo="handleNessunaDispo" />
       </div>
 
@@ -80,8 +80,7 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import AppointmentCard from './AppointmentCard.vue';
-import ChangeDisponibilty from '/home/riccardo/Scrivania/provaVueFine/tic-drive-workshops-site/components/ui/modals/ChangeAvailability.vue';
+import ChangeAvailability from '~/components/ui/modals/ChangeAvailability.vue';
 
 const weekDayNames = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
 

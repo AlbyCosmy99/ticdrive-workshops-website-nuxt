@@ -19,7 +19,7 @@
         </button>
 
 
-        <ChangeDisponibilty v-if="showChangeModal" class="absolute inset-x-0 top-5" :isOpen="showChangeModal"
+        <ChangeAvailability v-if="showChangeModal" class="absolute inset-x-0 top-5" :isOpen="showChangeModal"
           :currentMonth="displayedMonth" :currentYear="displayedDate.getFullYear()" @close="closeChangeModal"
           @nessunaDispo="handleNessunaDispo" />
       </div>
@@ -65,7 +65,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import AppointmentCard from './AppointmentCard.vue';
-import ChangeDisponibilty from '/home/riccardo/Scrivania/provaVueFine/tic-drive-workshops-site/components/ui/modals/ChangeAvailability.vue'; // Adjust path if needed
+import ChangeAvailability from '~/components/ui/modals/ChangeAvailability.vue';
 
 const timeSlots = [
   '08:00', '09:00', '10:00', '11:00', '12:00',
