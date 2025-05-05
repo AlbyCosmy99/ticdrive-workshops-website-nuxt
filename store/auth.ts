@@ -70,6 +70,33 @@ const useAuthStore = defineStore('auth', {
         );
       }
 
+      const schedule: Record<number, {
+        morningStartTime?: string;
+        morningEndTime?: string;
+        afternoonStartTime?: string;
+        afternoonEndTime?: string;
+      }> = {};
+      
+      for (const dayId of Object.keys(stepStore.stepFiveData.timeSlots).map(Number)) {
+        const slots = stepStore.stepFiveData.timeSlots[dayId];
+      
+        const formatTime = (date: Date | null) => {
+          if (!date) return undefined;
+          return date.toLocaleTimeString('it-IT', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+          });
+        };
+      
+        schedule[dayId] = {
+          morningStartTime: formatTime(slots[0].start),
+          morningEndTime: formatTime(slots[0].end),
+          afternoonStartTime: formatTime(slots[1]?.start ?? null),
+          afternoonEndTime: formatTime(slots[1]?.end ?? null),
+        };
+      }      
+
       const payload = {
         name: stepOneData.name,
         surname: stepOneData.surname,
@@ -92,6 +119,7 @@ const useAuthStore = defineStore('auth', {
         laborWarrantyMonths: stepEightData.warranty,
         signatureName: stepEightData.signature.name,
         signatureSurname: stepEightData.signature.surname,
+        schedule
       };
 
       try {
