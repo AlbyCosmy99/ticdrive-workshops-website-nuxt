@@ -1,53 +1,23 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-    <h2 class="text-2xl font-semibold mb-6">Prenotazioni Confermate</h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <BookingCard
-        v-for="(reservation, index) in reservations"
-        :key="index"
-        :name="reservation.userName"
-        :userImageSrc="reservation.userImage"
-        :time="reservation.time"
-        :service="reservation.service"
-        :vehicle="reservation.vehicle"
-        :price="reservation.payment"
-        status="confirmed"
-        :showCancelButton="true"
+  <div>
+    <div v-if="hasBookings" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- BookingCard -->
+    </div>
+    <div
+      v-else
+      class="flex flex-col items-center justify-center text-center text-gray-400 py-10"
+    >
+      <img
+        src="@/public/images/booking.png"
+        alt="Nessuna prenotazione"
+        class="w-24 h-24 mb-4 opacity-70"
       />
+      <p class="text-lg font-medium">Nessuna prenotazione confermata</p>
+      <p class="text-sm text-gray-500">Le conferme appariranno qui.</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
-import BookingCard from '../cards/dashboard/BookingCard.vue';
-
-interface Reservation {
-  userName: string;
-  userImage: string;
-  time: string;
-  service: string;
-  vehicle: string;
-  payment: string;
-}
-
-const reservations = ref<Reservation[]>([
-  {
-    userName: 'Paolo Bianchi',
-    userImage: '/images/Profile.png',
-    time: 'Domani - 10:00',
-    service: 'Cambio olio',
-    vehicle: 'Fiat Panda 2018',
-    payment: '€80 pagati',
-  },
-  {
-    userName: 'Lucia Rossi',
-    userImage: '/images/Profile.png',
-    time: 'Domani - 14:30',
-    service: 'Revisione',
-    vehicle: 'Audi A3 2020',
-    payment: '€150 pagati',
-  },
-]);
+const hasBookings = false;
 </script>

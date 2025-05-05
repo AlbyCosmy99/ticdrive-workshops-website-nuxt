@@ -14,6 +14,7 @@ import StarIcon from '@/public/svg/stars/star.svg';
       iconBgColor="bg-blue-100"
       trendValue="28"
       trendDirection="positive"
+      :hasData="false"
     >
       <template #icon>
         <ClientIcon />
@@ -25,6 +26,7 @@ import StarIcon from '@/public/svg/stars/star.svg';
       iconBgColor="bg-amber-100"
       trendValue="31"
       trendDirection="positive"
+      :hasData="false"
     >
       <template #icon>
         <CalendarIcon />
@@ -36,6 +38,7 @@ import StarIcon from '@/public/svg/stars/star.svg';
       iconBgColor="bg-green-100"
       trendValue="180€"
       trendDirection="negative"
+      :hasData="false"
     >
       <template #icon>
         <DashboardIcon />
@@ -47,6 +50,7 @@ import StarIcon from '@/public/svg/stars/star.svg';
       iconBgColor="bg-amber-100"
       trendValue="18"
       trendDirection="positive"
+      :hasData="false"
     >
       <template #icon>
         <div class="flex flex-col justify-center items-center gap-1">
