@@ -103,6 +103,7 @@ const useAuthStore = defineStore('auth', {
             'Registrazione fallita!',
             "Qualcosa e' andato storto. Riprova o contatta il supporto di TicDrive per assistenza.",
           );
+          return;
         }
 
         localStorage.setItem('token', res.data.token);
@@ -110,6 +111,41 @@ const useAuthStore = defineStore('auth', {
 
         const data = await useUserData();
         this.user = data;
+
+        if (this.user?.id && stepSixData.images?.length > 0) {
+          const validImages = stepSixData.images.filter(image => image?.file);
+
+          if (validImages.length === 0) {
+            showToast(
+              'info',
+              'Registrazione completata',
+              'Nessuna immagine è stata caricata. Puoi aggiungerle in seguito dal tuo profilo.',
+            );
+          } else {
+            const formData = new FormData();
+            for (const image of validImages) {
+              formData.append('files', image.file!);
+            }
+
+            try {
+              await $ticDriveAxios.post(
+                `/images/${this.user.id}/multiple`,
+                formData,
+                {
+                  headers: {
+                    Authorization: `Bearer ${this.token}`,
+                  },
+                },
+              );
+            } catch (uploadError) {
+              showToast(
+                'error',
+                'Errore nel caricamento delle immagini',
+                'Le immagini non sono state caricate. Puoi riprovare più tardi dal tuo profilo.',
+              );
+            }
+          }
+        }
 
         navigateTo('/dashboard');
       } catch (error: any) {
