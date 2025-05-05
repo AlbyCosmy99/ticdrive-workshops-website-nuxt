@@ -27,7 +27,7 @@
           <NuxtImg
             :src="props.mainImage"
             class="absolute inset-0 w-full h-full object-cover"
-            alt="Centered Image"
+            alt="Centered Image" 
           />
         </div>
       </div>
