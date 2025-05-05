@@ -41,7 +41,7 @@
         v-model="password"
       />
 
-      <div class="w-full max-w-lg lg:max-w-full">
+      <!-- <div class="w-full max-w-lg lg:max-w-full">
         <div
           class="flex justify-between gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full"
         >
@@ -58,7 +58,7 @@
             Password dimenticata?
           </button>
         </div>
-      </div>
+      </div> -->
       <button
         type="submit"
         :disabled="!password || !companyEmail || loading"
