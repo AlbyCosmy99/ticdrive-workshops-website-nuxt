@@ -155,7 +155,7 @@ const useAuthStore = defineStore('auth', {
               formData.append('files', image.file!);
             }
 
-            formData.append('mainImageIndex', '4');
+            formData.append('mainImageIndex', '0');
 
             try {
               await $ticDriveAxios.post(
