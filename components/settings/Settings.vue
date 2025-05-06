@@ -40,6 +40,22 @@
             {{ authStore.user?.name }}
           </div>
         </div>
+        <div class="mb-6 border-b pb-6">
+          <label class="block text-base font-normal text-gray-700 mb-1"
+            >Cognome</label
+          >
+          <div class="text-sm font-normal text-tic">
+            {{ authStore.user?.surname }}
+          </div>
+        </div>
+        <div class="mb-6 border-b pb-6">
+          <label class="block text-base font-normal text-gray-700 mb-1"
+            >Nome officina</label
+          >
+          <div class="text-sm font-normal text-tic">
+            {{ authStore.user?.workshopName }}
+          </div>
+        </div>
 
         <div class="mb-6 border-b pb-6">
           <label class="block text-base font-normal text-gray-700 mb-1"
