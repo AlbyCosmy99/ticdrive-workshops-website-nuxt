@@ -1,0 +1,4 @@
+<template>
+    wrapper
+    <NuxtPage />
+</template>
