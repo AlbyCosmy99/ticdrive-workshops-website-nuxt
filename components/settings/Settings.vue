@@ -15,7 +15,7 @@
             <div>
               <h3 class="text-lg font-semibold">{{ authStore.user?.name }}</h3>
               <p class="text-gray-500 font-poppins">
-                {{ authStore.user?.email }}
+                {{ authStore.user?.workshopName }}
               </p>
             </div>
           </div>
