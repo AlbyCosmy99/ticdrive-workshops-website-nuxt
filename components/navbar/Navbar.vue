@@ -11,10 +11,11 @@
     <div class="flex items-center gap-8">
       <div class="flex items-center space-x-3">
         <div
+          v-if="authStore.user?.images.length"
           class="cursor-pointer w-[48px] h-[48px] rounded-full overflow-hidden flex items-center justify-center transition-colors shadow-sm"
         >
-          <img
-            :src="authStore.user?.profileImageUrl"
+          <NuxtImg
+            :src="authStore.user?.images[0].url"
             alt="Profile"
             class="w-full h-full object-cover rounded-full"
           />
