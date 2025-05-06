@@ -14,12 +14,11 @@
     </div>
 
     <!-- Terms of Use content -->
-    <h2 class="text-lg font-semibold mb-3 mt-8">Terms of Use</h2>
-    <p>
-      These Terms of Use (the "Terms") apply between you ("you") and TicDrive of Via Leonardo da Vinci, 12b. 35133
-      Padova PD, Italy ("TicDrive", "we", "us", "our") for our iOS and Android mobile application (our "App") and
-      constitute a legal agreement between you and us governing your access to our App and Services.
-    </p>
+    <h2 class="text-lg font-semibold mb-3 mt-8">2. Terms of Use</h2>
+    <div v-for="(section, index) in termsOfUseSections" :key="index">
+      <h2 class="text-lg font-semibold mb-3 mt-5">{{ section.title }}</h2>
+      <div v-html="section.content"></div>
+    </div>
     <!-- Add rest of Terms of Use content -->
 
     <!-- EULA content -->
@@ -127,35 +126,200 @@ const privacyPolicySections = [
 <p>Our App uses the web analytics service Google Analytics for Firebase, which uses tracking technologies to track your use of our App. In this respect, information is generated about, among other things, the number of users and their sessions, the session duration, the operating system used by the users, their device model, the region from which our App is accessed, the first start of our App, our App execution and any updates.</p>
 
 <p>In order to provide the relevant data for analysis, Firebase Analytics uses your a) device's advertising ID, b) an App instance ID (a randomly generated number that identifies a single app installation), c) and the IP address, which is shortened (IP masking) before being processed on Google's servers (which may be located outside the EEA) to generate the usage analysis. You can object to the use of Firebase Analytics at any time by disabling the sending of usage statistics in your device settings (Reset Advertising ID). We have no influence on these data processing operations. The basis for processing is our legitimate interest and your consent.</p>`
+  },
+
+  {
+    title: 'OTHER USE OF YOUR PERSONAL DATA',
+    content: `<p>We may also collect, store, and use your Personal Data for the following purposes:</p>
+
+    <ul class="list-disc pl-6 mt-2 mb-2">
+      <li>to operate, manage, develop, and promote our business and, in particular, our relationship with you and related transactions, including, for example:
+        <ul class="list-disc pl-6 mt-1 mb-1">
+          <li>marketing purposes (when we have either gathered prior opt-in consent and/or have a legitimate interest to send you communications which we believe to be relevant and of use to you);</li>
+          <li>to operate, administer, and improve our App and other aspects of the way in which we conduct our business;</li>
+          <li>to offer you our App and services;</li>
+          <li>to provide you with services or information that you may have requested; and</li>
+          <li>to keep you informed and updated on relevant topics or services you may be interested in.</li>
+        </ul>
+      </li>
+      <li>to protect our business from fraud, money laundering, breach of confidence, theft of proprietary materials, and other financial or business crimes;</li>
+      <li>to comply with our legal and regulatory obligations, bring and defend legal claims and assert legal rights; and</li>
+      <li>if the purpose is directly connected with an assigned purpose previously made known to you.</li>
+    </ul>
+
+    <p>We will only process your Personal Data as necessary so that we can pursue the purposes described above and where we have a legal basis for such processing. Where our lawful basis for processing is that such processing is necessary to pursue our legitimate interests, we will only process your Personal Data where we have concluded that our processing does not prejudice you or your privacy in a way that would override our legitimate interest. In exceptional circumstances, we may also be required by law to disclose or otherwise process your Personal Data.</p>`
+  },
+
+
+  {
+    title: 'CHANGE OF PURPOSE',
+    content: `<p>We will only use your Personal Data for the purposes for which we collected it as detailed above, unless we reasonably consider that we need to use it for another reason and that reason is compatible with the original purpose. If we need to use your Personal Data for an unrelated purpose, we will notify you, and we will explain the legal basis which allows us to do so.</p>`
+  },
+  {
+    title: 'STORAGE AND RETENTION',
+    content: `<p>Your personal data will remain with us in a PostgreSQL database hosted on a Railway.com instance until the purpose for processing the data no longer applies. If you assert a justified request for deletion or revoke your consent to data processing, your data will be deleted unless we have other legally permissible reasons for storing your personal data (e.g., retention periods under tax or commercial law); in the latter case, the data will be deleted once these reasons no longer apply.</p>`
+  },
+  {
+    title: 'WHEN DO WE DISCLOSE YOUR PERSONAL DATA?',
+    content: `<p>We may share your information with organisations that help us provide the services described in this policy and who may process such data on our behalf and in accordance with this policy to support our App and our services. If you wish to learn more about how the relevant provider processes your personal data, please follow the links embedded in the above-mentioned provider's name.</p>
+
+    <p>Typically, and unless otherwise stated in this policy, data may be shared on the basis of our contractual and pre-contractual obligations. Equally, if you have consented to it, or where we have a legal obligation to do so on the basis of our legitimate interests (e.g., when using agents, hosting providers, tax, business and legal advisors, accounting, and similar services that allow us to perform our contractual obligations, administrative tasks, and duties efficiently and effectively). If we commission third parties to process data on the basis of a so-called "processing agreement".</p>
+
+    <p>We may also disclose information in other circumstances, such as when you agree to it or if the law, a court order, a legal obligation, or a regulatory authority asks us to. If the purpose is the prevention of fraud or crime or if it is necessary to protect and defend our rights, property, or personal safety of our staff, the App and its users.</p>`
+  },
+  {
+    title: 'HOW WE SECURE YOUR PERSONAL DATA',
+    content: `<p>Our App uses SSL or TLS encryption to ensure the security of data processing and to protect the transmission of confidential content, such as login data or contact requests that you send to us. We have also implemented numerous security measures ("technical and organizational measures"), for example, encryption or need-to-know access, to ensure the most complete protection of Personal Data processed through our App.</p>`
+  },
+];
 
 
 
 
 
 
+const termsOfUseSections = [
+  {
+    title: '1. GENERAL TERMS',
+    content: `<p>1.1. We may change these Terms from time to time and shall notify you accordingly if we do. If you do not agree to such terms, you must not use our App.</p>
+    <p>1.2. We reserve the right to change, modify, suspend, or discontinue any portion of our App and/or other software, or content provided by us in connection with our App at any time.</p>
+    <p>1.3. You agree that access to or operation of our App may from time to time be interrupted or encounter technical difficulties.</p>`
+  },
+  {
+    title: '2. LICENSE GRANT',
+    content: `<p>2.1. So long as you comply with these Terms, our End User Licence Agreement ("EULA") and our Privacy Policy, we grant you a non-transferable, non-exclusive licence to use our App as set out in our EULA.</p>
+    <p>2.2. We and our licensors reserve all rights not granted to you in these Terms.</p>`
+  },
+  {
+    title: '3. ACCOUNT AND PASSWORD',
+    content: `<p>3.1. The services are provided via a dedicated account on a one-account-per-person basis.</p>
+    <p>3.2. You are responsible for keeping your account confidential.</p>
+    <p>3.3. By registering for an account, which involves providing us with certain mandatory and voluntary information as required for a successful registration, and using our App, you agree and acknowledge that:</p>
+    <p>3.3.1. you have read the terms set out in these Terms and agree to be bound by and comply with them; and</p>
+    <p>3.3.2. you must be at least 18 years of age.</p>
+    <p>3.4. You are also responsible for any use of any account that you have access to, whether or not you authorized that use.</p>
+    <p>3.5. You will immediately notify us of any unauthorized use of your accounts.</p>
+    <p>3.6. You are solely responsible for any losses, damages, fees, or liability due to your lost, stolen, hacked, or otherwise compromised account.</p>`
+  },
+  {
+    title: '4. ACCOUNT SUSPENSION AND TERMINATION',
+    content: `<p>We reserve the right, at our sole discretion, to suspend or delete, at any time and without notice, any user account that we deem inappropriate, offensive, or in violation ("Breach") of these Terms. When a Breach of these Terms has occurred, we may take such action, without any liability for action taken, as we deem appropriate, including but not limited to all or any of the following actions:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>4.1.1. immediate temporary or permanent withdrawal of your right to use our App;</li>
+      <li>4.1.2. immediate temporary or permanent removal of any services rendered;</li>
+      <li>4.1.3. issuance of a warning to you;</li>
+      <li>4.1.4. legal proceedings against you for reimbursement of all costs on an indemnity basis (including but not limited to reasonable administrative and legal costs) resulting from the breach;</li>
+      <li>4.1.5. further legal action against you; and/or</li>
+      <li>4.1.6. disclosure of such information to law enforcement authorities as we reasonably feel is necessary.</li>
+    </ul>`
+  },
+  {
+    title: '5. END OF LIFE',
+    content: `<p>We reserve the right to End-Of-Life (EOL) our App at our sole discretion and shall provide 3 months notification of such EOL event. If you prepaid Fees for a service which is subject to EOL, we will use commercially reasonable efforts to a) transition you to a substantially similar Service or b) upon our express written agreement, ensure the App availability, without uptime guarantee or test bug fixes, patches, or enhancements to the App.</p>`
+  },
 
 
+  {
+    title: '6. SERVICE LEVELS AND SUPPORT',
+    content: `<p>6.1. We shall render all commercially reasonable efforts to provide technical support to assist you in using our App. The total amount of technical support provided by us shall be governed under the fair use principle.</p>
+    <p>6.2. We have no obligation to provide any support:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>6.2.1. for anything other than our Services;</li>
+      <li>6.2.2. if you or a third party has altered or modified any portion of the Services;</li>
+      <li>6.2.3. if you have not used the Services in accordance with the documentation or instructions provided by us;</li>
+      <li>6.2.4. to anyone other than you.</li>
+    </ul>
+    <p>6.3. The response time for contacts concerning technical support made by you will not exceed 72 hours. If the response time exceeds 72 hours, we will present you with a technical justification and define a new deadline for carrying out and completing the support service.</p>`
+  },
+  {
+    title: '7. DATA CHARGES AND MOBILE DEVICES',
+    content: `<p>You are responsible for all data-related charges that you may incur for using our App, including, without limitation, mobile, text-messaging, and data charges. You should understand or ask your service provider what charges you may incur before using the App.</p>`
+  },
+  {
+    title: '8. TECHNICAL ERROR',
+    content: `<p>In the unlikely event that you are experiencing or have experienced a technical error, please contact us with details and images of your experience so we can investigate the error and determine if a refund is owed to you.</p>`
+  },
+  {
+    title: '9. TECHNICAL REQUIREMENTS',
+    content: `<p>9.1. We attempt to keep our App updated so that it complies with modified/new versions of the firmware and new hardware. You are not granted rights to claim such an update.</p>
+    <p>9.2. You acknowledge that it is your responsibility to confirm and determine that the end-user device on which you intend to use our App satisfies the technical specifications required.</p>
+    <p>9.3. We reserve the right to modify the technical specifications as it sees appropriate at any time.</p>`
+  },
+  {
+    title: '10. UPLOADING CONTENT TO OUR APP',
+    content: `<p>10.1. You irrevocably and unconditionally represent and warrant that any of your content uploaded to our App complies with our Privacy Policy and any other applicable laws.</p>
+    <p>10.2. You are fully responsible for your content uploaded to our App. We will not be responsible or liable to any third party for:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>10.2.1. the content or accuracy of any content or data uploaded by you, by us on your behalf, or any other user of our App; or</li>
+      <li>10.2.2. the loss of any content or data provided to us by you. You should keep a record of all such content and data.</li>
+    </ul>
+    <p>10.3. We will only use the content uploaded by you for the purposes of carrying out our obligations in these Terms or any other purpose expressly set out in these Terms or otherwise agreed between us. We will not otherwise disclose or distribute the content uploaded by you, save for when required by law, a court of competent jurisdiction, or any governmental or regulatory authority.</p>
+    <p>10.4. We may use the content uploaded by you for the purpose of data analytics or to implement artificial intelligence or machine learning. Any such content shall be anonymised and used only for the purposes of improving the services and our response to users of the App.</p>
+    <p>10.5. We have the right to disclose your identity to any third party claiming that any content posted or uploaded by you to our App constitutes a violation of their rights under applicable law.</p>
+    <p>10.6. We have the right to delete any content uploaded to our App if, in our opinion, it does not comply with the content standards set out.</p>`
+  },
+  {
+    title: '11. WARRANTIES',
+    content: `<p>11.1. While we make all efforts to maintain the accuracy of the information on our App, we provide the website and all related content on an "as is" and "as available" basis, unless otherwise specified in writing. We make no representations or warranties of any kind, express or implied, as to the operation of any of the foregoing, unless otherwise specified in writing.</p>
+    <p>11.2. We make no representations about the suitability, reliability, timeliness, comprehensiveness, and accuracy of the content on our App, information, services, and other content contained on our App.</p>
+    <p>11.3. We cannot guarantee that the content on our App will always be correct, fault, error, virus free or free of any other harmful components.</p>
+    <p>11.4. We do not accept liability for incorrect content or errors and omissions in our Content and information on our App or its content (whether of legal, typographical, technical, or other nature).</p>
+    <p>11.5. To the full extent permissible by law, we disclaim all warranties, express or implied, relating to our App, including but not limited to implied warranties of merchantability and fitness for a particular purpose. We do not warrant that our App, the related content, or electronic communications sent by us are free of viruses or other harmful components.</p>`
+  },
+  {
+    title: '12. SUBMISSIONS',
+    content: `<p>12.1. You acknowledge and agree that any questions, comments, suggestions, ideas, feedback, or other information regarding the App ("Submissions") provided by you to us are non-confidential and shall become our sole property. We shall own exclusive rights, including all intellectual property rights, and shall be entitled to the unrestricted use and dissemination of these Submissions for any lawful purpose, commercial or otherwise, without acknowledgment or compensation to you.</p>
+    <p>12.2. You hereby waive all moral rights to any such Submissions, and you hereby warrant that any such Submissions are original with you or that you have the right to submit such Submissions. You agree there shall be no recourse against us for any alleged or actual infringement or misappropriation of any proprietary right in your Submissions.</p>`
+  },
+  {
+    title: '13. LIMITATION OF LIABILITY',
+    content: `<p>13.1. We are not liable for the completeness, accuracy, or correctness of any information uploaded on our App and any related content. You expressly agree that your use of the services and our App, is at your sole risk.</p>
+    <p>13.2. You agree not to use the services, our App and the related content for any resale purposes, and we have no liability to you, whether in contract, tort (including negligence), breach of statutory duty, or otherwise, arising under or in connection with these Terms (including but not limited to the use of, or inability to use, the services, our App or any other website or software) for:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>13.2.1. loss of profits, sales, business, or revenue;</li>
+      <li>13.2.2. business interruption;</li>
+      <li>13.2.3. loss of anticipated savings;</li>
+      <li>13.2.4. loss or corruption of data or information;</li>
+      <li>13.2.5. loss of business opportunity, goodwill, or reputation; or</li>
+      <li>13.2.6. any other indirect or consequential loss or damage.</li>
+    </ul>
+    <p>13.3. Nothing in these Terms shall limit or exclude our liability for:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>13.3.1. death or personal injury resulting from our negligence;</li>
+      <li>13.3.2. fraud; and/or</li>
+      <li>13.3.3. any other matter in respect of which we are prohibited under applicable law from limiting or excluding our liability.</li>
+    </ul>
+    <p>13.4. These Terms set out the full extent of our obligations and liabilities in respect of the supply of the services and our App. Except as expressly stated in these Terms, there are no conditions, warranties, representations, or other terms, express or implied, that are binding on us. Any condition, warranty, representation, or other term concerning the supply of the services and our App which might otherwise be implied into, or incorporated in, these Terms whether by statute, common law, or otherwise, is excluded to the fullest extent permitted by law.</p>`
+  },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  {
+    title: '14. TERMINATION',
+    content: `<p>14.1. To the fullest extent consistent with applicable law, we may suspend, modify or terminate your access to and use of our App, with no liability or notice to you, in the event that (a) we cease providing our App to users generally; (b) you breach any terms of these Terms (including the App Store Agreement(s) and our other policies specified in these Terms); (c) the owner of the applicable App Store terminates your App Store Account; or (d) we otherwise deem it necessary to suspend or modify your access to and use of our App or terminate these Terms in our sole discretion.</p>
+    <p>14.2. You may also terminate these Terms by deleting and uninstalling the App on all of your devices or by deleting your App Store Account. A suspension or modification of your access to and use of our App will result in your inability to access and use some or all features of our App, as determined by us in our sole discretion.</p>
+    <p>14.3. Upon any termination of these Terms, the rights granted to you will automatically terminate. You may no longer exercise any of those rights or these Terms. Subject to applicable law, we may, in our sole discretion, provide continued access to and use of our App after such termination.</p>
+    <p>14.4. Except to the extent required by law, all payments and fees are non-refundable under all circumstances, regardless of whether or not these Terms have been terminated.</p>`
+  },
+  {
+    title: '15. COMMUNICATION BETWEEN US',
+    content: `<p>15.1. If you wish to contact us in writing, or if any condition in these Terms requires you to give us notice in writing. We will confirm receipt of this by contacting you in writing, normally by e-mail.</p>
+    <p>15.2. If we have to contact you or give you notice in writing, we will do so by e-mail to the address you provide to us in your request for our App.</p>`
+  },
+  {
+    title: '16. EVENTS OUTSIDE OUR CONTROL',
+    content: `<p>16.1. We will not be liable or responsible for any failure to perform, or delay in performance of, any of our obligations under these Terms that is caused by any act or event beyond our reasonable control, including failure of public or private telecommunications networks (Event Outside Our Control).</p>
+    <p>16.2. If an Event Outside Our Control takes place that affects the performance of our obligations under these Terms:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>16.2.1. our obligations under these Terms will be suspended and the time for performance of our obligations will be extended for the duration of the Event Outside Our Control; and</li>
+      <li>16.2.2. we will use our reasonable endeavors to find a solution by which our obligations under these Terms may be performed despite the Event Outside Our Control.</li>
+    </ul>`
+  },
+  {
+    title: '17. OTHER IMPORTANT TERMS',
+    content: `<p>17.1. We may transfer our rights and obligations under these Terms to another organization, but this will not affect your rights or our obligations under these Terms.</p>
+    <p>17.2. You may only transfer your rights or obligations under these Terms to another person if we agree in writing.</p>
+    <p>17.3. If we fail to insist that you perform any of your obligations under these Terms, or if we do not enforce our rights against you, or if we delay in doing so, that will not mean that we have waived our rights against you and will not mean that you do not have to comply with those obligations. If we do waive a default by you, we will only do so in writing, and that will not mean that we will automatically waive any later default by you.</p>
+    <p>17.4. Each of the conditions of these Terms operates separately. If any court or competent authority decides that any of them are unlawful or unenforceable, the remaining conditions will remain in full force and effect.</p>
+    <p>17.5. Please note that these Terms, its subject matter and its formation are governed by the law of Italy. You and we both agree that the courts of Italy will have non-exclusive jurisdiction.</p>`
   }
 ];
 </script>
