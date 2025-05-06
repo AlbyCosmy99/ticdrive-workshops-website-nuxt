@@ -34,7 +34,7 @@
 
         <div class="mb-6 border-b pb-6">
           <label class="block text-base font-normal text-gray-700 mb-1"
-            >Nome Cognome</label
+            >Nome</label
           >
           <div class="text-sm font-normal text-tic">
             {{ authStore.user?.name }}
