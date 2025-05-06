@@ -124,32 +124,4 @@ const removeImage = (index: number) => {
 const setInputRef = (el: HTMLInputElement | null, index: number) => {
   inputRefs.value[index] = el;
 };
-
-const uploadImages = async () => {
-  const formData = new FormData();
-
-  useStore.stepSixData.images.forEach(img => {
-    if (img.file) {
-      formData.append('images', img.file);
-    }
-  });
-
-  try {
-    const response = await fetch(
-      `https://your-backend.com/api/images/upload?userId=12345`,
-      {
-        method: 'POST',
-        body: formData,
-      },
-    );
-
-    if (!response.ok) {
-      console.error('Failed to upload images');
-    } else {
-      console.log('Images uploaded successfully');
-    }
-  } catch (error) {
-    console.error('Error uploading images:', error);
-  }
-};
 </script>
