@@ -22,13 +22,11 @@
     <!-- Add rest of Terms of Use content -->
 
     <!-- EULA content -->
-    <h2 class="text-lg font-semibold mb-3 mt-8">End-User License Agreement (EULA)</h2>
-    <p>
-      This end-user licence agreement ("EULA") is a legal agreement between you ("End-user" or "you") and TicDrive of
-      Via Leonardo da Vinci, 12b. 35133 Padova PD, Italy ("TicDrive", "we", "us", "our") for the use of our iOS and
-      Android mobile application (our "App").
-    </p>
-    <!-- Add rest of EULA content -->
+    <h2 class="text-lg font-semibold mb-3 mt-8">3. End-User License Agreement (EULA)</h2>
+    <div v-for="(section, index) in eulaSections" :key="index">
+      <h2 class="text-lg font-semibold mb-3 mt-5">{{ section.title }}</h2>
+      <div v-html="section.content"></div>
+    </div>
   </div>
 </template>
 
@@ -322,4 +320,136 @@ const termsOfUseSections = [
     <p>17.5. Please note that these Terms, its subject matter and its formation are governed by the law of Italy. You and we both agree that the courts of Italy will have non-exclusive jurisdiction.</p>`
   }
 ];
+
+
+
+
+const eulaSections = [
+  {
+    title: '1. APPLE AND GOOGLE',
+    content: `<p>1.1. Our App is only available through accessing (or downloading from) a third-party platform or store, including but not limited to the Google Play Store and Apple App Store (each, an "App Store").</p>
+    <p>1.2. Your use of our App is also governed by any applicable agreements you have with any App Store (the "App Store Agreement(s)"). In the event of a conflict between any other App Store Agreement(s) from which you acquire our App and this EULA with respect to your use of our App, this EULA will take priority.</p>
+    <p>1.3. We are responsible for providing any maintenance and support services with respect to the App as specified in this EULA or to us as otherwise required under applicable law, and you acknowledge that each App Distributor has no obligation whatsoever to furnish any maintenance and support services with respect to the App.</p>
+    <p>1.4. You must comply with applicable third-party terms of agreement when using the App.</p>
+    <p>1.5. You acknowledge and agree that each App Distributor will have the right (and will be deemed to have accepted the right) to enforce the terms and conditions in this License against you as a third-party beneficiary thereof.</p>
+    <p>1.6. By downloading the App you agree to the terms of this EULA which will bind you. The terms of this EULA.</p>
+    <p>1.7. If you do not agree to the terms of this EULA, we will not license our App to you, and you must stop the downloading process now. In this case the downloading process will terminate. This agreement has been entered into on the date of your first download of our App.</p>`
+  },
+  {
+    title: '2. AGREED TERMS',
+    content: `<p>2.1. The terms of this EULA apply to our App or any of the services accessible through our App ("Service(s)"), including any updates or supplements to our App or any Service(s), unless they come with separate terms, in which case those terms apply.</p>
+    <p>2.2. We may change these terms at any time by message with details of the change or notifying you of a change when you next start our App. The new terms may be displayed on-screen, and you may be required to read and accept them to continue your use of the Service(s).</p>
+    <p>2.3. From time to time, updates to the App may be issued through the App Store. Depending on the update, you may not be able to use the Services until you have downloaded the latest version of our App and accepted any new terms.</p>
+    <p>2.4. By using our App or any Service(s), you acknowledge and agree that internet transmissions are never completely private or secure. You understand that any message or information you send using our App or any Service(s) may be read or intercepted by others, even if there is a special notice that a particular transmission is encrypted.</p>
+    <p>2.5. By using our App or any of the Service(s), you consent to us collecting and using technical information about the devices and related software, hardware, and peripherals for Services that are internet-based or wireless to improve our products and to provide any Service(s) to you.</p>
+    <p>2.6. The outcome of any study completed on the data collected (which shall be aggregated and anonymized) may form part of one or more scientific publications and may inform research and policies related to health and well-being, mobility, computer science, and related fields. You will not be identified in any report or publication. The data collected will be retained for analysis and may be used to inform public policy or to provide information to selected parties.</p>`
+  },
+  {
+    title: '3. GRANT AND SCOPE OF LICENCE',
+    content: `<p>3.1. In consideration of you agreeing to abide by the terms of this EULA, we grant you a non-transferable, non-exclusive licence to use our App, subject to these terms, our Privacy Policy and the App Store Rules, incorporated into this EULA by reference. We reserve all other rights.</p>
+    <p>3.2. You may download our App onto an Apple or Android device, in line with the operating system requirements set out at the beginning of this agreement, and view, use and display our App on the devices for your personal purposes only.</p>`
+  },
+
+
+
+
+  {
+    title: '4. LICENCE RESTRICTIONS',
+    content: `<p>Except as expressly set out in this EULA or as permitted by any local law, you agree:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>4.1. not to copy our App except where such copying is incidental to normal use of our App, or where it is necessary for the purpose of back-up or operational security;</li>
+      <li>4.2. not to rent, lease, sub-license, loan, translate, merge, adapt, vary or modify our App;</li>
+      <li>4.3. not to make alterations to, or modifications of, the whole or any part of our App, or permit our App or any part of it to be combined with, or become incorporated in, any other programs;</li>
+      <li>4.4. not to disassemble, decompile, reverse-engineer, or create derivative works based on the whole or any part of our App or attempt to do any such thing except to the extent that such actions cannot be prohibited because they are essential for the purpose of achieving interoperability of our App with another software program, and provided that the information obtained by you during such activities:</li>
+      <ul class="list-disc pl-6 mt-1">
+        <li>4.4.1. is used only for the purpose of achieving inter-operability of our App with another software program;</li>
+        <li>4.4.2. is not unnecessarily disclosed or communicated without our prior written consent to any third party; and</li>
+        <li>4.4.3. is not used to create any software that is substantially similar to our App;</li>
+      </ul>
+      <li>4.5. to keep all copies of our App secure and to maintain accurate and up-to-date records of the number and locations of all copies of our App;</li>
+      <li>4.6. to include our copyright notice on all entire and partial copies you make of our App on any medium;</li>
+      <li>4.7. not to provide or otherwise make available our App in whole or in part (including object and source code), in any form to any person without prior written consent from us; and</li>
+      <li>4.8. to comply with all technology control or export laws and regulations that apply to the technology used or supported by our App or any Service ("Technology").</li>
+    </ul>`
+  },
+  {
+    title: '5. ACCEPTABLE USE RESTRICTIONS',
+    content: `<p>You must:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>5.1. not use our App or any Service(s) in any unlawful manner, for any unlawful purpose, or in any manner inconsistent with this EULA, or act fraudulently or maliciously, for example, by hacking into or inserting malicious code, including viruses, or harmful data, into our App, any Service(s) or any operating system;</li>
+      <li>5.2. not infringe our intellectual property rights or those of any third party in relation to your use of our App or any Service(s), including the submission of any material (to the extent that such use is not licensed by this EULA);</li>
+      <li>5.3. not transmit any material that is defamatory, offensive or otherwise objectionable in relation to your use of our App or any Service(s);</li>
+      <li>5.4. not use our App or any Service(s) in a way that could damage, disable, overburden, impair or compromise our systems or security or interfere with other users; and</li>
+      <li>5.5. not collect or harvest any information or data from any Service(s) or our systems or attempt to decipher any transmissions to or from the servers running any Service(s); together referred to as Acceptable Use Restrictions.</li>
+    </ul>`
+  },
+  {
+    title: '6. INTELLECTUAL PROPERTY RIGHTS',
+    content: `<p>6.1. You acknowledge that all intellectual property rights in our App, the Documents and the Technology anywhere in the world belong to us or our licensors, that rights in our App are licensed (not sold) to you, and that you have no rights in, or to, our App, the Documents or the Technology other than the right to use each of them in accordance with the terms of this EULA.</p>
+    <p>6.2. You acknowledge that you have no right to have access to our App in source-code form.</p>`
+  },
+  {
+    title: '7. LIMITATION OF LIABILITY',
+    content: `<p>7.1. We are not liable for the completeness, accuracy or correctness of any information uploaded on our App and any related content. You expressly agree that your use of the services and our App, is at your sole risk.</p>
+    <p>7.2. You agree not to use the Services, our App and the related content for any resale purposes, and we have no liability to you, whether in contract, tort (including negligence), breach of statutory duty, or otherwise, arising under or in connection with this EULA (including but not limited to the use of, or inability to use, the services, our App or any other website or software) for:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>7.2.1. loss of profits, sales, business, or revenue;</li>
+      <li>7.2.2. business interruption;</li>
+      <li>7.2.3. loss of anticipated savings;</li>
+      <li>7.2.4. loss or corruption of data or information;</li>
+      <li>7.2.5. loss of business opportunity, goodwill, or reputation; or</li>
+      <li>7.2.6. any other indirect or consequential loss or damage.</li>
+    </ul>
+    <p>7.3. Nothing in this EULA shall limit or exclude our liability for:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>7.3.1. death or personal injury resulting from our negligence;</li>
+      <li>7.3.2. fraud; and/or</li>
+      <li>7.3.3. any other matter in respect of which we are prohibited under applicable law from limiting or excluding our liability.</li>
+    </ul>
+    <p>7.4. This EULA set out the full extent of our obligations and liabilities in respect of the supply of the services and our App. Except as expressly stated in this EULA, there are no conditions, warranties, representations, or other terms, express or implied, that are binding on us. Any condition, warranty, representation, or other term concerning the supply of the services and our App which might otherwise be implied into, or incorporated in, this EULA whether by statute, common law or otherwise, is excluded to the fullest extent permitted by law.</p>`
+  },
+
+
+
+
+
+  {
+    title: '8. TERMINATION',
+    content: `<p>8.1. We may terminate this EULA immediately by written notice to you:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>8.1.1. if you commit a material or persistent breach of this EULA which you fail to remedy (if remediable) within 14 days after the service of written notice requiring you to do so; and</li>
+      <li>8.1.2. if you breach any of the Licence Restrictions or the Acceptable Use Restrictions.</li>
+    </ul>
+    <p>8.2. On termination for any reason:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>8.2.1. all rights granted to you under this EULA shall cease;</li>
+      <li>8.2.2. you must immediately cease all activities authorised by this EULA, including your use of any Service(s); and</li>
+      <li>8.2.3. you must immediately delete or remove our App from all your devices and immediately destroy all copies of our App then in your possession, custody or control and certify to us that you have done so.</li>
+    </ul>`
+  },
+  {
+    title: '9. COMMUNICATION BETWEEN US',
+    content: `<p>9.1. If you wish to contact us in writing, or if any condition in this EULA requires you to give us notice in writing. We will confirm receipt of this by contacting you in writing, normally by e-mail.</p>
+    <p>9.2. If we have to contact you or give you notice in writing, we will do so by e-mail to the address you provide to us in your request for our App.</p>`
+  },
+  {
+    title: '10. EVENTS OUTSIDE OUR CONTROL',
+    content: `<p>10.1. We will not be liable or responsible for any failure to perform, or delay in performance of, any of our obligations under this EULA that is caused by any act or event beyond our reasonable control, including failure of public or private telecommunications networks (Event Outside Our Control).</p>
+    <p>10.2. If an Event Outside Our Control takes place that affects the performance of our obligations under this EULA:</p>
+    <ul class="list-disc pl-6 mt-2">
+      <li>10.2.1. our obligations under this EULA will be suspended and the time for performance of our obligations will be extended for the duration of the Event Outside Our Control; and</li>
+      <li>10.2.2. we will use our reasonable endeavors to find a solution by which our obligations under this EULA may be performed despite the Event Outside Our Control.</li>
+    </ul>`
+  },
+  {
+    title: '11. OTHER IMPORTANT TERMS',
+    content: `<p>11.1. We may transfer our rights and obligations under this EULA to another organization, but this will not affect your rights or our obligations under this EULA.</p>
+    <p>11.2. You may only transfer your rights or obligations under this EULA to another person if we agree in writing.</p>
+    <p>11.3. If we fail to insist that you perform any of your obligations under this EULA, or if we do not enforce our rights against you, or if we delay in doing so, that will not mean that we have waived our rights against you and will not mean that you do not have to comply with those obligations. If we do waive a default by you, we will only do so in writing, and that will not mean that we will automatically waive any later default by you.</p>
+    <p>11.4. Each of the conditions of this EULA operates separately. If any court or competent authority decides that any of them are unlawful or unenforceable, the remaining conditions will remain in full force and effect.</p>
+    <p>11.5. Please note that this EULA, its subject matter and its formation are governed by the law of Italy. You and we both agree that the courts of Italy will have non-exclusive jurisdiction.</p>`
+  },
+];
+
+
 </script>
