@@ -19,11 +19,11 @@
               </p>
             </div>
           </div>
-          <TicDrivebutton
+          <!-- <TicDrivebutton
             label="Modifica"
             @click="modifyProfile"
             custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5"
-          />
+          /> -->
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
 
         <div class="mb-6 border-b pb-6">
           <label class="block text-base font-normal text-gray-700 mb-1"
-            >Nome Cognome</label
+            >Nome</label
           >
           <div class="text-sm font-normal text-tic">
             {{ authStore.user?.name }}
@@ -71,41 +71,41 @@
           </div>
         </div>
 
-        <div class="mb-6 border-b pb-6">
+        <!-- <div class="mb-6 border-b pb-6">
           <button
             @click="changePassword"
             class="text-drive text-base font-normal hover:text-green-700"
           >
             Cambio Password
           </button>
-        </div>
+        </div> -->
 
-        <div class="mb-6 border-b pb-6">
+        <!-- <div class="mb-6 border-b pb-6">
           <button
             @click="modifyWorkshopDetails"
             class="text-drive text-base font-normal hover:text-green-700"
           >
             Modifica dettagli Officina
           </button>
-        </div>
+        </div> -->
 
         <div class="mb-6 border-b pb-6">
           <button
             @click="authStore.logout()"
-            class="text-drive text-base font-normal hover:text-green-700"
+            class="text-red-500 text-base font-normal hover:text-red-700"
           >
             Logout
           </button>
         </div>
 
-        <div class="pb-6">
+        <!-- <div class="pb-6">
           <button
             @click="deleteAccount"
             class="text-[16] text-red-500 font-poppins hover:text-red-600"
           >
             Elimina account
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
