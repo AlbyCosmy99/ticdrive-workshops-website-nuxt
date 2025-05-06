@@ -7,7 +7,7 @@
           <div class="flex items-center gap-4">
             <div class="rounded-full overflow-hidden h-[94px] w-[94px]">
               <NuxtImg
-                :src="authStore.user?.profileImageUrl"
+                :src="authStore.user?.images[0].url"
                 alt="Profile Image"
                 class="object-cover w-full h-full"
               />

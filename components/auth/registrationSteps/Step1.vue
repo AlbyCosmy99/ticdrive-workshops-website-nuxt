@@ -109,12 +109,12 @@ onMounted(() => {
 const passwordRule = helpers.withMessage(
   'La password deve contenere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero e un carattere speciale.',
   (value: string) => {
-    if (!value) return false
+    if (!value) return false;
 
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/
-    return regex.test(value)
-  }
-)
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/;
+    return regex.test(value);
+  },
+);
 
 const rules = computed(() => ({
   name: {
