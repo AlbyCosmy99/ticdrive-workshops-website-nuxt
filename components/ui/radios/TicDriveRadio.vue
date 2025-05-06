@@ -1,14 +1,14 @@
 <template>
   <div
     :class="[
-      'rounded-full px-3 py-3 border flex items-center cursor-pointer relative',
+      'rounded-full px-3 py-3 border flex items-center cursor-pointer relative h-10',
       isChecked ? 'border-green-500' : 'border-gray-500',
     ]"
     @click="handleChecked"
   >
     <div
       :class="[
-        'rounded-full border w-6 h-6 absolute',
+        'rounded-full border w-6 h-6 absolute flex justify-center items-center',
         isChecked ? 'border-green-500' : 'border-gray-500',
       ]"
     >
@@ -19,9 +19,9 @@
         class="w-4 h-4 m-auto"
       />
     </div>
-    <h1 :class="['ms-8 text-sm font-semibold', {'text-green-600': isChecked}]">
+    <h6 :class="['ms-8 text-sm font-semibold', {'text-green-600': isChecked}]">
       {{ name }}
-    </h1>
+    </h6>
   </div>
 </template>
 

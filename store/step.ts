@@ -8,6 +8,7 @@ import type {StepSevenData} from '~/types/auth/steps/StepSevenData';
 import type {StepSixData} from '~/types/auth/steps/StepSixData';
 import type {StepThreeData} from '~/types/auth/steps/StepThreeData';
 import type {StepTwoData} from '~/types/auth/steps/StepTwoData';
+import type {legalDeclaration} from '~/types/consents/legalDeclaration';
 
 interface StepLabel {
   step: number;
@@ -16,7 +17,11 @@ interface StepLabel {
 
 interface StepState {
   currentStep: number;
+  loading: boolean;
   steps: StepLabel[];
+  socialUpdatesConsent: legalDeclaration | undefined; //step1
+  privacyPolicy: legalDeclaration | undefined; //step1
+  declarationsOfConformity: legalDeclaration[]; //step8
   stepOneData: StepOneData;
   stepTwoData: StepTwoData;
   stepThreeData: StepThreeData;
@@ -30,8 +35,9 @@ interface StepState {
 const useStepStore = defineStore('step', {
   state: (): StepState => ({
     currentStep: 0,
+    loading: false,
     steps: [
-      // {step: 1, value: 'Benvenuto'},
+      // {step: 1, value: 'Benvenuto'}, - ignored as it doesn t have the stepbar
       {step: 2, value: 'Informazioni e contatti'},
       {step: 3, value: 'Tipologia d’officina'},
       {step: 4, value: 'Servizi offerti'},
@@ -40,13 +46,17 @@ const useStepStore = defineStore('step', {
       {step: 7, value: 'Descrizione officina'},
       {step: 8, value: 'Firma e accettazione'},
     ],
+    socialUpdatesConsent: undefined,
+    privacyPolicy: undefined,
+    declarationsOfConformity: [],
     stepOneData: {
       name: '',
       surname: '',
       phoneNumber: '',
       email: '',
+      password: '',
+      repeatedPassword: '',
       workshopName: '',
-      postalCode: '',
       acceptPrivacyPolicy: false,
       acceptUpdates: false,
     },
@@ -57,12 +67,7 @@ const useStepStore = defineStore('step', {
         province: '',
         postalCode: '',
       },
-      companyContact: {
-        phone: '',
-        email: '',
-      },
       referContact: {
-        fullName: '',
         phone: '',
         email: '',
       },
@@ -97,12 +102,68 @@ const useStepStore = defineStore('step', {
     },
   }),
   actions: {
+    async getSocialUpdatesConsent() {
+      try {
+        this.loading = true;
+        const $ticDriveAxios = useTicDriveAxios();
+        const data = await $ticDriveAxios.get(
+          'legalDeclarations?mostRecent=true&contexts=SaaS&contexts=AllEcosystem&type=SocialUpdates',
+        );
+        this.socialUpdatesConsent = data.data;
+      } catch (err: any) {
+        const showToast = useToast();
+        showToast(
+          'error',
+          'Error',
+          'Error while loading social updates consent',
+        );
+      } finally {
+        this.loading = false;
+      }
+    },
+    async getPrivacyPolicy() {
+      try {
+        this.loading = true;
+        const $ticDriveAxios = useTicDriveAxios();
+        const data = await $ticDriveAxios.get(
+          'legalDeclarations?mostRecent=true&contexts=SaaS&contexts=AllEcosystem&type=PrivacyPolicy',
+        );
+        this.privacyPolicy = data.data;
+      } catch (err: any) {
+        const showToast = useToast();
+        showToast('error', 'Error', 'Error while loading privacy policy');
+      } finally {
+        this.loading = false;
+      }
+    },
+    async getDeclarationsOfConformity() {
+      try {
+        this.loading = true;
+        const $ticDriveAxios = useTicDriveAxios();
+        const data = await $ticDriveAxios.get(
+          'legalDeclarations?contexts=SaaS&contexts=AllEcosystem&type=DeclarationOfConformity',
+        );
+        this.declarationsOfConformity = data.data;
+      } catch (err: any) {
+        const showToast = useToast();
+        showToast(
+          'error',
+          'Errore',
+          'Errore durante il caricamento dei consensi.',
+        );
+      } finally {
+        this.loading = false;
+      }
+    },
     resetStore() {
       this.$reset();
     },
     setStep(step: number) {
       this.currentStep = step;
     },
+  },
+  persist: {
+    paths: ['currentStep'],
   },
 });
 

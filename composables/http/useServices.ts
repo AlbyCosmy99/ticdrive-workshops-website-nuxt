@@ -13,7 +13,7 @@ const useServices = () => {
     loading.value = true;
 
     try {
-      const response = await $ticDriveAxios.get('services');
+      const response = await $ticDriveAxios.get('services?languageCode=it');
       services.value = response.data;
     } catch (e: any) {
       showToast('error', 'Errore', 'Errore nel recupero dei servizi!');

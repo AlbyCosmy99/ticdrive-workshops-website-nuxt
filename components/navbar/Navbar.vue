@@ -17,8 +17,8 @@
         <div
           class="cursor-pointer w-[48px] h-[48px] rounded-full overflow-hidden flex items-center justify-center transition-colors shadow-sm"
         >
-          <img
-            :src="authStore.user?.profileImageUrl"
+          <NuxtImg
+            :src="authStore.user?.images[0].url"
             alt="Profile"
             class="w-full h-full object-cover rounded-full"
           />

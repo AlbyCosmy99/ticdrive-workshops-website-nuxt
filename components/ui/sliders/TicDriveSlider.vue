@@ -20,7 +20,7 @@
       <div
         :class="[
           'absolute top-1/2 transform -translate-y-1/2 bg-white w-6 h-6 rounded-full shadow-md transition-all duration-300 ease-in-out',
-          isChecked ? 'left-7' : 'left-1',
+          isChecked ? 'left-8' : 'left-0',
         ]"
       ></div>
     </div>

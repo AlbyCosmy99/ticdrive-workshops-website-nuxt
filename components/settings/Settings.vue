@@ -5,46 +5,56 @@
         <h2 class="text-2xl font-semibold mb-4">Profilo Gestore Officina</h2>
         <div class="flex items-center gap-4 justify-between">
           <div class="flex items-center gap-4">
-            <div class="rounded-full overflow-hidden h-16 w-16">
-              <img
-                :src="authStore.user?.profileImageUrl"
+            <div class="rounded-full overflow-hidden h-[94px] w-[94px]">
+              <NuxtImg
+                :src="authStore.user?.images[0].url"
                 alt="Profile Image"
                 class="object-cover w-full h-full"
               />
             </div>
             <div>
               <h3 class="text-lg font-semibold">{{ authStore.user?.name }}</h3>
-              <p class="text-gray-500">{{ authStore.user?.email }}</p>
+              <p class="text-gray-500 font-poppins">
+                {{ authStore.user?.email }}
+              </p>
             </div>
           </div>
-          <TicDrivebutton label="Modifica" @click="modifyProfile" />
+          <TicDrivebutton
+            label="Modifica"
+            @click="modifyProfile"
+            custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5"
+          />
         </div>
       </div>
     </div>
 
     <div class="bg-white">
       <div class="px-6">
-        <h2 class="text-xl font-bold mb-6">Impostazioni</h2>
+        <h2 class="text-xl font-semibold mb-6">Impostazioni</h2>
 
         <div class="mb-6 border-b pb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1"
+          <label class="block text-base font-normal text-gray-700 mb-1"
             >Nome Cognome</label
           >
-          <div class="text-gray-800">{{ authStore.user?.name }}</div>
+          <div class="text-sm font-normal text-tic">
+            {{ authStore.user?.name }}
+          </div>
         </div>
 
         <div class="mb-6 border-b pb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1"
+          <label class="block text-base font-normal text-gray-700 mb-1"
             >Email</label
           >
-          <div class="text-gray-800">{{ authStore.user?.email }}</div>
+          <div class="text-sm font-normal text-tic">
+            {{ authStore.user?.email }}
+          </div>
         </div>
 
         <div class="mb-6 border-b pb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1"
+          <label class="block text-base font-normal text-gray-700 mb-1"
             >Numero di telefono</label
           >
-          <div class="text-gray-800">
+          <div class="text-sm font-normal text-tic">
             {{
               authStore.user?.phoneNumber ||
               'Numero di telefono non disponibile'
@@ -53,10 +63,10 @@
         </div>
 
         <div class="mb-6 border-b pb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1"
+          <label class="block text-base font-normal text-gray-700 mb-1"
             >Indirizzo</label
           >
-          <div class="text-gray-800">
+          <div class="text-sm font-normal text-tic">
             {{ authStore.user?.address || 'Indirizzo non disponibile' }}
           </div>
         </div>
@@ -64,7 +74,7 @@
         <div class="mb-6 border-b pb-6">
           <button
             @click="changePassword"
-            class="text-green-600 font-medium hover:text-green-700"
+            class="text-drive text-base font-normal hover:text-green-700"
           >
             Cambio Password
           </button>
@@ -73,7 +83,7 @@
         <div class="mb-6 border-b pb-6">
           <button
             @click="modifyWorkshopDetails"
-            class="text-green-600 font-medium hover:text-green-700"
+            class="text-drive text-base font-normal hover:text-green-700"
           >
             Modifica dettagli Officina
           </button>
@@ -81,8 +91,8 @@
 
         <div class="mb-6 border-b pb-6">
           <button
-            @click="logout"
-            class="text-green-600 font-medium hover:text-green-700"
+            @click="authStore.logout()"
+            class="text-drive text-base font-normal hover:text-green-700"
           >
             Logout
           </button>
@@ -91,7 +101,7 @@
         <div class="pb-6">
           <button
             @click="deleteAccount"
-            class="text-red-500 font-medium hover:text-red-600"
+            class="text-[16] text-red-500 font-poppins hover:text-red-600"
           >
             Elimina account
           </button>
@@ -131,12 +141,6 @@ const changePassword = () => {
 
 const modifyWorkshopDetails = () => {
   emit('modifyWorkshop');
-};
-
-const logout = () => {
-  authStore.logout();
-  localStorage.removeItem('token');
-  router.replace('/auth/login');
 };
 
 const deleteAccount = () => {

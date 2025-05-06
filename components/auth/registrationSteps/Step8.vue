@@ -4,7 +4,6 @@
   >
     <h1 class="text-gray-500 text-4xl font-semibold">Firma e Accettazione</h1>
 
-    <!-- Garanzia -->
     <h1 class="text-gray-500 text-2xl font-semibold mt-10">
       Garanzia e responsabilità
     </h1>
@@ -15,7 +14,6 @@
       @update:number="updateWarranty"
     />
 
-    <!-- Firma digitale -->
     <h1 class="text-gray-500 text-2xl font-semibold mt-8">Firma digitale</h1>
     <div
       class="p-1 mt-2 border border-gray-500 rounded-xl w-full flex flex-col sm:flex-row gap-3 justify-between relative"
@@ -60,12 +58,14 @@
         <Calendar
           v-model="stepStore.stepEightData.signature.date"
           readonly
+          dateFormat="dd/mm/yy"
           placeholder="(giorno/mese/anno)"
           :class="[
             'outline-none date-picker-wrapper text-center bg-gray-100 px-5 py-2 max-h-10',
             {'input-error': v$.signature.date.$errors.length},
           ]"
         />
+
         <span v-if="v$.signature.date.$errors.length" class="invalid-feedback">
           {{ v$.signature.date.$errors[0]?.$message || '' }}
         </span>
@@ -73,15 +73,25 @@
     </div>
 
     <!-- Conformità -->
-    <h1 class="text-gray-500 text-2xl font-semibold mt-8 mb-1">
+    <h1
+      v-if="stepStore.declarationsOfConformity.length"
+      class="text-gray-500 text-2xl font-semibold mt-8 mb-1"
+    >
       Autodichiarazione di conformità
     </h1>
+    <div
+      v-if="stepStore.loading"
+      class="flex justify-center overflow-auto h-40"
+    >
+      <UiSpinnersTicDriveSpinner />
+    </div>
     <TicDriveRadio
-      v-for="conformity in conformities"
+      v-else
+      v-for="conformity in stepStore.declarationsOfConformity"
       :key="conformity.id"
       :id="conformity.id"
       class="mt-2"
-      :name="conformity.text"
+      :name="conformity.content"
       :value="conformity"
       :isChecked="
         !!stepStore.stepEightData.conformities.find(c => c.id === conformity.id)
@@ -92,49 +102,21 @@
 </template>
 
 <script lang="ts" setup>
-import {defineProps, defineExpose, computed} from 'vue';
+import {defineExpose, computed} from 'vue';
 import {required, helpers} from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import useStepStore from '~/store/step';
 import Calendar from 'primevue/calendar';
-import type {StepEightData} from '~/types/auth/steps/StepEightData';
 import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
 import type {Conformity} from '~/types/auth/Conformity';
-
-const props = defineProps<{
-  stepValues: StepEightData;
-}>();
+import {UiSpinnersTicDriveSpinner} from '#components';
 
 const stepStore = useStepStore();
+stepStore.getDeclarationsOfConformity();
 
 defineExpose({
   validate: async () => await v$.value.$validate(),
 });
-
-const date = computed({
-  get: () => stepStore.stepEightData.signature.date,
-  set: (val: Date) => (stepStore.stepEightData.signature.date = val),
-});
-
-const conformities: Conformity[] = [
-  {
-    id: 1,
-    text: 'Dichiaro che l’autofficina è regolarmente registrata e in possesso di tutti i documenti richiesti dalla normativa italiana per operare legalmente.',
-  },
-  {
-    id: 2,
-    text: 'Accetto la trattenuta della commissione da parte della piattaforma e la modalità di accredito selezionata.',
-  },
-  {
-    id: 3,
-    text: "Accetto le condizioni di utilizzo della piattaforma e l'informativa sulla privacy (GDPR).",
-  },
-  {id: 4, text: 'Dichiaro di aderire alla piattaforma.'},
-  {
-    id: 5,
-    text: 'Dichiaro di aver letto e accettato i Termini e Condizioni della piattaforma.',
-  },
-];
 
 const rules = computed(() => ({
   signature: {

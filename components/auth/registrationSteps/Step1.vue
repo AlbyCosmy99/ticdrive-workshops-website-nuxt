@@ -10,64 +10,77 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
       <TicDriveInput
         id="name"
-        label="Name"
+        label="Nome*"
         placeholder="es. Mario"
-        v-model="stepValues.name"
+        v-model="stepStore.stepOneData.name"
         :error-message="v$.name.$errors[0]?.$message || ''"
       />
       <TicDriveInput
         id="surname"
         label="Cognome"
         placeholder="es. Rossi"
-        v-model="stepValues.surname"
-        :error-message="v$.surname.$errors[0]?.$message || ''"
+        v-model="stepStore.stepOneData.surname"
       />
     </div>
 
     <TicDriveInput
       id="tel"
-      label="Telefono"
+      label="Telefono Aziendale*"
       placeholder="+39 *** *******"
-      v-model="stepValues.phoneNumber"
+      v-model="stepStore.stepOneData.phoneNumber"
       type="tel"
       :error-message="v$.phoneNumber.$errors[0]?.$message || ''"
     />
     <TicDriveInput
       id="email"
-      label="Email"
+      label="Email Aziendale*"
       placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
-      v-model="stepValues.email"
+      v-model="stepStore.stepOneData.email"
       :error-message="v$.email.$errors[0]?.$message || ''"
     />
     <TicDriveInput
       id="workshop"
-      label="Nome dell’officina"
+      label="Nome dell’officina*"
       placeholder="es. Autofficina rossi"
-      v-model="stepValues.workshopName"
+      v-model="stepStore.stepOneData.workshopName"
       :error-message="v$.workshopName.$errors[0]?.$message || ''"
     />
     <TicDriveInput
-      id="postalCode"
-      label="Codice postale"
-      placeholder="es. 20100"
-      v-model="stepValues.postalCode"
-      :error-message="v$.postalCode.$errors[0]?.$message || ''"
+      id="password"
+      label="Password*"
+      placeholder="Inserisci password"
+      type="password"
+      v-model="stepStore.stepOneData.password"
+      :error-message="v$.password.$errors[0]?.$message || ''"
+      autocomplete="new-password"
     />
-
-    <div class="my-1 mt-6">
-      <CheckboxField
-        id="accept-updates"
-        v-model="stepStore.stepOneData.acceptPrivacyPolicy"
-        label="Accetto di ricevere aggiornamenti da TicDrive tramite WhatsApp o
-        piattaforme simili!"
-      />
+    <TicDriveInput
+      id="repeated-password"
+      label="Ripeti password*"
+      placeholder="Inserisci password ripetuta"
+      type="password"
+      v-model="stepStore.stepOneData.repeatedPassword"
+      :error-message="v$.repeatedPassword.$errors[0]?.$message || ''"
+      autocomplete="new-password"
+    />
+    <div v-if="stepStore.loading" class="mt-4 flex justify-center items-center">
+      <UiSpinnersTicDriveSpinner />
     </div>
-    <div class="my-1">
-      <CheckboxField
-        id="accept-updates"
-        v-model="stepStore.stepOneData.acceptUpdates"
-        label="Accetto Privacy Policy Cookie Policy Terms and Conditions"
-      />
+    <div v-else>
+      <div v-if="stepStore.socialUpdatesConsent" class="my-1 mt-6">
+        <CheckboxField
+          id="accept-updates"
+          v-model="stepStore.stepOneData.acceptUpdates"
+          :label="stepStore.socialUpdatesConsent?.content"
+        />
+      </div>
+      <div v-if="stepStore.privacyPolicy" class="my-1">
+        <CheckboxField
+          id="accept-privacy-policy"
+          v-model="stepStore.stepOneData.acceptPrivacyPolicy"
+          :label="stepStore.privacyPolicy?.content"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -75,18 +88,9 @@
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
 import {required, email, numeric, helpers} from '@vuelidate/validators';
-import {defineProps, defineEmits, defineExpose, computed} from 'vue';
+import {defineExpose, computed} from 'vue';
 import useStepStore from '~/store/step';
-import type {StepOneData} from '~/types/auth/steps/StepOneData';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
-
-const props = defineProps<{
-  stepValues: StepOneData;
-}>();
-
-const emit = defineEmits<{
-  (e: 'updateStepValues', key: keyof StepOneData, value: boolean): void;
-}>();
 
 defineExpose({
   validate: async () => {
@@ -97,33 +101,63 @@ defineExpose({
 
 const stepStore = useStepStore();
 
+onMounted(() => {
+  stepStore.getSocialUpdatesConsent();
+  stepStore.getPrivacyPolicy();
+});
+
+const passwordRule = helpers.withMessage(
+  'La password deve contenere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero e un carattere speciale.',
+  (value: string) => {
+    if (!value) return false;
+
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/;
+    return regex.test(value);
+  },
+);
+
 const rules = computed(() => ({
   name: {
-    required: helpers.withMessage('Name is required', required),
-  },
-  surname: {
-    required: helpers.withMessage('Surname is required', required),
+    required: helpers.withMessage('Il nome è richiesto.', required),
   },
   phoneNumber: {
-    required: helpers.withMessage('Phone number is required', required),
-    numeric: helpers.withMessage('Phone number must be numeric', numeric),
+    required: helpers.withMessage(
+      'Il numero di telefono è richiesto.',
+      required,
+    ),
+    numeric: helpers.withMessage(
+      'Il numero di telefono deve essere in formato numerico.',
+      numeric,
+    ),
   },
   email: {
-    required: helpers.withMessage('Email is required', required),
-    email: helpers.withMessage('Invalid email format', email),
+    required: helpers.withMessage('La email è richiesta.', required),
+    email: helpers.withMessage('Il formato della email non è valido.', email),
+  },
+  password: {
+    required: helpers.withMessage('La password è richiesta.', required),
+    strong: passwordRule,
+  },
+  repeatedPassword: {
+    required: helpers.withMessage('Ripeti la password.', required),
+    sameAsPassword: helpers.withMessage(
+      'Le password non coincidono.',
+      (value: string) => value === stepStore.stepOneData.password,
+    ),
   },
   workshopName: {
-    required: helpers.withMessage('Workshop name is required', required),
+    required: helpers.withMessage(
+      "Il nome dell'officina è richiesto.",
+      required,
+    ),
   },
-  postalCode: {
-    required: helpers.withMessage('Postal code is required', required),
-    numeric: helpers.withMessage('Postal code must be numeric', numeric),
+  acceptPrivacyPolicy: {
+    required: helpers.withMessage(
+      'Devi accettare la Privacy Policy.',
+      required,
+    ),
   },
 }));
 
-const v$ = useVuelidate(rules, props.stepValues);
-
-const checkToggle = (key: 'acceptPrivacyPolicy' | 'acceptUpdates') => {
-  emit('updateStepValues', key, !props.stepValues[key]);
-};
+const v$ = useVuelidate(rules, stepStore.stepOneData);
 </script>

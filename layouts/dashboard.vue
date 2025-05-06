@@ -10,10 +10,15 @@ const authStore = useAuthStore();
 
 //initial configurations on reserved area setup
 onMounted(async () => {
+  console.log(authStore.user);
   try {
     const token = localStorage.getItem('token');
     authStore.token = token;
     authStore.user = await useUserData();
+
+    if (!authStore.user?.emailConfirmed) {
+      navigateTo('/auth/confirm-email');
+    }
   } catch (e) {
     localStorage.removeItem('token');
     navigateTo('/auth/login');

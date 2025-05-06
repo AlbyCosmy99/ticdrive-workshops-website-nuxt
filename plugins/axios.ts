@@ -4,7 +4,7 @@ import type {AxiosInstance} from 'axios';
 
 export default defineNuxtPlugin(nuxtApp => {
   const ticDriveAxios: AxiosInstance = axios.create({
-    baseURL: 'https://ticdrivebackend.onrender.com/api/',
+    baseURL: 'https://ticdrivebackenddevelopment.onrender.com/api/',
   });
 
   ticDriveAxios.interceptors.request.use(config => {
@@ -21,11 +21,17 @@ export default defineNuxtPlugin(nuxtApp => {
       return response;
     },
     error => {
-      console.error(
-        '[TicDrive Response Error]',
-        error.response?.status,
-        error.response?.data,
-      );
+      const status = error.response?.status;
+
+      if (status === 401 || status === 403) {
+        const auth = useAuthStore();
+        auth.token = null;
+        localStorage.removeItem('token');
+
+        navigateTo('/auth/login');
+      }
+
+      console.error('[TicDrive Response Error]', status, error.response?.data);
       return Promise.reject(error);
     },
   );

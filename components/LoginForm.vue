@@ -27,10 +27,10 @@
       class="flex flex-col w-[90%] px-14 items-center m-auto max-w-lg lg:max-w-full"
     >
       <TicDriveInput
-        id="username"
-        label="Username"
-        placeholder="Inserisci username"
-        v-model="username"
+        id="companyEmail"
+        label="Email Aziendale"
+        placeholder="Inserisci la Email Aziendale"
+        v-model="companyEmail"
       />
 
       <TicDriveInput
@@ -53,7 +53,7 @@
           <button
             type="button"
             class="cursor-pointer self-start text-xs font-light text-black hover:underline focus:outline-none focus:underline"
-            @click="forgotPassword"
+            @click="openForgotPasswordModal"
           >
             Password dimenticata?
           </button>
@@ -61,55 +61,57 @@
       </div>
       <button
         type="submit"
-        :disabled="!password || !username || loading"
+        :disabled="!password || !companyEmail || loading"
         class="self-center px-16 py-3.5 mt-10 max-w-full text-base text-white whitespace-nowrap bg-drive rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-drive focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
       >
-        {{ loading ? 'Loading...' : 'Login' }}
+        {{ loading ? 'Caricando...' : 'Login' }}
       </button>
     </form>
+    <ForgotPasswordModal
+      :isOpen="isForgotPasswordModalOpen"
+      @close="isForgotPasswordModalOpen = false"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import {ref, computed, onMounted} from 'vue';
+import {ref, onMounted} from 'vue';
 import useStepStore from '~/store/step';
 import CheckboxField from './CheckboxField.vue';
 import useAuthStore from '~/store/auth';
 import TicDriveAuthSlider from './ui/sliders/TicDriveAuthSlider.vue';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
+import ForgotPasswordModal from './ui/modals/ForgotPasswordModal.vue';
 
 const useStore = useStepStore();
-const username = ref('');
+const companyEmail = ref('');
 const password = ref('');
 const rememberMe = ref(true);
-const passwordVisible = ref(false);
 const showToast = useToast();
+const isForgotPasswordModalOpen = ref(false);
 
-// Computed property for password input type
-const passwordInputType = computed(() =>
-  passwordVisible.value ? 'text' : 'password',
-);
 const authStore = useAuthStore();
 const loading = ref(false);
 
 const handleSubmit = async () => {
   try {
     loading.value = true;
-    await authStore.login(username.value, password.value);
+    await authStore.login(companyEmail.value, password.value);
     navigateTo({name: 'dashboard'});
   } catch (err: any) {
-    showToast('error', 'Wrong credentials', err.response.data, 5000);
+    showToast(
+      'error',
+      'Wrong credentials',
+      err?.response?.data || 'Wrong credentials. Try again.',
+      5000,
+    );
   } finally {
     loading.value = false;
   }
 };
 
-const togglePasswordVisibility = () => {
-  passwordVisible.value = !passwordVisible.value;
-};
-
-const forgotPassword = () => {
-  console.log('Forgot password clicked');
+const openForgotPasswordModal = () => {
+  isForgotPasswordModalOpen.value = true;
 };
 
 onMounted(() => {
