@@ -9,12 +9,16 @@
       </p>
     </div>
     <div class="flex items-center gap-8">
+      <div class="flex items-center space-x-4">
+        <OptionButton image="/images/mail.png" alt="Messages" />
+        <OptionButton image="/images/bell.png" alt="Notifications" />
+      </div>
       <div class="flex items-center space-x-3">
         <div
           class="cursor-pointer w-[48px] h-[48px] rounded-full overflow-hidden flex items-center justify-center transition-colors shadow-sm"
         >
-          <img
-            :src="authStore.user?.profileImageUrl"
+          <NuxtImg
+            :src="authStore.user?.images[0].url"
             alt="Profile"
             class="w-full h-full object-cover rounded-full"
           />
@@ -23,6 +27,7 @@
           <span class="font-semibold text-gray-800 leading-tight">
             {{ authStore.user?.name }}
           </span>
+          <span class="text-xs font-normal">Titolare</span>
         </div>
       </div>
     </div>
