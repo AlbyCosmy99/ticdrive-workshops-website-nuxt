@@ -15,6 +15,7 @@
       </div>
       <div class="flex items-center space-x-3">
         <div
+          v-if="authStore.user?.images.length"
           class="cursor-pointer w-[48px] h-[48px] rounded-full overflow-hidden flex items-center justify-center transition-colors shadow-sm"
         >
           <NuxtImg
