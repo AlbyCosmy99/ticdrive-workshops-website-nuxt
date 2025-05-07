@@ -97,7 +97,6 @@ const handleSubmit = async () => {
   try {
     loading.value = true;
     await authStore.login(companyEmail.value, password.value);
-    navigateTo({name: 'dashboard'});
   } catch (err: any) {
     showToast(
       'error',

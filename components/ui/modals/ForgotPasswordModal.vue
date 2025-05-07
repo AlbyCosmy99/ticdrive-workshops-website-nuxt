@@ -169,6 +169,7 @@
 
 <script setup lang="ts">
 import {ref, defineProps, defineEmits, computed} from 'vue';
+import useAuthStore from '~/store/auth';
 
 interface PasswordResetModalProps {
   isOpen: boolean;
@@ -188,6 +189,7 @@ const confirmPassword = ref('');
 const loading = ref(false);
 const showToast = useToast();
 const $ticDriveAxios = useTicDriveAxios();
+const authStore = useAuthStore()
 
 const passwordMismatch = computed(() => {
   return newPassword.value && confirmPassword.value && newPassword.value !== confirmPassword.value;
@@ -259,10 +261,10 @@ const submitNewPassword = async () => {
   try {
     await $ticDriveAxios.post('/auth/reset-password', {
       email: email.value,
-      code: verificationCode.value,
       newPassword: newPassword.value,
+      confirmPassword: confirmPassword.value
     });
-    
+    await authStore.login(email.value, newPassword.value)
     showToast('success', 'Successo', 'Password aggiornata con successo.');
     close();
   } catch (error) {
