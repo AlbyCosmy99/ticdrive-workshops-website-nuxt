@@ -13,13 +13,9 @@
       v-model="stepStore.stepSevenData.description"
       :class="[
         'border-2 border-gray-500 rounded-xl h-30 px-2 py-2 w-full mt-5 resize-none outline-none focus:border-green-500',
-        {'input-error': v$.description.$errors.length},
       ]"
       placeholder="(breve descrizione della tua attività, valori e punti di forza – max 500 caratteri)"
     ></textarea>
-    <span v-if="v$.description.$errors.length" class="invalid-feedback">
-      {{ v$.description.$errors[0]?.$message || '' }}
-    </span>
 
     <h1 class="text-gray-500 text-2xl font-semibold mt-5">Lingue Parlate:</h1>
     <div
@@ -47,30 +43,14 @@
 </template>
 
 <script lang="ts" setup>
-import {defineExpose, computed} from 'vue';
-import {helpers, required, minLength} from '@vuelidate/validators';
-import useVuelidate from '@vuelidate/core';
 import useStepStore from '~/store/step';
 import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
 import type {Language} from '~/types/Language';
 import useLanguageStore from '~/store/language';
 
-defineExpose({
-  validate: async () => await v$.value.$validate(),
-});
-
 const stepStore = useStepStore();
 const languageStore = useLanguageStore();
 languageStore.getLanguages();
-
-const rules = computed(() => ({
-  description: {
-    required: helpers.withMessage('La descrizione è obbligatoria', required),
-    minLength: helpers.withMessage('Minimo 100 caratteri', minLength(100)),
-  },
-}));
-
-const v$ = useVuelidate(rules, stepStore.stepSevenData);
 
 const checkLanguage = (language: Language) => {
   const index = stepStore.stepSevenData.languages.findIndex(
@@ -89,8 +69,5 @@ const checkLanguage = (language: Language) => {
   color: rgb(211, 49, 49);
   font-size: 14px;
   margin-top: 5px;
-}
-.input-error {
-  border-color: rgb(211, 49, 49) !important;
 }
 </style>

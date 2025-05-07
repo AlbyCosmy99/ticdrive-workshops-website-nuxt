@@ -32,9 +32,6 @@
 
 <script setup lang="ts">
 import useAuthStore from '~/store/auth';
-import OptionButton from './OptionButton.vue';
 
 const authStore = useAuthStore();
-
-// Vuoto per ora, puoi aggiungere logica se serve
 </script>

@@ -5,7 +5,10 @@
         <h2 class="text-2xl font-semibold mb-4">Profilo Gestore Officina</h2>
         <div class="flex items-center gap-4 justify-between">
           <div class="flex items-center gap-4">
-            <div v-if="authStore.user?.images.length" class="rounded-full overflow-hidden h-[94px] w-[94px]">
+            <div
+              v-if="authStore.user?.images.length"
+              class="rounded-full overflow-hidden h-[94px] w-[94px]"
+            >
               <NuxtImg
                 :src="authStore.user?.images[0].url"
                 alt="Profile Image"
@@ -15,7 +18,7 @@
             <div>
               <h3 class="text-lg font-semibold">{{ authStore.user?.name }}</h3>
               <p class="text-gray-500 font-poppins">
-                {{ authStore.user?.email }}
+                {{ authStore.user?.workshopName }}
               </p>
             </div>
           </div>
@@ -34,10 +37,26 @@
 
         <div class="mb-6 border-b pb-6">
           <label class="block text-base font-normal text-gray-700 mb-1"
-            >Nome Cognome</label
+            >Nome</label
           >
           <div class="text-sm font-normal text-tic">
             {{ authStore.user?.name }}
+          </div>
+        </div>
+        <div class="mb-6 border-b pb-6">
+          <label class="block text-base font-normal text-gray-700 mb-1"
+            >Cognome</label
+          >
+          <div class="text-sm font-normal text-tic">
+            {{ authStore.user?.surname }}
+          </div>
+        </div>
+        <div class="mb-6 border-b pb-6">
+          <label class="block text-base font-normal text-gray-700 mb-1"
+            >Nome officina</label
+          >
+          <div class="text-sm font-normal text-tic">
+            {{ authStore.user?.workshopName }}
           </div>
         </div>
 

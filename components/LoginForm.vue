@@ -41,15 +41,15 @@
         v-model="password"
       />
 
-      <!-- <div class="w-full max-w-lg lg:max-w-full">
+      <div class="w-full max-w-lg lg:max-w-full">
         <div
-          class="flex justify-between gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full"
+          class="flex justify-end gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full"
         >
-          <CheckboxField
+          <!-- <CheckboxField
             id="remember-me"
             v-model="rememberMe"
             label="Remember me"
-          />
+          /> -->
           <button
             type="button"
             class="cursor-pointer self-start text-xs font-light text-black hover:underline focus:outline-none focus:underline"
@@ -58,7 +58,7 @@
             Password dimenticata?
           </button>
         </div>
-      </div> -->
+      </div>
       <button
         type="submit"
         :disabled="!password || !companyEmail || loading"
@@ -97,7 +97,6 @@ const handleSubmit = async () => {
   try {
     loading.value = true;
     await authStore.login(companyEmail.value, password.value);
-    navigateTo({name: 'dashboard'});
   } catch (err: any) {
     showToast(
       'error',
