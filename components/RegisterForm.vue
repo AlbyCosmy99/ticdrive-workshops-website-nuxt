@@ -137,7 +137,7 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
       }
       return true;
     case 7:
-      return true
+      return true;
     case 8:
       const valid = await stepEightRef.value?.validate();
       const allChecked =

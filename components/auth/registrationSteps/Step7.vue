@@ -12,7 +12,7 @@
     <textarea
       v-model="stepStore.stepSevenData.description"
       :class="[
-        'border-2 border-gray-500 rounded-xl h-30 px-2 py-2 w-full mt-5 resize-none outline-none focus:border-green-500'
+        'border-2 border-gray-500 rounded-xl h-30 px-2 py-2 w-full mt-5 resize-none outline-none focus:border-green-500',
       ]"
       placeholder="(breve descrizione della tua attività, valori e punti di forza – max 500 caratteri)"
     ></textarea>
@@ -47,7 +47,6 @@ import useStepStore from '~/store/step';
 import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
 import type {Language} from '~/types/Language';
 import useLanguageStore from '~/store/language';
-
 
 const stepStore = useStepStore();
 const languageStore = useLanguageStore();
