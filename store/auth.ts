@@ -36,6 +36,7 @@ const useAuthStore = defineStore('auth', {
 
       const data = await useUserData();
       this.user = data;
+      navigateTo({name: 'dashboard'});
     },
 
     async register(): Promise<void> {
