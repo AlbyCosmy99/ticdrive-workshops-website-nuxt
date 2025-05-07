@@ -4,7 +4,6 @@
             <div class="flex items-center justify-between mb-8">
                 <div>
                     <h1 class="text-2xl font-semibold">Domande Frequenti</h1>
-                    <p class="text-gray-600 mt-1">Come possiamo aiutarti?</p>
                 </div>
                 <div>
                     <img src="/svg/TicDriveLogo.svg" alt="TicDrive" class="h-12" />
@@ -36,7 +35,7 @@
                     </div>
 
                     <div class="space-y-4">
-                        <div v-for="(faq, index) in faqs" :key="index"
+                        <div v-for="(faq, index) in filteredFaqs" :key="index"
                             class="border rounded-lg p-4 cursor-pointer hover:border-gray-400"
                             @click="toggleFaq(index)">
                             <div class="flex justify-between items-center">
@@ -59,32 +58,7 @@
                 <div class="mt-8 pt-6">
                     <div class="border-2 border-green-500 rounded-lg p-6">
                         <h2 class="text-xl font-semibold mb-4">Contattaci Direttamente</h2>
-                        <form @submit.prevent="submitForm" class="space-y-4">
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700">Nome</label>
-                                <input type="text" id="name" v-model="formData.name"
-                                    class="mt-1 block w-full rounded-md border border-gray-300 focus:ring-2 focus:ring-green-500">
-                            </div>
-
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="email" id="email" v-model="formData.email"
-                                    class="mt-1 block w-full rounded-md border border-gray-300 focus:ring-2 focus:ring-green-500">
-                            </div>
-
-                            <div>
-                                <label for="message" class="block text-sm font-medium text-gray-700">Messaggio</label>
-                                <textarea id="message" v-model="formData.message" rows="4"
-                                    class="mt-1 block w-full rounded-md border border-gray-300 focus:ring-2 focus:ring-green-500"></textarea>
-                            </div>
-
-                            <div class="flex justify-end">
-                                <button type="submit"
-                                    class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
-                                    Invia messaggio
-                                </button>
-                            </div>
-                        </form>
+                        <p>newsletter.ticdrive@gmail.com</p>
                     </div>
                 </div>
             </div>
@@ -93,7 +67,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 
 export default defineComponent({
     name: 'Support',
@@ -132,6 +106,13 @@ export default defineComponent({
             faqs.value[index].isOpen = !faqs.value[index].isOpen
         }
 
+        const filteredFaqs = computed(() =>
+            faqs.value.filter(faq =>
+                faq.question.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+                faq.answer.toLowerCase().includes(searchQuery.value.toLowerCase())
+            )
+        )
+
         const submitForm = async () => {
             console.log('Form submitted:', formData.value)
             formData.value = {
@@ -145,6 +126,7 @@ export default defineComponent({
             searchQuery,
             formData,
             faqs,
+            filteredFaqs,
             toggleFaq,
             submitForm
         }
