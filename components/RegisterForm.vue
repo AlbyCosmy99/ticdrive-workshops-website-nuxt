@@ -121,14 +121,22 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
     case 6:
       if (!stepStore.stepSixData.images[4]) {
         showToast(
-          'info',
-          'Immagine principale mancante.',
-          "Per favore carica un' immagine principale!",
+          'warn',
+          'Lingua non selezionata.',
+          "Per favore seleziona almeno una lingua!",
         );
         return false;
       }
       return true;
     case 7:
+      if (stepStore.stepSevenData.languages.length === 0) {
+        showToast(
+          'info',
+          'Tutte le caselle devono essere selezionate.',
+          'Seleziona tutte le caselle!',
+        );
+        return false;
+      }
       return true;
     case 8:
       const valid = await stepEightRef.value?.validate();

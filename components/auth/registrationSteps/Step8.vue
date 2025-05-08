@@ -90,9 +90,10 @@
       v-for="conformity in stepStore.declarationsOfConformity"
       :key="conformity.id"
       :id="conformity.id"
-      class="mt-2"
+      class='mt-2'
       :name="conformity.content"
       :value="conformity"
+      :url="conformity.url"
       :isChecked="
         !!stepStore.stepEightData.conformities.find(c => c.id === conformity.id)
       "

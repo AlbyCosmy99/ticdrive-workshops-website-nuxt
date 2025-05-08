@@ -19,14 +19,27 @@
         class="w-4 h-4 m-auto"
       />
     </div>
-    <h6 :class="['ms-8 text-sm font-semibold', {'text-green-600': isChecked}]">
-      {{ name }}
+
+    <h6 :class="['ms-8 text-sm font-semibold', { 'text-green-600': isChecked }, {'underline': url}]">
+      <a
+        v-if="url"
+        :href="url"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:underline"
+        @click.stop
+      >
+        {{ name }}
+      </a>
+      <span v-else>
+        {{ name }}
+      </span>
     </h6>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {defineProps, withDefaults, defineEmits} from 'vue';
+import { defineProps, withDefaults, defineEmits } from 'vue';
 
 type SharedValue = any;
 
@@ -36,9 +49,9 @@ const props = withDefaults(
     name: string;
     value: SharedValue;
     isChecked: boolean;
+    url?: string;
   }>(),
   {
-    label: '',
     isChecked: false,
   },
 );
