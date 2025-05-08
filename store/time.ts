@@ -28,11 +28,11 @@ const useTimeStore = defineStore('time', {
             label: day.name,
           }));
         } else {
-          showToast('error', 'Error', 'Unexpected response format');
+          showToast('error', 'Errore', 'Formato della risposta inatteso.');
         }
       } catch (err: any) {
-        console.error('Error loading days:', err);
-        showToast('error', 'Error', 'Unable to load days');
+        console.error('Errore nel recupero dei giorni:', err);
+        showToast('error', 'Errore', 'Errore nel recupero dei giorni.');
       } finally {
         this.loading = false;
       }
