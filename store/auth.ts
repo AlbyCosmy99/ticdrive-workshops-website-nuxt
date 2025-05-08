@@ -103,6 +103,14 @@ const useAuthStore = defineStore('auth', {
         };
       }
 
+      let consents = stepStore.declarationsOfConformity.map(declaration => declaration.id)
+      if(stepOneData.acceptUpdates) {
+        consents.push(stepStore.socialUpdatesConsent?.id!)
+      }
+      if(stepOneData.acceptPrivacyPolicy) {
+        consents.push(stepStore.privacyPolicy?.id!)
+      }
+
       const payload = {
         name: stepOneData.name,
         surname: stepOneData.surname,
@@ -126,6 +134,8 @@ const useAuthStore = defineStore('auth', {
         signatureName: stepEightData.signature.name,
         signatureSurname: stepEightData.signature.surname,
         schedule,
+        spokenLanguages: stepSevenData.languages.map(language => language.id),
+        consents
       };
 
       try {
