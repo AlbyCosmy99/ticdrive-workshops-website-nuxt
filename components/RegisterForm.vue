@@ -117,14 +117,6 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
         );
         return false;
       }
-      if (stepStore.stepFiveData.maxPerDay === 0) {
-        showToast(
-          'info',
-          'Numero di veicoli gestiti giornalmente errato',
-          'Il numero di veicoli gestiti giornalmente deve essere maggiore di zero!',
-        );
-        return false;
-      }
       return true;
     case 6:
       if (!stepStore.stepSixData.images[4]) {

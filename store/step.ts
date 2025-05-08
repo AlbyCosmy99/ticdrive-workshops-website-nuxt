@@ -80,7 +80,6 @@ const useStepStore = defineStore('step', {
     },
     stepFiveData: {
       activeDays: [],
-      maxPerDay: 0,
       homeService: false,
       timeSlots: [],
     },

@@ -127,7 +127,6 @@ const useAuthStore = defineStore('auth', {
         personalEmail: stepTwoData.referContact.email,
         specializations: stepThreeData.specializations.map(s => s.id),
         services: stepFourData.services.map(s => s.id),
-        maxDailyVehicles: stepFiveData.maxPerDay,
         offersHomeServices: stepFiveData.homeService,
         description: stepSevenData.description,
         laborWarrantyMonths: stepEightData.warranty,
