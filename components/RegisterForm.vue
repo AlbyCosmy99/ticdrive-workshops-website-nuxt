@@ -176,8 +176,9 @@ const nextStep = async (): Promise<void> => {
 
       register();
     } else {
-      stepStore.completedSteps.push(stepStore.currentStep)
-      console.log(stepStore.completedSteps)
+      if(!stepStore.completedSteps.includes(stepStore.currentStep)) {
+        stepStore.completedSteps.push(stepStore.currentStep)
+      }
       stepStore.currentStep++;
     }
   }
