@@ -49,7 +49,7 @@
         <h2 class="text-2xl font-semibold">Recensioni Recenti</h2>
         <SeeAllButton @on-click="router.push('/reviews')" />
       </div>
-      <ReviewCards />
+      <ReviewExtendedCards />
     </div>
   </div>
 </template>
@@ -58,7 +58,7 @@
 import BookingCard from '~/components/ui/cards/dashboard/BookingCard.vue';
 import StatsCards from '../ui/cards/dashboard/stats/StatsCards.vue';
 import SeeAllButton from '../ui/buttons/SeeAllButton.vue';
-import ReviewCards from '../ui/cards/reviews/ReviewCards.vue';
+import ReviewExtendedCards from '../ui/cards/reviews/ReviewExtendedCards.vue';
 
 const router = useRouter();
 </script>

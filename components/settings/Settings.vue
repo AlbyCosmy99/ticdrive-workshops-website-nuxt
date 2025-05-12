@@ -5,9 +5,9 @@
         <h2 class="text-2xl font-semibold mb-4">Profilo Gestore Officina</h2>
         <div class="flex items-center gap-4 justify-between">
           <div class="flex items-center gap-4">
-            <div class="rounded-full overflow-hidden h-[94px] w-[94px]">
+            <div v-if="authStore.user?.images.length" class="rounded-full overflow-hidden h-[94px] w-[94px]">
               <NuxtImg
-                :src="authStore.user?.profileImageUrl"
+                :src="authStore.user?.images[0].url"
                 alt="Profile Image"
                 class="object-cover w-full h-full"
               />
@@ -91,7 +91,7 @@
 
         <div class="mb-6 border-b pb-6">
           <button
-            @click="logout"
+            @click="authStore.logout()"
             class="text-drive text-base font-normal hover:text-green-700"
           >
             Logout
@@ -141,12 +141,6 @@ const changePassword = () => {
 
 const modifyWorkshopDetails = () => {
   emit('modifyWorkshop');
-};
-
-const logout = () => {
-  authStore.logout();
-  localStorage.removeItem('token');
-  router.replace('/auth/login');
 };
 
 const deleteAccount = () => {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ReviewCard from './ReviewCard.vue';
+import ReviewExtendedCard from './ReviewExtendedCard.vue';
 </script>
 
 <template>
@@ -40,7 +40,7 @@ import ReviewCard from './ReviewCard.vue';
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
-        <ReviewCard
+        <ReviewExtendedCard
           number="01"
           user="Mario Rossi"
           userId="#A000001"
@@ -50,7 +50,7 @@ import ReviewCard from './ReviewCard.vue';
           service="Tagliando"
           rating="5"
         />
-        <ReviewCard
+        <ReviewExtendedCard
           number="02"
           user="Paolo Verdi"
           userId="#A000002"
@@ -60,7 +60,7 @@ import ReviewCard from './ReviewCard.vue';
           service="Cambio pastiglie"
           rating="4"
         />
-        <ReviewCard
+        <ReviewExtendedCard
           number="03"
           user="Marietta Rosa"
           userId="#A000003"

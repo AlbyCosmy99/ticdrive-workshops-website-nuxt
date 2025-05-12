@@ -4,7 +4,6 @@
   >
     <h1 class="text-gray-500 text-4xl font-semibold">Firma e Accettazione</h1>
 
-    <!-- Garanzia -->
     <h1 class="text-gray-500 text-2xl font-semibold mt-10">
       Garanzia e responsabilità
     </h1>
@@ -15,7 +14,6 @@
       @update:number="updateWarranty"
     />
 
-    <!-- Firma digitale -->
     <h1 class="text-gray-500 text-2xl font-semibold mt-8">Firma digitale</h1>
     <div
       class="p-1 mt-2 border border-gray-500 rounded-xl w-full flex flex-col sm:flex-row gap-3 justify-between relative"
@@ -60,12 +58,14 @@
         <Calendar
           v-model="stepStore.stepEightData.signature.date"
           readonly
+          dateFormat="dd/mm/yy"
           placeholder="(giorno/mese/anno)"
           :class="[
             'outline-none date-picker-wrapper text-center bg-gray-100 px-5 py-2 max-h-10',
             {'input-error': v$.signature.date.$errors.length},
           ]"
         />
+
         <span v-if="v$.signature.date.$errors.length" class="invalid-feedback">
           {{ v$.signature.date.$errors[0]?.$message || '' }}
         </span>
@@ -79,7 +79,14 @@
     >
       Autodichiarazione di conformità
     </h1>
+    <div
+      v-if="stepStore.loading"
+      class="flex justify-center overflow-auto h-40"
+    >
+      <UiSpinnersTicDriveSpinner />
+    </div>
     <TicDriveRadio
+      v-else
       v-for="conformity in stepStore.declarationsOfConformity"
       :key="conformity.id"
       :id="conformity.id"
@@ -102,6 +109,7 @@ import useStepStore from '~/store/step';
 import Calendar from 'primevue/calendar';
 import TicDriveRadio from '~/components/ui/radios/TicDriveRadio.vue';
 import type {Conformity} from '~/types/auth/Conformity';
+import {UiSpinnersTicDriveSpinner} from '#components';
 
 const stepStore = useStepStore();
 stepStore.getDeclarationsOfConformity();

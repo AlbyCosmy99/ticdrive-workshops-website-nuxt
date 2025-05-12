@@ -8,7 +8,7 @@
   >
     <div
       :class="[
-        'rounded-full border w-6 h-6 absolute',
+        'rounded-full border w-6 h-6 absolute flex justify-center items-center',
         isChecked ? 'border-green-500' : 'border-gray-500',
       ]"
     >
