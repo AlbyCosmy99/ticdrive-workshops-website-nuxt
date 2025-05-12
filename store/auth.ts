@@ -103,12 +103,14 @@ const useAuthStore = defineStore('auth', {
         };
       }
 
-      let consents = stepStore.declarationsOfConformity.map(declaration => declaration.id)
-      if(stepOneData.acceptUpdates) {
-        consents.push(stepStore.socialUpdatesConsent?.id!)
+      let consents = stepStore.declarationsOfConformity.map(
+        declaration => declaration.id,
+      );
+      if (stepOneData.acceptUpdates) {
+        consents.push(stepStore.socialUpdatesConsent?.id!);
       }
-      if(stepOneData.acceptPrivacyPolicy) {
-        consents.push(stepStore.privacyPolicy?.id!)
+      if (stepOneData.acceptPrivacyPolicy) {
+        consents.push(stepStore.privacyPolicy?.id!);
       }
 
       const payload = {
@@ -134,7 +136,7 @@ const useAuthStore = defineStore('auth', {
         signatureSurname: stepEightData.signature.surname,
         schedule,
         spokenLanguages: stepSevenData.languages.map(language => language.id),
-        consents
+        consents,
       };
 
       try {

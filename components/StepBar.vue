@@ -13,11 +13,18 @@
       v-if="stepStore.currentStep >= 0 && isRegisterRoute && !hideBar"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-8 gap-1 w-8/9 ps-6"
     >
-      <div v-for="(step, index) in stepStore.steps" :key="index" class="mt-2 cursor-pointer" @click="stepStore.currentStep = step.step">
+      <div
+        v-for="(step, index) in stepStore.steps"
+        :key="index"
+        class="mt-2 cursor-pointer"
+        @click="stepStore.currentStep = step.step"
+      >
         <div
           :class="[
             'h-[5px]',
-            stepStore.completedSteps.includes(step.step)  ? 'bg-green-500' : 'bg-gray-200',
+            stepStore.completedSteps.includes(step.step)
+              ? 'bg-green-500'
+              : 'bg-gray-200',
           ]"
         ></div>
 

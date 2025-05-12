@@ -20,7 +20,13 @@
       />
     </div>
 
-    <h6 :class="['ms-8 text-sm font-semibold', { 'text-green-600': isChecked }, {'underline': url}]">
+    <h6
+      :class="[
+        'ms-8 text-sm font-semibold',
+        {'text-green-600': isChecked},
+        {underline: url},
+      ]"
+    >
       <a
         v-if="url"
         :href="url"
@@ -39,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, withDefaults, defineEmits } from 'vue';
+import {defineProps, withDefaults, defineEmits} from 'vue';
 
 type SharedValue = any;
 

@@ -122,7 +122,6 @@
 <script lang="ts" setup>
 import Calendar from 'primevue/calendar';
 import TicDriveSlider from '~/components/ui/sliders/TicDriveSlider.vue';
-import PlusMinusField from '~/components/PlusMinusField.vue';
 import useStepStore from '~/store/step';
 import type {Day} from '~/types/datetime/Day';
 import useTimeStore from '~/store/time';
@@ -204,7 +203,7 @@ const updateHomeService = (isYes: boolean) => {
 <style scoped>
 :deep(.p-inputtext) {
   text-align: center !important;
-  padding: 0.5rem 0.75rem;
+  padding: 0;
   border-radius: 0.5rem;
   border: 1px solid #d1d5db;
   background-color: #f9fafb;

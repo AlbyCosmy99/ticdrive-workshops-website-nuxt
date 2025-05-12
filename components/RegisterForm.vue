@@ -51,7 +51,7 @@
 import {ref, computed} from 'vue';
 import useStepStore from '~/store/step';
 
-import { watchEffect } from 'vue';
+import {watchEffect} from 'vue';
 import Step1 from './auth/registrationSteps/Step1.vue';
 import Step2 from './auth/registrationSteps/Step2.vue';
 import Step3 from './auth/registrationSteps/Step3.vue';
@@ -124,7 +124,7 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
         showToast(
           'warn',
           'Lingua non selezionata.',
-          "Per favore seleziona almeno una lingua!",
+          'Per favore seleziona almeno una lingua!',
         );
         return false;
       }
@@ -153,13 +153,13 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
         );
         return false;
       }
-      if(stepStore.completedSteps.length !== 7) {
+      if (stepStore.completedSteps.length !== 7) {
         showToast(
           'warn',
           'Tutti i passaggi devono essere completati.',
           'Completa tutti i passaggi della fase di registrazione!',
         );
-        return false
+        return false;
       }
       return true;
     default:
@@ -173,11 +173,10 @@ const nextStep = async (): Promise<void> => {
 
   if (isValid) {
     if (stepStore.currentStep === 8) {
-
       register();
     } else {
-      if(!stepStore.completedSteps.includes(stepStore.currentStep)) {
-        stepStore.completedSteps.push(stepStore.currentStep)
+      if (!stepStore.completedSteps.includes(stepStore.currentStep)) {
+        stepStore.completedSteps.push(stepStore.currentStep);
       }
       stepStore.currentStep++;
     }
@@ -193,5 +192,4 @@ const prevStep = (): void => {
 const register = () => {
   authStore.register();
 };
-
 </script>

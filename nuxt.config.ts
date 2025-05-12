@@ -4,9 +4,9 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
-        { rel: 'icon', type: 'image/png', href: '/images/ticDriveLogo.png' }
-      ]
-    }
+        {rel: 'icon', type: 'image/png', href: '/images/ticDriveLogo.png'},
+      ],
+    },
   },
   compatibilityDate: '2024-11-01',
   devtools: {enabled: true},
