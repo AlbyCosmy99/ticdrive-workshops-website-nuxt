@@ -109,59 +109,6 @@
             </button>
           </form>
         </div>
-
-        <div v-else-if="currentStep === 'changePassword'">
-          <div class="mb-8">
-            <h1 class="text-2xl font-bold mb-2">Reset Password</h1>
-            <p class="text-gray-500">
-              Inserisci la tua nuova password per completare il processo
-            </p>
-          </div>
-
-          <form @submit.prevent="submitNewPassword">
-            <div class="mb-4">
-              <label class="block text-black font-medium mb-2"
-                >New Password</label
-              >
-              <input
-                type="password"
-                v-model="newPassword"
-                placeholder="Inserisci nuova password"
-                class="w-full p-4 bg-gray-100 rounded-lg focus:outline-none"
-                required
-                minlength="8"
-              />
-            </div>
-
-            <div class="mb-8">
-              <label class="block text-black font-medium mb-2"
-                >Confirm New Password</label
-              >
-              <input
-                type="password"
-                v-model="confirmPassword"
-                placeholder="Conferma nuova password"
-                class="w-full p-4 bg-gray-100 rounded-lg focus:outline-none"
-                required
-                minlength="8"
-              />
-              <p 
-                v-if="passwordMismatch" 
-                class="text-red-500 text-sm mt-2"
-              >
-                Le password non corrispondono
-              </p>
-            </div>
-
-            <button
-              type="submit"
-              :disabled="!newPassword || !confirmPassword || loading || passwordMismatch"
-              class="w-full py-4 bg-green-inter text-white font-medium rounded-lg hover:bg-green-dark focus:outline-none transition duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
-            >
-              {{ loading ? 'Salvataggio in corso...' : 'Salva nuova password' }}
-            </button>
-          </form>
-        </div>
       </div>
     </div>
   </div>
@@ -189,11 +136,6 @@ const confirmPassword = ref('');
 const loading = ref(false);
 const showToast = useToast();
 const $ticDriveAxios = useTicDriveAxios();
-const authStore = useAuthStore()
-
-const passwordMismatch = computed(() => {
-  return newPassword.value && confirmPassword.value && newPassword.value !== confirmPassword.value;
-});
 
 const handleBackButton = () => {
   if (currentStep.value === 'verification') {
@@ -243,32 +185,10 @@ const submitVerificationCode = async () => {
       email: email.value,
       code: verificationCode.value,
     });
-    
-    
-    currentStep.value = 'changePassword';
+
+    resetForm();
   } catch (error) {
     showToast('error', 'Riprova', 'Il codice non è valido.');
-  } finally {
-    loading.value = false;
-  }
-};
-
-const submitNewPassword = async () => {
-  if (!newPassword.value || !confirmPassword.value) return;
-  if (newPassword.value !== confirmPassword.value) return;
-
-  loading.value = true;
-  try {
-    await $ticDriveAxios.post('/auth/reset-password', {
-      email: email.value,
-      newPassword: newPassword.value,
-      confirmPassword: confirmPassword.value
-    });
-    await authStore.login(email.value, newPassword.value)
-    showToast('success', 'Successo', 'Password aggiornata con successo.');
-    close();
-  } catch (error) {
-    showToast('error', 'Riprova', 'Errore durante il reset della password.');
   } finally {
     loading.value = false;
   }

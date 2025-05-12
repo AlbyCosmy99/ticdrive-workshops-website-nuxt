@@ -7,21 +7,17 @@
       collection and use of personal data by us.
     </p>
 
-    <!-- Privacy Policy content -->
     <div v-for="(section, index) in privacyPolicySections" :key="index">
       <h2 class="text-lg font-semibold mb-3 mt-5">{{ section.title }}</h2>
       <div v-html="section.content"></div>
     </div>
 
-    <!-- Terms of Use content -->
     <h2 class="text-lg font-semibold mb-3 mt-8">2. Terms of Use</h2>
     <div v-for="(section, index) in termsOfUseSections" :key="index">
       <h2 class="text-lg font-semibold mb-3 mt-5">{{ section.title }}</h2>
       <div v-html="section.content"></div>
     </div>
-    <!-- Add rest of Terms of Use content -->
 
-    <!-- EULA content -->
     <h2 class="text-lg font-semibold mb-3 mt-8">3. End-User License Agreement (EULA)</h2>
     <div v-for="(section, index) in eulaSections" :key="index">
       <h2 class="text-lg font-semibold mb-3 mt-5">{{ section.title }}</h2>
@@ -450,6 +446,4 @@ const eulaSections = [
     <p>11.5. Please note that this EULA, its subject matter and its formation are governed by the law of Italy. You and we both agree that the courts of Italy will have non-exclusive jurisdiction.</p>`
   },
 ];
-
-
 </script>

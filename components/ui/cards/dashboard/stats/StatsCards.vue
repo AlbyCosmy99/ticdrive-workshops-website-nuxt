@@ -55,7 +55,6 @@ import StarIcon from '@/public/svg/stars/star.svg';
       <template #icon>
         <div class="flex flex-col justify-center items-center gap-1">
           <StarIcon />
-          <p class="font-bold text-base">4,7</p>
         </div>
       </template>
     </StatsCard>

@@ -26,7 +26,7 @@
     <TicDriveInput
       id="tel"
       label="Telefono Aziendale*"
-      placeholder="+39 *** *******"
+      placeholder="es. 333 *******"
       v-model="stepStore.stepOneData.phoneNumber"
       type="tel"
       :error-message="v$.phoneNumber.$errors[0]?.$message || ''"

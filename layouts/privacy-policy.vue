@@ -14,30 +14,13 @@
 
         <div class="max-w-4xl mx-auto bg-white rounded-md shadow-sm border-2 border-green-500">
             <div class="p-6">
-                <!-- This is where the page content will be injected -->
+                
                 <slot />
 
                 <div class="mt-8 pt-6 border-t border-gray-200">
                     <p class="text-sm text-gray-500">Ultimo aggiornamento: 5 Maggio 2025</p>
-
-                    <div class="mt-6">
-                        <button @click="goBack"
-                            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
-                            Indietro
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
-<script lang="ts" setup>
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-
-const goBack = () => {
-    router.back();
-};
-</script>
