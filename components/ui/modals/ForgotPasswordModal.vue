@@ -123,28 +123,40 @@
               <label class="block text-black font-medium mb-2"
                 >New Password</label
               >
-              <input
-                type="password"
-                v-model="newPassword"
-                placeholder="Inserisci nuova password"
-                class="w-full p-4 bg-gray-100 rounded-lg focus:outline-none"
-                required
-                minlength="8"
-              />
+              <div class="relative">
+                <input
+                  :type="showNewPassword ? 'text' : 'password'"
+                  v-model="newPassword"
+                  placeholder="Inserisci nuova password"
+                  class="w-full p-4 bg-gray-100 rounded-lg focus:outline-none pr-10"
+                  required
+                  minlength="8"
+                />
+                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" @click="toggleNewPasswordVisibility">
+                  <NuxtImg v-if="showNewPassword" src="/svg/stars/occhioaperto.svg" alt="Hide password" class="w-[18px] h-[18px]" width="18" height="18" />
+                  <NuxtImg v-else src="/svg/stars/occhiobarrato.svg" alt="Show password" class="w-[18px] h-[18px]" width="18" height="18" />
+                </div>
+              </div>
             </div>
 
             <div class="mb-8">
               <label class="block text-black font-medium mb-2"
                 >Confirm New Password</label
               >
-              <input
-                type="password"
-                v-model="confirmPassword"
-                placeholder="Conferma nuova password"
-                class="w-full p-4 bg-gray-100 rounded-lg focus:outline-none"
-                required
-                minlength="8"
-              />
+              <div class="relative">
+                <input
+                  :type="showConfirmPassword ? 'text' : 'password'"
+                  v-model="confirmPassword"
+                  placeholder="Conferma nuova password"
+                  class="w-full p-4 bg-gray-100 rounded-lg focus:outline-none pr-10"
+                  required
+                  minlength="8"
+                />
+                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" @click="toggleConfirmPasswordVisibility">
+                  <NuxtImg v-if="showConfirmPassword" src="/svg/stars/occhioaperto.svg" alt="Hide password" class="w-[18px] h-[18px]" width="18" height="18" />
+                  <NuxtImg v-else src="/svg/stars/occhiobarrato.svg" alt="Show password" class="w-[18px] h-[18px]" width="18" height="18" />
+                </div>
+              </div>
               <p 
                 v-if="passwordMismatch" 
                 class="text-red-500 text-sm mt-2"
@@ -191,6 +203,18 @@ const showToast = useToast();
 const $ticDriveAxios = useTicDriveAxios();
 const authStore = useAuthStore()
 
+// Password visibility toggles
+const showNewPassword = ref(false);
+const showConfirmPassword = ref(false);
+
+const toggleNewPasswordVisibility = () => {
+  showNewPassword.value = !showNewPassword.value;
+};
+
+const toggleConfirmPasswordVisibility = () => {
+  showConfirmPassword.value = !showConfirmPassword.value;
+};
+
 const passwordMismatch = computed(() => {
   return newPassword.value && confirmPassword.value && newPassword.value !== confirmPassword.value;
 });
@@ -216,6 +240,8 @@ const resetForm = () => {
   verificationCode.value = '';
   newPassword.value = '';
   confirmPassword.value = '';
+  showNewPassword.value = false;
+  showConfirmPassword.value = false;
   loading.value = false;
 };
 
