@@ -32,36 +32,88 @@
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Password attuale</label
           >
-          <input
-            type="password"
-            v-model="currentPassword"
-            class="w-full p-2 border border-gray-300 rounded-md"
-            required
-          />
+          <div class="relative">
+            <input
+              :type="showCurrentPassword ? 'text' : 'password'"
+              v-model="currentPassword"
+              class="w-full p-2 border border-gray-300 rounded-md pr-10"
+              required
+            />
+            <div
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+              @click="toggleCurrentPasswordVisibility"
+            >
+              <NuxtImg
+                v-if="showCurrentPassword"
+                src="/svg/stars/occhioaperto.svg"
+                alt="Hide password"
+                class="w-[18px] h-[18px]"
+                width="18"
+                height="18"
+              />
+              <NuxtImg
+                v-else
+                src="/svg/stars/occhiobarrato.svg"
+                alt="Show password"
+                class="w-[18px] h-[18px]"
+                width="18"
+                height="18"
+              />
+            </div>
+          </div>
         </div>
 
         <div class="mb-4">
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Nuova password</label
           >
-          <input
-            type="password"
-            v-model="newPassword"
-            class="w-full p-2 border border-gray-300 rounded-md"
-            required
-          />
+          <div class="relative">
+            <input
+              :type="showNewPassword ? 'text' : 'password'"
+              v-model="newPassword"
+              class="w-full p-2 border border-gray-300 rounded-md pr-10"
+              required
+            />
+            <div
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+              @click="toggleNewPasswordVisibility"
+            >
+              <NuxtImg
+                v-if="showNewPassword"
+                src="/svg/stars/occhioaperto.svg"
+                alt="Hide password"
+                class="w-[18px] h-[18px]"
+                width="18"
+                height="18"
+              />
+              <NuxtImg
+                v-else
+                src="/svg/stars/occhiobarrato.svg"
+                alt="Show password"
+                class="w-[18px] h-[18px]"
+                width="18"
+                height="18"
+              />
+            </div>
+          </div>
         </div>
 
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-1"
             >Conferma nuova password</label
           >
-          <input
-            type="password"
-            v-model="confirmPassword"
-            class="w-full p-2 border border-gray-300 rounded-md"
-            required
-          />
+          <div class="relative">
+            <input
+              :type="showConfirmPassword ? 'text' : 'password'"
+              v-model="confirmPassword"
+              class="w-full p-2 border border-gray-300 rounded-md pr-10"
+              required
+            />
+            <PasswordEyeToggle
+              :show-password="showConfirmPassword"
+              @toggle="toggleConfirmPasswordVisibility"
+            />
+          </div>
           <p v-if="passwordMismatch" class="mt-1 text-sm text-red-600">
             Le password non corrispondono
           </p>
@@ -89,6 +141,7 @@
 
 <script setup lang="ts">
 import {ref, computed} from 'vue';
+import PasswordEyeToggle from '../toggles/PasswordEyeToggle.vue';
 
 interface PasswordChangeModalProps {
   isOpen: boolean;
@@ -100,6 +153,23 @@ const emit = defineEmits(['close', 'save']);
 const currentPassword = ref('');
 const newPassword = ref('');
 const confirmPassword = ref('');
+
+// Password visibility toggles
+const showCurrentPassword = ref(false);
+const showNewPassword = ref(false);
+const showConfirmPassword = ref(false);
+
+const toggleCurrentPasswordVisibility = () => {
+  showCurrentPassword.value = !showCurrentPassword.value;
+};
+
+const toggleNewPasswordVisibility = () => {
+  showNewPassword.value = !showNewPassword.value;
+};
+
+const toggleConfirmPasswordVisibility = () => {
+  showConfirmPassword.value = !showConfirmPassword.value;
+};
 
 const passwordMismatch = computed(() => {
   return (
@@ -128,5 +198,8 @@ const resetForm = () => {
   currentPassword.value = '';
   newPassword.value = '';
   confirmPassword.value = '';
+  showCurrentPassword.value = false;
+  showNewPassword.value = false;
+  showConfirmPassword.value = false;
 };
 </script>
