@@ -3,10 +3,10 @@
     <div class="prose max-w-none text-sm">
       <h2 class="text-lg font-semibold mb-3">1. Privacy Policy</h2>
       <p>
-        Thank you for your interest in this Privacy Policy, and welcome to
-        TicDrive our iOS and Android mobile application (our "App"). This policy
-        is intended to inform the users of our App about the nature, scope, and
-        purpose of the collection and use of personal data by us.
+        Welcome to TicDrive! We are pleased that you are using our Software as a Service (SaaS) located at
+       <a href="https://www.ticdrive.it/auth/login" class="text-blue-600 hover:underline">www.ticdrive.it</a>.
+        Data protection and data security when using our Services are very important to us. We would
+        therefore like to inform you which of your personal data we collect and for what purposes it is used.
       </p>
 
       <div v-for="(section, index) in privacyPolicySections" :key="index">
