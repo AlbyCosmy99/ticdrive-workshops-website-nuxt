@@ -1,6 +1,6 @@
 <template>
   <LayoutAuthRegistration
-    :main-image="`/images/reg${stepStore.currentStep}.jpg`"
+    :main-image="`@/public/images/reg${stepStore.currentStep}.jpg`"
   >
     <template #rightContent>
       <RegisterForm />
