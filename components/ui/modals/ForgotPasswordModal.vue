@@ -132,9 +132,26 @@
                   required
                   minlength="8"
                 />
-                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" @click="toggleNewPasswordVisibility">
-                  <NuxtImg v-if="showNewPassword" src="/svg/stars/occhioaperto.svg" alt="Hide password" class="w-[18px] h-[18px]" width="18" height="18" />
-                  <NuxtImg v-else src="/svg/stars/occhiobarrato.svg" alt="Show password" class="w-[18px] h-[18px]" width="18" height="18" />
+                <div
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  @click="toggleNewPasswordVisibility"
+                >
+                  <NuxtImg
+                    v-if="showNewPassword"
+                    src="/svg/stars/occhioaperto.svg"
+                    alt="Hide password"
+                    class="w-[18px] h-[18px]"
+                    width="18"
+                    height="18"
+                  />
+                  <NuxtImg
+                    v-else
+                    src="/svg/stars/occhiobarrato.svg"
+                    alt="Show password"
+                    class="w-[18px] h-[18px]"
+                    width="18"
+                    height="18"
+                  />
                 </div>
               </div>
             </div>
@@ -152,22 +169,38 @@
                   required
                   minlength="8"
                 />
-                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" @click="toggleConfirmPasswordVisibility">
-                  <NuxtImg v-if="showConfirmPassword" src="/svg/stars/occhioaperto.svg" alt="Hide password" class="w-[18px] h-[18px]" width="18" height="18" />
-                  <NuxtImg v-else src="/svg/stars/occhiobarrato.svg" alt="Show password" class="w-[18px] h-[18px]" width="18" height="18" />
+                <div
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  @click="toggleConfirmPasswordVisibility"
+                >
+                  <NuxtImg
+                    v-if="showConfirmPassword"
+                    src="/svg/stars/occhioaperto.svg"
+                    alt="Hide password"
+                    class="w-[18px] h-[18px]"
+                    width="18"
+                    height="18"
+                  />
+                  <NuxtImg
+                    v-else
+                    src="/svg/stars/occhiobarrato.svg"
+                    alt="Show password"
+                    class="w-[18px] h-[18px]"
+                    width="18"
+                    height="18"
+                  />
                 </div>
               </div>
-              <p 
-                v-if="passwordMismatch" 
-                class="text-red-500 text-sm mt-2"
-              >
+              <p v-if="passwordMismatch" class="text-red-500 text-sm mt-2">
                 Le password non corrispondono
               </p>
             </div>
 
             <button
               type="submit"
-              :disabled="!newPassword || !confirmPassword || loading || passwordMismatch"
+              :disabled="
+                !newPassword || !confirmPassword || loading || passwordMismatch
+              "
               class="w-full py-4 bg-green-inter text-white font-medium rounded-lg hover:bg-green-dark focus:outline-none transition duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
             >
               {{ loading ? 'Salvataggio in corso...' : 'Salva nuova password' }}
@@ -201,7 +234,7 @@ const confirmPassword = ref('');
 const loading = ref(false);
 const showToast = useToast();
 const $ticDriveAxios = useTicDriveAxios();
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 
 // Password visibility toggles
 const showNewPassword = ref(false);
@@ -216,7 +249,11 @@ const toggleConfirmPasswordVisibility = () => {
 };
 
 const passwordMismatch = computed(() => {
-  return newPassword.value && confirmPassword.value && newPassword.value !== confirmPassword.value;
+  return (
+    newPassword.value &&
+    confirmPassword.value &&
+    newPassword.value !== confirmPassword.value
+  );
 });
 
 const handleBackButton = () => {
@@ -269,8 +306,7 @@ const submitVerificationCode = async () => {
       email: email.value,
       code: verificationCode.value,
     });
-    
-    
+
     currentStep.value = 'changePassword';
   } catch (error) {
     showToast('error', 'Riprova', 'Il codice non è valido.');
@@ -288,9 +324,9 @@ const submitNewPassword = async () => {
     await $ticDriveAxios.post('/auth/reset-password', {
       email: email.value,
       newPassword: newPassword.value,
-      confirmPassword: confirmPassword.value
+      confirmPassword: confirmPassword.value,
     });
-    await authStore.login(email.value, newPassword.value)
+    await authStore.login(email.value, newPassword.value);
     showToast('success', 'Successo', 'Password aggiornata con successo.');
     close();
   } catch (error) {
