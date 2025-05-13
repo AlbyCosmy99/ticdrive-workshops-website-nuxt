@@ -25,26 +25,11 @@
         "
       />
 
-      <div
+      <PasswordEyeToggle
         v-if="type === 'password'"
-        class="absolute right-5 top-1/2 transform -translate-y-1/2 cursor-pointer"
-        @click="togglePasswordVisibility"
-      >
-        <NuxtImg
-          v-if="showPassword"
-          src="/svg/stars/occhioaperto.svg"
-          alt="Hide password"
-          width="20"
-          height="20"
-        />
-        <NuxtImg
-          v-else
-          src="/svg/stars/occhiobarrato.svg"
-          alt="Show password"
-          width="20"
-          height="20"
-        />
-      </div>
+        :show-password="showPassword"
+        @toggle="togglePasswordVisibility"
+      />
     </div>
 
     <div
@@ -59,6 +44,7 @@
 
 <script lang="ts" setup>
 import {ref, computed} from 'vue';
+import PasswordEyeToggle from '../toggles/PasswordEyeToggle.vue';
 
 type InputSize = 'standard' | 'small';
 type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';

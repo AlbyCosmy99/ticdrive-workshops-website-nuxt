@@ -132,27 +132,10 @@
                   required
                   minlength="8"
                 />
-                <div
-                  class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                  @click="toggleNewPasswordVisibility"
-                >
-                  <NuxtImg
-                    v-if="showNewPassword"
-                    src="/svg/stars/occhioaperto.svg"
-                    alt="Hide password"
-                    class="w-[18px] h-[18px]"
-                    width="18"
-                    height="18"
-                  />
-                  <NuxtImg
-                    v-else
-                    src="/svg/stars/occhiobarrato.svg"
-                    alt="Show password"
-                    class="w-[18px] h-[18px]"
-                    width="18"
-                    height="18"
-                  />
-                </div>
+                <PasswordEyeToggle
+                  :show-password="showNewPassword"
+                  @toggle="toggleNewPasswordVisibility"
+                />
               </div>
             </div>
 
@@ -169,27 +152,10 @@
                   required
                   minlength="8"
                 />
-                <div
-                  class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                  @click="toggleConfirmPasswordVisibility"
-                >
-                  <NuxtImg
-                    v-if="showConfirmPassword"
-                    src="/svg/stars/occhioaperto.svg"
-                    alt="Hide password"
-                    class="w-[18px] h-[18px]"
-                    width="18"
-                    height="18"
-                  />
-                  <NuxtImg
-                    v-else
-                    src="/svg/stars/occhiobarrato.svg"
-                    alt="Show password"
-                    class="w-[18px] h-[18px]"
-                    width="18"
-                    height="18"
-                  />
-                </div>
+                <PasswordEyeToggle
+                  :show-password="showConfirmPassword"
+                  @toggle="toggleConfirmPasswordVisibility"
+                />
               </div>
               <p v-if="passwordMismatch" class="text-red-500 text-sm mt-2">
                 Le password non corrispondono
@@ -215,6 +181,7 @@
 <script setup lang="ts">
 import {ref, defineProps, defineEmits, computed} from 'vue';
 import useAuthStore from '~/store/auth';
+import PasswordEyeToggle from '../toggles/PasswordEyeToggle.vue';
 
 interface PasswordResetModalProps {
   isOpen: boolean;
