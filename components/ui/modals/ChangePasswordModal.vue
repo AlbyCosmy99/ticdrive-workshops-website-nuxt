@@ -39,27 +39,10 @@
               class="w-full p-2 border border-gray-300 rounded-md pr-10"
               required
             />
-            <div
-              class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-              @click="toggleCurrentPasswordVisibility"
-            >
-              <NuxtImg
-                v-if="showCurrentPassword"
-                src="/svg/stars/occhioaperto.svg"
-                alt="Hide password"
-                class="w-[18px] h-[18px]"
-                width="18"
-                height="18"
-              />
-              <NuxtImg
-                v-else
-                src="/svg/stars/occhiobarrato.svg"
-                alt="Show password"
-                class="w-[18px] h-[18px]"
-                width="18"
-                height="18"
-              />
-            </div>
+            <PasswordEyeToggle
+              :show-password="showCurrentPassword"
+              @toggle="toggleCurrentPasswordVisibility"
+            />
           </div>
         </div>
 
@@ -74,27 +57,10 @@
               class="w-full p-2 border border-gray-300 rounded-md pr-10"
               required
             />
-            <div
-              class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-              @click="toggleNewPasswordVisibility"
-            >
-              <NuxtImg
-                v-if="showNewPassword"
-                src="/svg/stars/occhioaperto.svg"
-                alt="Hide password"
-                class="w-[18px] h-[18px]"
-                width="18"
-                height="18"
-              />
-              <NuxtImg
-                v-else
-                src="/svg/stars/occhiobarrato.svg"
-                alt="Show password"
-                class="w-[18px] h-[18px]"
-                width="18"
-                height="18"
-              />
-            </div>
+            <PasswordEyeToggle
+              :show-password="showNewPassword"
+              @toggle="toggleNewPasswordVisibility"
+            />
           </div>
         </div>
 
