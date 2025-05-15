@@ -216,17 +216,17 @@ const useAuthStore = defineStore('auth', {
       return new Promise((resolve, reject) => {
         try {
           // API call here
-          
+
           if (this.user) {
             this.user = {
               ...this.user,
               name: profileData.name,
               email: profileData.email,
               phoneNumber: profileData.phoneNumber,
-              address: profileData.address
+              address: profileData.address,
             };
           }
-          
+
           // Simulate a slight delay like an API call would have
           setTimeout(() => {
             resolve();
@@ -235,7 +235,7 @@ const useAuthStore = defineStore('auth', {
           reject(error);
         }
       });
-    }
+    },
   },
 });
 

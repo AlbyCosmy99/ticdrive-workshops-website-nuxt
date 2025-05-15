@@ -48,19 +48,19 @@ const handleUpdateProfile = async (userData: {
   address: string;
 }) => {
   console.log('Updating user profile:', userData);
-  
+
   try {
     // Show loading state
     toast.info('Aggiornamento in corso...');
-    
+
     // Call the store method to update the profile
     await authStore.updateProfile(userData);
-    
+
     // Show success message
     toast.success('Profilo aggiornato con successo!');
   } catch (error) {
     console.error('Error updating profile:', error);
-    toast.error('Errore durante l\'aggiornamento del profilo.');
+    toast.error("Errore durante l'aggiornamento del profilo.");
   }
 };
 </script>
