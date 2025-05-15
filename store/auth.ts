@@ -10,14 +10,6 @@ interface AuthState {
   loading: boolean;
 }
 
-// Interface for profile update data
-interface ProfileUpdateData {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  address: string;
-}
-
 const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     user: null,
@@ -209,32 +201,6 @@ const useAuthStore = defineStore('auth', {
       this.token = null;
       localStorage.removeItem('token');
       router.replace('/auth/login');
-    },
-
-    // New method to update user profile data (lascio commenti per chiarezza)
-    updateProfile(profileData: ProfileUpdateData): Promise<void> {
-      return new Promise((resolve, reject) => {
-        try {
-          // API call here
-
-          if (this.user) {
-            this.user = {
-              ...this.user,
-              name: profileData.name,
-              email: profileData.email,
-              phoneNumber: profileData.phoneNumber,
-              address: profileData.address,
-            };
-          }
-
-          // Simulate a slight delay like an API call would have
-          setTimeout(() => {
-            resolve();
-          }, 500);
-        } catch (error) {
-          reject(error);
-        }
-      });
     },
   },
 });

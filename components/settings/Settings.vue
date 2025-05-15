@@ -131,25 +131,14 @@
 
 <script setup lang="ts">
 import {ref} from 'vue';
-import {useRouter} from 'vue-router';
 import useAuthStore from '~/store/auth';
 import TicDrivebutton from '@/components/ui/buttons/TicDrivebutton.vue';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
 
-interface SettingsPageProps {
-  profileImagePath?: string;
-}
-
-const props = withDefaults(defineProps<SettingsPageProps>(), {
-  profileImagePath: 'public/images/Profile.png',
-});
-
-const router = useRouter();
 const authStore = useAuthStore();
 const isEditing = ref(false);
 const loading = ref(false);
 
-// Initialize user data from auth store
 const userData = ref({
   name: authStore.user?.name || '',
   email: authStore.user?.email || '',
@@ -162,7 +151,6 @@ const emit = defineEmits([
   'modifyWorkshop',
   'deleteAccount',
   'modifyProfile',
-  'updateProfile',
 ]);
 
 const changePassword = () => {
@@ -179,31 +167,5 @@ const deleteAccount = () => {
 
 const modifyProfile = () => {
   emit('modifyProfile');
-};
-
-const toggleEdit = async () => {
-  if (isEditing.value) {
-    // Save changes
-    try {
-      loading.value = true;
-      await emit('updateProfile', userData.value);
-      isEditing.value = false;
-
-      // Refresh the display data from the store after save
-      userData.value = {
-        name: authStore.user?.name || '',
-        email: authStore.user?.email || '',
-        phoneNumber: authStore.user?.phoneNumber || '',
-        address: authStore.user?.address || '',
-      };
-    } catch (error) {
-      console.error('Error saving profile:', error);
-    } finally {
-      loading.value = false;
-    }
-  } else {
-    // Enter edit mode
-    isEditing.value = true;
-  }
 };
 </script>
