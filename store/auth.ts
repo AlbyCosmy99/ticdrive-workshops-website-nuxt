@@ -57,7 +57,7 @@ const useAuthStore = defineStore('auth', {
       } = stepStore;
 
       const fullAddress = stepTwoData.fullAddress;
-      const address = `${fullAddress.streetAddress}, ${fullAddress.postalCode} ${fullAddress.city}, ${fullAddress.province}, Italy`;
+      const address = `${fullAddress.streetAddress}, ${fullAddress.postalCode} ${fullAddress.city}, ${fullAddress.province}, Italia`;
 
       let coordinates = {lat: null, lng: null};
       try {
