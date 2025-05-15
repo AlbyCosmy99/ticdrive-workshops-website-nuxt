@@ -23,8 +23,8 @@
             </div>
           </div>
           <TicDrivebutton
-            label="Modifica"
-            @click="modifyProfile"
+            :label="isEditing ? 'Salva' : 'Modifica'"
+            @click="toggleEdit"
             custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5"
           />
         </div>
@@ -39,39 +39,65 @@
           <label class="block text-base font-normal text-gray-700 mb-1"
             >Nome Cognome</label
           >
-          <div class="text-sm font-normal text-tic">
+          <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ authStore.user?.name }}
           </div>
+          <TicDriveInput
+            v-else
+            v-model="userData.name"
+            placeholder="Inserisci il tuo nome completo"
+            size="small"
+          />
         </div>
 
         <div class="mb-6 border-b pb-6">
           <label class="block text-base font-normal text-gray-700 mb-1"
             >Email</label
           >
-          <div class="text-sm font-normal text-tic">
+          <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ authStore.user?.email }}
           </div>
+          <TicDriveInput
+            v-else
+            v-model="userData.email"
+            placeholder="Inserisci la tua email"
+            type="email"
+            size="small"
+          />
         </div>
 
         <div class="mb-6 border-b pb-6">
           <label class="block text-base font-normal text-gray-700 mb-1"
             >Numero di telefono</label
           >
-          <div class="text-sm font-normal text-tic">
+          <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{
               authStore.user?.phoneNumber ||
               'Numero di telefono non disponibile'
             }}
           </div>
+          <TicDriveInput
+            v-else
+            v-model="userData.phoneNumber"
+            placeholder="Inserisci il tuo numero di telefono"
+            type="tel"
+            size="small"
+          />
         </div>
 
         <div class="mb-6 border-b pb-6">
           <label class="block text-base font-normal text-gray-700 mb-1"
             >Indirizzo</label
           >
-          <div class="text-sm font-normal text-tic">
+          <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ authStore.user?.address || 'Indirizzo non disponibile' }}
           </div>
+          <TicDriveInput
+            v-else
+            v-model="userData.address"
+            placeholder="Inserisci il tuo indirizzo"
+            size="small"
+          />
         </div>
 
         <div class="mb-6 border-b pb-6">
@@ -119,6 +145,7 @@ import {ref} from 'vue';
 import {useRouter} from 'vue-router';
 import useAuthStore from '~/store/auth';
 import TicDrivebutton from '@/components/ui/buttons/TicDrivebutton.vue';
+import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
 
 interface SettingsPageProps {
   profileImagePath?: string;
@@ -130,12 +157,22 @@ const props = withDefaults(defineProps<SettingsPageProps>(), {
 
 const router = useRouter();
 const authStore = useAuthStore();
+const isEditing = ref(false);
+
+// Initialize user data from auth store
+const userData = ref({
+  name: authStore.user?.name || '',
+  email: authStore.user?.email || '',
+  phoneNumber: authStore.user?.phoneNumber || '',
+  address: authStore.user?.address || '',
+});
 
 const emit = defineEmits([
   'changePassword',
   'modifyWorkshop',
   'deleteAccount',
   'modifyProfile',
+  'updateProfile'
 ]);
 
 const changePassword = () => {
@@ -152,5 +189,13 @@ const deleteAccount = () => {
 
 const modifyProfile = () => {
   emit('modifyProfile');
+};
+
+const toggleEdit = () => {
+  if (isEditing.value) {
+    // Save changes
+    emit('updateProfile', userData.value);
+  }
+  isEditing.value = !isEditing.value;
 };
 </script>
