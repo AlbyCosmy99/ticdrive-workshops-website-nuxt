@@ -170,6 +170,10 @@ const modifyProfile = () => {
 };
 
 const onEditProfile = () => {
-  
+   if(isEditing) {
+    //api call
+  }
+
+  isEditing.value = !isEditing.value
 }
 </script>
