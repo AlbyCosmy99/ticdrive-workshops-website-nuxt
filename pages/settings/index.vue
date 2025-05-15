@@ -41,16 +41,27 @@ const handleDeleteAccount = () => {
 };
 
 // Handler for profile update
-const handleUpdateProfile = (userData: {
+const handleUpdateProfile = async (userData: {
   name: string;
   email: string;
   phoneNumber: string;
   address: string;
 }) => {
   console.log('Updating user profile:', userData);
-  // In a real application, this would call an API to update the user data
-  // For now, we'll just show a success toast
-  toast.success('Profilo aggiornato con successo!');
+  
+  try {
+    // Show loading state
+    toast.info('Aggiornamento in corso...');
+    
+    // Call the store method to update the profile
+    await authStore.updateProfile(userData);
+    
+    // Show success message
+    toast.success('Profilo aggiornato con successo!');
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    toast.error('Errore durante l\'aggiornamento del profilo.');
+  }
 };
 </script>
 

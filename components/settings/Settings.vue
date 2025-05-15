@@ -23,8 +23,9 @@
             </div>
           </div>
           <TicDrivebutton
-            :label="isEditing ? 'Salva' : 'Modifica'"
+            :label="isEditing ? (isSaving ? 'Salvando...' : 'Salva') : 'Modifica'"
             @click="toggleEdit"
+            :disabled="isSaving"
             custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5"
           />
         </div>
@@ -158,6 +159,7 @@ const props = withDefaults(defineProps<SettingsPageProps>(), {
 const router = useRouter();
 const authStore = useAuthStore();
 const isEditing = ref(false);
+const isSaving = ref(false);
 
 // Initialize user data from auth store
 const userData = ref({
@@ -191,11 +193,29 @@ const modifyProfile = () => {
   emit('modifyProfile');
 };
 
-const toggleEdit = () => {
+const toggleEdit = async () => {
   if (isEditing.value) {
     // Save changes
-    emit('updateProfile', userData.value);
+    try {
+      isSaving.value = true;
+      await emit('updateProfile', userData.value);
+      isEditing.value = false;
+      
+      // Refresh the display data from the store after save
+      userData.value = {
+        name: authStore.user?.name || '',
+        email: authStore.user?.email || '',
+        phoneNumber: authStore.user?.phoneNumber || '',
+        address: authStore.user?.address || '',
+      };
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    } finally {
+      isSaving.value = false;
+    }
+  } else {
+    // Enter edit mode
+    isEditing.value = true;
   }
-  isEditing.value = !isEditing.value;
 };
 </script>
