@@ -22,14 +22,22 @@
               </p>
             </div>
           </div>
-          <TicDrivebutton
-            :label="
-              isEditing ? (loading ? 'Salvando...' : 'Salva') : 'Modifica'
-            "
-            @click="onEditProfile"
-            :disabled="loading"
-            custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5 w-[100px]"
-          />
+          <div class="flex gap-2">
+            <TicDrivebutton
+              v-if="isEditing"
+              label="Annulla"
+              @click="cancelEdit"
+              custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5 w-[100px] bg-gray-500 hover:bg-gray-600"
+            />
+            <TicDrivebutton
+              :label="
+                isEditing ? (loading ? 'Salvando...' : 'Salva') : 'Modifica'
+              "
+              @click="onEditProfile"
+              :disabled="loading"
+              custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5 w-[100px]"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -98,10 +106,25 @@
           <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ authStore.user?.address || 'Indirizzo non disponibile' }}
           </div>
-          <div v-else class="w-[400px]">
+          <div v-else class="flex flex-col w-[400px] gap-2">
             <TicDriveInput
-              v-model="userData.address"
-              placeholder="Inserisci il tuo indirizzo"
+              v-model="userData.address.streetAddress"
+              placeholder="Via e Numero Civico"
+              size="small"
+            />
+            <TicDriveInput
+              v-model="userData.address.city"
+              placeholder="Città"
+              size="small"
+            />
+            <TicDriveInput
+              v-model="userData.address.province"
+              placeholder="Provincia"
+              size="small"
+            />
+            <TicDriveInput
+              v-model="userData.address.postalCode"
+              placeholder="CAP"
               size="small"
             />
           </div>
@@ -143,8 +166,38 @@ const userData = ref({
   name: authStore.user?.name || '',
   email: authStore.user?.email || '',
   phoneNumber: authStore.user?.phoneNumber || '',
-  address: authStore.user?.address || '',
+  address: {
+    streetAddress: '',
+    city: '',
+    province: '',
+    postalCode: ''
+  }
 });
+
+// Parse the address string if available
+if (authStore.user?.address) {
+  try {
+    // Expected format: "Via e numero, CAP Città, Provincia, Italy"
+    const addressParts = authStore.user.address.split(',');
+    userData.value.address.streetAddress = addressParts[0]?.trim() || '';
+    
+    // Extract postal code and city
+    if (addressParts[1]) {
+      const cityParts = addressParts[1].trim().split(' ');
+      if (cityParts.length > 1) {
+        userData.value.address.postalCode = cityParts[0] || '';
+        userData.value.address.city = cityParts.slice(1).join(' ') || '';
+      }
+    }
+    
+    // Extract province
+    if (addressParts[2]) {
+      userData.value.address.province = addressParts[2].trim() || '';
+    }
+  } catch (error) {
+    console.error('Error parsing address:', error);
+  }
+}
 
 const emit = defineEmits([
   'changePassword',
@@ -169,11 +222,59 @@ const modifyProfile = () => {
   emit('modifyProfile');
 };
 
+const cancelEdit = () => {
+  // Reset form data to original values
+  userData.value.name = authStore.user?.name || '';
+  userData.value.email = authStore.user?.email || '';
+  userData.value.phoneNumber = authStore.user?.phoneNumber || '';
+  
+  // Reset address fields
+  if (authStore.user?.address) {
+    try {
+      const addressParts = authStore.user.address.split(',');
+      userData.value.address.streetAddress = addressParts[0]?.trim() || '';
+      
+      if (addressParts[1]) {
+        const cityParts = addressParts[1].trim().split(' ');
+        if (cityParts.length > 1) {
+          userData.value.address.postalCode = cityParts[0] || '';
+          userData.value.address.city = cityParts.slice(1).join(' ') || '';
+        }
+      }
+      
+      if (addressParts[2]) {
+        userData.value.address.province = addressParts[2].trim() || '';
+      }
+    } catch (error) {
+      console.error('Error parsing address:', error);
+    }
+  } else {
+    userData.value.address = {
+      streetAddress: '',
+      city: '',
+      province: '',
+      postalCode: ''
+    };
+  }
+  
+  // Exit editing mode
+  isEditing.value = false;
+};
+
 const onEditProfile = () => {
-   if(isEditing) {
-    //api call
+  if(isEditing.value) {
+    // Format address string like in registration
+    const { streetAddress, postalCode, city, province } = userData.value.address;
+    const formattedAddress = `${streetAddress}, ${postalCode} ${city}, ${province}, Italy`;
+    
+    // API call would go here
+    // Use formatted address in the API payload
+    console.log('Formatted address:', formattedAddress);
+    
+    // Here you would make the actual API call with all user data
+    // Don't forget to include the formatted address
   }
 
-  isEditing.value = !isEditing.value
+  isEditing.value = !isEditing.value;
 }
 </script>
