@@ -26,7 +26,7 @@
             :label="
               isEditing ? (loading ? 'Salvando...' : 'Salva') : 'Modifica'
             "
-            @click="toggleEdit"
+            @click="onEditProfile"
             :disabled="loading"
             custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5 w-[100px]"
           />
@@ -168,4 +168,8 @@ const deleteAccount = () => {
 const modifyProfile = () => {
   emit('modifyProfile');
 };
+
+const onEditProfile = () => {
+  
+}
 </script>
