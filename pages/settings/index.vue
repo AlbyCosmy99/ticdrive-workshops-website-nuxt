@@ -2,6 +2,7 @@
 import {ref} from 'vue';
 import Settings from '~/components/settings/Settings.vue';
 import ChangePasswordModal from '~/components/ui/modals/ChangePasswordModal.vue';
+import useToast from '~/composables/useToast';
 
 definePageMeta({
   layout: 'dashboard',
@@ -9,6 +10,7 @@ definePageMeta({
 });
 
 const showPasswordModal = ref(false);
+const toast = useToast();
 
 const openPasswordModal = () => {
   showPasswordModal.value = true;
@@ -37,6 +39,30 @@ const handleLogout = () => {
 const handleDeleteAccount = () => {
   console.log('Delete account');
 };
+
+// Handler for profile update
+const handleUpdateProfile = async (userData: {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+}) => {
+  console.log('Updating user profile:', userData);
+
+  try {
+    // Show loading state
+    toast.info('Aggiornamento in corso...');
+
+    // Call the store method to update the profile
+    await authStore.updateProfile(userData);
+
+    // Show success message
+    toast.success('Profilo aggiornato con successo!');
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    toast.error("Errore durante l'aggiornamento del profilo.");
+  }
+};
 </script>
 
 <template>
@@ -46,6 +72,7 @@ const handleDeleteAccount = () => {
       @modify-workshop="handleModifyWorkshop"
       @logout="handleLogout"
       @delete-account="handleDeleteAccount"
+      @update-profile="handleUpdateProfile"
     />
     <ChangePasswordModal
       :is-open="showPasswordModal"
