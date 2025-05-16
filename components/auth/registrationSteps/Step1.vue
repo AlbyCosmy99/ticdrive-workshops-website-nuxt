@@ -1,47 +1,97 @@
 <template>
-  <div class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center px-20">
+  <div
+    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center px-20 gap-2"
+  >
     <h1 class="text-4xl text-tic text-center font-semibold">Benvenuto!</h1>
     <h4 class="my-3 text-xl text-drive font-semibold text-center">
       Inserisci i tuoi dati per saperne di più.
     </h4>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
-      <TicDriveInput id="name" label="Nome*" placeholder="es. Mario" v-model="stepStore.stepOneData.name"
-        :error-message="v$.name.$errors[0]?.$message || ''" />
-      <TicDriveInput id="surname" label="Cognome" placeholder="es. Rossi" v-model="stepStore.stepOneData.surname" />
+      <TicDriveInput
+        id="name"
+        label="Nome*"
+        placeholder="es. Mario"
+        v-model="stepStore.stepOneData.name"
+        :error-message="v$.name.$errors[0]?.$message || ''"
+      />
+      <TicDriveInput
+        id="surname"
+        label="Cognome"
+        placeholder="es. Rossi"
+        v-model="stepStore.stepOneData.surname"
+      />
     </div>
 
-    <TicDriveInput id="tel" label="Telefono Aziendale*" placeholder="+39 *** *******"
-      v-model="stepStore.stepOneData.phoneNumber" type="tel"
-      :error-message="v$.phoneNumber.$errors[0]?.$message || ''" />
+    <TicDriveInput
+      id="tel"
+      label="Telefono Aziendale*"
+      placeholder="+39 *** *******"
+      v-model="stepStore.stepOneData.phoneNumber"
+      type="tel"
+      :error-message="v$.phoneNumber.$errors[0]?.$message || ''"
+    />
 
-    <TicDriveInput id="email" label="Email Aziendale*" placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
-      v-model="stepStore.stepOneData.email" :error-message="v$.email.$errors[0]?.$message || ''" />
-      
-    <TicDriveInput id="confirmEmail" label="Conferma Email Aziendale*" placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
-      v-model="stepStore.stepOneData.confirmEmail" :error-message="v$.confirmEmail.$errors[0]?.$message || ''" />
+    <TicDriveInput
+      id="email"
+      label="Email Aziendale*"
+      placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
+      v-model="stepStore.stepOneData.email"
+      :error-message="v$.email.$errors[0]?.$message || ''"
+    />
 
-    <TicDriveInput id="workshop" label="Nome dell’officina*" placeholder="es. Autofficina rossi"
-      v-model="stepStore.stepOneData.workshopName" :error-message="v$.workshopName.$errors[0]?.$message || ''" />
+    <TicDriveInput
+      id="confirmEmail"
+      label="Conferma Email Aziendale*"
+      placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
+      v-model="stepStore.stepOneData.confirmEmail"
+      :error-message="v$.confirmEmail.$errors[0]?.$message || ''"
+    />
 
-    <TicDriveInput id="password" label="Password*" placeholder="Inserisci password" type="password"
-      v-model="stepStore.stepOneData.password" :error-message="v$.password.$errors[0]?.$message || ''"
-      autocomplete="new-password" />
+    <TicDriveInput
+      id="workshop"
+      label="Nome dell’officina*"
+      placeholder="es. Autofficina rossi"
+      v-model="stepStore.stepOneData.workshopName"
+      :error-message="v$.workshopName.$errors[0]?.$message || ''"
+    />
 
-    <TicDriveInput id="repeated-password" label="Ripeti password*" placeholder="Inserisci password ripetuta"
-      type="password" v-model="stepStore.stepOneData.repeatedPassword"
-      :error-message="v$.repeatedPassword.$errors[0]?.$message || ''" autocomplete="new-password" />
+    <TicDriveInput
+      id="password"
+      label="Password*"
+      placeholder="Inserisci password"
+      type="password"
+      v-model="stepStore.stepOneData.password"
+      :error-message="v$.password.$errors[0]?.$message || ''"
+      autocomplete="new-password"
+    />
+
+    <TicDriveInput
+      id="repeated-password"
+      label="Ripeti password*"
+      placeholder="Inserisci password ripetuta"
+      type="password"
+      v-model="stepStore.stepOneData.repeatedPassword"
+      :error-message="v$.repeatedPassword.$errors[0]?.$message || ''"
+      autocomplete="new-password"
+    />
     <div v-if="stepStore.loading" class="mt-4 flex justify-center items-center">
       <UiSpinnersTicDriveSpinner />
     </div>
     <div v-else>
       <div v-if="stepStore.socialUpdatesConsent" class="my-1 mt-6">
-        <CheckboxField id="accept-updates" v-model="stepStore.stepOneData.acceptUpdates"
-          :label="stepStore.socialUpdatesConsent?.content" />
+        <CheckboxField
+          id="accept-updates"
+          v-model="stepStore.stepOneData.acceptUpdates"
+          :label="stepStore.socialUpdatesConsent?.content"
+        />
       </div>
       <div v-if="stepStore.privacyPolicy" class="my-1">
-        <CheckboxField id="accept-privacy-policy" v-model="stepStore.stepOneData.acceptPrivacyPolicy"
-          :label="stepStore.privacyPolicy?.content" />
+        <CheckboxField
+          id="accept-privacy-policy"
+          v-model="stepStore.stepOneData.acceptPrivacyPolicy"
+          :label="stepStore.privacyPolicy?.content"
+        />
       </div>
     </div>
   </div>
@@ -49,8 +99,8 @@
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { required, email, numeric, helpers } from '@vuelidate/validators';
-import { defineExpose, computed } from 'vue';
+import {required, email, numeric, helpers} from '@vuelidate/validators';
+import {defineExpose, computed} from 'vue';
 import useStepStore from '~/store/step';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
 

@@ -72,7 +72,6 @@
 <script lang="ts" setup>
 import {ref, onMounted} from 'vue';
 import useStepStore from '~/store/step';
-import CheckboxField from './CheckboxField.vue';
 import useAuthStore from '~/store/auth';
 import TicDriveAuthSlider from './ui/sliders/TicDriveAuthSlider.vue';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
@@ -81,7 +80,6 @@ import ForgotPasswordModal from './ui/modals/ForgotPasswordModal.vue';
 const useStore = useStepStore();
 const companyEmail = ref('');
 const password = ref('');
-const rememberMe = ref(true);
 const showToast = useToast();
 const isForgotPasswordModalOpen = ref(false);
 
