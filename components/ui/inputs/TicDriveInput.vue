@@ -1,10 +1,6 @@
 <template>
   <div class="w-full">
-    <label
-      v-if="label"
-      :for="id"
-      class="self-start mt-4 text-base text-black block"
-    >
+    <label v-if="label" :for="id" class="self-start mt-4 text-base text-black block">
       {{ label }}
     </label>
 
@@ -14,7 +10,7 @@
         :id="id"
         :placeholder="placeholder"
         :value="modelValue"
-        :class="[inputClasses, 'pr-12']"
+        :class="[inputClasses, type === 'password' ? 'pr-12' : '']"
         :aria-invalid="Boolean(errorMessage)"
         :aria-describedby="errorMessage ? `${id}-error` : undefined"
         :autocomplete="autocomplete"
@@ -25,14 +21,10 @@
         "
       />
 
-      <NuxtImg
+      <PasswordEyeToggle
         v-if="type === 'password'"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/6985640710eeb41e49e1efa67ef16cb3f8b29c3408fb1e345a7504c0c37e74c5?placeholderIfAbsent=true&apiKey=60b2620725b44e1c95ff63fd7ebca566"
-        alt="Toggle password visibility"
-        class="absolute right-8 top-1/2 transform -translate-y-1/2 w-[18px] cursor-pointer"
-        @click="togglePasswordVisibility"
-        width="18"
-        height="18"
+        :show-password="showPassword"
+        @toggle="togglePasswordVisibility"
       />
     </div>
 
@@ -48,6 +40,7 @@
 
 <script lang="ts" setup>
 import {ref, computed} from 'vue';
+import PasswordEyeToggle from '../toggles/PasswordEyeToggle.vue';
 
 type InputSize = 'standard' | 'small';
 type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';

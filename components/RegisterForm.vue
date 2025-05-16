@@ -51,7 +51,6 @@
 import {ref, computed} from 'vue';
 import useStepStore from '~/store/step';
 
-import {watchEffect} from 'vue';
 import Step1 from './auth/registrationSteps/Step1.vue';
 import Step2 from './auth/registrationSteps/Step2.vue';
 import Step3 from './auth/registrationSteps/Step3.vue';
@@ -173,7 +172,7 @@ const nextStep = async (): Promise<void> => {
 
   if (isValid) {
     if (stepStore.currentStep === 8) {
-      register();
+      await register();
     } else {
       if (!stepStore.completedSteps.includes(stepStore.currentStep)) {
         stepStore.completedSteps.push(stepStore.currentStep);
@@ -189,7 +188,19 @@ const prevStep = (): void => {
   if (stepStore.currentStep === 0) navigateTo('/auth/login');
 };
 
-const register = () => {
-  authStore.register();
+const register = async() => {
+  let isValid = true
+  for(let i = 1; i <= 8; i++) {
+      const stepValid = await stepValidation(i);
+      if(!stepValid) {
+        isValid = false
+        break
+      }
+  } 
+  if(isValid) {
+    authStore.register();
+  } else {
+    showToast('warn', "Completa tutti gli step", "Controlla di aver completato bene tutti gli step.")
+  }
 };
 </script>
