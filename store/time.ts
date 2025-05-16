@@ -20,19 +20,20 @@ const useTimeStore = defineStore('time', {
       this.loading = true;
 
       try {
-        const response = await $ticDriveAxios.get('datetime/days');
-
+        const response = await $ticDriveAxios.get(
+          'datetime/days?LanguageCode=it',
+        );
         if (Array.isArray(response.data)) {
           this.days = response.data.map(day => ({
             id: day.id,
-            label: day.name,
+            label: day.label,
           }));
         } else {
-          showToast('error', 'Error', 'Unexpected response format');
+          showToast('error', 'Errore', 'Formato della risposta inatteso.');
         }
       } catch (err: any) {
-        console.error('Error loading days:', err);
-        showToast('error', 'Error', 'Unable to load days');
+        console.error('Errore nel recupero dei giorni:', err);
+        showToast('error', 'Errore', 'Errore nel recupero dei giorni.');
       } finally {
         this.loading = false;
       }
