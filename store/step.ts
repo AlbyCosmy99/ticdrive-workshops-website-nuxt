@@ -1,5 +1,4 @@
 import {defineStore} from 'pinia';
-import type {Signature} from '~/types/auth/Signature';
 import type {StepEightData} from '~/types/auth/steps/StepEightData';
 import type {StepFiveData} from '~/types/auth/steps/StepFiveData';
 import type {StepFourData} from '~/types/auth/steps/StepFourData';
@@ -17,6 +16,7 @@ interface StepLabel {
 
 interface StepState {
   currentStep: number;
+  completedSteps: number[];
   loading: boolean;
   steps: StepLabel[];
   socialUpdatesConsent: legalDeclaration | undefined; //step1
@@ -35,6 +35,7 @@ interface StepState {
 const useStepStore = defineStore('step', {
   state: (): StepState => ({
     currentStep: 0,
+    completedSteps: [],
     loading: false,
     steps: [
       // {step: 1, value: 'Benvenuto'}, - ignored as it doesn t have the stepbar
@@ -54,8 +55,8 @@ const useStepStore = defineStore('step', {
       surname: '',
       phoneNumber: '',
       email: '',
-      confirmEmail: '',
       password: '',
+      confirmEmail: '',
       repeatedPassword: '',
       workshopName: '',
       acceptPrivacyPolicy: false,
@@ -81,7 +82,6 @@ const useStepStore = defineStore('step', {
     },
     stepFiveData: {
       activeDays: [],
-      maxPerDay: 0,
       homeService: false,
       timeSlots: [],
     },
