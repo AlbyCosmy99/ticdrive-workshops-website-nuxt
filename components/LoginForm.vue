@@ -43,7 +43,7 @@
 
       <div class="w-full max-w-lg lg:max-w-full">
         <div
-          class="flex justify-between gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full"
+          class="flex justify-end gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full"
         >
           <button
             type="button"
