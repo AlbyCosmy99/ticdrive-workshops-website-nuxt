@@ -87,13 +87,6 @@
       </div>
     </div>
 
-    <PlusMinusField
-      :label="'Numero massimo di veicoli gestibili al giorno:'"
-      :numberValue="stepStore.stepFiveData.maxPerDay"
-      :isMinusDisable="!stepStore.stepFiveData.maxPerDay"
-      @update:number="updateMaxVehicle"
-    />
-
     <div
       class="border-2 border-gray-500 p-4 flex flex-col sm:flex-row justify-between items-center mt-4 rounded-xl mb-10"
     >
@@ -129,7 +122,6 @@
 <script lang="ts" setup>
 import Calendar from 'primevue/calendar';
 import TicDriveSlider from '~/components/ui/sliders/TicDriveSlider.vue';
-import PlusMinusField from '~/components/PlusMinusField.vue';
 import useStepStore from '~/store/step';
 import type {Day} from '~/types/datetime/Day';
 import useTimeStore from '~/store/time';
@@ -160,8 +152,8 @@ const handleCheckbox = (day: Day) => {
     stepStore.stepFiveData.activeDays.push(day);
     stepStore.stepFiveData.timeSlots[day.id] = [
       {
-        start: stringToDate('09:00'),
-        end: stringToDate('13:00'),
+        start: stringToDate('08:30'),
+        end: stringToDate('12:30'),
       },
       {
         start: null,
@@ -175,10 +167,10 @@ const plusHandle = (day: Day) => {
   const firstSlotEnd = stepStore.stepFiveData.timeSlots[day.id][0]?.end;
   if (!firstSlotEnd) return;
 
-  const newStart = new Date(firstSlotEnd.getTime() + 1 * 60 * 60 * 1000);
+  const newStart = new Date(firstSlotEnd.getTime() + 2 * 60 * 60 * 1000);
   stepStore.stepFiveData.timeSlots[day.id][1] = {
     start: newStart,
-    end: new Date(newStart.getTime() + 3 * 60 * 60 * 1000),
+    end: new Date(newStart.getTime() + 4 * 60 * 60 * 1000),
   };
 };
 
@@ -189,10 +181,10 @@ const checkAndAdaptSecondSlot = (dayId: number) => {
   if (!firstSlotEnd || !secondSlotStart) return;
 
   if (secondSlotStart <= firstSlotEnd) {
-    const newStart = new Date(firstSlotEnd.getTime() + 1 * 60 * 60 * 1000);
+    const newStart = new Date(firstSlotEnd.getTime() + 2 * 60 * 60 * 1000);
     stepStore.stepFiveData.timeSlots[dayId][1].start = newStart;
     stepStore.stepFiveData.timeSlots[dayId][1].end = new Date(
-      newStart.getTime() + 3 * 60 * 60 * 1000,
+      newStart.getTime() + 4 * 60 * 60 * 1000,
     );
   }
 };
@@ -200,14 +192,6 @@ const checkAndAdaptSecondSlot = (dayId: number) => {
 const removeHandle = (dayId: number) => {
   if (stepStore.stepFiveData.timeSlots[dayId][1]) {
     stepStore.stepFiveData.timeSlots[dayId][1] = {start: null, end: null};
-  }
-};
-
-const updateMaxVehicle = (action: 'plus' | 'minus') => {
-  if (action === 'plus') {
-    stepStore.stepFiveData.maxPerDay++;
-  } else if (action === 'minus' && stepStore.stepFiveData.maxPerDay > 0) {
-    stepStore.stepFiveData.maxPerDay--;
   }
 };
 
@@ -219,7 +203,7 @@ const updateHomeService = (isYes: boolean) => {
 <style scoped>
 :deep(.p-inputtext) {
   text-align: center !important;
-  padding: 0.5rem 0.75rem;
+  padding: 0;
   border-radius: 0.5rem;
   border: 1px solid #d1d5db;
   background-color: #f9fafb;
