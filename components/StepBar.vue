@@ -13,19 +13,24 @@
       v-if="stepStore.currentStep >= 0 && isRegisterRoute && !hideBar"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-8 gap-1 w-8/9 ps-6"
     >
-      <div v-for="(step, index) in stepStore.steps" :key="index" class="mt-2">
+      <div
+        v-for="(step, index) in stepStore.steps"
+        :key="index"
+        class="mt-2 cursor-pointer"
+        @click="stepStore.currentStep = step.step"
+      >
         <div
           :class="[
             'h-[5px]',
-            index + 2 < stepStore.currentStep ? 'bg-green-500' : 'bg-gray-200',
+            stepStore.completedSteps.includes(step.step)
+              ? 'bg-green-500'
+              : 'bg-gray-200',
           ]"
         ></div>
 
-        <!-- Step circle and label -->
         <div class="flex justify-start items-center mt-2">
-          <!-- Completed Step -->
           <NuxtImg
-            v-if="index + 2 < stepStore.currentStep"
+            v-if="stepStore.completedSteps.includes(step.step)"
             class="me-1"
             src="/images/step-vector.svg"
             alt="step-check"
@@ -34,7 +39,6 @@
             aria-hidden="true"
           />
 
-          <!-- Inactive Step -->
           <div
             v-else
             :class="['rounded-full border w-4 h-4 me-1 border-gray-500']"
