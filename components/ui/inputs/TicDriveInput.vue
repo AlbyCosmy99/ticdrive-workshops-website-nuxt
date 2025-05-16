@@ -41,6 +41,7 @@
 <script lang="ts" setup>
 import {ref, computed} from 'vue';
 import PasswordEyeToggle from '../toggles/PasswordEyeToggle.vue';
+import PasswordEyeToggle from '../toggles/PasswordEyeToggle.vue';
 
 type InputSize = 'standard' | 'small';
 type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
