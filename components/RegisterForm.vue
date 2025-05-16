@@ -51,6 +51,7 @@
 import {ref, computed} from 'vue';
 import useStepStore from '~/store/step';
 
+import {watchEffect} from 'vue';
 import Step1 from './auth/registrationSteps/Step1.vue';
 import Step2 from './auth/registrationSteps/Step2.vue';
 import Step3 from './auth/registrationSteps/Step3.vue';
@@ -117,27 +118,27 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
         );
         return false;
       }
-      if (stepStore.stepFiveData.maxPerDay === 0) {
-        showToast(
-          'info',
-          'Numero di veicoli gestiti giornalmente errato',
-          'Il numero di veicoli gestiti giornalmente deve essere maggiore di zero!',
-        );
-        return false;
-      }
       return true;
     case 6:
       if (!stepStore.stepSixData.images[4]) {
         showToast(
-          'info',
-          'Immagine principale mancante.',
-          "Per favore carica un' immagine principale!",
+          'warn',
+          'Lingua non selezionata.',
+          'Per favore seleziona almeno una lingua!',
         );
         return false;
       }
       return true;
     case 7:
-      return await stepSevenRef.value?.validate();
+      if (stepStore.stepSevenData.languages.length === 0) {
+        showToast(
+          'info',
+          'Tutte le caselle devono essere selezionate.',
+          'Seleziona tutte le caselle!',
+        );
+        return false;
+      }
+      return true;
     case 8:
       const valid = await stepEightRef.value?.validate();
       const allChecked =
@@ -149,6 +150,14 @@ const stepValidation = async (step: number): Promise<boolean | undefined> => {
           'info',
           'Tutte le caselle devono essere selezionate.',
           'Seleziona tutte le caselle!',
+        );
+        return false;
+      }
+      if (stepStore.completedSteps.length !== 7) {
+        showToast(
+          'warn',
+          'Tutti i passaggi devono essere completati.',
+          'Completa tutti i passaggi della fase di registrazione!',
         );
         return false;
       }
@@ -166,6 +175,9 @@ const nextStep = async (): Promise<void> => {
     if (stepStore.currentStep === 8) {
       register();
     } else {
+      if (!stepStore.completedSteps.includes(stepStore.currentStep)) {
+        stepStore.completedSteps.push(stepStore.currentStep);
+      }
       stepStore.currentStep++;
     }
   }
