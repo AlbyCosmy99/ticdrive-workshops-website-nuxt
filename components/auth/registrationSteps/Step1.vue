@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center px-20 gap-2"
+    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center px-20"
   >
     <h1 class="text-4xl text-tic text-center font-semibold">Benvenuto!</h1>
     <h4 class="my-3 text-xl text-drive font-semibold text-center">
