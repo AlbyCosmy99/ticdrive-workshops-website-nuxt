@@ -26,11 +26,12 @@
     <TicDriveInput
       id="tel"
       label="Telefono Aziendale*"
-      placeholder="es. 333 *******"
+      placeholder="+39 *** *******"
       v-model="stepStore.stepOneData.phoneNumber"
       type="tel"
       :error-message="v$.phoneNumber.$errors[0]?.$message || ''"
     />
+
     <TicDriveInput
       id="email"
       label="Email Aziendale*"
@@ -38,6 +39,15 @@
       v-model="stepStore.stepOneData.email"
       :error-message="v$.email.$errors[0]?.$message || ''"
     />
+
+    <TicDriveInput
+      id="confirmEmail"
+      label="Conferma Email Aziendale*"
+      placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
+      v-model="stepStore.stepOneData.confirmEmail"
+      :error-message="v$.confirmEmail.$errors[0]?.$message || ''"
+    />
+
     <TicDriveInput
       id="workshop"
       label="Nome dell’officina*"
@@ -45,6 +55,7 @@
       v-model="stepStore.stepOneData.workshopName"
       :error-message="v$.workshopName.$errors[0]?.$message || ''"
     />
+
     <TicDriveInput
       id="password"
       label="Password*"
@@ -54,6 +65,7 @@
       :error-message="v$.password.$errors[0]?.$message || ''"
       autocomplete="new-password"
     />
+
     <TicDriveInput
       id="repeated-password"
       label="Ripeti password*"
@@ -133,6 +145,14 @@ const rules = computed(() => ({
   email: {
     required: helpers.withMessage('La email è richiesta.', required),
     email: helpers.withMessage('Il formato della email non è valido.', email),
+  },
+  confirmEmail: {
+    required: helpers.withMessage('La conferma email è richiesta.', required),
+    email: helpers.withMessage('Il formato della email non è valido.', email),
+    sameAsEmail: helpers.withMessage(
+      'Le email non coincidono.',
+      (value: string) => value === stepStore.stepOneData.email,
+    ),
   },
   password: {
     required: helpers.withMessage('La password è richiesta.', required),
