@@ -200,7 +200,7 @@ const register = async() => {
   if(isValid) {
     authStore.register();
   } else {
-    showToast('error', "Completa tutti gli step", "Controlla di aver completato bene tutti gli step.")
+    showToast('warn', "Completa tutti gli step", "Controlla di aver completato bene tutti gli step.")
   }
 };
 </script>
