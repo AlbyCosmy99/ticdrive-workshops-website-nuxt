@@ -22,11 +22,22 @@
               </p>
             </div>
           </div>
-          <TicDrivebutton
-            label="Modifica"
-            @click="modifyProfile"
-            custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5"
-          />
+          <div class="flex gap-2">
+            <TicDrivebutton
+              :label="
+                isEditing ? (loading ? 'Salvando...' : 'Salva') : 'Modifica'
+              "
+              @click="onEditProfile"
+              :disabled="loading"
+              custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5 w-[100px]"
+            />
+            <TicDrivebutton
+              v-if="isEditing"
+              label="Annulla"
+              @click="cancelEdit"
+              custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5 w-[100px] bg-red-500 hover:bg-red-600 text-white"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -39,8 +50,15 @@
           <label class="block text-base font-normal text-gray-700 mb-1"
             >Nome Cognome</label
           >
-          <div class="text-sm font-normal text-tic">
+          <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ authStore.user?.name }}
+          </div>
+          <div v-else class="w-[400px]">
+            <TicDriveInput
+              v-model="userData.name"
+              placeholder="Inserisci il tuo nome completo"
+              size="small"
+            />
           </div>
         </div>
 
@@ -48,8 +66,16 @@
           <label class="block text-base font-normal text-gray-700 mb-1"
             >Email</label
           >
-          <div class="text-sm font-normal text-tic">
+          <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ authStore.user?.email }}
+          </div>
+          <div v-else class="w-[400px]">
+            <TicDriveInput
+              v-model="userData.email"
+              placeholder="Inserisci la tua email"
+              type="email"
+              size="small"
+            />
           </div>
         </div>
 
@@ -57,11 +83,19 @@
           <label class="block text-base font-normal text-gray-700 mb-1"
             >Numero di telefono</label
           >
-          <div class="text-sm font-normal text-tic">
+          <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{
               authStore.user?.phoneNumber ||
               'Numero di telefono non disponibile'
             }}
+          </div>
+          <div v-else class="w-[400px]">
+            <TicDriveInput
+              v-model="userData.phoneNumber"
+              placeholder="Inserisci il tuo numero di telefono"
+              type="tel"
+              size="small"
+            />
           </div>
         </div>
 
@@ -69,8 +103,30 @@
           <label class="block text-base font-normal text-gray-700 mb-1"
             >Indirizzo</label
           >
-          <div class="text-sm font-normal text-tic">
+          <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ authStore.user?.address || 'Indirizzo non disponibile' }}
+          </div>
+          <div v-else class="flex flex-col w-[400px] gap-2">
+            <TicDriveInput
+              v-model="userData.address.streetAddress"
+              placeholder="Via e Numero Civico"
+              size="small"
+            />
+            <TicDriveInput
+              v-model="userData.address.city"
+              placeholder="Città"
+              size="small"
+            />
+            <TicDriveInput
+              v-model="userData.address.province"
+              placeholder="Provincia"
+              size="small"
+            />
+            <TicDriveInput
+              v-model="userData.address.postalCode"
+              placeholder="CAP"
+              size="small"
+            />
           </div>
         </div>
 
@@ -85,28 +141,10 @@
 
         <div class="mb-6 border-b pb-6">
           <button
-            @click="modifyWorkshopDetails"
-            class="text-drive text-base font-normal hover:text-green-700"
-          >
-            Modifica dettagli Officina
-          </button>
-        </div>
-
-        <div class="mb-6 border-b pb-6">
-          <button
             @click="authStore.logout()"
-            class="text-drive text-base font-normal hover:text-green-700"
+            class="text-red-500 text-base font-normal hover:text-red-700"
           >
             Logout
-          </button>
-        </div>
-
-        <div class="pb-6">
-          <button
-            @click="deleteAccount"
-            class="text-[16] text-red-500 font-poppins hover:text-red-600"
-          >
-            Elimina account
           </button>
         </div>
       </div>
@@ -116,20 +154,46 @@
 
 <script setup lang="ts">
 import {ref} from 'vue';
-import {useRouter} from 'vue-router';
 import useAuthStore from '~/store/auth';
 import TicDrivebutton from '@/components/ui/buttons/TicDrivebutton.vue';
+import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
 
-interface SettingsPageProps {
-  profileImagePath?: string;
-}
+const authStore = useAuthStore();
+const isEditing = ref(false);
+const loading = ref(false);
 
-const props = withDefaults(defineProps<SettingsPageProps>(), {
-  profileImagePath: 'public/images/Profile.png',
+const userData = ref({
+  name: authStore.user?.name || '',
+  email: authStore.user?.email || '',
+  phoneNumber: authStore.user?.phoneNumber || '',
+  address: {
+    streetAddress: '',
+    city: '',
+    province: '',
+    postalCode: '',
+  },
 });
 
-const router = useRouter();
-const authStore = useAuthStore();
+if (authStore.user?.address) {
+  try {
+    const addressParts = authStore.user.address.split(',');
+    userData.value.address.streetAddress = addressParts[0]?.trim() || '';
+
+    if (addressParts[1]) {
+      const cityParts = addressParts[1].trim().split(' ');
+      if (cityParts.length > 1) {
+        userData.value.address.postalCode = cityParts[0] || '';
+        userData.value.address.city = cityParts.slice(1).join(' ') || '';
+      }
+    }
+
+    if (addressParts[2]) {
+      userData.value.address.province = addressParts[2].trim() || '';
+    }
+  } catch (error) {
+    console.error('Error parsing address:', error);
+  }
+}
 
 const emit = defineEmits([
   'changePassword',
@@ -152,5 +216,31 @@ const deleteAccount = () => {
 
 const modifyProfile = () => {
   emit('modifyProfile');
+};
+
+const cancelEdit = () => {
+  userData.value.name = '';
+  userData.value.email = '';
+  userData.value.phoneNumber = '';
+
+  userData.value.address = {
+    streetAddress: '',
+    city: '',
+    province: '',
+    postalCode: '',
+  };
+  isEditing.value = false;
+};
+
+const onEditProfile = () => {
+  if (isEditing.value) {
+    // Format address string like in registration(commento lasciato per essere sicuri che sia formattato/messo insieme giusto)
+    const {streetAddress, postalCode, city, province} = userData.value.address;
+    const formattedAddress = `${streetAddress}, ${postalCode} ${city}, ${province}, Italy`;
+
+    console.log('Formatted address:', formattedAddress);
+  }
+
+  isEditing.value = !isEditing.value;
 };
 </script>
