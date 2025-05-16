@@ -103,6 +103,16 @@ const useAuthStore = defineStore('auth', {
         };
       }
 
+      let consents = stepStore.declarationsOfConformity.map(
+        declaration => declaration.id,
+      );
+      if (stepOneData.acceptUpdates) {
+        consents.push(stepStore.socialUpdatesConsent?.id!);
+      }
+      if (stepOneData.acceptPrivacyPolicy) {
+        consents.push(stepStore.privacyPolicy?.id!);
+      }
+
       const payload = {
         name: stepOneData.name,
         surname: stepOneData.surname,
@@ -119,13 +129,14 @@ const useAuthStore = defineStore('auth', {
         personalEmail: stepTwoData.referContact.email,
         specializations: stepThreeData.specializations.map(s => s.id),
         services: stepFourData.services.map(s => s.id),
-        maxDailyVehicles: stepFiveData.maxPerDay,
         offersHomeServices: stepFiveData.homeService,
         description: stepSevenData.description,
         laborWarrantyMonths: stepEightData.warranty,
         signatureName: stepEightData.signature.name,
         signatureSurname: stepEightData.signature.surname,
         schedule,
+        spokenLanguages: stepSevenData.languages.map(language => language.id),
+        consents,
       };
 
       try {
