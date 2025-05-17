@@ -32,7 +32,7 @@
     </div>
 
     <!-- Reply button -->
-    <div class="flex justify-end mt-4">
+    <div class="flex justify-end items-center mt-4">
       <button
         class="px-4 py-2 text-white rounded-full hover:opacity-90 transition"
         style="background-color: #39b269"
@@ -41,25 +41,16 @@
         Rispondi
       </button>
 
-      <div class="relative ml-2" ref="menuRef">
+      <div class="ml-3 flex items-center" ref="menuRef">
         <button
-          class="text-gray-400 hover:text-gray-600"
+          class="text-gray-400 hover:text-gray-600 flex items-center justify-center"
           @click="toggleOptions"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-            />
-          </svg>
+          <img
+            src="/public/svg/stars/bandiera.png"
+            alt="Report"
+            class="h-5 w-5 object-contain"
+          />
         </button>
 
         <div
@@ -68,15 +59,9 @@
         >
           <button
             class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            @click="viewProfile"
-          >
-            View profile
-          </button>
-          <button
-            class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             @click="reportReview"
           >
-            Report
+            Segnala recensione
           </button>
         </div>
       </div>
@@ -96,7 +81,7 @@ interface ReviewCardProps {
 }
 
 const props = defineProps<ReviewCardProps>();
-const emit = defineEmits(['reply', 'viewProfile', 'report']);
+const emit = defineEmits(['reply', 'report']);
 
 const showOptions = ref(false);
 const menuRef = ref<HTMLElement | null>(null);
@@ -128,12 +113,6 @@ const handleReply = () => {
 const toggleOptions = () => {
   showOptions.value = !showOptions.value;
 };
-
-const viewProfile = () => {
-  emit('viewProfile', props.user);
-  showOptions.value = false;
-};
-
 const reportReview = () => {
   emit('report', props.user);
   showOptions.value = false;
