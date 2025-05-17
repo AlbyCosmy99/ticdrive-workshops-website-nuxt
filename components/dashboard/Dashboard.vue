@@ -49,7 +49,24 @@
         <h2 class="text-2xl font-semibold">Recensioni Recenti</h2>
         <SeeAllButton @on-click="router.push('/reviews')" />
       </div>
-      <ReviewExtendedCards />
+      <div class="flex flex-col gap-4">
+        <ReviewCard
+          user="Mario Rossi"
+          avatar="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRABxEMu4GRwpNWC8OndvH_fuF5z5r5yQmEaA&s"
+          date="24 Dicembre, 2024"
+          :rating="5"
+          comment="Si vede chiaramente da parte del personale l'esperienza lavorativa nel settore, veloci, onesti nei prezzi e anche simpatici."
+          @reply="handleReply"
+        />
+        <ReviewCard
+          user="Paolo Verdi"
+          avatar="https://static.vecteezy.com/system/resources/previews/009/305/107/non_2x/man-avatar-clipart-illustration-free-png.png"
+          date="15 Gennaio, 2025"
+          :rating="4"
+          comment="Professionali cortesi disponibili e con prezzi buoni. Molto soddisfatto del servizio."
+          @reply="handleReply"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -58,7 +75,12 @@
 import BookingCard from '~/components/ui/cards/dashboard/BookingCard.vue';
 import StatsCards from '../ui/cards/dashboard/stats/StatsCards.vue';
 import SeeAllButton from '../ui/buttons/SeeAllButton.vue';
-import ReviewExtendedCards from '../ui/cards/reviews/ReviewExtendedCards.vue';
+import ReviewCard from '../ui/cards/reviews/ReviewCard.vue';
 
 const router = useRouter();
+
+const handleReply = (user: string) => {
+  console.log(`Replying to ${user}'s review`);
+  // Implement reply functionality here
+};
 </script>
