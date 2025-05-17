@@ -20,12 +20,10 @@
       <Element
         path="/dashboard"
         title="Dashboard"
-        :selected="currentRoute === '/dashboard' || currentRoute === '/reviews'"
+        :selected="currentRoute === '/dashboard'"
       >
         <template #icon>
-          <SelectedDashboardLogo
-            v-if="currentRoute === '/dashboard' || currentRoute === '/reviews'"
-          />
+          <SelectedDashboardLogo v-if="currentRoute === '/dashboard'" />
           <DashboardLogo v-else />
         </template>
       </Element>
@@ -47,6 +45,16 @@
         <template #icon>
           <SelectedCalendarLogo v-if="currentRoute === '/calendar'" />
           <CalendarLogo v-else />
+        </template>
+      </Element>
+      <Element
+        path="/reviews"
+        title="Recensioni"
+        :selected="currentRoute === '/reviews'"
+      >
+        <template #icon>
+          <SelectedDashboardLogo v-if="currentRoute === '/reviews'" />
+          <DashboardLogo v-else />
         </template>
       </Element>
       <Element
