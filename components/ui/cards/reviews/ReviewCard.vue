@@ -46,10 +46,12 @@
           class="text-gray-400 hover:text-gray-600 flex items-center justify-center"
           @click="toggleOptions"
         >
-          <img
-            src="/public/svg/stars/bandiera.png"
+          <NuxtImg
+            src="/svg/stars/bandiera.png"
             alt="Report"
-            class="h-5 w-5 object-contain"
+            width="20"
+            height="20"
+            class="object-contain"
           />
         </button>
 
