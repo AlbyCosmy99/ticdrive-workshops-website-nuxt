@@ -85,7 +85,7 @@ const showToast = useToast();
 const stepValidation = async (step: number): Promise<boolean | undefined> => {
   switch (step) {
     case 1:
-      return await stepOneRef.value?.validate();
+      return await stepOneRef.value?.s();
     case 2:
       return await stepTwoRef.value?.validate();
     case 3:
@@ -189,18 +189,21 @@ const prevStep = (): void => {
 };
 
 const register = async() => {
-  let isValid = true
-  for(let i = 1; i <= 7; i++) {
-      const stepValid = await stepValidation(i);
-      if(!stepValid) {
-        isValid = false
-        break
-      }
-  } 
-  if(isValid) {
-    authStore.register();
-  } else {
-    showToast('warn', "Completa tutti gli step", "Controlla di aver completato bene tutti gli step.")
-  }
+  authStore.register();
+  // let isValid = true
+  // for(let i = 1; i <= 8; i++) {
+  //     const stepValid = await stepValidation(i);
+  //     console.log(stepStore.stepOneData)
+  //     console.log('step:', i)
+  //     if(!stepValid) {
+  //       isValid = false
+  //       break
+  //     }
+  // } 
+  // if(isValid) {
+    
+  // } else {
+  //   showToast('warn', "Completa tutti gli step", "Controlla di aver completato bene tutti gli step.")
+  // }
 };
 </script>
