@@ -205,6 +205,62 @@ const useAuthStore = defineStore('auth', {
         this.loading = false;
       }
     },
+    async updateUser(
+      name?: string,
+      email?: string,
+      phoneNumber?: string,
+      address?: string,
+    ) {
+      const showToast = useToast();
+      const $ticDriveAxios = useTicDriveAxios();
+
+      let coordinates = {lat: null, lng: null};
+      try {
+        const location = await getCoordinates(address ?? '');
+        if (location) coordinates = location;
+      } catch (err: any) {
+        showToast(
+          'error',
+          'Non è stato possibile ottenere le coordinate geografiche!',
+          err.message,
+        );
+      }
+
+      const payload = {} as any;
+      if (name) {
+        payload['name'] = name;
+      }
+      if (email) {
+        payload['email'] = email;
+      }
+      if (phoneNumber) {
+        payload['phoneNumber'] = phoneNumber;
+      }
+      if (address) {
+        payload['address'] = address;
+        payload['latitude'] = coordinates.lat;
+        payload['longitude'] = coordinates.lng;
+      }
+
+      try {
+        await $ticDriveAxios.put('auth/update-user', payload);
+        this.user!.name = payload.name;
+        this.user!.email = payload.email;
+        this.user!.phoneNumber = payload.phoneNumber;
+        this.user!.address = payload.address;
+        showToast(
+          'success',
+          'Dati modificati con successo',
+          'Il tuo profilo è stato aggiornato con successo.',
+        );
+      } catch (e: any) {
+        showToast(
+          'error',
+          'Errore durante il salvataggio.',
+          'Non è stato possibile salvare i dati. Riprovare.',
+        );
+      }
+    },
 
     logout() {
       const router = useRouter();
