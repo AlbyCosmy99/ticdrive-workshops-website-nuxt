@@ -6,14 +6,14 @@
     <UiSpinnersTicDriveSpinner text="Registrazione in corso..." />
   </div>
   <div v-else class="px-3 w-full mt-2 mb-4 overflow-auto">
-    <Step1 v-if="stepStore.currentStep === 1" ref="stepOneRef" />
-    <Step2 v-if="stepStore.currentStep === 2" ref="stepTwoRef" />
-    <Step3 v-if="stepStore.currentStep === 3" ref="stepThreeRef" />
-    <Step4 v-if="stepStore.currentStep === 4" ref="stepFourRef" />
-    <Step5 v-if="stepStore.currentStep === 5" ref="stepFiveRef" />
-    <Step6 v-if="stepStore.currentStep === 6" ref="stepSixRef" />
-    <Step7 v-if="stepStore.currentStep === 7" ref="stepSevenRef" />
-    <Step8 v-if="stepStore.currentStep === 8" ref="stepEightRef" />
+    <Step1 v-show="stepStore.currentStep === 1" ref="stepOneRef" />
+    <Step2 v-show="stepStore.currentStep === 2" ref="stepTwoRef" />
+    <Step3 v-show="stepStore.currentStep === 3" ref="stepThreeRef" />
+    <Step4 v-show="stepStore.currentStep === 4" ref="stepFourRef" />
+    <Step5 v-show="stepStore.currentStep === 5" ref="stepFiveRef" />
+    <Step6 v-show="stepStore.currentStep === 6" ref="stepSixRef" />
+    <Step7 v-show="stepStore.currentStep === 7" ref="stepSevenRef" />
+    <Step8 v-show="stepStore.currentStep === 8" ref="stepEightRef" />
     <div
       class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
     >
@@ -85,7 +85,7 @@ const showToast = useToast();
 const stepValidation = async (step: number): Promise<boolean | undefined> => {
   switch (step) {
     case 1:
-      return await stepOneRef.value?.s();
+      return await stepOneRef.value?.validate();
     case 2:
       return await stepTwoRef.value?.validate();
     case 3:
@@ -188,22 +188,24 @@ const prevStep = (): void => {
   if (stepStore.currentStep === 0) navigateTo('/auth/login');
 };
 
-const register = async() => {
-  authStore.register();
-  // let isValid = true
-  // for(let i = 1; i <= 8; i++) {
-  //     const stepValid = await stepValidation(i);
-  //     console.log(stepStore.stepOneData)
-  //     console.log('step:', i)
-  //     if(!stepValid) {
-  //       isValid = false
-  //       break
-  //     }
-  // } 
-  // if(isValid) {
-    
-  // } else {
-  //   showToast('warn', "Completa tutti gli step", "Controlla di aver completato bene tutti gli step.")
-  // }
+const register = async () => {
+  let isValid = true;
+  for (let i = 1; i <= 8; i++) {
+    const stepValid = await stepValidation(i);
+    console.log('step:', i);
+    if (!stepValid) {
+      isValid = false;
+      break;
+    }
+  }
+  if (isValid) {
+    authStore.register();
+  } else {
+    showToast(
+      'warn',
+      'Completa tutti gli step',
+      'Controlla di aver completato bene tutti gli step.',
+    );
+  }
 };
 </script>
