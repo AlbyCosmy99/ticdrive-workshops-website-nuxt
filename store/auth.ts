@@ -213,9 +213,9 @@ const useAuthStore = defineStore('auth', {
     ) {
       const showToast = useToast();
       const $ticDriveAxios = useTicDriveAxios();
-
       let coordinates = {lat: null, lng: null};
       try {
+        this.loading = true;
         const location = await getCoordinates(address ?? '');
         if (location) coordinates = location;
       } catch (err: any) {
@@ -224,6 +224,8 @@ const useAuthStore = defineStore('auth', {
           'Non è stato possibile ottenere le coordinate geografiche!',
           err.message,
         );
+      } finally {
+        this.loading = false;
       }
 
       const payload = {} as any;
@@ -243,22 +245,29 @@ const useAuthStore = defineStore('auth', {
       }
 
       try {
+        this.loading = true;
         await $ticDriveAxios.put('auth/update-user', payload);
         this.user!.name = payload.name;
         this.user!.email = payload.email;
         this.user!.phoneNumber = payload.phoneNumber;
         this.user!.address = payload.address;
-        showToast(
-          'success',
-          'Dati modificati con successo',
-          'Il tuo profilo è stato aggiornato con successo.',
-        );
+        setTimeout(() => {
+          showToast(
+            'success',
+            'Dati modificati con successo',
+            'Il tuo profilo è stato aggiornato con successo.',
+          );
+        }, 500);
       } catch (e: any) {
-        showToast(
-          'error',
-          'Errore durante il salvataggio.',
-          'Non è stato possibile salvare i dati. Riprovare.',
-        );
+        setTimeout(() => {
+          showToast(
+            'error',
+            'Errore durante il salvataggio.',
+            'Non è stato possibile salvare i dati. Riprovare.',
+          );
+        }, 500);
+      } finally {
+        this.loading = false;
       }
     },
     async changePassword(
