@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-white">
+  <div v-if="loading" class="flex justify-center items-center h-80">
+    <UiSpinnersTicDriveSpinner v-if="true" text="Salvando..." />
+  </div>
+  <div v-else class="bg-white">
     <div class="bg-white mb-6">
       <div class="py-4 px-6">
         <h2 class="text-2xl font-semibold mb-4">Profilo Gestore Officina</h2>
@@ -24,7 +27,9 @@
           </div>
           <div class="flex gap-2">
             <TicDrivebutton
-              :label="isEditing ? (loading ? 'Salvando...' : 'Salva') : 'Modifica'"
+              :label="
+                isEditing ? (loading ? 'Salvando...' : 'Salva') : 'Modifica'
+              "
               @click="onEditProfile"
               :disabled="loading"
               custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5 w-[100px]"
@@ -45,7 +50,17 @@
         <h2 class="text-xl font-semibold mb-6">Impostazioni</h2>
 
         <div class="mb-6 border-b pb-6">
-          <label class="block text-base font-normal text-gray-700 mb-1">Nome</label>
+          <label class="block text-base font-normal text-gray-700 mb-1"
+            >Email</label
+          >
+          <div class="text-sm font-normal text-tic">
+            {{ userData.email }}
+          </div>
+        </div>
+        <div class="mb-6 border-b pb-6">
+          <label class="block text-base font-normal text-gray-700 mb-1"
+            >Nome</label
+          >
           <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ userData.name }}
           </div>
@@ -59,22 +74,9 @@
         </div>
 
         <div class="mb-6 border-b pb-6">
-          <label class="block text-base font-normal text-gray-700 mb-1">Email</label>
-          <div v-if="!isEditing" class="text-sm font-normal text-tic">
-            {{ userData.email }}
-          </div>
-          <div v-else class="w-[400px]">
-            <TicDriveInput
-              v-model="editData.email"
-              placeholder="Inserisci la tua email"
-              type="email"
-              size="small"
-            />
-          </div>
-        </div>
-
-        <div class="mb-6 border-b pb-6">
-          <label class="block text-base font-normal text-gray-700 mb-1">Numero di telefono</label>
+          <label class="block text-base font-normal text-gray-700 mb-1"
+            >Numero di telefono</label
+          >
           <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ userData.phoneNumber || 'Numero di telefono non disponibile' }}
           </div>
@@ -89,10 +91,13 @@
         </div>
 
         <div class="mb-6 border-b pb-6">
-          <label class="block text-base font-normal text-gray-700 mb-1">Indirizzo</label>
+          <label class="block text-base font-normal text-gray-700 mb-1"
+            >Indirizzo</label
+          >
           <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{
-              `${userData.address?.streetAddress}, ${userData.address?.city}, ${userData.address?.province}, ${userData.address?.postalCode}` || 'Indirizzo non disponibile'
+              `${userData.address?.streetAddress}, ${userData.address?.city}, ${userData.address?.province}, ${userData.address?.postalCode}` ||
+              'Indirizzo non disponibile'
             }}
           </div>
           <div v-else class="flex flex-col w-[400px] gap-2">
@@ -142,12 +147,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import {ref} from 'vue';
 import useAuthStore from '~/store/auth';
 import TicDrivebutton from '@/components/ui/buttons/TicDrivebutton.vue';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
-import type { User } from '~/types/auth/User';
-import type { Address } from '~/types/localization/Address';
+import type {User} from '~/types/auth/User';
+import type {Address} from '~/types/localization/Address';
 
 const authStore = useAuthStore();
 const isEditing = ref(false);
@@ -160,19 +165,19 @@ const defaultAddress: Address = {
   postalCode: '',
 };
 
-type EditableUser = Omit<User, 'address'> & { address: Address };
+type EditableUser = Omit<User, 'address'> & {address: Address};
 
 const userData = ref<EditableUser>({
   id: authStore.user?.id || '',
   name: authStore.user?.name || '',
   email: authStore.user?.email || '',
   phoneNumber: authStore.user?.phoneNumber || '',
-  address: { ...defaultAddress },
+  address: {...defaultAddress},
 });
 
 const editData = ref<EditableUser>({
   ...userData.value,
-  address: { ...userData.value.address },
+  address: {...userData.value.address},
 });
 
 if (
@@ -187,36 +192,30 @@ if (
     const province = addressParts[2]?.trim() || '';
     const postalCode = addressParts[3]?.trim().split(' ')[0] || '';
 
-    const parsed: Address = { streetAddress, city, province, postalCode };
+    const parsed: Address = {streetAddress, city, province, postalCode};
 
-    userData.value.address = { ...parsed };
-    editData.value.address = { ...parsed };
+    userData.value.address = {...parsed};
+    editData.value.address = {...parsed};
   } catch (error) {
     console.error('Error parsing address:', error);
   }
 }
 
-const emit = defineEmits([
-  'changePassword',
-  'modifyWorkshop',
-  'deleteAccount',
-  'modifyProfile',
-]);
+const emit = defineEmits(['changePassword']);
 
 const changePassword = () => {
   emit('changePassword');
 };
 
-const modifyWorkshopDetails = () => {
-  emit('modifyWorkshop');
-};
-
-const deleteAccount = () => {
-  emit('deleteAccount');
-};
-
-const modifyProfile = () => {
-  emit('modifyProfile');
+const modifyProfile = async (formattedAddress: string) => {
+  loading.value = true;
+  await authStore.updateUser(
+    editData.value.name,
+    editData.value.email,
+    editData.value.phoneNumber,
+    formattedAddress,
+  );
+  loading.value = false;
 };
 
 const cancelEdit = () => {
@@ -225,22 +224,22 @@ const cancelEdit = () => {
 
 const onEditProfile = () => {
   if (isEditing.value) {
-    const { streetAddress, postalCode, city, province } = editData.value.address as Address;
-    const formattedAddress = `${streetAddress}, ${city}, ${province}, ${postalCode}`;
+    const {streetAddress, postalCode, city, province} = editData.value
+      .address as Address;
+    const formattedAddress = `${streetAddress}, ${city}, ${province}, ${postalCode} Italia`;
 
     console.log('Formatted address:', formattedAddress);
 
     userData.value = {
       ...editData.value,
-      address: { ...editData.value.address },
+      address: {...editData.value.address},
     };
 
-    modifyProfile();
+    modifyProfile(formattedAddress);
   } else {
-    // Clonazione profonda
     editData.value = {
       ...userData.value,
-      address: { ...userData.value.address },
+      address: {...userData.value.address},
     };
   }
 
