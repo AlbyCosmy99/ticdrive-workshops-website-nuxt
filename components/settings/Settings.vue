@@ -45,7 +45,7 @@
         <h2 class="text-xl font-semibold mb-6">Impostazioni</h2>
 
         <div class="mb-6 border-b pb-6">
-          <label class="block text-base font-normal text-gray-700 mb-1">Nome Cognome</label>
+          <label class="block text-base font-normal text-gray-700 mb-1">Nome</label>
           <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ userData.name }}
           </div>
