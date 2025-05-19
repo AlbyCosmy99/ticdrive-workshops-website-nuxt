@@ -1,13 +1,12 @@
+import type {Address} from '../localization/Address';
 import type {UserImage} from '../UserImage';
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
-  surname?: string;
-  workshopName: string;
   email: string;
-  address?: string;
+  address?: Address | string;
   phoneNumber?: string;
-  images: UserImage[];
+  images?: UserImage[];
   emailConfirmed?: boolean;
 }
