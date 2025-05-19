@@ -226,8 +226,6 @@ const onEditProfile = () => {
       .address as Address;
     const formattedAddress = `${streetAddress}, ${city}, ${province}, ${postalCode} Italia`;
 
-    console.log('Formatted address:', formattedAddress);
-
     userData.value = {
       ...editData.value,
       address: {...editData.value.address},
