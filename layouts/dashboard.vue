@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Toast from 'primevue/toast';
 import Navbar from '~/components/navbar/Navbar.vue';
 import Sidebar from '~/components/sidebar/Sidebar.vue';
 import useUserData from '~/composables/http/auth/useUserData';
@@ -37,6 +38,7 @@ onMounted(async () => {
   </div>
 
   <div v-else class="flex min-h-screen bg-gray-50">
+    <Toast />
     <aside class="w-64 p-4">
       <Sidebar />
     </aside>
