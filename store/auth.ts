@@ -261,6 +261,34 @@ const useAuthStore = defineStore('auth', {
         );
       }
     },
+    async changePassword(
+      currentPassword: string,
+      newPassword: string,
+      confirmPassword: string,
+    ) {
+      const showToast = useToast();
+      const $ticDriveAxios = useTicDriveAxios();
+
+      try {
+        await $ticDriveAxios.post('auth/change-password', {
+          currentPassword,
+          newPassword,
+          confirmPassword,
+        });
+        showToast(
+          'success',
+          'Password cambiata con successo.',
+          'Il tuo profilo è stato aggiornato con successo.',
+        );
+      } catch (err: any) {
+        console.log(err);
+        showToast(
+          'error',
+          'Non è stato possibile cambiare la password!',
+          'Qualcosa è andato storto. Riprova.',
+        );
+      }
+    },
 
     logout() {
       const router = useRouter();
