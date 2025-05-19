@@ -31,7 +31,7 @@ onMounted(async () => {
 
 <template>
   <div
-    v-if="loading"
+    v-if="loading || authStore.loading"
     class="flex w-full min-h-screen justify-center items-center bg-white"
   >
     <UiSpinnersTicDriveSpinner />

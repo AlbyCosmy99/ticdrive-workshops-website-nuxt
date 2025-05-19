@@ -208,14 +208,12 @@ const changePassword = () => {
 };
 
 const modifyProfile = async (formattedAddress: string) => {
-  loading.value = true;
   await authStore.updateUser(
     editData.value.name,
     editData.value.email,
     editData.value.phoneNumber,
     formattedAddress,
   );
-  loading.value = false;
 };
 
 const cancelEdit = () => {
