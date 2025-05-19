@@ -8,6 +8,6 @@ export interface User {
   email: string;
   address?: string;
   phoneNumber?: string;
-  images: UserImage[];
+  images?: UserImage[];
   emailConfirmed?: boolean;
 }
