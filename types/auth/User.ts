@@ -1,7 +1,7 @@
 import type {UserImage} from '../UserImage';
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
   surname?: string;
   workshopName: string;
