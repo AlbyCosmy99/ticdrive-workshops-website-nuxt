@@ -123,7 +123,7 @@ const passwordRule = helpers.withMessage(
   (value: string) => {
     if (!value) return false;
 
-    const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const regex =/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/;
     return regex.test(value);
   },
 );
