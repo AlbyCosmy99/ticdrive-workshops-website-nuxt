@@ -16,7 +16,7 @@
     </div>
     <div
       v-else
-      class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-0 mb-8 mt-8 h-80 overflow-auto"
+      class="flex flex-wrap mb-8 mt-8 h-80 overflow-auto"
     >
       <TicDriveRadio
         v-for="specialization in specializations"
@@ -30,6 +30,7 @@
           )
         "
         @update:check="handleRadioSelection"
+        class="w-[49.5%] mr-[1%] mb-0.2"
       />
     </div>
   </div>
