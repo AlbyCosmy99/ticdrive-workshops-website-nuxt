@@ -7,12 +7,46 @@
     <h1 class="text-gray-500 text-2xl font-semibold mt-10">
       Garanzia e responsabilità
     </h1>
-    <PlusMinusField
-      :isMinusDisable="!stepStore.stepEightData.warranty"
-      v-model:numberValue="stepStore.stepEightData.warranty"
-      label="Garanzia sulla manodopera (durata in mesi):"
-      @update:number="updateWarranty"
-    />
+    <div class="bg-white rounded-lg shadow p-4 border border-gray-100 mt-3">
+      <div class="flex flex-col">
+        <div class="flex items-center gap-2 mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-drive" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <p class="font-medium text-tic text-lg">Garanzia sulla manodopera</p>
+        </div>
+        
+        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <span class="text-gray-600">Durata in mesi:</span>
+          <div class="flex items-center gap-3">
+            <div 
+              :class="[
+                'w-8 h-8 rounded-full flex items-center justify-center',
+                !stepStore.stepEightData.warranty ? 'bg-gray-300 cursor-not-allowed' : 'bg-drive text-white cursor-pointer hover:bg-green-600'
+              ]"
+              @click="stepStore.stepEightData.warranty > 0 ? stepStore.stepEightData.warranty-- : null"
+            >
+              <span class="text-lg font-bold">-</span>
+            </div>
+            
+            <span class="w-10 h-10 bg-white border border-gray-200 rounded-md flex items-center justify-center font-bold">
+              {{ stepStore.stepEightData.warranty }}
+            </span>
+            
+            <div 
+              class="w-8 h-8 rounded-full bg-drive text-white flex items-center justify-center cursor-pointer hover:bg-green-600"
+              @click="stepStore.stepEightData.warranty++"
+            >
+              <span class="text-lg font-bold">+</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-gray-500 text-sm mt-3">
+          Offri una garanzia sulla manodopera per dare maggiore sicurezza ai tuoi clienti. Consigliamo un minimo di 6 mesi.
+        </p>
+      </div>
+    </div>
 
     <h1 class="text-gray-500 text-2xl font-semibold mt-8">Firma digitale</h1>
     <div
