@@ -16,7 +16,7 @@
           <p class="font-medium text-tic text-lg">Garanzia sulla manodopera</p>
         </div>
         
-        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
           <span class="text-gray-600">Durata in mesi:</span>
           <div class="flex items-center gap-3">
             <div 
