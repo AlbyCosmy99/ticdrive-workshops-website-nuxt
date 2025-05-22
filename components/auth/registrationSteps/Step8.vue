@@ -16,7 +16,7 @@
           <p class="font-medium text-tic text-lg">Garanzia sulla manodopera</p>
         </div>
         
-        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
           <span class="text-gray-600">Durata in mesi:</span>
           <div class="flex items-center gap-3">
             <div 
@@ -49,60 +49,59 @@
     </div>
 
     <h1 class="text-gray-500 text-2xl font-semibold mt-8">Firma digitale</h1>
-    <div
-      class="p-1 mt-2 border border-gray-500 rounded-xl w-full flex flex-col sm:flex-row gap-3 justify-between relative"
-    >
-      <div class="grid grid-cols-2 gap-3 w-full sm:w-2/3">
-        <div class="flex flex-col">
-          <input
-            v-model="stepStore.stepEightData.signature.name"
-            name="name"
-            placeholder="Nome"
-            :class="[
-              'p-3 outline-none rounded-xl border border-gray-500 focus:border-green-500 w-full max-h-10',
-              {'input-error': v$.signature.name.$errors.length},
-            ]"
-          />
-          <span
-            v-if="v$.signature.name.$errors.length"
-            class="invalid-feedback"
-          >
-            {{ v$.signature.name.$errors[0]?.$message || '' }}
-          </span>
+    <div class="bg-white rounded-lg shadow p-4 border border-gray-100 mt-3">
+      <div class="flex flex-col">
+        <div class="flex items-center gap-2 mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-drive" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+          </svg>
+          <p class="font-medium text-tic text-lg">Firma con nome e cognome</p>
         </div>
-        <div class="flex flex-col">
-          <input
-            v-model="stepStore.stepEightData.signature.surname"
-            name="surname"
-            placeholder="Cognome"
-            :class="[
-              'p-3 outline-none rounded-xl border border-gray-500 focus:border-green-500 w-full max-h-10',
-              {'input-error': v$.signature.surname.$errors.length},
-            ]"
-          />
-          <span
-            v-if="v$.signature.surname.$errors.length"
-            class="invalid-feedback"
-          >
-            {{ v$.signature.surname.$errors[0]?.$message || '' }}
-          </span>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3">
+          <div class="flex flex-col">
+            <label class="text-sm text-gray-600 mb-1">Nome</label>
+            <input
+              v-model="stepStore.stepEightData.signature.name"
+              name="name"
+              placeholder="Inserisci nome"
+              :class="[
+                'p-3 outline-none rounded-lg border border-gray-300 focus:border-green-500 w-full',
+                {'border-red-500': v$.signature.name.$errors.length},
+              ]"
+            />
+            <span
+              v-if="v$.signature.name.$errors.length"
+              class="text-red-500 text-sm mt-1"
+            >
+              {{ v$.signature.name.$errors[0]?.$message || '' }}
+            </span>
+          </div>
+          
+          <div class="flex flex-col">
+            <label class="text-sm text-gray-600 mb-1">Cognome</label>
+            <input
+              v-model="stepStore.stepEightData.signature.surname"
+              name="surname"
+              placeholder="Inserisci cognome"
+              :class="[
+                'p-3 outline-none rounded-lg border border-gray-300 focus:border-green-500 w-full',
+                {'border-red-500': v$.signature.surname.$errors.length},
+              ]"
+            />
+            <span
+              v-if="v$.signature.surname.$errors.length"
+              class="text-red-500 text-sm mt-1"
+            >
+              {{ v$.signature.surname.$errors[0]?.$message || '' }}
+            </span>
+          </div>
         </div>
-      </div>
-      <div class="flex flex-col w-full sm:w-1/3">
-        <Calendar
-          v-model="stepStore.stepEightData.signature.date"
-          readonly
-          dateFormat="dd/mm/yy"
-          placeholder="(giorno/mese/anno)"
-          :class="[
-            'outline-none date-picker-wrapper text-center bg-gray-100 px-5 py-2 max-h-10',
-            {'input-error': v$.signature.date.$errors.length},
-          ]"
-        />
 
-        <span v-if="v$.signature.date.$errors.length" class="invalid-feedback">
-          {{ v$.signature.date.$errors[0]?.$message || '' }}
-        </span>
+        <p class="text-gray-500 text-sm mt-3">
+          La firma digitale ha lo stesso valore legale di una firma autografa. Inserendo nome e cognome confermi di accettare i termini e le condizioni del servizio.
+        </p>
       </div>
     </div>
 
