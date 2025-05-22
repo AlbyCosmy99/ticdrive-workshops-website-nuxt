@@ -16,7 +16,7 @@
     </div>
     <div
       v-else
-      class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8 mt-8 h-80 overflow-auto py-4"
+      class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8 mt-8 overflow-auto py-4"
     >
       <TicDriveRadio
         v-for="specialization in specializations"
