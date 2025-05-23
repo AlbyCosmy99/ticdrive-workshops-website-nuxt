@@ -1,12 +1,15 @@
 <template>
-  <div class="bg-white">
+  <div v-if="loading" class="flex justify-center items-center h-80">
+    <UiSpinnersTicDriveSpinner v-if="true" text="Salvando..." />
+  </div>
+  <div v-else class="bg-white">
     <div class="bg-white mb-6">
       <div class="py-4 px-6">
         <h2 class="text-2xl font-semibold mb-4">Profilo Gestore Officina</h2>
         <div class="flex items-center gap-4 justify-between">
           <div class="flex items-center gap-4">
             <div
-              v-if="authStore.user?.images.length"
+              v-if="authStore.user?.images?.length"
               class="rounded-full overflow-hidden h-[94px] w-[94px]"
             >
               <NuxtImg
@@ -48,32 +51,23 @@
 
         <div class="mb-6 border-b pb-6">
           <label class="block text-base font-normal text-gray-700 mb-1"
-            >Nome Cognome</label
-          >
-          <div v-if="!isEditing" class="text-sm font-normal text-tic">
-            {{ authStore.user?.name }}
-          </div>
-          <div v-else class="w-[400px]">
-            <TicDriveInput
-              v-model="userData.name"
-              placeholder="Inserisci il tuo nome completo"
-              size="small"
-            />
-          </div>
-        </div>
-
-        <div class="mb-6 border-b pb-6">
-          <label class="block text-base font-normal text-gray-700 mb-1"
             >Email</label
           >
+          <div class="text-sm font-normal text-tic">
+            {{ userData.email }}
+          </div>
+        </div>
+        <div class="mb-6 border-b pb-6">
+          <label class="block text-base font-normal text-gray-700 mb-1"
+            >Nome</label
+          >
           <div v-if="!isEditing" class="text-sm font-normal text-tic">
-            {{ authStore.user?.email }}
+            {{ userData.name }}
           </div>
           <div v-else class="w-[400px]">
             <TicDriveInput
-              v-model="userData.email"
-              placeholder="Inserisci la tua email"
-              type="email"
+              v-model="editData.name"
+              placeholder="Inserisci il tuo nome completo"
               size="small"
             />
           </div>
@@ -84,14 +78,11 @@
             >Numero di telefono</label
           >
           <div v-if="!isEditing" class="text-sm font-normal text-tic">
-            {{
-              authStore.user?.phoneNumber ||
-              'Numero di telefono non disponibile'
-            }}
+            {{ userData.phoneNumber || 'Numero di telefono non disponibile' }}
           </div>
           <div v-else class="w-[400px]">
             <TicDriveInput
-              v-model="userData.phoneNumber"
+              v-model="editData.phoneNumber"
               placeholder="Inserisci il tuo numero di telefono"
               type="tel"
               size="small"
@@ -104,26 +95,29 @@
             >Indirizzo</label
           >
           <div v-if="!isEditing" class="text-sm font-normal text-tic">
-            {{ authStore.user?.address || 'Indirizzo non disponibile' }}
+            {{
+              `${userData.address?.streetAddress}, ${userData.address?.city}, ${userData.address?.province}, ${userData.address?.postalCode}` ||
+              'Indirizzo non disponibile'
+            }}
           </div>
           <div v-else class="flex flex-col w-[400px] gap-2">
             <TicDriveInput
-              v-model="userData.address.streetAddress"
+              v-model="editData.address.streetAddress"
               placeholder="Via e Numero Civico"
               size="small"
             />
             <TicDriveInput
-              v-model="userData.address.city"
+              v-model="editData.address.city"
               placeholder="Città"
               size="small"
             />
             <TicDriveInput
-              v-model="userData.address.province"
+              v-model="editData.address.province"
               placeholder="Provincia"
               size="small"
             />
             <TicDriveInput
-              v-model="userData.address.postalCode"
+              v-model="editData.address.postalCode"
               placeholder="CAP"
               size="small"
             />
@@ -157,88 +151,92 @@ import {ref} from 'vue';
 import useAuthStore from '~/store/auth';
 import TicDrivebutton from '@/components/ui/buttons/TicDrivebutton.vue';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
+import type {User} from '~/types/auth/User';
+import type {Address} from '~/types/localization/Address';
 
 const authStore = useAuthStore();
 const isEditing = ref(false);
 const loading = ref(false);
 
-const userData = ref({
+const defaultAddress: Address = {
+  streetAddress: '',
+  city: '',
+  province: '',
+  postalCode: '',
+};
+
+type EditableUser = Omit<User, 'address'> & {address: Address};
+
+const userData = ref<EditableUser>({
+  id: authStore.user?.id || '',
   name: authStore.user?.name || '',
   email: authStore.user?.email || '',
   phoneNumber: authStore.user?.phoneNumber || '',
-  address: {
-    streetAddress: '',
-    city: '',
-    province: '',
-    postalCode: '',
-  },
+  address: {...defaultAddress},
 });
 
-if (authStore.user?.address) {
+const editData = ref<EditableUser>({
+  ...userData.value,
+  address: {...userData.value.address},
+});
+
+if (
+  typeof authStore.user?.address === 'string' &&
+  typeof userData.value.address === 'object'
+) {
   try {
     const addressParts = authStore.user.address.split(',');
-    userData.value.address.streetAddress = addressParts[0]?.trim() || '';
 
-    if (addressParts[1]) {
-      const cityParts = addressParts[1].trim().split(' ');
-      if (cityParts.length > 1) {
-        userData.value.address.postalCode = cityParts[0] || '';
-        userData.value.address.city = cityParts.slice(1).join(' ') || '';
-      }
-    }
+    const streetAddress = addressParts[0]?.trim() || '';
+    const city = addressParts[1]?.trim() || '';
+    const province = addressParts[2]?.trim() || '';
+    const postalCode = addressParts[3]?.trim().split(' ')[0] || '';
 
-    if (addressParts[2]) {
-      userData.value.address.province = addressParts[2].trim() || '';
-    }
+    const parsed: Address = {streetAddress, city, province, postalCode};
+
+    userData.value.address = {...parsed};
+    editData.value.address = {...parsed};
   } catch (error) {
     console.error('Error parsing address:', error);
   }
 }
 
-const emit = defineEmits([
-  'changePassword',
-  'modifyWorkshop',
-  'deleteAccount',
-  'modifyProfile',
-]);
+const emit = defineEmits(['changePassword']);
 
 const changePassword = () => {
   emit('changePassword');
 };
 
-const modifyWorkshopDetails = () => {
-  emit('modifyWorkshop');
-};
-
-const deleteAccount = () => {
-  emit('deleteAccount');
-};
-
-const modifyProfile = () => {
-  emit('modifyProfile');
+const modifyProfile = async (formattedAddress: string) => {
+  await authStore.updateUser(
+    editData.value.name,
+    editData.value.email,
+    editData.value.phoneNumber,
+    formattedAddress,
+  );
 };
 
 const cancelEdit = () => {
-  userData.value.name = '';
-  userData.value.email = '';
-  userData.value.phoneNumber = '';
-
-  userData.value.address = {
-    streetAddress: '',
-    city: '',
-    province: '',
-    postalCode: '',
-  };
   isEditing.value = false;
 };
 
 const onEditProfile = () => {
   if (isEditing.value) {
-    // Format address string like in registration(commento lasciato per essere sicuri che sia formattato/messo insieme giusto)
-    const {streetAddress, postalCode, city, province} = userData.value.address;
-    const formattedAddress = `${streetAddress}, ${postalCode} ${city}, ${province}, Italy`;
+    const {streetAddress, postalCode, city, province} = editData.value
+      .address as Address;
+    const formattedAddress = `${streetAddress}, ${city}, ${province}, ${postalCode} Italia`;
 
-    console.log('Formatted address:', formattedAddress);
+    userData.value = {
+      ...editData.value,
+      address: {...editData.value.address},
+    };
+
+    modifyProfile(formattedAddress);
+  } else {
+    editData.value = {
+      ...userData.value,
+      address: {...userData.value.address},
+    };
   }
 
   isEditing.value = !isEditing.value;

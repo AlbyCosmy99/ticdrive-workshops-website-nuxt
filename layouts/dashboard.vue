@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Toast from 'primevue/toast';
 import Navbar from '~/components/navbar/Navbar.vue';
 import Sidebar from '~/components/sidebar/Sidebar.vue';
 import useUserData from '~/composables/http/auth/useUserData';
@@ -30,17 +31,18 @@ onMounted(async () => {
 
 <template>
   <div
-    v-if="loading"
+    v-if="loading || authStore.loading"
     class="flex w-full min-h-screen justify-center items-center bg-white"
   >
     <UiSpinnersTicDriveSpinner />
   </div>
 
-  <div v-else class="flex min-h-screen bg-gray-50">
-    <aside class="w-64 p-4">
+  <div v-else class="flex min-h-screen bg-gray-50 relative">
+    <Toast />
+    <aside class="w-64 p-4 fixed h-screen">
       <Sidebar />
     </aside>
-    <main class="flex-1 p-4">
+    <main class="flex-1 p-4 ml-64">
       <Navbar />
       <div class="mt-6">
         <NuxtPage />
