@@ -31,9 +31,7 @@ const saveNewPassword = (passwordData: {
 
 <template>
   <div>
-    <Settings
-      @change-password="openPasswordModal"
-    />
+    <Settings @change-password="openPasswordModal" />
     <ChangePasswordModal
       :is-open="showPasswordModal"
       @close="closePasswordModal"

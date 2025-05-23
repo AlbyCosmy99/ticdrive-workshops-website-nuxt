@@ -1,6 +1,10 @@
 <template>
   <div class="w-full">
-    <label v-if="label" :for="id" class="self-start mt-4 text-base text-black block">
+    <label
+      v-if="label"
+      :for="id"
+      class="self-start mt-4 text-base text-black block"
+    >
       {{ label }}
     </label>
 

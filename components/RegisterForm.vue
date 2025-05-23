@@ -188,19 +188,23 @@ const prevStep = (): void => {
   if (stepStore.currentStep === 0) navigateTo('/auth/login');
 };
 
-const register = async() => {
-  let isValid = true
-  for(let i = 1; i <= 8; i++) {
-      const stepValid = await stepValidation(i);
-      if(!stepValid) {
-        isValid = false
-        break
-      }
-  } 
-  if(isValid) {
+const register = async () => {
+  let isValid = true;
+  for (let i = 1; i <= 8; i++) {
+    const stepValid = await stepValidation(i);
+    if (!stepValid) {
+      isValid = false;
+      break;
+    }
+  }
+  if (isValid) {
     authStore.register();
   } else {
-    showToast('warn', "Completa tutti gli step", "Controlla di aver completato bene tutti gli step.")
+    showToast(
+      'warn',
+      'Completa tutti gli step',
+      'Controlla di aver completato bene tutti gli step.',
+    );
   }
 };
 </script>
