@@ -7,7 +7,7 @@
     <h1 class="text-gray-500 text-2xl font-semibold mt-10">
       Garanzia e responsabilità
     </h1>
-    <div class="bg-white rounded-lg shadow p-4 border border-gray-100 mt-3">
+    <div class="bg-white rounded-lg shadow p-4 border border-gray-300 mt-3">
       <div class="flex flex-col">
         <div class="flex items-center gap-2 mb-3">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-drive" viewBox="0 0 20 20" fill="currentColor">
@@ -45,7 +45,7 @@
     </div>
 
     <h1 class="text-gray-500 text-2xl font-semibold mt-8">Firma digitale</h1>
-    <div class="bg-white rounded-lg shadow p-4 border border-gray-100 mt-3">
+    <div class="bg-white rounded-lg shadow p-4 border border-gray-300 mt-3">
       <div class="flex flex-col">
         <div class="flex items-center gap-2 mb-3">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-drive" viewBox="0 0 20 20" fill="currentColor">
