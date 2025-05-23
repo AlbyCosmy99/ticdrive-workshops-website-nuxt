@@ -21,7 +21,7 @@
           <div class="flex items-center gap-3">
             <div 
               :class="[
-                'w-8 h-8 rounded-full flex items-center justify-center',
+                'select-none w-8 h-8 rounded-full flex items-center justify-center',
                 !stepStore.stepEightData.warranty ? 'bg-gray-300 cursor-not-allowed' : 'bg-drive text-white cursor-pointer hover:bg-green-600'
               ]"
               @click="stepStore.stepEightData.warranty > 0 ? stepStore.stepEightData.warranty-- : null"
@@ -34,17 +34,13 @@
             </span>
             
             <div 
-              class="w-8 h-8 rounded-full bg-drive text-white flex items-center justify-center cursor-pointer hover:bg-green-600"
+              class="select-none w-8 h-8 rounded-full bg-drive text-white flex items-center justify-center cursor-pointer hover:bg-green-600"
               @click="stepStore.stepEightData.warranty++"
             >
               <span class="text-lg font-bold">+</span>
             </div>
           </div>
         </div>
-
-        <p class="text-gray-500 text-sm mt-3">
-          Offri una garanzia sulla manodopera per dare maggiore sicurezza ai tuoi clienti. Consigliamo un minimo di 6 mesi.
-        </p>
       </div>
     </div>
 
