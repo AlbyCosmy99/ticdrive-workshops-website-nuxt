@@ -1,8 +1,11 @@
 <template>
-  <div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center">
+  <div
+    v-if="isOpen"
+    class="fixed inset-0 z-50 flex items-center justify-center"
+  >
     <div
       v-if="loading"
-      class=" bg-white rounded-lg shadow-xl p-6 w-full max-w-md relative z-10 flex justify-center items-center"
+      class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md relative z-10 flex justify-center items-center"
     >
       <UiSpinnersTicDriveSpinner text="Cambio password in corso..." />
     </div>
