@@ -37,12 +37,12 @@ onMounted(async () => {
     <UiSpinnersTicDriveSpinner />
   </div>
 
-  <div v-else class="flex min-h-screen bg-gray-50">
+  <div v-else class="flex min-h-screen bg-gray-50 relative">
     <Toast />
-    <aside class="w-64 p-4">
+    <aside class="w-64 p-4 fixed h-screen">
       <Sidebar />
     </aside>
-    <main class="flex-1 p-4">
+    <main class="flex-1 p-4 ml-64">
       <Navbar />
       <div class="mt-6">
         <NuxtPage />
