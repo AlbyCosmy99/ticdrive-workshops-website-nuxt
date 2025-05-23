@@ -53,8 +53,8 @@
         :selected="currentRoute === '/reviews'"
       >
         <template #icon>
-          <SelectedDashboardLogo v-if="currentRoute === '/reviews'" />
-          <DashboardLogo v-else />
+          <SelectedReviewsLogo v-if="currentRoute === '/reviews'" />
+          <ReviewsLogo v-else />
         </template>
       </Element>
       <Element
@@ -81,6 +81,8 @@ import SelectedCalendarLogo from '@/public/svg/logos/sidebar/selected/calendar.s
 import CalendarLogo from '@/public/svg/logos/sidebar/notSelected/calendar.svg';
 import SelectedSettingsLogo from '@/public/svg/logos/sidebar/selected/settings.svg';
 import SettingsLogo from '@/public/svg/logos/sidebar/notSelected/settings.svg';
+import SelectedReviewsLogo from '@/public/svg/logos/sidebar/selected/reviews.svg';
+import ReviewsLogo from '@/public/svg/logos/sidebar/notSelected/reviews.svg';
 
 const router = useRouter();
 const route = useRoute();
