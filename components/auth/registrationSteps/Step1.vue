@@ -35,7 +35,7 @@
     <TicDriveInput
       id="email"
       label="Email Aziendale*"
-      placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
+      placeholder="es. nome@gmail.com"
       v-model="stepStore.stepOneData.email"
       :error-message="v$.email.$errors[0]?.$message || ''"
     />
@@ -43,7 +43,7 @@
     <TicDriveInput
       id="confirmEmail"
       label="Conferma Email Aziendale*"
-      placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
+      placeholder="es. nome@gmail.com"
       v-model="stepStore.stepOneData.confirmEmail"
       :error-message="v$.confirmEmail.$errors[0]?.$message || ''"
     />
@@ -123,7 +123,7 @@ const passwordRule = helpers.withMessage(
   (value: string) => {
     if (!value) return false;
 
-    const regex =/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/;
+    const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/;
     return regex.test(value);
   },
 );
