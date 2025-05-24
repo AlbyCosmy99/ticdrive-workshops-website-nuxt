@@ -9,7 +9,7 @@
         <h2 class="text-2xl font-semibold">
           Prenotazioni In Attesa di Conferma
         </h2>
-        <SeeAllButton @on-click="router.push('/bookings')" />
+        <SeeAllButton text="Vedi tutte le richieste" @on-click="router.push('/bookings')" />
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -47,7 +47,7 @@
     <div class="mb-2">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-semibold">Recensioni Recenti</h2>
-        <SeeAllButton @on-click="router.push('/reviews')" />
+        <SeeAllButton text="Vedi tutte le recensioni" @on-click="router.push('/reviews')" />
       </div>
       <div class="flex flex-col gap-4">
         <ReviewCard

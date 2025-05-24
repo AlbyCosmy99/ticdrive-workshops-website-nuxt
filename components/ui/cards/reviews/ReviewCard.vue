@@ -1,7 +1,6 @@
 <template>
   <div class="p-4 border border-gray-100 rounded-lg shadow-sm">
     <div class="flex items-start gap-4">
-      <!-- User avatar -->
       <div
         class="flex-shrink-0 h-12 w-12 bg-gray-200 rounded-full overflow-hidden"
       >
@@ -13,7 +12,6 @@
         />
       </div>
 
-      <!-- Review content -->
       <div class="flex-1">
         <div class="flex justify-between items-center mb-2">
           <h3 class="font-medium text-lg">{{ user }}</h3>
@@ -31,33 +29,27 @@
       </div>
     </div>
 
-    <!-- Reply button -->
-    <div class="flex justify-end items-center mt-4">
+    <div class="flex justify-end items-center mt-4 gap-4 relative">
       <button
-        class="px-4 py-2 text-white rounded-full hover:opacity-90 transition"
+        class="px-4 py-1 text-white rounded-full hover:opacity-90 transition font-semibold text-base"
         style="background-color: #39b269"
         @click="handleReply"
       >
         Rispondi
       </button>
 
-      <div class="ml-3 flex items-center" ref="menuRef">
+      <div class="flex items-center">
         <button
           class="text-gray-400 hover:text-gray-600 flex items-center justify-center"
           @click="toggleOptions"
         >
-          <NuxtImg
-            src="/svg/stars/bandiera.png"
-            alt="Report"
-            width="20"
-            height="20"
-            class="object-contain"
-          />
+          <FlagIcon />
         </button>
 
         <div
           v-if="showOptions"
-          class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 py-1 border border-gray-200"
+          ref="menuRef"
+          class="absolute right-0 top-10 w-48 bg-white rounded-md shadow-lg z-10 py-1 border border-gray-200"
         >
           <button
             class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -73,6 +65,7 @@
 
 <script setup lang="ts">
 import {computed, ref, onMounted, onBeforeUnmount} from 'vue';
+import FlagIcon from '@/public/svg/flag.svg';
 
 interface ReviewCardProps {
   user: string;
