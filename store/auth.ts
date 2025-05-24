@@ -205,6 +205,99 @@ const useAuthStore = defineStore('auth', {
         this.loading = false;
       }
     },
+    async updateUser(
+      name?: string,
+      email?: string,
+      phoneNumber?: string,
+      address?: string,
+    ) {
+      const showToast = useToast();
+      const $ticDriveAxios = useTicDriveAxios();
+      let coordinates = {lat: null, lng: null};
+      try {
+        this.loading = true;
+        const location = await getCoordinates(address ?? '');
+        if (location) coordinates = location;
+      } catch (err: any) {
+        showToast(
+          'error',
+          'Non è stato possibile ottenere le coordinate geografiche!',
+          err.message,
+        );
+      } finally {
+        this.loading = false;
+      }
+
+      const payload = {} as any;
+      if (name) {
+        payload['name'] = name;
+      }
+      if (email) {
+        payload['email'] = email;
+      }
+      if (phoneNumber) {
+        payload['phoneNumber'] = phoneNumber;
+      }
+      if (address) {
+        payload['address'] = address;
+        payload['latitude'] = coordinates.lat;
+        payload['longitude'] = coordinates.lng;
+      }
+
+      try {
+        this.loading = true;
+        await $ticDriveAxios.put('auth/update-user', payload);
+        this.user!.name = payload.name;
+        this.user!.email = payload.email;
+        this.user!.phoneNumber = payload.phoneNumber;
+        this.user!.address = payload.address;
+        setTimeout(() => {
+          showToast(
+            'success',
+            'Dati modificati con successo',
+            'Il tuo profilo è stato aggiornato con successo.',
+          );
+        }, 500);
+      } catch (e: any) {
+        setTimeout(() => {
+          showToast(
+            'error',
+            'Errore durante il salvataggio.',
+            'Non è stato possibile salvare i dati. Riprovare.',
+          );
+        }, 500);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async changePassword(
+      currentPassword: string,
+      newPassword: string,
+      confirmPassword: string,
+    ) {
+      const showToast = useToast();
+      const $ticDriveAxios = useTicDriveAxios();
+
+      try {
+        await $ticDriveAxios.post('auth/change-password', {
+          currentPassword,
+          newPassword,
+          confirmPassword,
+        });
+        showToast(
+          'success',
+          'Password cambiata con successo.',
+          'Il tuo profilo è stato aggiornato con successo.',
+        );
+      } catch (err: any) {
+        console.log(err);
+        showToast(
+          'error',
+          'Non è stato possibile cambiare la password!',
+          'Qualcosa è andato storto. Riprova.',
+        );
+      }
+    },
 
     logout() {
       const router = useRouter();

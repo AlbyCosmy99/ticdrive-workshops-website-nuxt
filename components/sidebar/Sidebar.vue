@@ -20,12 +20,10 @@
       <Element
         path="/dashboard"
         title="Dashboard"
-        :selected="currentRoute === '/dashboard' || currentRoute === '/reviews'"
+        :selected="currentRoute === '/dashboard'"
       >
         <template #icon>
-          <SelectedDashboardLogo
-            v-if="currentRoute === '/dashboard' || currentRoute === '/reviews'"
-          />
+          <SelectedDashboardLogo v-if="currentRoute === '/dashboard'" />
           <DashboardLogo v-else />
         </template>
       </Element>
@@ -47,6 +45,16 @@
         <template #icon>
           <SelectedCalendarLogo v-if="currentRoute === '/calendar'" />
           <CalendarLogo v-else />
+        </template>
+      </Element>
+      <Element
+        path="/reviews"
+        title="Recensioni"
+        :selected="currentRoute === '/reviews'"
+      >
+        <template #icon>
+          <SelectedReviewsLogo v-if="currentRoute === '/reviews'" />
+          <ReviewsLogo v-else />
         </template>
       </Element>
       <Element
@@ -73,6 +81,8 @@ import SelectedCalendarLogo from '@/public/svg/logos/sidebar/selected/calendar.s
 import CalendarLogo from '@/public/svg/logos/sidebar/notSelected/calendar.svg';
 import SelectedSettingsLogo from '@/public/svg/logos/sidebar/selected/settings.svg';
 import SettingsLogo from '@/public/svg/logos/sidebar/notSelected/settings.svg';
+import SelectedReviewsLogo from '@/public/svg/logos/sidebar/selected/reviews.svg';
+import ReviewsLogo from '@/public/svg/logos/sidebar/notSelected/reviews.svg';
 
 const router = useRouter();
 const route = useRoute();

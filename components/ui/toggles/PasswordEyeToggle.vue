@@ -8,9 +8,7 @@
   >
     <NuxtImg
       :src="
-        showPassword
-          ? '/svg/toggles/showEye.svg'
-          : '/svg/toggles/hideEye.svg'
+        showPassword ? '/svg/toggles/showEye.svg' : '/svg/toggles/hideEye.svg'
       "
       :alt="showPassword ? 'Shpw password' : 'Hide password'"
       width="20"

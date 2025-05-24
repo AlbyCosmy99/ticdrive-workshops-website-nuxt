@@ -35,7 +35,7 @@
     <TicDriveInput
       id="email"
       label="Email Aziendale*"
-      placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
+      placeholder="es. nome@gmail.com"
       v-model="stepStore.stepOneData.email"
       :error-message="v$.email.$errors[0]?.$message || ''"
     />
@@ -43,7 +43,7 @@
     <TicDriveInput
       id="confirmEmail"
       label="Conferma Email Aziendale*"
-      placeholder="es. nome@gmail.com/tuo.nome@azienda.com"
+      placeholder="es. nome@gmail.com"
       v-model="stepStore.stepOneData.confirmEmail"
       :error-message="v$.confirmEmail.$errors[0]?.$message || ''"
     />
@@ -119,11 +119,11 @@ onMounted(() => {
 });
 
 const passwordRule = helpers.withMessage(
-  'La password deve contenere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero e un carattere speciale.',
+  'La password deve contenere almeno 8 caratteri, una lettera maiuscola, una minuscola e un numero.',
   (value: string) => {
     if (!value) return false;
 
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/;
+    const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/;
     return regex.test(value);
   },
 );
