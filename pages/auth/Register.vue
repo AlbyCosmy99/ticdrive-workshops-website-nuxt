@@ -11,9 +11,5 @@
 <script lang="ts" setup>
 import useStepStore from '~/store/step';
 
-definePageMeta({
-  middleware: 'auth',
-});
-
 const stepStore = useStepStore();
 </script>
