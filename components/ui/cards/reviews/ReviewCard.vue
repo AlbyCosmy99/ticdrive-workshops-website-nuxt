@@ -32,9 +32,9 @@
     </div>
 
     <!-- Reply button -->
-    <div class="flex justify-end mt-4">
+    <div class="flex justify-end mt-2">
       <button
-        class="px-4 py-2 text-white rounded-full hover:opacity-90 transition"
+        class="px-8 py-2 text-white rounded-full hover:opacity-90 transition"
         style="background-color: #39b269"
         @click="handleReply"
       >
