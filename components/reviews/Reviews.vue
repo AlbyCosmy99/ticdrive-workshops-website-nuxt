@@ -18,20 +18,28 @@
     </button>
   </div>
   <div v-else class="bg-white rounded-lg shadow-sm p-2">
-    <!-- Replace the old rating section with MediaReviews component -->
-    <MediaReviews :reviews="reviews" @reply="handleReply" />
-
-    <div class="flex flex-col gap-2">
-      <ReviewCard
-        v-for="review in reviews"
-        :key="review.id"
-        :user="review.user"
-        :avatar="review.avatar"
-        :date="review.date"
-        :rating="review.rating"
-        :comment="review.comment"
-        @reply="handleReply"
-      />
+    <!-- Reviews summary section -->
+    <div class="mb-6">
+      <MediaReviews :reviews="reviews" />
+    </div>
+    
+    <!-- Individual reviews section using ReviewCard -->
+    <div class="flex flex-col gap-4">
+      <h3 class="font-semibold text-xl px-4">Recensioni individuali</h3>
+      <div class="flex flex-col gap-2">
+        <ReviewCard
+          v-for="review in reviews"
+          :key="review.id"
+          :user="review.user"
+          :avatar="review.avatar"
+          :date="review.date"
+          :rating="review.rating"
+          :comment="review.comment"
+          @reply="handleReply"
+          @viewProfile="viewUserProfile"
+          @report="reportReview"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -56,7 +64,7 @@ const reviews = ref([
     user: 'Maria Rossi',
     avatar: 'https://cdn-icons-png.flaticon.com/512/6858/6858504.png',
     date: '2 giorni fa',
-    rating: 5,
+    rating: 3,
     comment:
       "Si vede chiaramente da parte del personale l'esperienza lavorativa nel settore, veloci, onesti nei prezzi e anche simpatici.",
   },
@@ -65,7 +73,7 @@ const reviews = ref([
     user: 'Maria Rossi',
     avatar: 'https://cdn-icons-png.flaticon.com/512/6858/6858504.png',
     date: '2 settimane fa',
-    rating: 5,
+    rating: 1,
     comment: 'Professionali cortesi disponibili e con prezzi buoni',
   },
 ]);
@@ -73,5 +81,15 @@ const reviews = ref([
 const handleReply = (user: string) => {
   console.log(`Replying to ${user}'s review`);
   // Implement reply functionality here
+};
+
+const viewUserProfile = (user: string) => {
+  console.log(`Viewing ${user}'s profile`);
+  // Implement profile view functionality here
+};
+
+const reportReview = (user: string) => {
+  console.log(`Reporting ${user}'s review`);
+  // Implement report functionality here
 };
 </script>
