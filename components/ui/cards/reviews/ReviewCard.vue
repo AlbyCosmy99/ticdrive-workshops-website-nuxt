@@ -17,9 +17,9 @@
       <div class="flex-1">
         <div class="flex justify-between items-center mb-2">
           <h3 class="font-medium text-lg">{{ user }}</h3>
-          <div class="flex px-2 py-1 rounded-md" :class="ratingBackgroundClass">
+          <div class="flex items-center px-2 py-1 rounded-md" :class="ratingBackgroundClass">
             <template v-for="i in 5" :key="i">
-              <span class="text-amber-500" :class="{'opacity-40': i > rating}">
+              <span class="text-amber-500 text-xl leading-none" :class="{'opacity-40': i > rating}">
                 {{ i <= rating ? '★' : '☆' }}
               </span>
             </template>
