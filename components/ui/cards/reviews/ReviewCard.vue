@@ -32,34 +32,21 @@
     </div>
 
     <!-- Reply button -->
-    <div class="flex justify-end mt-4">
+    <div class="flex items-center justify-end mt-4 space-x-2">
       <button
-        class="px-4 py-2 text-white rounded-full hover:opacity-90 transition"
+        class="px-4 py-2 text-white rounded-full hover:opacity-90 transition flex items-center"
         style="background-color: #39b269"
         @click="handleReply"
       >
         Rispondi
       </button>
 
-      <div class="relative ml-2" ref="menuRef">
+      <div class="relative flex items-center" ref="menuRef">
         <button
-          class="text-gray-400 hover:text-gray-600"
+          class="text-gray-400 hover:text-gray-600 p-2 flex items-center"
           @click="toggleOptions"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-            />
-          </svg>
+          <FlagIcon class="h-5 w-5" />
         </button>
 
         <div
@@ -85,7 +72,8 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, onMounted, onBeforeUnmount} from 'vue';
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
+import FlagIcon from '/public/svg/stars/flag.svg'  
 
 interface ReviewCardProps {
   user: string;
