@@ -37,7 +37,7 @@
         </button>
 
         <div v-if="showOptions"
-          class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 py-1 border border-gray-200">
+          class="absolute right-10 mt-2 w-48 bg-white rounded-md shadow-lg z-10 py-1 border border-gray-200">
           <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" @click="viewProfile">
             View profile
           </button>
