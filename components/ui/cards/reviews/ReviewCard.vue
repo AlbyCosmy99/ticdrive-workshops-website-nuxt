@@ -17,7 +17,7 @@
       <div class="flex-1">
         <div class="flex justify-between items-center mb-2">
           <h3 class="font-medium text-lg">{{ user }}</h3>
-          <div class="flex items-center px-2 py-1 rounded-md" :class="ratingBackgroundClass">
+          <div class="flex items-center">
             <template v-for="i in 5" :key="i">
               <span class="text-amber-500 text-xl leading-none" :class="{'opacity-40': i > rating}">
                 {{ i <= rating ? '★' : '☆' }}
@@ -85,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, onMounted, onBeforeUnmount} from 'vue';
+import {ref, onMounted, onBeforeUnmount} from 'vue';
 
 interface ReviewCardProps {
   user: string;
@@ -113,12 +113,6 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside, true);
-});
-
-const ratingBackgroundClass = computed((): string => {
-  if (props.rating >= 4) return 'bg-emerald-50';
-  if (props.rating >= 3) return 'bg-amber-100';
-  return 'bg-red-100';
 });
 
 const handleReply = () => {
