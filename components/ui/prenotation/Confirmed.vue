@@ -3,25 +3,25 @@
     <h2 class="text-2xl font-semibold mb-6">Prenotazioni Confermate</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <BookingCard
+      <ConfirmedBookingCard
         v-for="(reservation, index) in reservations"
         :key="index"
         :name="reservation.userName"
-        :userImageSrc="reservation.userImage"
+        :user-image-src="reservation.userImage"
         :time="reservation.time"
         :service="reservation.service"
         :vehicle="reservation.vehicle"
         :price="reservation.payment"
-        status="confirmed"
-        :showCancelButton="true"
+        @cancel-booking="handleCancelBooking(reservation)"
+        @complete-service="handleCompleteService(reservation)"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
-import BookingCard from '../cards/dashboard/BookingCard.vue';
+import { ref } from 'vue';
+import ConfirmedBookingCard from '@/components/ui/cards/bookings/ConfirmedBookingCard.vue';
 
 interface Reservation {
   userName: string;
@@ -50,4 +50,14 @@ const reservations = ref<Reservation[]>([
     payment: '€150 pagati',
   },
 ]);
+
+const handleCancelBooking = (reservation: Reservation) => {
+  // Add logic for canceling booking
+  console.log('Canceling booking for:', reservation.userName);
+};
+
+const handleCompleteService = (reservation: Reservation) => {
+  // Add logic for completing service
+  console.log('Completing service for:', reservation.userName);
+};
 </script>
