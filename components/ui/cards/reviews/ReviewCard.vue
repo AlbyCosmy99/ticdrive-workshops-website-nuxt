@@ -19,8 +19,11 @@
           <h3 class="font-medium text-lg">{{ user }}</h3>
           <div class="flex items-center">
             <template v-for="i in 5" :key="i">
-              <span class="text-amber-500 text-xl leading-none" :class="{'opacity-40': i > rating}">
-                {{ i <= rating ? '★' : '☆' }}
+              <span 
+                :class="i <= rating ? 'text-amber-500' : 'text-[#999999]/50'" 
+                class="text-xl leading-none"
+              >
+                {{ i <= rating ? '★' : '★' }}
               </span>
             </template>
           </div>
