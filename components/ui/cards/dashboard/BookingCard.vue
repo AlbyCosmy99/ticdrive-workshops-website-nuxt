@@ -46,19 +46,8 @@
       </p>
     </div>
 
-    <!-- Actions slot -->
     <div class="flex space-x-2 mb-3">
-      <slot name="actions">
-        <!-- Default actions: Accetta / Rifiuta -->
-        <button class="flex-1 py-2 border border-gray-300 rounded-md text-center">
-          Rifiuta
-        </button>
-        <button
-          class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark"
-        >
-          Accetta
-        </button>
-      </slot>
+      <slot name="actions" />
     </div>
     <p
       class="text-center mt-2 text-sm font-semibold text-tic cursor-pointer hover:underline"
