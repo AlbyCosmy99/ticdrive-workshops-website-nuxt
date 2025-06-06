@@ -46,30 +46,32 @@
           :price="reservation.payment"
         >
           <template #actions>
-            <span v-if="activeTab === 'confirmed'">
+            <div class="flex flex-col sm:flex-row gap-2 w-full mt-2">
               <button
-                class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark"
+                v-if="activeTab === 'confirmed'"
+                class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark transition-colors"
               >
                 Conferma fine intervento
               </button>
               <button
-                class="flex-1 py-2 border border-red-500 text-red-500 rounded-md text-center"
+                v-if="activeTab === 'confirmed'"
+                class="flex-1 py-2 border border-red-500 text-red-500 rounded-md text-center transition-colors"
               >
                 Segnala un problema
               </button>
-            </span>
-            <span v-else-if="activeTab === 'to-confirm'">
               <button
-                class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark"
+                v-if="activeTab === 'to-confirm'"
+                class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark transition-colors"
               >
-                aaa
+                Conferma Prenotazione
               </button>
               <button
-                class="flex-1 py-2 border border-red-500 text-red-500 rounded-md text-center"
+                v-if="activeTab === 'to-confirm'"
+                class="flex-1 py-2 border border-red-500 text-red-500 rounded-md text-center transition-colors"
               >
-                Svdrgda
+                Rifiuta Intervento
               </button>
-            </span>
+            </div>
           </template>
         </BookingCard>
       </div>
