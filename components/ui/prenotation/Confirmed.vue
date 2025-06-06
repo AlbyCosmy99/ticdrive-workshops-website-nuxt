@@ -12,9 +12,16 @@
         :service="reservation.service"
         :vehicle="reservation.vehicle"
         :price="reservation.payment"
-        status="confirmed"
-        :showCancelButton="true"
-      />
+      >
+        <template #actions>
+          <button class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark">
+            Conferma fine intervento
+          </button>
+          <button class="flex-1 py-2 border border-red-500 text-red-500 rounded-md text-center">
+            Segnala un problema
+          </button>
+        </template>
+      </BookingCard>
     </div>
   </div>
 </template>
