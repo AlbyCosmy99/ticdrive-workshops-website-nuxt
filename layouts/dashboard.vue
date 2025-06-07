@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Toast from 'primevue/toast';
+import Footer from '~/components/Footer.vue';
 import Navbar from '~/components/navbar/Navbar.vue';
 import Sidebar from '~/components/sidebar/Sidebar.vue';
 import useUserData from '~/composables/http/auth/useUserData';
@@ -37,16 +38,19 @@ onMounted(async () => {
     <UiSpinnersTicDriveSpinner />
   </div>
 
-  <div v-else class="flex min-h-screen bg-gray-50 relative">
-    <Toast />
-    <aside class="w-64 p-4 fixed h-screen">
-      <Sidebar />
-    </aside>
-    <main class="flex-1 p-4 ml-64">
-      <Navbar />
-      <div class="mt-6">
-        <NuxtPage />
-      </div>
-    </main>
+  <div v-else class="flex flex-col">
+    <div class="flex min-h-screen bg-gray-50 relative">
+      <Toast />
+      <aside class="w-64 p-4 fixed h-screen">
+        <Sidebar />
+      </aside>
+      <main class="flex-1 p-4 ml-64">
+        <Navbar />
+        <div class="mt-6">
+          <NuxtPage />
+        </div>
+      </main>
+    </div>
+    <Footer />
   </div>
 </template>
