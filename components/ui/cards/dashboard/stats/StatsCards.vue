@@ -57,3 +57,9 @@ import StarIcon from '@/public/svg/stars/star.svg';
     </StatsCard>
   </div>
 </template>
+<script setup lang="ts">
+const loadingUniqueClients = ref(false)
+const loadingTotalBookings = ref(false)
+const loadingTotalEarnings = ref(false)
+const loadingTotalReviews = ref(false)
+</script>
