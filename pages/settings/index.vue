@@ -2,7 +2,6 @@
 import {ref} from 'vue';
 import Settings from '~/components/settings/Settings.vue';
 import ChangePasswordModal from '~/components/ui/modals/ChangePasswordModal.vue';
-import useToast from '~/composables/useToast';
 
 definePageMeta({
   layout: 'dashboard',
@@ -10,7 +9,6 @@ definePageMeta({
 });
 
 const showPasswordModal = ref(false);
-const toast = useToast();
 
 const openPasswordModal = () => {
   showPasswordModal.value = true;
