@@ -12,22 +12,11 @@
         <SeeAllButton @on-click="router.push('/bookings')" />
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div
+        :class="`flex ${bookings.length === 2 ? 'justify-evenly' : 'justify-center'}`"
+      >
         <UiSpinnersTicDriveSpinner v-if="loadingBookings" />
-        <div
-          v-else-if="bookings.length === 0"
-          class="flex flex-col items-center justify-center py-10 text-gray-400 text-center"
-        >
-          <img
-            src="/images/booking.png"
-            alt="Nessuna prenotazione"
-            class="w-24 h-24 mb-4 opacity-70"
-          />
-          <p class="text-lg font-medium">Nessuna prenotazione al momento</p>
-          <p class="text-sm text-gray-500">
-            Riceverai le richieste dei clienti direttamente qui
-          </p>
-        </div>
+        <NoBookings v-else-if="bookings.length === 0" />
         <BookingCard
           v-else
           v-for="booking in bookings.slice(0, 2)"
@@ -62,12 +51,13 @@
 </template>
 
 <script setup lang="ts">
-import BookingCard from '~/components/ui/cards/dashboard/BookingCard.vue';
+import BookingCard from '~/components/ui/cards/bookings/BookingCard.vue';
 import StatsCards from '../ui/cards/dashboard/stats/StatsCards.vue';
 import SeeAllButton from '../ui/buttons/SeeAllButton.vue';
 import ReviewExtendedCards from '../ui/cards/reviews/ReviewExtendedCards.vue';
 import getBookingsAsync from '~/services/http/requests/get/getBookingsAsync';
 import type {Booking} from '~/types/bookings/Booking';
+import NoBookings from '../bookings/NoBookings.vue';
 
 const $ticDriveAxios = useTicDriveAxios();
 const bookings = ref<Booking[]>([]);
@@ -78,7 +68,7 @@ onMounted(async () => {
   try {
     loadingBookings.value = true;
     const res = await getBookingsAsync($ticDriveAxios);
-    // bookings.value = res.data;
+    bookings.value = res.data;
   } catch (e: any) {
     showToast(
       'error',

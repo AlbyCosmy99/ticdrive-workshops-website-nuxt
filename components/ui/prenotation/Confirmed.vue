@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue';
-import BookingCard from '../cards/dashboard/BookingCard.vue';
+import BookingCard from '../cards/bookings/BookingCard.vue';
 
 interface Reservation {
   userName: string;
