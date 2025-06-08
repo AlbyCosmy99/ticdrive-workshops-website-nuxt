@@ -21,6 +21,6 @@ const props = withDefaults(
   {
     title: 'Nessuna prenotazione al momento',
     subtitle: 'Riceverai le richieste dei clienti direttamente qui',
-  }
+  },
 );
 </script>

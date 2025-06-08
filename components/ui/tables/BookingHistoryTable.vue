@@ -52,9 +52,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import getBookingsAsync from '~/services/http/requests/get/getBookingsAsync';
-import type { Booking } from '~/types/bookings/Booking';
+import type {Booking} from '~/types/bookings/Booking';
 
 const $ticDriveAxios = useTicDriveAxios();
 const bookings = ref<Booking[]>([]);
@@ -81,15 +81,15 @@ const statusClass = (status: string) => {
 const statusLabel = (status: string) => {
   switch (status) {
     case 'Completed':
-      return 'Completata';
+      return 'Completato';
     case 'Waiting':
       return 'Da confermare';
     case 'Rejected':
-      return 'Rifiutata';
+      return 'Rifiutato';
     case 'RescheduleProposed':
       return 'Riprogrammazione proposta';
     case 'Accepted':
-      return 'Accettata';
+      return 'Accettato';
     default:
       return 'Sconosciuto';
   }
@@ -101,7 +101,11 @@ onMounted(async () => {
     const res = await getBookingsAsync($ticDriveAxios);
     bookings.value = res.data.bookings;
   } catch (e: any) {
-    showToast('error', 'Errore durante il caricamento delle prenotazioni', e.message);
+    showToast(
+      'error',
+      'Errore durante il caricamento delle prenotazioni',
+      e.message,
+    );
   } finally {
     loadingBookings.value = false;
   }

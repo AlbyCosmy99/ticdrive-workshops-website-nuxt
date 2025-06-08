@@ -14,7 +14,7 @@
           content="Vedi tutte le richieste"
         />
       </div>
-      <UiCardsBookingsCards booking-type="Waiting" :take="2"/>
+      <UiCardsBookingsCards booking-type="Waiting" :take="2" />
     </div>
 
     <div class="mb-2">

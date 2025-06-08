@@ -1,11 +1,27 @@
 <template>
-  <UiModalsBaseModal :isOpen="isOpen" @close="close" :containerClass="'w-full max-w-md'">
+  <UiModalsBaseModal
+    :isOpen="isOpen"
+    @close="close"
+    :containerClass="'w-full max-w-md'"
+  >
     <template #header>
       <div class="flex items-center pb-2 mb-4 border-b border-gray-100">
         <button @click="handleBackButton" class="p-1">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M19 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M19 12H5"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M12 19L5 12L12 5"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
         </button>
         <div class="flex-grow text-center">
@@ -18,7 +34,9 @@
     <!-- Step: Email -->
     <template v-if="currentStep === 'email'">
       <h1 class="text-2xl font-bold mb-2">Password dimenticata?</h1>
-      <p class="text-gray-500 mb-6">Inserisci la tua email per reimpostare la password</p>
+      <p class="text-gray-500 mb-6">
+        Inserisci la tua email per reimpostare la password
+      </p>
 
       <form @submit.prevent="submitEmail">
         <label class="block text-black font-medium mb-2">Email</label>
@@ -57,7 +75,9 @@
         />
         <button
           type="submit"
-          :disabled="!verificationCode || loading || verificationCode.length !== 6"
+          :disabled="
+            !verificationCode || loading || verificationCode.length !== 6
+          "
           class="w-full py-4 bg-green-inter text-white font-medium rounded-lg hover:bg-green-dark disabled:bg-gray-300"
         >
           {{ loading ? 'Verifica in corso...' : 'Verifica codice' }}
@@ -80,10 +100,15 @@
             required
             minlength="8"
           />
-          <PasswordEyeToggle :show-password="showNewPassword" @toggle="toggleNewPasswordVisibility" />
+          <PasswordEyeToggle
+            :show-password="showNewPassword"
+            @toggle="toggleNewPasswordVisibility"
+          />
         </div>
 
-        <label class="block text-black font-medium mb-2">Conferma nuova password</label>
+        <label class="block text-black font-medium mb-2"
+          >Conferma nuova password</label
+        >
         <div class="relative mb-2">
           <input
             :type="showConfirmPassword ? 'text' : 'password'"
@@ -92,13 +117,20 @@
             required
             minlength="8"
           />
-          <PasswordEyeToggle :show-password="showConfirmPassword" @toggle="toggleConfirmPasswordVisibility" />
+          <PasswordEyeToggle
+            :show-password="showConfirmPassword"
+            @toggle="toggleConfirmPasswordVisibility"
+          />
         </div>
-        <p v-if="passwordMismatch" class="text-red-500 text-sm mb-4">Le password non corrispondono</p>
+        <p v-if="passwordMismatch" class="text-red-500 text-sm mb-4">
+          Le password non corrispondono
+        </p>
 
         <button
           type="submit"
-          :disabled="!newPassword || !confirmPassword || loading || passwordMismatch"
+          :disabled="
+            !newPassword || !confirmPassword || loading || passwordMismatch
+          "
           class="w-full py-4 bg-green-inter text-white font-medium rounded-lg hover:bg-green-dark disabled:bg-gray-300"
         >
           {{ loading ? 'Salvataggio in corso...' : 'Salva nuova password' }}
@@ -109,7 +141,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineProps, defineEmits } from 'vue';
+import {ref, computed, defineProps, defineEmits} from 'vue';
 import PasswordEyeToggle from '../toggles/PasswordEyeToggle.vue';
 import useAuthStore from '~/store/auth';
 
@@ -134,14 +166,22 @@ const showToast = useToast();
 const showNewPassword = ref(false);
 const showConfirmPassword = ref(false);
 
-const toggleNewPasswordVisibility = () => (showNewPassword.value = !showNewPassword.value);
-const toggleConfirmPasswordVisibility = () => (showConfirmPassword.value = !showConfirmPassword.value);
+const toggleNewPasswordVisibility = () =>
+  (showNewPassword.value = !showNewPassword.value);
+const toggleConfirmPasswordVisibility = () =>
+  (showConfirmPassword.value = !showConfirmPassword.value);
 
-const passwordMismatch = computed(() => newPassword.value && confirmPassword.value && newPassword.value !== confirmPassword.value);
+const passwordMismatch = computed(
+  () =>
+    newPassword.value &&
+    confirmPassword.value &&
+    newPassword.value !== confirmPassword.value,
+);
 
 const handleBackButton = () => {
   if (currentStep.value === 'verification') currentStep.value = 'email';
-  else if (currentStep.value === 'changePassword') currentStep.value = 'verification';
+  else if (currentStep.value === 'changePassword')
+    currentStep.value = 'verification';
   else close();
 };
 
@@ -164,7 +204,7 @@ const resetForm = () => {
 const submitEmail = async () => {
   loading.value = true;
   try {
-    await $ticDriveAxios.post('/auth/forgot-password', { email: email.value });
+    await $ticDriveAxios.post('/auth/forgot-password', {email: email.value});
     currentStep.value = 'verification';
   } catch {
     showToast('error', 'Errore', 'Impossibile inviare email. Riprova.');
@@ -190,7 +230,8 @@ const submitVerificationCode = async () => {
 };
 
 const submitNewPassword = async () => {
-  if (!newPassword.value || !confirmPassword.value || passwordMismatch.value) return;
+  if (!newPassword.value || !confirmPassword.value || passwordMismatch.value)
+    return;
   loading.value = true;
   try {
     await $ticDriveAxios.post('/auth/reset-password', {

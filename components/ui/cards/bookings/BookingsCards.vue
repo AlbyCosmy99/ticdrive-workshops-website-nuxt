@@ -29,8 +29,9 @@
     />
     <BookingCard
       v-else
-      v-for="booking in bookings.slice(0, 2)"
+      v-for="booking in bookings"
       :key="booking.id"
+      :booking-id="booking.id"
       :name="booking.customerName"
       :time="booking.appointmentDate"
       :service="booking.serviceName"
@@ -46,7 +47,8 @@
         booking.customerImage ??
         'https://cdn-icons-png.flaticon.com/512/6858/6858504.png'
       "
-      status="to-confirm"
+      :status="booking.status"
+      @updated="fetchBookings"
     />
   </div>
 </template>
@@ -78,6 +80,10 @@ const props = withDefaults(
 );
 
 onMounted(async () => {
+  fetchBookings();
+});
+
+const fetchBookings = async () => {
   try {
     loadingBookings.value = true;
     const res = await getBookingsAsync(
@@ -96,5 +102,5 @@ onMounted(async () => {
   } finally {
     loadingBookings.value = false;
   }
-});
+};
 </script>

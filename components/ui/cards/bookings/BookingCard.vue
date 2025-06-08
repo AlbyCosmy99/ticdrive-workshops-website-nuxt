@@ -15,17 +15,10 @@
         </div>
         <span class="font-bold text-base">{{ name }}</span>
       </div>
-      <div class="flex items-center p-3 rounded gap-1 bg-[#fff4f0]">
-        <CompassIcon />
-        <p class="text-[#D28B30] text-sm font-medium">
-          In attesa di accettazione
-        </p>
-      </div>
     </div>
 
     <hr />
 
-    <!-- Details -->
     <div class="grid grid-cols-2 gap-2 mb-4 mt-6">
       <div class="flex items-center gap-2">
         <EventAvailableIcon />
@@ -57,7 +50,7 @@
     <!-- Buttons -->
     <div class="flex flex-col sm:flex-row gap-2 w-full mt-2 mb-3">
       <button
-        v-if="status === 'confirmed'"
+        v-if="status === 'Accepted'"
         @click="openModal('complete')"
         class="flex-1 py-2 bg-drive text-white rounded-md hover:bg-green-dark transition-colors"
       >
@@ -65,7 +58,7 @@
       </button>
 
       <button
-        v-if="status === 'confirmed'"
+        v-if="status === 'Accepted'"
         @click="openModal('issue')"
         class="flex-1 py-2 border border-red-500 text-red-500 rounded-md transition-colors"
       >
@@ -73,7 +66,7 @@
       </button>
 
       <button
-        v-if="status === 'to-confirm'"
+        v-if="status === 'Waiting'"
         @click="openModal('confirm')"
         class="flex-1 py-2 bg-drive text-white rounded-md hover:bg-green-dark transition-colors"
       >
@@ -81,7 +74,7 @@
       </button>
 
       <button
-        v-if="status === 'to-confirm'"
+        v-if="status === 'Waiting'"
         @click="openModal('reject')"
         class="flex-1 py-2 border border-red-500 text-red-500 rounded-md transition-colors"
       >
@@ -123,7 +116,7 @@
       </p>
       <p v-else-if="activeModal === 'complete'">
         Vuoi segnare l'intervento come completato? Verrà inviata una mail al
-        cliente per avvisarlo, in modo che possa tornare a ritirare il mezzo.
+        cliente per avvisarlo.
       </p>
       <p v-else-if="activeModal === 'issue'">
         Descrivi il problema riscontrato con il cliente.
@@ -139,8 +132,13 @@
 
       <div class="flex justify-end mt-6 space-x-2">
         <button @click="closeModal" class="px-4 py-2 text-sm">Annulla</button>
-        <button @click="closeModal" :class="confirmButtonClass">
-          {{ confirmButtonText }}
+        <button
+          @click="handleModalAction"
+          :class="confirmButtonClass"
+          :disabled="loading"
+        >
+          <span v-if="loading">Attendi...</span>
+          <span v-else>{{ confirmButtonText }}</span>
         </button>
       </div>
     </div>
@@ -148,13 +146,14 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
-import CompassIcon from '@/public/svg/time/compass.svg';
+import {ref, computed} from 'vue';
 import EventAvailableIcon from '@/public/svg/time/event_available.svg';
 import CarRepairIcon from '@/public/svg/cars/car_repair.svg';
 import Car1Icon from '@/public/svg/cars/car1.svg';
 import PaymentDoneIcon from '@/public/svg/payment/payment_done.svg';
 import BaseModal from '../../modals/BaseModal.vue';
+import {updateBookingStatusAsync} from '~/services/http/requests/get/bookings/UpdateBookingStatusAsync';
+import type {BookingStatus} from '~/types/bookings/BookingStatus';
 
 interface BookingCardProps {
   name: string;
@@ -164,15 +163,19 @@ interface BookingCardProps {
   price: string;
   paymentStatus?: 'paid' | 'to pay';
   userImageSrc?: string;
-  status: 'to-confirm' | 'confirmed';
+  status: BookingStatus;
+  bookingId: number;
 }
 
-defineProps<BookingCardProps>();
+const props = defineProps<BookingCardProps>();
 
 const activeModal = ref<'confirm' | 'reject' | 'complete' | 'issue' | null>(
   null,
 );
 const issueText = ref('');
+const loading = ref(false);
+const toast = useToast();
+const $ticDriveAxios = useTicDriveAxios();
 
 const openModal = (type: typeof activeModal.value) => {
   activeModal.value = type;
@@ -194,18 +197,53 @@ const confirmButtonText = computed(() => {
       return 'Rifiuta';
     case 'issue':
       return 'Invia';
-    case 'confirm':
-      return 'Conferma';
-    case 'complete':
-      return 'Conferma';
     default:
       return 'Conferma';
   }
 });
 
-
 const closeModal = () => {
   activeModal.value = null;
   issueText.value = '';
+  loading.value = false;
+};
+
+const emit = defineEmits(['updated']);
+
+const handleModalAction = async () => {
+  if (!props.bookingId) return;
+
+  if (activeModal.value === 'issue') {
+    toast(
+      'warn',
+      'Funzione in sviluppo',
+      'La segnalazione verrà gestita in seguito.',
+    );
+    closeModal();
+    return;
+  }
+
+  const statusMap = {
+    confirm: 'Accepted',
+    reject: 'Rejected',
+    complete: 'Completed',
+  } as const;
+
+  const newStatus = statusMap[activeModal.value as keyof typeof statusMap];
+  loading.value = true;
+
+  try {
+    await updateBookingStatusAsync(props.bookingId, newStatus, $ticDriveAxios);
+    toast('success', 'Successo', `Stato aggiornato.`);
+    closeModal();
+    emit('updated');
+  } catch (err) {
+    toast(
+      'error',
+      'Errore',
+      'Errore durante l’aggiornamento della prenotazione',
+    );
+    loading.value = false;
+  }
 };
 </script>
