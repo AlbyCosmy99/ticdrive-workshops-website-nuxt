@@ -1,9 +1,9 @@
 <template>
   <div class="bg-white rounded-lg shadow p-4 flex flex-col gap-2">
-    <div class="h-32 flex justify-center items-center" v-if="loading" >
+    <div class="h-24 flex justify-center items-center" v-if="loading" >
       <TicDriveSpinner />
     </div>
-    <span v-else class="h-32">
+    <span v-else class="h-24">
       <div class="flex justify-between items-start mb-2">
         <h3 class="text-gray-500 text-sm font-semibold">{{ title }}</h3>
         <div
@@ -16,7 +16,7 @@
         </div>
       </div>
       <h2 class="text-2xl font-bold">{{ value }}</h2>
-      <div class="flex items-center mt-2 text-sm gap-2">
+      <div v-if="trendDirection && trendValue" class="flex items-center mt-2 text-sm gap-2">
         <PositiveTrendIcon v-if="trendDirection === 'positive'" />
         <NegativeTrendIcon v-else />
         <div class="flex items-center">
@@ -46,8 +46,8 @@ interface StatsCardProps {
   title: string;
   value: string;
   iconBgColor: string;
-  trendValue: string;
-  trendDirection: 'positive' | 'negative';
+  trendValue?: string;
+  trendDirection?: 'positive' | 'negative';
   loading?: boolean;
 }
 
