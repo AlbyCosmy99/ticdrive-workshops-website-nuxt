@@ -14,6 +14,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <UiSpinnersTicDriveSpinner v-if="loadingBookings" />
+        <p v-else-if="bookings.length === 0">no bookings</p>
         <BookingCard
           v-else
           v-for="booking in bookings.slice(0, 2)"
@@ -64,7 +65,7 @@ onMounted(async () => {
   try {
     loadingBookings.value = true;
     const res = await getBookingsAsync($ticDriveAxios);
-    bookings.value = res.data;
+    // bookings.value = res.data;
   } catch (e: any) {
     showToast(
       'error',
