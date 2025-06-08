@@ -25,7 +25,13 @@
           content="Vedi tutte le recensioni"
         />
       </div>
-      <ReviewExtendedCards />
+      <div class="grid gap-4">
+        <ReviewCard
+          v-for="review in recentReviews"
+          :key="review.id"
+          v-bind="review"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -33,7 +39,26 @@
 <script setup lang="ts">
 import StatsCards from '../ui/cards/dashboard/stats/StatsCards.vue';
 import SeeAllButton from '../ui/buttons/SeeAllButton.vue';
-import ReviewExtendedCards from '../ui/cards/reviews/ReviewExtendedCards.vue';
+import ReviewCard from '../ui/cards/reviews/ReviewCard.vue'; 
 
 const router = useRouter();
+
+const recentReviews = [
+  {
+    id: 1,
+    user: 'Mario Rossi',
+    avatar: '/public/images/Profile.png',
+    date: '2024-06-01',
+    rating: 5,
+    comment: 'Ottimo servizio!',
+  },
+  {
+    id: 2,
+    user: 'Giulia Bianchi',
+    avatar: '/public/images/Profile.png',
+    date: '2024-06-03',
+    rating: 4,
+    comment: 'Tutto perfetto, grazie!',
+  },
+];
 </script>
