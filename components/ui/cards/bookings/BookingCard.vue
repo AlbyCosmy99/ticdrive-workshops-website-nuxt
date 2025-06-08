@@ -1,5 +1,6 @@
 <template>
   <div class="bg-white rounded-lg shadow p-4 border border-gray-100">
+    <!-- Header -->
     <div class="flex justify-between items-center mb-4">
       <div class="flex items-center">
         <div class="w-10 h-10 bg-gray-200 rounded-full mr-3 overflow-hidden">
@@ -21,8 +22,10 @@
         </p>
       </div>
     </div>
+
     <hr />
 
+    <!-- Details -->
     <div class="grid grid-cols-2 gap-2 mb-4 mt-6">
       <div class="flex items-center gap-2">
         <EventAvailableIcon />
@@ -51,48 +54,107 @@
       </p>
     </div>
 
-    <div class="flex space-x-2 mb-3">
-      <div class="flex flex-col sm:flex-row gap-2 w-full mt-2">
-        <button
-          v-if="status === 'confirmed'"
-          class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark transition-colors"
-        >
-          Conferma fine intervento
-        </button>
-        <button
-          v-if="status === 'confirmed'"
-          class="flex-1 py-2 border border-red-500 text-red-500 rounded-md text-center transition-colors"
-        >
-          Segnala un problema
-        </button>
-        <button
-          v-if="status === 'to-confirm'"
-          class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark transition-colors"
-        >
-          Conferma Prenotazione
-        </button>
-        <button
-          v-if="status === 'to-confirm'"
-          class="flex-1 py-2 border border-red-500 text-red-500 rounded-md text-center transition-colors"
-        >
-          Rifiuta Intervento
-        </button>
-      </div>
+    <!-- Buttons -->
+    <div class="flex flex-col sm:flex-row gap-2 w-full mt-2 mb-3">
+      <button
+        v-if="status === 'confirmed'"
+        @click="openModal('complete')"
+        class="flex-1 py-2 bg-drive text-white rounded-md hover:bg-green-dark transition-colors"
+      >
+        Conferma fine intervento
+      </button>
+
+      <button
+        v-if="status === 'confirmed'"
+        @click="openModal('issue')"
+        class="flex-1 py-2 border border-red-500 text-red-500 rounded-md transition-colors"
+      >
+        Segnala un problema
+      </button>
+
+      <button
+        v-if="status === 'to-confirm'"
+        @click="openModal('confirm')"
+        class="flex-1 py-2 bg-drive text-white rounded-md hover:bg-green-dark transition-colors"
+      >
+        Conferma Prenotazione
+      </button>
+
+      <button
+        v-if="status === 'to-confirm'"
+        @click="openModal('reject')"
+        class="flex-1 py-2 border border-red-500 text-red-500 rounded-md transition-colors"
+      >
+        Rifiuta Intervento
+      </button>
     </div>
+
     <p
       class="text-center mt-2 text-sm font-semibold text-tic cursor-pointer hover:underline"
     >
       Vuoi suggerire un orario diverso?
     </p>
   </div>
+
+  <!-- MODALE -->
+  <BaseModal :isOpen="!!activeModal" @close="closeModal">
+    <template #header>
+      <h3 class="text-lg font-bold">
+        {{
+          activeModal === 'confirm'
+            ? 'Conferma Prenotazione'
+            : activeModal === 'reject'
+              ? 'Rifiuta Intervento'
+              : activeModal === 'complete'
+                ? 'Fine Intervento'
+                : 'Segnala Problema'
+        }}
+      </h3>
+    </template>
+
+    <div class="mt-4">
+      <p v-if="activeModal === 'confirm'">
+        Vuoi confermare questa prenotazione? Verrà inviata una mail al cliente
+        per avvisarlo.
+      </p>
+      <p v-else-if="activeModal === 'reject'">
+        Sei sicuro di voler rifiutare questo intervento? Verrà inviata una mail
+        al cliente per avvisarlo.
+      </p>
+      <p v-else-if="activeModal === 'complete'">
+        Vuoi segnare l'intervento come completato? Verrà inviata una mail al
+        cliente per avvisarlo, in modo che possa tornare a ritirare il mezzo.
+      </p>
+      <p v-else-if="activeModal === 'issue'">
+        Descrivi il problema riscontrato con il cliente.
+      </p>
+
+      <textarea
+        v-if="activeModal === 'issue'"
+        class="w-full mt-4 p-2 border border-gray-300 rounded"
+        rows="4"
+        placeholder="Descrivi qui il problema"
+        v-model="issueText"
+      />
+
+      <div class="flex justify-end mt-6 space-x-2">
+        <button @click="closeModal" class="px-4 py-2 text-sm">Annulla</button>
+        <button @click="closeModal" :class="confirmButtonClass">
+          {{ confirmButtonText }}
+        </button>
+      </div>
+    </div>
+  </BaseModal>
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue';
 import CompassIcon from '@/public/svg/time/compass.svg';
 import EventAvailableIcon from '@/public/svg/time/event_available.svg';
 import CarRepairIcon from '@/public/svg/cars/car_repair.svg';
 import Car1Icon from '@/public/svg/cars/car1.svg';
 import PaymentDoneIcon from '@/public/svg/payment/payment_done.svg';
+import BaseModal from '../../modals/BaseModal.vue';
 
 interface BookingCardProps {
   name: string;
@@ -102,9 +164,48 @@ interface BookingCardProps {
   price: string;
   paymentStatus?: 'paid' | 'to pay';
   userImageSrc?: string;
-  paymentIconSvg?: string;
   status: 'to-confirm' | 'confirmed';
 }
 
 defineProps<BookingCardProps>();
+
+const activeModal = ref<'confirm' | 'reject' | 'complete' | 'issue' | null>(
+  null,
+);
+const issueText = ref('');
+
+const openModal = (type: typeof activeModal.value) => {
+  activeModal.value = type;
+};
+
+const confirmButtonClass = computed(() => {
+  if (activeModal.value === 'reject') {
+    return 'px-4 py-2 bg-red-500 text-white text-sm rounded hover:bg-red-600';
+  }
+  if (activeModal.value === 'issue') {
+    return 'px-4 py-2 bg-orange-500 text-white text-sm rounded hover:bg-orange-600';
+  }
+  return 'px-4 py-2 bg-green-500 text-white text-sm rounded hover:bg-green-600';
+});
+
+const confirmButtonText = computed(() => {
+  switch (activeModal.value) {
+    case 'reject':
+      return 'Rifiuta';
+    case 'issue':
+      return 'Invia';
+    case 'confirm':
+      return 'Conferma';
+    case 'complete':
+      return 'Conferma';
+    default:
+      return 'Conferma';
+  }
+});
+
+
+const closeModal = () => {
+  activeModal.value = null;
+  issueText.value = '';
+};
 </script>
