@@ -1,4 +1,4 @@
-import type { BookingStatus } from "./BookingStatus";
+import type {BookingStatus} from './BookingStatus';
 
 interface Booking {
   id: number;
@@ -12,7 +12,7 @@ interface Booking {
   workshopAddress: string;
   workshopImage: string | null;
   finalPrice: number;
-  status: BookingStatus
+  status: BookingStatus;
   serviceId: number;
   serviceName: string;
   customerCarId: number;
@@ -25,5 +25,4 @@ interface Booking {
   pinCode: string;
 }
 
-export type { Booking };
-
+export type {Booking};

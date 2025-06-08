@@ -9,11 +9,14 @@
         <h2 class="text-2xl font-semibold">
           Prenotazioni In Attesa di Conferma
         </h2>
-        <SeeAllButton @on-click="router.push('/bookings')" />
+        <SeeAllButton
+          @on-click="router.push('/bookings')"
+          content="Vedi tutte le richieste"
+        />
       </div>
 
       <div
-        :class="`flex ${bookings.length === 2 ? 'justify-evenly' : 'justify-center'}`"
+        :class="`flex ${bookings.length === 2 ? 'justify-evenly' : bookings.length === 0 ? 'justify-center' : ''}`"
       >
         <UiSpinnersTicDriveSpinner v-if="loadingBookings" />
         <NoBookings v-else-if="bookings.length === 0" />
@@ -36,6 +39,7 @@
             booking.customerImage ??
             'https://cdn-icons-png.flaticon.com/512/6858/6858504.png'
           "
+          status="to-confirm"
         />
       </div>
     </div>
@@ -43,7 +47,10 @@
     <div class="mb-2">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-semibold">Recensioni Recenti</h2>
-        <SeeAllButton @on-click="router.push('/reviews')" />
+        <SeeAllButton
+          @on-click="router.push('/reviews')"
+          content="Vedi tutte le recensioni"
+        />
       </div>
       <ReviewExtendedCards />
     </div>
@@ -68,7 +75,7 @@ onMounted(async () => {
   try {
     loadingBookings.value = true;
     const res = await getBookingsAsync($ticDriveAxios);
-    bookings.value = res.data;
+    // bookings.value = res.data;
   } catch (e: any) {
     showToast(
       'error',

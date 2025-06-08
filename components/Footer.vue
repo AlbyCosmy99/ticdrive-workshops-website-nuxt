@@ -9,7 +9,7 @@
       color: #333;
     "
   >
-    <p style="margin-bottom: 0.5rem;">
+    <p style="margin-bottom: 0.5rem">
       © {{ new Date().getFullYear() }} TicDrive ·
       <a
         class="underline"
@@ -20,11 +20,14 @@
         Norme sulla privacy
       </a>
     </p>
-    <p style="margin-bottom: 0.5rem;">
-      TicDrive è un'app mobile che consente agli utenti di cercare, confrontare e prenotare servizi auto presso officine locali.
+    <p style="margin-bottom: 0.5rem">
+      TicDrive è un'app mobile che consente agli utenti di cercare, confrontare
+      e prenotare servizi auto presso officine locali.
     </p>
     <p>
-      Utilizziamo l'accesso Google esclusivamente per autenticare in modo sicuro gli utenti. Nessun dato personale come email o contatti viene utilizzato per altri scopi.
+      Utilizziamo l'accesso Google esclusivamente per autenticare in modo sicuro
+      gli utenti. Nessun dato personale come email o contatti viene utilizzato
+      per altri scopi.
     </p>
   </footer>
 </template>

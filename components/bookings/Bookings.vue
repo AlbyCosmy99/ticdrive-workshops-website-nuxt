@@ -44,36 +44,8 @@
           :service="reservation.service"
           :vehicle="reservation.vehicle"
           :price="reservation.payment"
-        >
-          <template #actions>
-            <div class="flex flex-col sm:flex-row gap-2 w-full mt-2">
-              <button
-                v-if="activeTab === 'confirmed'"
-                class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark transition-colors"
-              >
-                Conferma fine intervento
-              </button>
-              <button
-                v-if="activeTab === 'confirmed'"
-                class="flex-1 py-2 border border-red-500 text-red-500 rounded-md text-center transition-colors"
-              >
-                Segnala un problema
-              </button>
-              <button
-                v-if="activeTab === 'to-confirm'"
-                class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark transition-colors"
-              >
-                Conferma Prenotazione
-              </button>
-              <button
-                v-if="activeTab === 'to-confirm'"
-                class="flex-1 py-2 border border-red-500 text-red-500 rounded-md text-center transition-colors"
-              >
-                Rifiuta Intervento
-              </button>
-            </div>
-          </template>
-        </BookingCard>
+          :status="activeTab === 'to-confirm' ? 'to-confirm' : 'confirmed'"
+        />
       </div>
     </div>
   </div>
@@ -82,7 +54,7 @@
 <script setup lang="ts">
 import {ref, computed} from 'vue';
 import History from '../ui/prenotation/History.vue';
-import BookingCard from '../ui/cards/dashboard/BookingCard.vue';
+import BookingCard from '../ui/cards/bookings/BookingCard.vue';
 
 type activeTabTypes = 'confirmed' | 'to-confirm' | 'history';
 
