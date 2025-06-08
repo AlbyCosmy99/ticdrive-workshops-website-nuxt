@@ -42,7 +42,7 @@
         <p class="text-base font-medium text-tic">Pagamento</p>
       </div>
       <p class="text-base font-medium text-right mt-1">
-        {{ price }} {{ paymentStatus }}
+        {{ price }} {{ paymentStatus === 'paid' ? 'pagato' : 'da pagare' }}
       </p>
     </div>
 

@@ -48,7 +48,7 @@ import ReviewExtendedCard from './ReviewExtendedCard.vue';
           date="24 Dicembre, 2024"
           time="11:35"
           service="Tagliando"
-          rating="5"
+          rating="1"
         />
         <ReviewExtendedCard
           number="02"
