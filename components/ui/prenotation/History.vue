@@ -1,7 +1,5 @@
 <template>
   <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-    <h2 class="text-2xl font-semibold mb-6">Storico Prenotazioni</h2>
-
     <div class="rounded-lg overflow-hidden border border-gray-200">
       <div class="overflow-x-auto">
         <table class="min-w-full">

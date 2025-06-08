@@ -14,7 +14,12 @@
         </div>
         <span class="font-bold text-base">{{ name }}</span>
       </div>
-      <WaitingConfirmationCard />
+      <div class="flex items-center p-3 rounded gap-1 bg-[#fff4f0]">
+        <CompassIcon />
+        <p class="text-[#D28B30] text-sm font-medium">
+          In attesa di accettazione
+        </p>
+      </div>
     </div>
     <hr />
 
@@ -47,14 +52,32 @@
     </div>
 
     <div class="flex space-x-2 mb-3">
-      <button class="flex-1 py-2 border border-gray-300 rounded-md text-center">
-        Rifiuta
-      </button>
-      <button
-        class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark"
-      >
-        Accetta
-      </button>
+      <div class="flex flex-col sm:flex-row gap-2 w-full mt-2">
+        <button
+          v-if="status === 'confirmed'"
+          class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark transition-colors"
+        >
+          Conferma fine intervento
+        </button>
+        <button
+          v-if="status === 'confirmed'"
+          class="flex-1 py-2 border border-red-500 text-red-500 rounded-md text-center transition-colors"
+        >
+          Segnala un problema
+        </button>
+        <button
+          v-if="status === 'to-confirm'"
+          class="flex-1 py-2 bg-drive text-white rounded-md text-center hover:bg-green-dark transition-colors"
+        >
+          Conferma Prenotazione
+        </button>
+        <button
+          v-if="status === 'to-confirm'"
+          class="flex-1 py-2 border border-red-500 text-red-500 rounded-md text-center transition-colors"
+        >
+          Rifiuta Intervento
+        </button>
+      </div>
     </div>
     <p
       class="text-center mt-2 text-sm font-semibold text-tic cursor-pointer hover:underline"
@@ -65,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import WaitingConfirmationCard from '../bookings/WaitingConfirmationCard.vue';
+import CompassIcon from '@/public/svg/time/compass.svg';
 import EventAvailableIcon from '@/public/svg/time/event_available.svg';
 import CarRepairIcon from '@/public/svg/cars/car_repair.svg';
 import Car1Icon from '@/public/svg/cars/car1.svg';
@@ -80,6 +103,7 @@ interface BookingCardProps {
   paymentStatus?: 'paid' | 'to pay';
   userImageSrc?: string;
   paymentIconSvg?: string;
+  status: 'to-confirm' | 'confirmed';
 }
 
 defineProps<BookingCardProps>();

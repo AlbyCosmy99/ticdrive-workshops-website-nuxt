@@ -22,7 +22,7 @@
     <div class="mb-6">
       <MediaReviews :reviews="reviews" />
     </div>
-    
+
     <!-- Individual reviews section using ReviewCard -->
     <div class="flex flex-col gap-4">
       <h3 class="font-semibold text-xl px-4">Recensioni individuali</h3>
@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import {ref} from 'vue';
 import ReviewCard from '../ui/cards/reviews/ReviewCard.vue';
 import MediaReviews from '../ui/cards/reviews/MediaReviews.vue';
 

@@ -2,8 +2,15 @@
   <div class="p-4 border border-gray-100 rounded-lg shadow-sm">
     <div class="flex items-start gap-4">
       <!-- User avatar -->
-      <div class="flex-shrink-0 h-12 w-12 bg-gray-200 rounded-full overflow-hidden">
-        <img v-if="avatar" :src="avatar" :alt="`${user}'s avatar`" class="w-full h-full object-cover" />
+      <div
+        class="flex-shrink-0 h-12 w-12 bg-gray-200 rounded-full overflow-hidden"
+      >
+        <img
+          v-if="avatar"
+          :src="avatar"
+          :alt="`${user}'s avatar`"
+          class="w-full h-full object-cover"
+        />
       </div>
 
       <!-- Review content -->
@@ -12,8 +19,8 @@
           <h3 class="font-medium text-lg">{{ user }}</h3>
           <div class="flex items-center">
             <template v-for="i in 5" :key="i">
-              <span 
-                :class="i <= rating ? 'text-amber-500' : 'text-[#999999]/50'" 
+              <span
+                :class="i <= rating ? 'text-amber-500' : 'text-[#999999]/50'"
                 class="text-xl leading-none"
               >
                 {{ i <= rating ? '★' : '★' }}
@@ -29,23 +36,32 @@
 
     <!-- Reply button -->
     <div class="flex items-center justify-end mt-4 space-x-2">
-      <button class="px-4 py-2.5 text-white rounded-full hover:opacity-90 transition flex items-center"
-        style="background-color: #39b269" @click="handleReply">
+      <button
+        class="px-4 py-2.5 text-white rounded-full hover:opacity-90 transition flex items-center"
+        style="background-color: #39b269"
+        @click="handleReply"
+      >
         Rispondi
       </button>
 
       <div class="relative flex items-center" ref="menuRef">
-        <button class="text-gray-400 hover:text-gray-600 flex items-center h-[42px] w-[42px] justify-center"
-          @click="toggleOptions">
+        <button
+          class="text-gray-400 hover:text-gray-600 flex items-center h-[42px] w-[42px] justify-center"
+          @click="toggleOptions"
+        >
           <FlagIcon class="w-6 h-6" />
         </button>
 
-        <div v-if="showOptions"
-          class="absolute right-10 mt-2 w-48 bg-white rounded-md shadow-lg z-10 py-1 border border-gray-200">
-          <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" @click="viewProfile">
+        <div
+          v-if="showOptions"
+          class="absolute right-10 mt-2 w-48 bg-white rounded-md shadow-lg z-10 py-1 border border-gray-200"
+        >
+          <button
+            class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            @click="viewProfile"
+          >
             View profile
           </button>
-
         </div>
       </div>
     </div>
@@ -53,8 +69,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import FlagIcon from '/public/svg/stars/flag.svg'
+import {ref, onMounted, onBeforeUnmount} from 'vue';
+import FlagIcon from '/public/svg/stars/flag.svg';
 
 interface ReviewCardProps {
   user: string;
