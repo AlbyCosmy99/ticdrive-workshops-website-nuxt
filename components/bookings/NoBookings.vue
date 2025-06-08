@@ -7,9 +7,20 @@
       alt="Nessuna prenotazione"
       class="w-24 h-24 mb-4 opacity-70"
     />
-    <p class="text-lg font-medium">Nessuna prenotazione al momento</p>
-    <p class="text-sm text-gray-500">
-      Riceverai le richieste dei clienti direttamente qui
-    </p>
+    <p class="text-lg font-medium">{{ title }}</p>
+    <p class="text-sm text-gray-500">{{ subtitle }}</p>
   </div>
 </template>
+
+<script lang="ts" setup>
+const props = withDefaults(
+  defineProps<{
+    title?: string;
+    subtitle?: string;
+  }>(),
+  {
+    title: 'Nessuna prenotazione al momento',
+    subtitle: 'Riceverai le richieste dei clienti direttamente qui',
+  }
+);
+</script>

@@ -1,7 +1,6 @@
 <template>
   <footer
     style="
-      margin-top: 3rem;
       padding: 2rem;
       background-color: #f5f5f5;
       text-align: center;

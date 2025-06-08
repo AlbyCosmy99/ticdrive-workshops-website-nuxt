@@ -32,29 +32,20 @@
     </div>
 
     <div>
-      <h2 class="text-2xl font-semibold mb-6">{{ title }}</h2>
-      <History v-if="activeTab === 'history'" />
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <BookingCard
-          v-for="(reservation, index) in reservations"
-          :key="index"
-          :name="reservation.userName"
-          :userImageSrc="reservation.userImage"
-          :time="reservation.time"
-          :service="reservation.service"
-          :vehicle="reservation.vehicle"
-          :price="reservation.payment"
-          :status="activeTab === 'to-confirm' ? 'to-confirm' : 'confirmed'"
-        />
-      </div>
+      <h2 class="text-xl font-medium mb-6">{{ title }}</h2>
+      <BookingHistoryTable v-if="activeTab === 'history'" />
+      <UiCardsBookingsCards
+        v-else
+        :key="activeTab"
+        :booking-type="activeTab === 'confirmed' ? 'Accepted' : 'Waiting'"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import {ref, computed} from 'vue';
-import History from '../ui/prenotation/History.vue';
-import BookingCard from '../ui/cards/bookings/BookingCard.vue';
+import BookingHistoryTable from '../ui/tables/BookingHistoryTable.vue';
 
 type activeTabTypes = 'confirmed' | 'to-confirm' | 'history';
 
@@ -74,32 +65,4 @@ const title = computed(() => {
 const changeTab = (tab: activeTabTypes) => {
   activeTab.value = tab;
 };
-
-interface Reservation {
-  userName: string;
-  userImage: string;
-  time: string;
-  service: string;
-  vehicle: string;
-  payment: string;
-}
-
-const reservations = ref<Reservation[]>([
-  {
-    userName: 'Paolo Bianchi',
-    userImage: '/images/Profile.png',
-    time: 'Domani - 10:00',
-    service: 'Cambio olio',
-    vehicle: 'Fiat Panda 2018',
-    payment: '€80 pagati',
-  },
-  {
-    userName: 'Lucia Rossi',
-    userImage: '/images/Profile.png',
-    time: 'Domani - 14:30',
-    service: 'Revisione',
-    vehicle: 'Audi A3 2020',
-    payment: '€150 pagati',
-  },
-]);
 </script>
