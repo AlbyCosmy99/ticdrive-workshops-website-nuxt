@@ -75,7 +75,7 @@ onMounted(async () => {
   try {
     loadingBookings.value = true;
     const res = await getBookingsAsync($ticDriveAxios);
-    // bookings.value = res.data;
+    bookings.value = res.data;
   } catch (e: any) {
     showToast(
       'error',
