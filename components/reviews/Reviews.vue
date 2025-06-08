@@ -1,6 +1,9 @@
 <template>
+  <div v-if="loading" class="flex justify-center items-center h-48">
+    <TicDriveSpinner />
+  </div>
   <div
-    v-if="reviews.length === 0"
+    v-else-if="reviews.length === 0"
     class="flex flex-col items-center justify-center py-12 px-4 bg-white rounded-lg shadow-sm text-center"
   >
     <h2 class="text-xl font-semibold text-gray-700 mb-2">
@@ -18,26 +21,21 @@
     </button>
   </div>
   <div v-else class="bg-white rounded-lg shadow-sm p-2">
-    <!-- Reviews summary section -->
     <div class="mb-6">
-      <MediaReviews :reviews="reviews" />
+      <ReviewsOverview :reviews="reviews" />
     </div>
 
-    <!-- Individual reviews section using ReviewCard -->
     <div class="flex flex-col gap-4">
       <h3 class="font-semibold text-xl px-4">Recensioni individuali</h3>
       <div class="flex flex-col gap-2">
         <ReviewCard
           v-for="review in reviews"
           :key="review.id"
-          :user="review.user"
-          :avatar="review.avatar"
-          :date="review.date"
-          :rating="review.rating"
-          :comment="review.comment"
-          @reply="handleReply"
-          @viewProfile="viewUserProfile"
-          @report="reportReview"
+          :user="review.customerName"
+          :avatar="review.customerImageUrl"
+          :date="review.whenPublished"
+          :rating="review.stars"
+          :comment="review.text"
         />
       </div>
     </div>
@@ -45,51 +43,34 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
 import ReviewCard from '../ui/cards/reviews/ReviewCard.vue';
-import MediaReviews from '../ui/cards/reviews/MediaReviews.vue';
+import getReviewsAsync from '~/services/http/requests/get/reviews/getReviewsAsync';
+import useAuthStore from '~/store/auth';
+import useTicDriveAxios from '~/composables/useTicDriveAxios';
+import useToast from '~/composables/useToast';
+import type {Review} from '~/types/reviews/Review';
+import TicDriveSpinner from '../ui/spinners/TicDriveSpinner.vue';
+import ReviewsOverview from './ReviewsOverview.vue';
 
-const reviews = ref([
-  {
-    id: 1,
-    user: 'Maria Rossi',
-    avatar: 'https://cdn-icons-png.flaticon.com/512/6858/6858504.png',
-    date: '2 giorni fa',
-    rating: 5,
-    comment:
-      "Si vede chiaramente da parte del personale l'esperienza lavorativa nel settore, veloci, onesti nei prezzi e anche simpatici.",
-  },
-  {
-    id: 2,
-    user: 'Maria Rossi',
-    avatar: 'https://cdn-icons-png.flaticon.com/512/6858/6858504.png',
-    date: '2 giorni fa',
-    rating: 3,
-    comment:
-      "Si vede chiaramente da parte del personale l'esperienza lavorativa nel settore, veloci, onesti nei prezzi e anche simpatici.",
-  },
-  {
-    id: 3,
-    user: 'Maria Rossi',
-    avatar: 'https://cdn-icons-png.flaticon.com/512/6858/6858504.png',
-    date: '2 settimane fa',
-    rating: 1,
-    comment: 'Professionali cortesi disponibili e con prezzi buoni',
-  },
-]);
+const loading = ref(false);
+const $ticDriveAxios = useTicDriveAxios();
+const authStore = useAuthStore();
+const showToast = useToast();
+const reviews = ref<Review[]>([]);
 
-const handleReply = (user: string) => {
-  console.log(`Replying to ${user}'s review`);
-  // Implement reply functionality here
-};
-
-const viewUserProfile = (user: string) => {
-  console.log(`Viewing ${user}'s profile`);
-  // Implement profile view functionality here
-};
-
-const reportReview = (user: string) => {
-  console.log(`Reporting ${user}'s review`);
-  // Implement report functionality here
-};
+onMounted(async () => {
+  try {
+    loading.value = true;
+    const res = await getReviewsAsync($ticDriveAxios, authStore.user?.id!);
+    reviews.value = res.data;
+  } catch (e: any) {
+    showToast(
+      'error',
+      'Errore durante il carimento delle recensioni',
+      e.message,
+    );
+  } finally {
+    loading.value = false;
+  }
+});
 </script>

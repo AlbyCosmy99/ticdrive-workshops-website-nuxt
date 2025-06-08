@@ -54,7 +54,7 @@
         @click="openModal('complete')"
         class="flex-1 py-2 bg-drive text-white rounded-md hover:bg-green-dark transition-colors"
       >
-        Conferma fine intervento
+        Fine intervento
       </button>
 
       <button
