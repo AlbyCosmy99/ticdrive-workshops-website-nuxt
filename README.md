@@ -30,7 +30,7 @@ It is designed for **auto repair shops and service providers**, allowing them to
 
 ## 👨‍💻 Development  
 
-This project was mainly developed by **Andrei Albu**, with contributions from **Riccardo De Simoni (MaestroTheSimoni)**.  
+This project was mainly developed by **Andrei Albu**, with contributions from **[Riccardo De Simoni](https://github.com/MaestroTheSimoni)**.  
 It was part of the **TicDrive startup ecosystem**, complementing the **mobile app** and the **backend API**.  
 
 ---
