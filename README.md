@@ -3,7 +3,7 @@
 The **TicDrive Workshops Site** is a **Nuxt.js web application** built to support the **TicDrive ecosystem**.  
 It is designed for **auto repair shops and service providers**, allowing them to register, manage their profiles, handle bookings and interact with customers using the TicDrive mobile app.  
 
-🔗 Online site [here](https://www.ticdrive.it)
+🔗 Online site [here](https://tic-drive-workshops-site.vercel.app)
 
 ---
 
