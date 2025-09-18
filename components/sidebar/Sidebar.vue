@@ -8,7 +8,7 @@
         @click="router.push('/')"
       >
         <NuxtImg
-          src="/svg/TicDriveLogo.svg"
+          src="https://raw.githubusercontent.com/AlbyCosmy99/ticdrive-workshops-website-nuxt/7604878af149bec51368ddc4ae7686902fd92ad6/public/svg/TicDriveLogo.svg"
           alt="TicDrive logo"
           class="object-contain self-center max-w-full aspect-square"
           width="120"
