@@ -21,7 +21,7 @@ It is designed for **auto repair shops and service providers**, allowing them to
 ## 🛠️ Tech Stack  
 
 - [Nuxt.js](https://nuxt.com/) – Vue.js framework for SSR & static generation  
-- [Vuex / Pinia] – state management  
+- [Pinia](https://pinia.vuejs.org/) – state management  
 - [Tailwind CSS](https://tailwindcss.com/) – modern UI styling  
 - [Axios](https://axios-http.com/) – API communication  
 - [Vercel](https://vercel.com/) – deployment platform  
