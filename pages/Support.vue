@@ -6,7 +6,7 @@
           <h1 class="text-2xl font-semibold">Domande Frequenti</h1>
         </div>
         <div>
-          <img src="/svg/TicDriveLogo.svg" alt="TicDrive" class="h-12" />
+          <img src="https://raw.githubusercontent.com/AlbyCosmy99/ticdrive-workshops-website-nuxt/7604878af149bec51368ddc4ae7686902fd92ad6/public/svg/TicDriveLogo.svg" alt="TicDrive" class="h-12" />
         </div>
       </div>
     </div>
