@@ -3,7 +3,7 @@
     class="block md:hidden h-screen text-drive flex justify-center items-center flex-col gap-10 mx-10"
   >
     <NuxtImg
-      src="/svg/TicDriveLogo.svg"
+      src="https://raw.githubusercontent.com/AlbyCosmy99/ticdrive-workshops-website-nuxt/7604878af149bec51368ddc4ae7686902fd92ad6/public/svg/TicDriveLogo.svg"
       alt="TicDrive logo"
       width="130"
       height="130"
