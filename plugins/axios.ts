@@ -4,7 +4,7 @@ import type {AxiosInstance} from 'axios';
 
 export default defineNuxtPlugin(nuxtApp => {
   const ticDriveAxios: AxiosInstance = axios.create({
-    baseURL: 'https://ticdrivebackend.onrender.com/api/',
+    baseURL: 'https://ticdrive-backend-net-core-8-production.up.railway.app/api/',
   });
 
   ticDriveAxios.interceptors.request.use(config => {
