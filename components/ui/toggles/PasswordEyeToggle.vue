@@ -10,7 +10,7 @@
       :src="
         showPassword ? '/svg/toggles/showEye.svg' : '/svg/toggles/hideEye.svg'
       "
-      :alt="showPassword ? 'Shpw password' : 'Hide password'"
+      :alt="showPassword ? 'Show password' : 'Hide password'"
       width="20"
       height="20"
     />
