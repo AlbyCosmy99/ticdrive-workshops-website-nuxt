@@ -3,8 +3,9 @@ import useAuthStore from '~/store/auth';
 import type {AxiosInstance} from 'axios';
 
 export default defineNuxtPlugin(nuxtApp => {
+  const config = useRuntimeConfig();
   const ticDriveAxios: AxiosInstance = axios.create({
-    baseURL: 'https://ticdrivebackend.onrender.com/api/',
+    baseURL: config.public.ticDriveApiBaseUrl,
   });
 
   ticDriveAxios.interceptors.request.use(config => {

@@ -3,6 +3,13 @@ import svgLoader from 'vite-svg-loader';
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: {enabled: true},
+  runtimeConfig: {
+    public: {
+      ticDriveApiBaseUrl:
+        process.env.NUXT_PUBLIC_TICDRIVE_API_BASE_URL ??
+        'https://ticdrivebackend.onrender.com/api/',
+    },
+  },
 
   css: [
     'primevue/resources/themes/aura-light-green/theme.css',
