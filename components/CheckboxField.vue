@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-row items-center gap-2 text-xs">
+  <div class="flex items-start gap-3 text-sm leading-6">
     <div
       role="checkbox"
       :aria-checked="props.modelValue"
       :id="props.id"
       tabindex="0"
-      class="flex items-center justify-center w-4 h-4 rounded cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500"
+      class="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500"
       :class="
         props.modelValue ? 'bg-green-500' : 'bg-white border border-neutral-400'
       "
@@ -25,7 +25,7 @@
 
     <label
       :for="props.id"
-      class="cursor-pointer font-light text-black select-none"
+      class="cursor-pointer select-none font-light text-black"
       @click="toggle"
     >
       {{ props.label }}

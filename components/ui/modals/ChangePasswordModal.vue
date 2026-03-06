@@ -1,22 +1,34 @@
 <template>
   <div
     v-if="isOpen"
-    class="fixed inset-0 z-50 flex items-center justify-center"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
   >
     <div
+      class="absolute inset-0 bg-black/45 backdrop-blur-[2px]"
+      @click="close"
+    ></div>
+
+    <div
       v-if="loading"
-      class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md relative z-10 flex justify-center items-center"
+      class="relative z-10 flex w-full max-w-md items-center justify-center rounded-2xl bg-white p-6 shadow-xl"
     >
       <UiSpinnersTicDriveSpinner text="Cambio password in corso..." />
     </div>
-    <span v-else class="fixed inset-0 z-50 flex items-center justify-center">
-      <div class="absolute inset-0 bg-black bg-opacity-30" @click="close"></div>
+    <span
+      v-else
+      class="relative z-10 flex w-full items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+    >
       <div
-        class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md relative z-10"
+        class="relative w-full max-w-md rounded-2xl bg-white p-5 shadow-xl sm:p-6"
       >
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-lg font-bold">Cambio Password</h3>
-          <button @click="close" class="text-gray-500 hover:text-gray-700">
+          <button
+            @click="close"
+            class="rounded-full p-1 text-gray-500 transition hover:bg-gray-100 hover:text-gray-700"
+          >
             <svg
               class="w-5 h-5"
               fill="none"
@@ -43,7 +55,7 @@
               <input
                 :type="showCurrentPassword ? 'text' : 'password'"
                 v-model="currentPassword"
-                class="w-full p-2 border border-gray-300 rounded-md pr-10"
+                class="w-full rounded-lg border border-gray-200 bg-gray-50 p-3 pr-10 focus:border-drive focus:outline-none focus:ring-2 focus:ring-green-100"
               />
               <PasswordEyeToggle
                 :show-password="showCurrentPassword"
@@ -60,7 +72,7 @@
               <input
                 :type="showNewPassword ? 'text' : 'password'"
                 v-model="newPassword"
-                class="w-full p-2 border border-gray-300 rounded-md pr-10"
+                class="w-full rounded-lg border border-gray-200 bg-gray-50 p-3 pr-10 focus:border-drive focus:outline-none focus:ring-2 focus:ring-green-100"
               />
               <PasswordEyeToggle
                 :show-password="showNewPassword"
@@ -77,7 +89,7 @@
               <input
                 :type="showConfirmPassword ? 'text' : 'password'"
                 v-model="confirmPassword"
-                class="w-full p-2 border border-gray-300 rounded-md pr-10"
+                class="w-full rounded-lg border border-gray-200 bg-gray-50 p-3 pr-10 focus:border-drive focus:outline-none focus:ring-2 focus:ring-green-100"
               />
               <PasswordEyeToggle
                 :show-password="showConfirmPassword"
@@ -86,17 +98,17 @@
             </div>
           </div>
 
-          <div class="flex justify-end">
+          <div class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
             <button
               type="button"
               @click="close"
-              class="mr-3 px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+              class="px-4 py-2 text-sm font-medium text-gray-700 transition hover:text-gray-900"
             >
               Annulla
             </button>
             <button
               type="submit"
-              class="px-4 py-2 bg-green-500 text-white text-sm font-medium rounded-md hover:bg-green-600"
+              class="rounded-lg bg-green-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-600"
             >
               Salva
             </button>
@@ -143,6 +155,14 @@ const toggleConfirmPasswordVisibility = () => {
   showConfirmPassword.value = !showConfirmPassword.value;
 };
 
+const syncBodyScroll = (isOpen: boolean) => {
+  if (!import.meta.client) {
+    return;
+  }
+
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+};
+
 const passwordMismatch = computed(() => {
   return (
     newPassword.value &&
@@ -156,9 +176,27 @@ const close = () => {
   resetForm();
 };
 
+watch(
+  () => props.isOpen,
+  isOpen => {
+    syncBodyScroll(isOpen);
+    if (!isOpen) {
+      resetForm();
+    }
+  },
+  {immediate: true},
+);
+
+onBeforeUnmount(() => {
+  if (import.meta.client) {
+    document.body.style.overflow = '';
+  }
+});
+
 const handleSubmit = async () => {
   if (passwordMismatch.value) {
     showToast('warn', 'Le password non coincidono. ', 'Aggiusta le password.');
+    return;
   }
   if (!currentPassword.value) {
     showToast(
@@ -166,6 +204,7 @@ const handleSubmit = async () => {
       'Password corrente obbligatoria. ',
       'Inserisci la password corrente.',
     );
+    return;
   }
   if (!newPassword.value) {
     showToast(
@@ -173,6 +212,7 @@ const handleSubmit = async () => {
       'Password nuova obbligatoria. ',
       'Inserisci la nuova password.',
     );
+    return;
   }
   if (!confirmPassword.value) {
     showToast(
@@ -180,9 +220,11 @@ const handleSubmit = async () => {
       'Password ripetuta obbligatoria. ',
       'Ripeti la password.',
     );
+    return;
   }
-  if (!passwordMismatch.value && confirmPassword.value) {
-    loading.value = true;
+
+  loading.value = true;
+  try {
     await authStore.changePassword(
       currentPassword.value,
       newPassword.value,
@@ -190,6 +232,7 @@ const handleSubmit = async () => {
     );
     emit('close');
     resetForm();
+  } finally {
     loading.value = false;
   }
 };

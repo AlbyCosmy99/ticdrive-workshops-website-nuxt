@@ -1,17 +1,45 @@
 <template>
-  <div class="p-4 w-full max-w-lg lg:max-w-full mx-auto">
+  <div class="mx-auto w-full max-w-5xl px-4 pb-2 pt-3 sm:px-6 lg:max-w-full lg:p-4">
     <NuxtImg
       v-if="isRegisterRoute"
       src="https://raw.githubusercontent.com/AlbyCosmy99/ticdrive-workshops-website-nuxt/7604878af149bec51368ddc4ae7686902fd92ad6/public/svg/TicDriveLogo.svg"
       alt="logo"
-      class="mx-auto lg:absolute right-6 top-[-1]"
+      class="mx-auto h-auto w-20 lg:absolute lg:right-6 lg:top-[-1]"
       width="100"
       height="100"
     />
 
     <div
       v-if="stepStore.currentStep >= 0 && isRegisterRoute && !hideBar"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-8 gap-1 w-8/9 ps-6"
+      class="rounded-2xl border border-gray-200 bg-white/90 p-4 shadow-sm backdrop-blur-sm lg:hidden"
+    >
+      <div class="mb-3 flex items-center justify-between gap-3">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
+            Registrazione
+          </p>
+          <p class="text-base font-semibold text-gray-700">
+            Step {{ currentStepIndex }} di {{ totalSteps }}
+          </p>
+        </div>
+        <span
+          class="rounded-full bg-green-50 px-3 py-1 text-sm font-semibold text-drive"
+        >
+          {{ currentStepLabel }}
+        </span>
+      </div>
+
+      <div class="h-2 overflow-hidden rounded-full bg-gray-100">
+        <div
+          class="h-full rounded-full bg-drive transition-all duration-300"
+          :style="{width: `${progressPercentage}%`}"
+        ></div>
+      </div>
+    </div>
+
+    <div
+      v-if="stepStore.currentStep >= 0 && isRegisterRoute && !hideBar"
+      class="hidden gap-1 ps-6 lg:grid lg:grid-cols-5 xl:grid-cols-7"
     >
       <div
         v-for="(step, index) in stepStore.steps"
@@ -61,6 +89,21 @@ const stepStore = useStepStore();
 const route = useRoute();
 
 const isRegisterRoute = computed(() => route.path.startsWith('/auth/register'));
+const totalSteps = computed(() => stepStore.steps.length + 1);
+const currentStepIndex = computed(() => Math.max(stepStore.currentStep, 1));
+const currentStepLabel = computed(() => {
+  if (stepStore.currentStep <= 1) {
+    return 'Benvenuto';
+  }
+
+  return (
+    stepStore.steps.find(step => step.step === stepStore.currentStep)?.value ||
+    'Registrazione'
+  );
+});
+const progressPercentage = computed(
+  () => (currentStepIndex.value / totalSteps.value) * 100,
+);
 
 const props = defineProps({
   hideBar: {

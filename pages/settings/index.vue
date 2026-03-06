@@ -17,40 +17,11 @@ const openPasswordModal = () => {
 const closePasswordModal = () => {
   showPasswordModal.value = false;
 };
-
-const saveNewPassword = (passwordData: {
-  currentPassword: string;
-  newPassword: string;
-}) => {
-  console.log('Changing password:', passwordData);
-  showPasswordModal.value = false;
-};
-
-const handleModifyWorkshop = () => {
-  console.log('Modify workshop details');
-};
-
-const handleLogout = () => {
-  console.log('Logout');
-};
-
-const handleDeleteAccount = () => {
-  console.log('Delete account');
-};
 </script>
 
 <template>
   <div>
-    <Settings
-      @change-password="openPasswordModal"
-      @modify-workshop="handleModifyWorkshop"
-      @logout="handleLogout"
-      @delete-account="handleDeleteAccount"
-    />
-    <ChangePasswordModal
-      :is-open="showPasswordModal"
-      @close="closePasswordModal"
-      @save="saveNewPassword"
-    />
+    <Settings @change-password="openPasswordModal" />
+    <ChangePasswordModal :is-open="showPasswordModal" @close="closePasswordModal" />
   </div>
 </template>

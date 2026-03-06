@@ -1,15 +1,16 @@
 <template>
   <div
-    class="flex flex-col w-full justify-center items-center max-md:max-w-full"
+    class="flex w-full flex-col items-center justify-center px-4"
   >
     <NuxtImg
       src="https://raw.githubusercontent.com/AlbyCosmy99/ticdrive-workshops-website-nuxt/7604878af149bec51368ddc4ae7686902fd92ad6/public/svg/TicDriveLogo.svg"
       alt="TicDrive logo"
       width="130"
       height="130"
+      class="h-auto w-28 sm:w-[130px]"
     />
     <div
-      class="mt-8 flex flex-col self-center max-w-full font-medium whitespace-nowrap w-[370px]"
+      class="mt-8 flex w-full max-w-[370px] flex-col self-center font-medium"
     >
       <h1 class="mb-4 self-center max-w-full text-4xl rounded-none text-tic">
         Benvenuto!
@@ -24,7 +25,7 @@
 
     <form
       @submit.prevent="handleSubmit"
-      class="flex flex-col w-[90%] px-14 items-center m-auto max-w-lg lg:max-w-full"
+      class="m-auto flex w-full max-w-md flex-col items-center px-4 sm:px-6"
     >
       <TicDriveInput
         id="companyEmail"
@@ -43,13 +44,8 @@
 
       <div class="w-full max-w-lg lg:max-w-full">
         <div
-          class="flex justify-end gap-10 mt-4 w-full max-md:mt-10 max-md:max-w-full"
+          class="mt-4 flex w-full justify-end pr-1 max-md:max-w-full"
         >
-          <!-- <CheckboxField
-            id="remember-me"
-            v-model="rememberMe"
-            label="Remember me"
-          /> -->
           <button
             type="button"
             class="cursor-pointer self-start text-xs font-light text-black hover:underline focus:outline-none focus:underline"
@@ -62,7 +58,7 @@
       <button
         type="submit"
         :disabled="!password || !companyEmail || loading"
-        class="self-center px-16 py-3.5 mt-10 max-w-full text-base text-white whitespace-nowrap bg-drive rounded-[36px] w-[232px] max-md:px-5 max-md:mt-10 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-drive focus:ring-opacity-50 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
+        class="mt-10 w-full rounded-[36px] bg-drive px-6 py-3.5 text-base text-white transition hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-drive focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 disabled:hover:bg-gray-300 sm:w-[232px]"
       >
         {{ loading ? 'Caricando...' : 'Login' }}
       </button>
@@ -77,7 +73,6 @@
 <script lang="ts" setup>
 import {ref, onMounted} from 'vue';
 import useStepStore from '~/store/step';
-import CheckboxField from './CheckboxField.vue';
 import useAuthStore from '~/store/auth';
 import TicDriveAuthSlider from './ui/sliders/TicDriveAuthSlider.vue';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput.vue';
@@ -86,7 +81,6 @@ import ForgotPasswordModal from './ui/modals/ForgotPasswordModal.vue';
 const useStore = useStepStore();
 const companyEmail = ref('');
 const password = ref('');
-const rememberMe = ref(true);
 const showToast = useToast();
 const isForgotPasswordModalOpen = ref(false);
 

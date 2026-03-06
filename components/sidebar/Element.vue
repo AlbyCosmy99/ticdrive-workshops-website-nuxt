@@ -1,17 +1,19 @@
 <template>
   <div class="relative">
     <div
-      class="absolute top-1/2 -translate-y-1/2 -left-4 w-1 h-13 bg-drive transition-all rounded-r-md"
+      class="absolute inset-y-2 -left-3 w-1 rounded-r-md bg-drive transition-all"
       :class="selected ? 'opacity-100' : 'opacity-0'"
     ></div>
     <button
       @click="$router.push(path)"
       :class="[
-        'cursor-pointer font-medium text-base flex items-center w-full py-3 px-4 rounded-md text-black transition-colors group',
-        selected && 'bg-drive text-white',
+        'group flex min-h-[52px] w-full cursor-pointer items-center rounded-xl px-4 py-3 text-left text-base font-medium text-gray-700 transition-all',
+        selected
+          ? 'bg-drive text-white shadow-sm'
+          : 'hover:bg-gray-50 hover:text-gray-900',
       ]"
     >
-      <div class="w-8 mr-3 flex items-center justify-center">
+      <div class="mr-3 flex w-8 items-center justify-center">
         <slot name="icon" />
       </div>
       <span class="text-sm font-medium">{{ title }}</span>

@@ -12,4 +12,8 @@
 import useStepStore from '~/store/step';
 
 const stepStore = useStepStore();
+
+if (!stepStore.currentStep) {
+  stepStore.currentStep = 1;
+}
 </script>

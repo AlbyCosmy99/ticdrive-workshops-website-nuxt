@@ -1,8 +1,8 @@
 <template>
   <div
-    class="w-[220px] bg-white h-[85vh] rounded-lg border border-gray-200 flex flex-col py-6 shadow-sm relative"
+    class="flex h-full w-full flex-col border-r border-gray-200 bg-white py-5 shadow-xl shadow-slate-200/50 lg:rounded-2xl lg:border lg:py-6 lg:shadow-sm"
   >
-    <div class="px-6 mb-12 flex items-center justify-center">
+    <div class="mb-8 flex items-center justify-center px-6 lg:mb-12">
       <button
         class="flex items-center justify-center"
         @click="router.push('/')"
@@ -10,13 +10,14 @@
         <NuxtImg
           src="https://raw.githubusercontent.com/AlbyCosmy99/ticdrive-workshops-website-nuxt/7604878af149bec51368ddc4ae7686902fd92ad6/public/svg/TicDriveLogo.svg"
           alt="TicDrive logo"
-          class="object-contain self-center max-w-full aspect-square"
+          class="aspect-square max-w-full object-contain self-center"
           width="120"
           height="120"
         />
       </button>
     </div>
-    <div class="flex flex-col flex-grow space-y-1 px-4">
+
+    <div class="flex flex-grow flex-col space-y-1 overflow-y-auto px-3 lg:px-4">
       <Element
         path="/dashboard"
         title="Dashboard"

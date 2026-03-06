@@ -1,14 +1,16 @@
 <template>
   <div class="flex flex-col w-full">
-    <div class="mb-4">
+    <div class="mb-6">
       <h1 class="text-2xl font-bold mb-1">Panoramica</h1>
     </div>
 
     <StatsCards />
 
     <div class="mb-8">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-semibold">
+      <div
+        class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <h2 class="text-2xl font-semibold leading-tight">
           Prenotazioni In Attesa di Conferma
         </h2>
         <SeeAllButton @on-click="router.push('/bookings')" />
@@ -47,7 +49,7 @@
 
       <div
         v-else
-        class="flex flex-col items-center justify-center py-10 text-gray-400 text-center"
+        class="flex flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white px-4 py-12 text-center text-gray-400 shadow-sm"
       >
         <img
           src="/images/booking.png"
@@ -62,7 +64,7 @@
     </div>
 
     <div class="mb-2">
-      <div class="flex justify-between items-center mb-4">
+      <div class="mb-4 flex items-center justify-between">
         <h2 class="text-2xl font-semibold">Recensioni Recenti</h2>
       </div>
       <ReviewExtendedCards />

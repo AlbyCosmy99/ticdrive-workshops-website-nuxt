@@ -1,9 +1,11 @@
 <template>
   <div
-    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
+    class="mx-auto flex w-full max-w-3xl flex-col justify-center px-4 pb-2 pt-2 sm:px-6"
   >
-    <h1 class="text-gray-500 text-4xl font-semibold">Informazioni profilo</h1>
-    <h1 class="text-gray-500 text-2xl font-semibold mt-10">
+    <h1 class="text-3xl font-semibold text-gray-600 sm:text-4xl">
+      Informazioni profilo
+    </h1>
+    <h1 class="mt-10 text-2xl font-semibold text-gray-500">
       Foto dell'Autofficina
     </h1>
     <h1 class="text-gray-500 text-lg font-semibold mt-3">

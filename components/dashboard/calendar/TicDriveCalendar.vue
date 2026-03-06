@@ -1,10 +1,10 @@
 <template>
   <div
-    class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 flex flex-col h-[85vh] relative overflow-hidden"
+    class="relative flex min-h-[70vh] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6 lg:h-[85vh]"
   >
     <h1 class="text-2xl font-semibold mb-6">Calendario Prenotazioni</h1>
 
-    <div class="flex justify-between items-center mb-6">
+    <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <!-- Intestazione con pulsanti -->
       ...
     </div>

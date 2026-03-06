@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex gap-1.5 justify-center items-center self-stretch py-1.5 pr-2 pl-2 my-auto bg-neutral-100 min-h-[60px] min-w-60 rounded-[30px] w-[370px]"
+    class="my-auto flex min-h-[60px] w-full max-w-[370px] min-w-0 items-center justify-center gap-1.5 rounded-[30px] bg-neutral-100 px-2 py-1.5"
     role="tablist"
     aria-label="Login options"
   >
@@ -46,7 +46,7 @@ const emit = defineEmits(['update:tab']);
 const activeTab = ref('login');
 
 const baseButtonClasses =
-  'cursor-pointer gap-2.5 self-stretch px-4 py-4 my-auto text-center min-h-[50px] rounded-[30px] w-[175px] focus:outline-none focus:ring-0 transition-colors duration-200';
+  'my-auto min-h-[50px] flex-1 cursor-pointer rounded-[30px] px-4 py-4 text-center transition-colors duration-200 focus:outline-none focus:ring-0';
 
 const setActiveTab = (tab: string) => {
   activeTab.value = tab;

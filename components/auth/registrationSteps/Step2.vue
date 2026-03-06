@@ -1,13 +1,15 @@
 <template>
   <div
-    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center px-20"
+    class="mx-auto flex w-full max-w-3xl flex-col justify-center px-4 pb-2 pt-2 sm:px-6"
   >
-    <h1 class="text-4xl text-gray-500 font-semibold">
+    <h1 class="text-3xl font-semibold text-gray-600 sm:text-4xl">
       Informazioni sull'attività
     </h1>
 
-    <div class="flex flex-col mt-10">
-      <h4 class="text-2xl text-gray-500 font-semibold">Indirizzo completo*:</h4>
+    <div class="mt-8 flex flex-col rounded-2xl border border-gray-200 bg-gray-50/60 p-4 sm:mt-10 sm:p-5">
+      <h4 class="text-xl font-semibold text-gray-600 sm:text-2xl">
+        Indirizzo completo*
+      </h4>
 
       <TicDriveInput
         placeholder="Via e Numero Civico:"
@@ -35,8 +37,8 @@
       />
     </div>
 
-    <div class="mt-4">
-      <h4 class="text-2xl text-gray-500 font-semibold">
+    <div class="mt-4 rounded-2xl border border-gray-200 bg-gray-50/60 p-4 sm:p-5">
+      <h4 class="text-xl font-semibold text-gray-600 sm:text-2xl">
         Contatti di Riferimento
       </h4>
       <TicDriveInput

@@ -2,15 +2,17 @@
   <div v-if="loading" class="flex justify-center items-center h-80">
     <UiSpinnersTicDriveSpinner v-if="true" text="Salvando..." />
   </div>
-  <div v-else class="bg-white">
-    <div class="bg-white mb-6">
-      <div class="py-4 px-6">
+  <div v-else class="rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <div class="mb-6 bg-white">
+      <div class="px-5 py-5 sm:px-6">
         <h2 class="text-2xl font-semibold mb-4">Profilo Gestore Officina</h2>
-        <div class="flex items-center gap-4 justify-between">
-          <div class="flex items-center gap-4">
+        <div
+          class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div class="flex min-w-0 items-center gap-4">
             <div
               v-if="authStore.user?.images?.length"
-              class="rounded-full overflow-hidden h-[94px] w-[94px]"
+              class="h-[94px] w-[94px] flex-shrink-0 overflow-hidden rounded-full"
             >
               <NuxtImg
                 :src="authStore.user?.images[0].url"
@@ -18,27 +20,29 @@
                 class="object-cover w-full h-full"
               />
             </div>
-            <div>
-              <h3 class="text-lg font-semibold">{{ authStore.user?.name }}</h3>
-              <p class="text-gray-500 font-poppins">
+            <div class="min-w-0">
+              <h3 class="truncate text-lg font-semibold">
+                {{ authStore.user?.name }}
+              </h3>
+              <p class="truncate text-gray-500 font-poppins">
                 {{ authStore.user?.email }}
               </p>
             </div>
           </div>
-          <div class="flex gap-2">
+          <div class="flex flex-wrap gap-2">
             <TicDrivebutton
               :label="
                 isEditing ? (loading ? 'Salvando...' : 'Salva') : 'Modifica'
               "
               @click="onEditProfile"
               :disabled="loading"
-              custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5 w-[100px]"
+              custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5 min-w-[100px]"
             />
             <TicDrivebutton
               v-if="isEditing"
               label="Annulla"
               @click="cancelEdit"
-              custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5 w-[100px] bg-red-500 hover:bg-red-600 text-white"
+              custom-class="text-sm font-bold rounded-lg pl-2.5 pr-2.5 pt-2.5 pb-2.5 min-w-[100px] bg-red-500 hover:bg-red-600 text-white"
             />
           </div>
         </div>
@@ -46,7 +50,7 @@
     </div>
 
     <div class="bg-white">
-      <div class="px-6">
+      <div class="px-5 pb-6 sm:px-6">
         <h2 class="text-xl font-semibold mb-6">Impostazioni</h2>
 
         <div class="mb-6 border-b pb-6">
@@ -64,7 +68,7 @@
           <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ userData.name }}
           </div>
-          <div v-else class="w-[400px]">
+          <div v-else class="w-full max-w-md">
             <TicDriveInput
               v-model="editData.name"
               placeholder="Inserisci il tuo nome completo"
@@ -80,7 +84,7 @@
           <div v-if="!isEditing" class="text-sm font-normal text-tic">
             {{ userData.phoneNumber || 'Numero di telefono non disponibile' }}
           </div>
-          <div v-else class="w-[400px]">
+          <div v-else class="w-full max-w-md">
             <TicDriveInput
               v-model="editData.phoneNumber"
               placeholder="Inserisci il tuo numero di telefono"
@@ -95,12 +99,9 @@
             >Indirizzo</label
           >
           <div v-if="!isEditing" class="text-sm font-normal text-tic">
-            {{
-              `${userData.address?.streetAddress}, ${userData.address?.city}, ${userData.address?.province}, ${userData.address?.postalCode}` ||
-              'Indirizzo non disponibile'
-            }}
+            {{ formattedAddress }}
           </div>
-          <div v-else class="flex flex-col w-[400px] gap-2">
+          <div v-else class="flex w-full max-w-md flex-col gap-2">
             <TicDriveInput
               v-model="editData.address.streetAddress"
               placeholder="Via e Numero Civico"
@@ -180,6 +181,18 @@ const editData = ref<EditableUser>({
   address: {...userData.value.address},
 });
 
+const formattedAddress = computed(() => {
+  const address = userData.value.address;
+  const parts = [
+    address?.streetAddress,
+    address?.city,
+    address?.province,
+    address?.postalCode,
+  ].filter(Boolean);
+
+  return parts.length ? parts.join(', ') : 'Indirizzo non disponibile';
+});
+
 if (
   typeof authStore.user?.address === 'string' &&
   typeof userData.value.address === 'object'
@@ -217,21 +230,29 @@ const modifyProfile = async (formattedAddress: string) => {
 };
 
 const cancelEdit = () => {
+  editData.value = {
+    ...userData.value,
+    address: {...userData.value.address},
+  };
   isEditing.value = false;
 };
 
-const onEditProfile = () => {
+const onEditProfile = async () => {
   if (isEditing.value) {
     const {streetAddress, postalCode, city, province} = editData.value
       .address as Address;
     const formattedAddress = `${streetAddress}, ${city}, ${province}, ${postalCode} Italia`;
 
-    userData.value = {
-      ...editData.value,
-      address: {...editData.value.address},
-    };
-
-    modifyProfile(formattedAddress);
+    loading.value = true;
+    try {
+      await modifyProfile(formattedAddress);
+      userData.value = {
+        ...editData.value,
+        address: {...editData.value.address},
+      };
+    } finally {
+      loading.value = false;
+    }
   } else {
     editData.value = {
       ...userData.value,

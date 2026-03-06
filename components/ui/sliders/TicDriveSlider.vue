@@ -1,30 +1,38 @@
 <template>
-  <div
+  <button
+    type="button"
+    :aria-pressed="isChecked"
     :class="[
-      'py-2 px-6 rounded-xl border relative flex mt-2 items-center justify-between',
-      isChecked ? 'border-green-500' : 'border-gray-500',
+      'mt-2 flex w-full items-center justify-between gap-4 rounded-2xl border px-5 py-3 text-left transition-all duration-200',
+      isChecked
+        ? 'border-green-300 bg-green-50/60'
+        : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50',
     ]"
+    @click="handleClick"
   >
-    <h1 class="text-gray-500 text-2xl font-semibold">
+    <h1
+      :class="[
+        'truncate text-lg font-semibold sm:text-xl',
+        isChecked ? 'text-gray-700' : 'text-gray-500',
+      ]"
+    >
       {{ name }}
     </h1>
-    <div class="relative w-14 h-6 cursor-pointer" @click="handleClick">
+
+    <div
+      :class="[
+        'relative h-7 w-14 flex-shrink-0 rounded-full transition-all duration-300 ease-in-out',
+        isChecked ? 'bg-drive' : 'bg-gray-300',
+      ]"
+    >
       <div
         :class="[
-          'absolute inset-0 rounded-full transition-all duration-300 ease-in-out',
-          isChecked
-            ? 'bg-green-500 border-green-500'
-            : 'bg-gray-500 border-gray-500',
-        ]"
-      ></div>
-      <div
-        :class="[
-          'absolute top-1/2 transform -translate-y-1/2 bg-white w-6 h-6 rounded-full shadow-md transition-all duration-300 ease-in-out',
-          isChecked ? 'left-8' : 'left-0',
+          'absolute top-1/2 h-5 w-5 -translate-y-1/2 rounded-full bg-white shadow-sm transition-all duration-300 ease-in-out',
+          isChecked ? 'left-8' : 'left-1',
         ]"
       ></div>
     </div>
-  </div>
+  </button>
 </template>
 
 <script lang="ts" setup>

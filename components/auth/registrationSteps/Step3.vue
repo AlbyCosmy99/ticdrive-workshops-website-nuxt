@@ -1,11 +1,11 @@
 <template>
   <div
-    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
+    class="mx-auto flex w-full max-w-3xl flex-col justify-center px-4 pb-2 pt-2 sm:px-6"
   >
-    <h1 class="text-4xl text-gray-500 font-semibold">
+    <h1 class="text-3xl font-semibold text-gray-600 sm:text-4xl">
       Officina specializzata in:
     </h1>
-    <p class="text-lg text-gray-500 font-semibold mt-3">
+    <p class="mt-3 text-base font-semibold text-gray-500 sm:text-lg">
       (Selezionare più di una casella se necessario)
     </p>
     <div
@@ -16,7 +16,7 @@
     </div>
     <div
       v-else
-      class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8 mt-8 max-h-80 overflow-auto py-4"
+      class="mt-8 grid max-h-80 grid-cols-1 gap-2 overflow-auto rounded-2xl border border-gray-200 bg-gray-50/60 p-4 md:grid-cols-2"
     >
       <TicDriveRadio
         v-for="specialization in specializations"

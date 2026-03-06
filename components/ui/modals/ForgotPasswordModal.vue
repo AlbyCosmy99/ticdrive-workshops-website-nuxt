@@ -1,15 +1,24 @@
 <template>
   <div
     v-if="isOpen"
-    class="fixed inset-0 z-50 flex items-center justify-center"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+    aria-modal="true"
+    role="dialog"
   >
-    <div class="absolute inset-0 bg-black bg-opacity-30" @click="close"></div>
+    <div
+      class="absolute inset-0 bg-black/45 backdrop-blur-[2px]"
+      @click="close"
+    ></div>
 
     <div
-      class="relative bg-white w-full max-w-md rounded-lg shadow-lg overflow-hidden"
+      class="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl"
     >
-      <div class="flex items-center p-6 border-b border-gray-100">
-        <button @click="handleBackButton" class="p-1">
+      <div class="flex items-center border-b border-gray-100 p-5 sm:p-6">
+        <button
+          type="button"
+          class="rounded-full p-1 transition hover:bg-gray-100"
+          @click="handleBackButton"
+        >
           <svg
             width="24"
             height="24"
@@ -40,27 +49,49 @@
             <span class="text-3xl font-bold text-green-500">Drive</span>
           </div>
         </div>
+
+        <button
+          type="button"
+          class="rounded-full p-1 text-gray-500 transition hover:bg-gray-100 hover:text-gray-700"
+          aria-label="Chiudi"
+          @click="close"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
       </div>
 
-      <div class="p-6">
+      <div class="max-h-[min(75vh,40rem)] overflow-y-auto p-5 sm:p-6">
         <div v-if="currentStep === 'email'">
           <div class="mb-8">
-            <h1 class="text-2xl font-bold mb-2">Password dimenticata?</h1>
+            <h1 class="mb-2 text-2xl font-bold">Password dimenticata?</h1>
             <p class="text-gray-500">
-              Inserisci la tua email per reimpostare la password
+              Inserisci la tua email per ricevere il codice di reimpostazione.
             </p>
           </div>
 
           <form @submit.prevent="submitEmail">
             <div class="mb-8">
-              <label class="block text-black font-medium mb-2"
-                >Your email</label
-              >
+              <label class="mb-2 block font-medium text-black">
+                La tua email
+              </label>
               <input
-                type="email"
                 v-model="email"
-                placeholder="Insert your email"
-                class="w-full p-4 bg-gray-100 rounded-lg focus:outline-none"
+                type="email"
+                placeholder="Inserisci la tua email"
+                class="w-full rounded-lg border border-gray-200 bg-gray-50 p-4 focus:border-drive focus:outline-none focus:ring-2 focus:ring-green-100"
                 required
               />
             </div>
@@ -68,29 +99,32 @@
             <button
               type="submit"
               :disabled="!email || loading"
-              class="w-full py-4 bg-green-inter text-white font-medium rounded-lg hover:bg-green-dark focus:outline-none transition duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              class="w-full rounded-lg bg-green-inter py-4 font-medium text-white transition duration-200 hover:bg-green-dark focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-300"
             >
-              {{ loading ? 'Invio in corso...' : 'Reimposta password' }}
+              {{ loading ? 'Invio in corso...' : 'Invia codice' }}
             </button>
           </form>
         </div>
 
         <div v-else-if="currentStep === 'verification'">
           <div class="mb-8">
-            <h1 class="text-2xl font-bold mb-2">Check your email</h1>
+            <h1 class="mb-2 text-2xl font-bold">Controlla la tua email</h1>
             <p class="text-gray-500">
               Abbiamo inviato un codice di verifica a {{ email }}. Inserisci il
-              codice a 6 cifre ricevuto nell'email.
+              codice a 6 cifre ricevuto via email.
             </p>
           </div>
 
           <form @submit.prevent="submitVerificationCode">
             <div class="mb-8">
+              <label class="mb-2 block font-medium text-black">
+                Codice di verifica
+              </label>
               <input
-                type="text"
                 v-model="verificationCode"
-                placeholder="Inserisci codice"
-                class="w-full p-4 bg-gray-100 rounded-lg focus:outline-none"
+                type="text"
+                placeholder="Inserisci il codice"
+                class="w-full rounded-lg border border-gray-200 bg-gray-50 p-4 tracking-[0.35em] focus:border-drive focus:outline-none focus:ring-2 focus:ring-green-100"
                 maxlength="6"
                 pattern="[0-9]{6}"
                 inputmode="numeric"
@@ -103,9 +137,69 @@
               :disabled="
                 !verificationCode || loading || verificationCode.length !== 6
               "
-              class="w-full py-4 bg-green-inter text-white font-medium rounded-lg hover:bg-green-dark focus:outline-none transition duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              class="w-full rounded-lg bg-green-inter py-4 font-medium text-white transition duration-200 hover:bg-green-dark focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-300"
             >
               {{ loading ? 'Verifica in corso...' : 'Verifica codice' }}
+            </button>
+          </form>
+        </div>
+
+        <div v-else>
+          <div class="mb-8">
+            <h1 class="mb-2 text-2xl font-bold">Imposta una nuova password</h1>
+            <p class="text-gray-500">
+              Scegli una nuova password per il tuo account.
+            </p>
+          </div>
+
+          <form @submit.prevent="submitNewPassword">
+            <div class="mb-4">
+              <label class="mb-2 block font-medium text-black">
+                Nuova password
+              </label>
+              <div class="relative">
+                <input
+                  v-model="newPassword"
+                  :type="showNewPassword ? 'text' : 'password'"
+                  placeholder="Inserisci la nuova password"
+                  class="w-full rounded-lg border border-gray-200 bg-gray-50 p-4 pr-12 focus:border-drive focus:outline-none focus:ring-2 focus:ring-green-100"
+                  required
+                />
+                <PasswordEyeToggle
+                  :show-password="showNewPassword"
+                  @toggle="showNewPassword = !showNewPassword"
+                />
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <label class="mb-2 block font-medium text-black">
+                Conferma password
+              </label>
+              <div class="relative">
+                <input
+                  v-model="confirmPassword"
+                  :type="showConfirmPassword ? 'text' : 'password'"
+                  placeholder="Conferma la nuova password"
+                  class="w-full rounded-lg border border-gray-200 bg-gray-50 p-4 pr-12 focus:border-drive focus:outline-none focus:ring-2 focus:ring-green-100"
+                  required
+                />
+                <PasswordEyeToggle
+                  :show-password="showConfirmPassword"
+                  @toggle="showConfirmPassword = !showConfirmPassword"
+                />
+              </div>
+              <p v-if="passwordMismatch" class="mt-2 text-sm text-red-500">
+                Le password non coincidono.
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              :disabled="isResetDisabled"
+              class="w-full rounded-lg bg-green-inter py-4 font-medium text-white transition duration-200 hover:bg-green-dark focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-300"
+            >
+              {{ loading ? 'Aggiornamento in corso...' : 'Salva nuova password' }}
             </button>
           </form>
         </div>
@@ -115,8 +209,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, defineProps, defineEmits, computed} from 'vue';
-import useAuthStore from '~/store/auth';
+import PasswordEyeToggle from '../toggles/PasswordEyeToggle.vue';
 
 interface PasswordResetModalProps {
   isOpen: boolean;
@@ -134,17 +227,40 @@ const verificationCode = ref('');
 const newPassword = ref('');
 const confirmPassword = ref('');
 const loading = ref(false);
+const showNewPassword = ref(false);
+const showConfirmPassword = ref(false);
 const showToast = useToast();
 const $ticDriveAxios = useTicDriveAxios();
+
+const passwordMismatch = computed(() => {
+  return (
+    !!newPassword.value &&
+    !!confirmPassword.value &&
+    newPassword.value !== confirmPassword.value
+  );
+});
+
+const isResetDisabled = computed(() => {
+  return (
+    loading.value ||
+    !newPassword.value ||
+    !confirmPassword.value ||
+    passwordMismatch.value
+  );
+});
 
 const handleBackButton = () => {
   if (currentStep.value === 'verification') {
     currentStep.value = 'email';
-  } else if (currentStep.value === 'changePassword') {
-    currentStep.value = 'verification';
-  } else {
-    close();
+    return;
   }
+
+  if (currentStep.value === 'changePassword') {
+    currentStep.value = 'verification';
+    return;
+  }
+
+  close();
 };
 
 const close = () => {
@@ -158,11 +274,54 @@ const resetForm = () => {
   verificationCode.value = '';
   newPassword.value = '';
   confirmPassword.value = '';
+  showNewPassword.value = false;
+  showConfirmPassword.value = false;
   loading.value = false;
 };
 
+const syncBodyScroll = (isOpen: boolean) => {
+  if (!import.meta.client) {
+    return;
+  }
+
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+};
+
+const handleEscape = (event: KeyboardEvent) => {
+  if (event.key === 'Escape' && props.isOpen) {
+    close();
+  }
+};
+
+watch(
+  () => props.isOpen,
+  isOpen => {
+    syncBodyScroll(isOpen);
+    if (!isOpen) {
+      resetForm();
+    }
+  },
+  {immediate: true},
+);
+
+onMounted(() => {
+  if (import.meta.client) {
+    window.addEventListener('keydown', handleEscape);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (import.meta.client) {
+    window.removeEventListener('keydown', handleEscape);
+    document.body.style.overflow = '';
+  }
+});
+
 const submitEmail = async () => {
-  if (!email.value) return;
+  if (!email.value) {
+    return;
+  }
+
   loading.value = true;
   try {
     await $ticDriveAxios.post('/auth/forgot-password', {
@@ -177,7 +336,9 @@ const submitEmail = async () => {
 };
 
 const submitVerificationCode = async () => {
-  if (!verificationCode.value || verificationCode.value.length !== 6) return;
+  if (!verificationCode.value || verificationCode.value.length !== 6) {
+    return;
+  }
 
   loading.value = true;
   try {
@@ -186,9 +347,39 @@ const submitVerificationCode = async () => {
       code: verificationCode.value,
     });
 
-    resetForm();
+    currentStep.value = 'changePassword';
   } catch (error) {
     showToast('error', 'Riprova', 'Il codice non è valido.');
+  } finally {
+    loading.value = false;
+  }
+};
+
+const submitNewPassword = async () => {
+  if (isResetDisabled.value) {
+    return;
+  }
+
+  loading.value = true;
+  try {
+    await $ticDriveAxios.post('/auth/reset-password', {
+      email: email.value,
+      newPassword: newPassword.value,
+      confirmPassword: confirmPassword.value,
+    });
+    showToast(
+      'success',
+      'Password aggiornata',
+      'La password è stata reimpostata correttamente.',
+    );
+    close();
+  } catch (error: any) {
+    showToast(
+      'error',
+      'Riprova',
+      error?.response?.data?.message ||
+        'Non è stato possibile aggiornare la password.',
+    );
   } finally {
     loading.value = false;
   }

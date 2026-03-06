@@ -5,36 +5,39 @@
   >
     <UiSpinnersTicDriveSpinner text="Registrazione in corso..." />
   </div>
-  <div v-else class="px-3 w-full mt-2 mb-4 overflow-auto">
-    <Step1 v-show="stepStore.currentStep === 1" ref="stepOneRef" />
-    <Step2 v-show="stepStore.currentStep === 2" ref="stepTwoRef" />
-    <Step3 v-show="stepStore.currentStep === 3" ref="stepThreeRef" />
-    <Step4 v-show="stepStore.currentStep === 4" ref="stepFourRef" />
-    <Step5 v-show="stepStore.currentStep === 5" ref="stepFiveRef" />
-    <Step6 v-show="stepStore.currentStep === 6" ref="stepSixRef" />
-    <Step7 v-show="stepStore.currentStep === 7" ref="stepSevenRef" />
-    <Step8 v-show="stepStore.currentStep === 8" ref="stepEightRef" />
+  <div v-else class="w-full">
+    <div class="w-full rounded-[28px] bg-white px-1 pb-2 pt-2 sm:px-3">
+      <Step1 v-show="stepStore.currentStep === 1" ref="stepOneRef" />
+      <Step2 v-show="stepStore.currentStep === 2" ref="stepTwoRef" />
+      <Step3 v-show="stepStore.currentStep === 3" ref="stepThreeRef" />
+      <Step4 v-show="stepStore.currentStep === 4" ref="stepFourRef" />
+      <Step5 v-show="stepStore.currentStep === 5" ref="stepFiveRef" />
+      <Step6 v-show="stepStore.currentStep === 6" ref="stepSixRef" />
+      <Step7 v-show="stepStore.currentStep === 7" ref="stepSevenRef" />
+      <Step8 v-show="stepStore.currentStep === 8" ref="stepEightRef" />
+    </div>
+
     <div
-      class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center"
+      class="sticky bottom-0 z-10 mx-auto mt-6 w-full max-w-3xl border-t border-gray-200 bg-white/95 px-0 pb-[calc(env(safe-area-inset-bottom,0px)+0.5rem)] pt-4 backdrop-blur-sm sm:static sm:border-t-0 sm:bg-transparent sm:px-0 sm:pb-0 sm:pt-6"
     >
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div class="grid grid-cols-2 gap-3">
         <TicDrivebutton
           label="Indietro"
-          customClass="mt-4 bg-gray-500"
+          customClass="w-full bg-gray-500 text-base sm:text-lg"
           color="gray"
           :disable="!stepStore.currentStep"
           @click="prevStep()"
         />
         <TicDrivebutton
           label="Avanti"
-          customClass="mt-4"
+          customClass="w-full text-base sm:text-lg"
           :disable="buttonDisableStatus"
           @click="nextStep()"
         />
       </div>
       <div
         v-if="!stepStore.currentStep"
-        class="flex text-center mt-3 justify-center"
+        class="mt-3 flex justify-center text-center"
       >
         <h1 class="text-black text-md">Sono già partner?</h1>
         <h1
@@ -48,7 +51,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {ref, computed} from 'vue';
+import {ref, computed, onMounted} from 'vue';
 import useStepStore from '~/store/step';
 
 import Step1 from './auth/registrationSteps/Step1.vue';
@@ -65,7 +68,12 @@ import useAuthStore from '~/store/auth';
 
 const stepStore = useStepStore();
 const authStore = useAuthStore();
-console.log(stepStore.currentStep);
+
+onMounted(() => {
+  if (!stepStore.currentStep) {
+    stepStore.currentStep = 1;
+  }
+});
 
 const stepOneRef = ref<InstanceType<typeof Step1> | null>(null);
 const stepTwoRef = ref<InstanceType<typeof Step2> | null>(null);
@@ -76,9 +84,9 @@ const stepSixRef = ref<InstanceType<typeof Step6> | null>(null);
 const stepSevenRef = ref<InstanceType<typeof Step7> | null>(null);
 const stepEightRef = ref<InstanceType<typeof Step8> | null>(null);
 
-const buttonDisableStatus = computed(
-  () => !stepStore.stepOneData.acceptPrivacyPolicy,
-);
+const buttonDisableStatus = computed(() => {
+  return stepStore.currentStep === 1 && !stepStore.stepOneData.acceptPrivacyPolicy;
+});
 
 const showToast = useToast();
 
@@ -192,7 +200,6 @@ const register = async () => {
   let isValid = true;
   for (let i = 1; i <= 8; i++) {
     const stepValid = await stepValidation(i);
-    console.log('step:', i);
     if (!stepValid) {
       isValid = false;
       break;

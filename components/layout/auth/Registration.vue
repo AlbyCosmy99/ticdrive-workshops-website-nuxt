@@ -1,28 +1,16 @@
 <template>
-  <div
-    class="block md:hidden h-screen text-drive flex justify-center items-center flex-col gap-10 mx-10"
-  >
-    <NuxtImg
-      src="https://raw.githubusercontent.com/AlbyCosmy99/ticdrive-workshops-website-nuxt/7604878af149bec51368ddc4ae7686902fd92ad6/public/svg/TicDriveLogo.svg"
-      alt="TicDrive logo"
-      width="130"
-      height="130"
-    />
-    <p class="text-center">
-      TicDrive per le officine non è ancora disponibile per mobile. Lo sarà
-      molto presto. Da utilizzare da tablet o pc.
-    </p>
-  </div>
-  <div class="hidden md:flex h-screen flex-col">
+  <div class="flex min-h-screen flex-col bg-white">
     <StepBar
       v-if="stepStore.currentStep > 0"
       :hide-bar="stepStore.currentStep === 1"
     />
-    <div class="w-full grid grid-cols-1 lg:grid-cols-2 flex-1 min-h-0">
-      <!-- Left Section -->
-      <div class="flex justify-center items-center p-4">
+
+    <div class="grid flex-1 grid-cols-1 lg:grid-cols-2 lg:gap-0">
+      <div
+        class="hidden items-start justify-center px-4 pb-6 sm:px-6 lg:order-1 lg:flex lg:items-center lg:px-8 lg:py-6"
+      >
         <div
-          class="relative w-[90%] aspect-square max-w-lg lg:max-w-[600px] lg:max-h-[600px] rounded-[30px] overflow-hidden"
+          class="relative aspect-[5/4] w-full max-w-lg overflow-hidden rounded-[30px] shadow-sm sm:aspect-square lg:max-w-[600px] lg:max-h-[600px]"
         >
           <NuxtImg
             :src="props.mainImage"
@@ -32,13 +20,15 @@
         </div>
       </div>
 
-      <!-- Right Section -->
       <div
-        class="lg:overflow-y-auto p-4 flex justify-center items-center flex-col min-h-0"
+        class="order-1 flex min-h-0 items-start justify-center px-4 pb-6 pt-4 sm:px-6 lg:order-2 lg:items-center lg:overflow-y-auto lg:px-8 lg:py-6"
       >
-        <slot name="rightContent" />
-        <Toast />
+        <div class="w-full max-w-xl">
+          <slot name="rightContent" />
+        </div>
       </div>
+
+      <Toast />
     </div>
   </div>
 </template>

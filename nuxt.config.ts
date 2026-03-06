@@ -60,7 +60,7 @@ export default defineNuxtConfig({
         {property: 'og:url', content: 'https://www.ticdrive.it'},
         {property: 'og:image', content: '/images/ticDriveLogo.png'},
       ],
-      link: [{rel: 'icon', type: 'image/png', href: '/favicon.png'}],
+      link: [{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}],
     },
   },
 });

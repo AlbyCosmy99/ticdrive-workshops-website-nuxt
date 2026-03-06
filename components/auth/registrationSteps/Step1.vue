@@ -1,13 +1,15 @@
 <template>
   <div
-    class="flex flex-col w-full mx-auto max-w-lg max-md:mt-10 lg:max-w-full justify-center px-20"
+    class="mx-auto flex w-full max-w-3xl flex-col justify-center px-4 pb-2 pt-2 sm:px-6"
   >
-    <h1 class="text-4xl text-tic text-center font-semibold">Benvenuto!</h1>
-    <h4 class="my-3 text-xl text-drive font-semibold text-center">
+    <h1 class="text-center text-3xl font-semibold text-tic sm:text-4xl">
+      Benvenuto!
+    </h1>
+    <h4 class="my-3 text-center text-base font-semibold text-drive sm:text-xl">
       Inserisci i tuoi dati per saperne di più.
     </h4>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
+    <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
       <TicDriveInput
         id="name"
         label="Nome*"
@@ -75,18 +77,24 @@
       :error-message="v$.repeatedPassword.$errors[0]?.$message || ''"
       autocomplete="new-password"
     />
-    <div v-if="stepStore.loading" class="mt-4 flex justify-center items-center">
+    <div v-if="stepStore.loading" class="mt-4 flex items-center justify-center">
       <UiSpinnersTicDriveSpinner />
     </div>
-    <div v-else>
-      <div v-if="stepStore.socialUpdatesConsent" class="my-1 mt-6">
+    <div v-else class="mt-6 space-y-3">
+      <div
+        v-if="stepStore.socialUpdatesConsent"
+        class="rounded-2xl border border-gray-200 bg-gray-50/80 px-4 py-3"
+      >
         <CheckboxField
           id="accept-updates"
           v-model="stepStore.stepOneData.acceptUpdates"
           :label="stepStore.socialUpdatesConsent?.content"
         />
       </div>
-      <div v-if="stepStore.privacyPolicy" class="my-1">
+      <div
+        v-if="stepStore.privacyPolicy"
+        class="rounded-2xl border border-gray-200 bg-gray-50/80 px-4 py-3"
+      >
         <CheckboxField
           id="accept-privacy-policy"
           v-model="stepStore.stepOneData.acceptPrivacyPolicy"
