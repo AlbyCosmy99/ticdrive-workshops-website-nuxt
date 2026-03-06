@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//home/albycosmy99/Desktop/**)",
+      "WebFetch(domain:expo.dev)",
+      "WebFetch(domain:docs.expo.dev)",
+      "Bash(node --version)",
+      "Bash(npm --version)",
+      "Bash(npx expo install expo@^54.0.0)",
+      "Bash(npm install react@19.1.0 react-dom@19.1.0 react-native@0.81.0)",
+      "Bash(npx expo install --fix)",
+      "Bash(npm install --legacy-peer-deps)",
+      "Bash(node -e \"const p = require\\(''./node_modules/react-native/package.json''\\); console.log\\(''react-native:'', p.version\\)\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/react/package.json''\\); console.log\\(''react:'', p.version\\)\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/expo/package.json''\\); console.log\\(''expo:'', p.version\\)\")"
+    ],
+    "additionalDirectories": [
+      "/home/albycosmy99/Desktop/ticdrive/ticdrive-app-react-native"
+    ]
+  }
+}

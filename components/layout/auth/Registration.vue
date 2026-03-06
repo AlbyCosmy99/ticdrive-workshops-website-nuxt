@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <Toast />
+      <Toast class="auth-toast" />
     </div>
   </div>
 </template>
@@ -45,3 +45,37 @@ const props = defineProps<{
 
 const stepStore = useStepStore();
 </script>
+
+<style scoped>
+:deep(.auth-toast.p-toast) {
+  width: min(26rem, calc(100vw - 2.5rem));
+  max-width: calc(100vw - 2.5rem);
+}
+
+@media (max-width: 768px) {
+  :deep(.auth-toast.p-toast) {
+    top: calc(env(safe-area-inset-top, 0px) + 0.75rem) !important;
+    left: 1rem !important;
+    right: 1rem !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  :deep(.auth-toast .p-toast-message) {
+    margin-bottom: 0.75rem;
+  }
+
+  :deep(.auth-toast .p-toast-message-content) {
+    align-items: flex-start;
+  }
+
+  :deep(.auth-toast .p-toast-message-text) {
+    min-width: 0;
+  }
+
+  :deep(.auth-toast .p-toast-summary),
+  :deep(.auth-toast .p-toast-detail) {
+    word-break: break-word;
+  }
+}
+</style>
