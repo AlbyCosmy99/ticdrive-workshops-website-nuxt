@@ -209,6 +209,7 @@
 </template>
 
 <script setup lang="ts">
+import type {AxiosError} from 'axios';
 import PasswordEyeToggle from '../toggles/PasswordEyeToggle.vue';
 
 interface PasswordResetModalProps {
@@ -231,6 +232,9 @@ const showNewPassword = ref(false);
 const showConfirmPassword = ref(false);
 const showToast = useToast();
 const $ticDriveAxios = useTicDriveAxios();
+const forgotPasswordRequestConfig = {
+  timeout: 12000,
+};
 
 const passwordMismatch = computed(() => {
   return (
@@ -248,6 +252,33 @@ const isResetDisabled = computed(() => {
     passwordMismatch.value
   );
 });
+
+const getForgotPasswordErrorMessage = (
+  error: AxiosError<{message?: string}> | any,
+  fallback: string,
+) => {
+  const responseMessage =
+    typeof error?.response?.data === 'string'
+      ? error.response.data
+      : error?.response?.data?.message;
+
+  if (error?.code === 'ECONNABORTED') {
+    return 'Il server sta impiegando troppo tempo a rispondere. Riprova tra poco.';
+  }
+
+  if (error?.response?.status === 503) {
+    return (
+      responseMessage ||
+      "Il servizio email non è disponibile al momento. Riprova tra poco."
+    );
+  }
+
+  if (!error?.response) {
+    return 'Impossibile contattare il server in questo momento.';
+  }
+
+  return responseMessage || fallback;
+};
 
 const handleBackButton = () => {
   if (currentStep.value === 'verification') {
@@ -326,10 +357,17 @@ const submitEmail = async () => {
   try {
     await $ticDriveAxios.post('/auth/forgot-password', {
       email: email.value,
-    });
+    }, forgotPasswordRequestConfig);
     currentStep.value = 'verification';
   } catch (error) {
-    showToast('error', 'Riprova', "Errore durante l'invio della mail.");
+    showToast(
+      'error',
+      'Riprova',
+      getForgotPasswordErrorMessage(
+        error,
+        "Errore durante l'invio della mail.",
+      ),
+    );
   } finally {
     loading.value = false;
   }
@@ -345,11 +383,15 @@ const submitVerificationCode = async () => {
     await $ticDriveAxios.post('/auth/send-code-password-forgot', {
       email: email.value,
       code: verificationCode.value,
-    });
+    }, forgotPasswordRequestConfig);
 
     currentStep.value = 'changePassword';
   } catch (error) {
-    showToast('error', 'Riprova', 'Il codice non è valido.');
+    showToast(
+      'error',
+      'Riprova',
+      getForgotPasswordErrorMessage(error, 'Il codice non è valido.'),
+    );
   } finally {
     loading.value = false;
   }
@@ -366,7 +408,7 @@ const submitNewPassword = async () => {
       email: email.value,
       newPassword: newPassword.value,
       confirmPassword: confirmPassword.value,
-    });
+    }, forgotPasswordRequestConfig);
     showToast(
       'success',
       'Password aggiornata',
@@ -377,8 +419,10 @@ const submitNewPassword = async () => {
     showToast(
       'error',
       'Riprova',
-      error?.response?.data?.message ||
+      getForgotPasswordErrorMessage(
+        error,
         'Non è stato possibile aggiornare la password.',
+      ),
     );
   } finally {
     loading.value = false;
