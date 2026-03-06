@@ -10,7 +10,7 @@
     "
   >
     <p style="margin-bottom: 0.5rem;">
-      © {{ new Date().getFullYear() }} TicDrive ·
+      © 2025 TicDrive ·
       <a
         class="underline"
         href="https://www.ticdrive.it/privacy-policy/app"
