@@ -254,13 +254,13 @@ const isResetDisabled = computed(() => {
 });
 
 const getForgotPasswordErrorMessage = (
-  error: AxiosError<{message?: string}> | any,
+  error: AxiosError<{message?: string; Message?: string}> | any,
   fallback: string,
 ) => {
   const responseMessage =
     typeof error?.response?.data === 'string'
       ? error.response.data
-      : error?.response?.data?.message;
+      : error?.response?.data?.message || error?.response?.data?.Message;
 
   if (error?.code === 'ECONNABORTED') {
     return 'Il server sta impiegando troppo tempo a rispondere. Riprova tra poco.';
